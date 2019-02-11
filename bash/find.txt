@@ -1,0 +1,5 @@
+find . -name \*.txt -print
+
+find . -name '*.xml'
+
+find . -print | grep -i '.*[.]xml'

@@ -1,0 +1,32 @@
+http://www.infosysblogs.com/microsoft/2007/02/msmq_sending_message_to_remote.html
+
+MSMQ - Sending messages to remote private queues
+
+Following are things that I found.
+
+1. When working with remote queues, the queue name in the format machinename\private$\queuename doesn't work. This results in an "invalid queue path" error.
+
+2. The queue name has to be mentioned as "FormatName:Direct=OS:machinename\\private$\\queuename". This is necessary since the queue access is internally done using the format name syntax only. The other friendly representation is converted to the FormatName and then used. When working with remote queues, unless there is an AD to resolve the queue name, the friendly name won't work. Check out documentation for details.
+
+For Eg.
+
+    MessageQueue rmQ = new MessageQueue("FormatName:Direct=OS:machinename\\private$\\queue");
+    rmQ.Send("sent to regular queue - Atul");
+
+3. Further to previous point, note that FormatName is case sensitive. If you mention the earlier string as "FORMATNAME:Direct=OS:machinename\\private$\\queuename", it won't work. Surprisingly, there is no error thrown in this case. "FormatName" part of the string seems to be the only case sensitive part. Others can appear in different case. For eg. You can write "DIRECT". 
+
+4. In case you want to use the machine's IP address the syntax will be "FormatName:Direct=TCP:ipaddress\\private$\\queuename".
+
+For Eg.
+
+    MessageQueue rmQ = new MessageQueue("FormatName:Direct=TCP:121.0.0.1\\private$\\queue");
+    rmQ.Send("sent to regular queue - Atul");
+
+5. The transactional properties of the queue instance you create in code should match with that of the queue you are trying to send the message to. So in the earlier examples, I was sending message to a non-transactional queue. To send to a transactional queue, the code would be
+
+    MessageQueue rmTxnQ = new MessageQueue("FormatName:Direct=OS:machinename\\private$\\queue");
+    rmTxnQ.Send("sent to Txn queue - Atul", MessageQueueTransactionType.Single);
+
+If the transactional properties don't match, the message will not be delivered. The surprising part is again, I didn't get any error, and the message just disappeared
+
+6. Finally, when you send messages to remote queue, a temporary outgoing queue is created on your own machine. This is used in case the remote queue is unavailable. If you go to the computer Management console (compmgmt.msc), and expand the Services and Applications / Message Queuing / Outgoing Queues, you would see these queues. The right side of the console should show the details including the state (connected or not) and the IP address(es) for the next hop(s).

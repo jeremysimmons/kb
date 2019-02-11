@@ -1,0 +1,25 @@
+https://www.codeproject.com/Articles/7933/Smart-Thread-Pool
+
+The number of threads dynamically changes according to the workload on the threads in the pool. 
+Work items can return a value.
+A work item can be cancelled if it hasn't been executed yet.
+The caller thread's context is used when the work item is executed (limited).
+Usage of minimum number of Win32 event handles, so the handle count of the application won't explode.
+The caller can wait for multiple or all the work items to complete.
+A work item can have a PostExecute callback, which is called as soon the work item is completed.
+The state object that accompanies the work item can be disposed automatically.
+Work item exceptions are sent back to the caller.
+Work items have priority.
+Work items group.
+The caller can suspend the start of a thread pool and work items group.
+Threads have priority.
+Threads have initialization and termination events.
+WinCE platform is supported (limited).
+Action<T> and Func<T> generic methods are supported.
+Mono is supported.
+Performance counters (Windows and internal).
+Work item timeout (passive).
+Threads ApartmentState
+Threads IsBackground
+Threads name template
+Threads MaxStackSize

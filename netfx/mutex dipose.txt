@@ -1,0 +1,7 @@
+https://stackoverflow.com/questions/7107079/should-i-dispose-a-mutex
+
+I don't trust that code sample in the Mutex class docs where the mutex object is not disposed. Although Henzi has a good point in comment: 
+The Mutex object is static and would be either disposed by the finalizer or destroyed by the Windows kernel when the process exits.
+
+https://docs.microsoft.com/en-us/windows/desktop/api/synchapi/nf-synchapi-createmutexa
+Use the CloseHandle function to close the handle. The system closes the handle automatically when the process terminates. The mutex object is destroyed when its last handle has been closed.

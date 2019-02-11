@@ -1,0 +1,23 @@
+https://docs.docker.com/machine/get-started/#prerequisite-information
+
+https://docs.docker.com/machine/drivers/hyper-v/#2-set-up-a-new-external-network-switch-optional
+
+WSL SSH server
+https://gist.github.com/harleyday/76a103a1a0ca97c6f33706e4a8cc3307#file-wsl-ssh-server-md
+https://gist.github.com/dentechy/de2be62b55cfd234681921d5a8b6be11
+
+WSL autostart
+https://github.com/troytse/wsl-autostart
+
+virtual kubelet
+https://docs.microsoft.com/en-us/azure/aks/virtual-kubelet
+
+https://ashleypoole.co.uk/2016/docker-containers-windows-server-2016-guide/
+https://www.thegeekstuff.com/2016/02/docker-machine-create-generic/
+
+http://www.macadamian.com/2017/01/24/docker-machine-basic-examples/
+
+https://github.com/StefanScherer/windows-docker-machine
+
+server 2019
+https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2019

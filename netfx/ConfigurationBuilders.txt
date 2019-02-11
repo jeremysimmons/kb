@@ -1,0 +1,39 @@
+https://docs.microsoft.com/en-us/aspnet/config-builder
+Configuration builders provide a modern and agile mechanism for ASP.NET apps to get configuration values from external sources.
+
+
+<configuration>
+
+  <configSections>
+    <section name="configBuilders" 
+             type="System.Configuration.ConfigurationBuildersSection, 
+             System.Configuration, Version=4.0.0.0, Culture=neutral, 
+             PublicKeyToken=b03f5f7f11d50a3a"
+             restartOnExternalChanges="false" requirePermission="false" />
+  </configSections>
+
+  <configBuilders>
+    <builders>
+      <add name="MyEnvironment"
+           type="Microsoft.Configuration.ConfigurationBuilders.EnvironmentConfigBuilder, 
+           Microsoft.Configuration.ConfigurationBuilders.Environment, 
+           Version=1.0.0.0, Culture=neutral" />
+    </builders>
+  </configBuilders>
+
+  <appSettings configBuilders="MyEnvironment">
+    <add key="ServiceID" value="ServiceID value from web.config" />
+    <add key="ServiceKey" value="ServiceKey value from web.config" />
+  </appSettings>
+
+  <connectionStrings configBuilders="MyEnvironment">
+    <add name="default" connectionString="Data Source=web.config/mydb.db" />
+  </connectionStrings>
+
+
+Note: In a Windows container environment, variables set at run time are only injected into the EntryPoint process environment. Apps that run as a service or a non-EntryPoint process do not pick up these variables unless they are otherwise injected through a mechanism in the container. For IIS/ASP.NET-based containers, the current version of ServiceMonitor.exe handles this in the DefaultAppPool only. Other Windows-based container variants may need to develop their own injection mechanism for non-EntryPoint processes.
+
+https://github.com/Microsoft/iis-docker/pull/41
+
+Question: Use of environment variables for application pools other than DefaultAppPool? 
+https://github.com/Microsoft/iis-docker/issues/55

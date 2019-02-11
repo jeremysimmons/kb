@@ -1,0 +1,157 @@
+https://stackoverflow.com/questions/37115009/how-to-shim-executereader-with-ms-fake
+
+public void GetEmailTemplateFiltersTest()
+        {
+            using (ShimsContext.Create())
+            {
+                #region ARRANGE
+                var rowCounter = 0;
+
+                ShimSqlConnection.AllInstances.Open = (sender) => { };
+                ShimSqlConnection.AllInstances.StateGet = (sender) => ConnectionState.Open;
+                ShimSqlCommand.AllInstances.ExecuteReader = (sender) => new ShimSqlDataReader();
+                ShimDbDataReader.AllInstances.Dispose = (sender) => { };
+                ShimDbDataReader.AllInstances.DisposeBoolean = (sender, p1) => { };
+
+                ShimSqlDataReader.AllInstances.Read = (sender) =>
+                {
+                    rowCounter++;
+                    return rowCounter <= 2;
+                };
+
+                ShimSqlDataReader.AllInstances.ItemGetString = (sender, coloumnName) =>
+                {
+                    if (rowCounter == 1)
+                    {
+                        switch (coloumnName)
+                        {
+                            case "InvoiceEmailMapParmId":
+                                return 1;
+                            case "ParmName":
+                                return "Param1";
+                            default:
+                                return "SomeStrigValue";
+                        }
+                    }
+                    else if (rowCounter == 2)
+                    {
+                        switch (coloumnName)
+                        {
+                            case "InvoiceEmailMapParmId":
+                                return 1;
+                            case "ParmName":
+                                return "Param1";
+                            default:
+                                return "SomeStrigValue";
+                        }
+                    }
+                    else
+                    {
+                        return string.Empty;
+                    }
+                }; 
+                #endregion
+
+                //ACT
+                var filterList = _sut.GetEmailTemplateFilters();
+
+                //ASSERT
+                Assert.That(filterList.Length, Is.EqualTo(2));
+
+            }
+        }
+
+https://stackoverflow.com/a/41247095/26877
+
+[TestMethod]
+MyTestWithInternSqlConnection()
+{
+   using (ShimsContext.Create())
+   {
+      // simulate a connection
+      ShimSqlConnection.AllInstances.Open = connection => { };
+      string commandText;
+
+      // shim-Mock all called methods
+      ShimSqlCommand.AllInstances.ExecuteReader = command =>
+      {
+         commandText = command.CommandText;
+         return new ShimSqlDataReader();
+      };
+
+      int readCount = 0;
+      ShimSqlDataReader.AllInstances.Read = reader => readCount == 0;
+      ShimSqlDataReader.AllInstances.GetSqlStringInt32 = (reader, i) =>
+      {
+         readCount++;
+         return "testServer";
+      };
+
+      var theReadedString = AMethodUnderTestThatReadsFromDatabaseAString();
+      Assert.IsTrue(theReadedString == "testServer");
+   }
+}
+
+https://stackoverflow.com/questions/53980886/fake-sqlconnection-with-mstest
+
+ [TestMethod]
+    public void GetDevices_That_ReturnsDataSet()
+    {
+        string connectionString = "Server=tcp:localserver,1433;Initial Catalog=mydb;Persist Security Info=False;User ID=userid;Password=password;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+
+        using (ShimsContext.Create())
+        {
+
+   System.Data.Common.Fakes.ShimDbConnection.AllInstances.CreateCommand = (c) => {
+                c.ConnectionString = connectionString;
+                return new ShimSqlCommand();
+            };
+            ShimSqlConnection.AllInstances.ValidateConnectionForExecuteStringSqlCommand = (co, s, cmd) => {  };
+            ShimSqlConnection.AllInstances.Open = (c) =>
+            {
+                c.ConnectionString = connectionString;
+            };
+            ShimSqlConnection.AllInstances.Close = (c) => { };
+            ShimSqlConnection.AllInstances.StateGet = (c) => ConnectionState.Open;
+            ShimSqlConnection.AllInstances.ServerVersionGet = (c) => "14.0";
+            ShimSqlConnection.AllInstances.ClientConnectionIdGet = (c) => It.IsAny<Guid>();
+            ShimSqlConnection.AllInstances.CredentialGet = (c) => new ShimSqlCredential();
+            ShimSqlDataReader.AllInstances.Close = (c) => { };
+            // Faking Adapter, from command for current instance of command
+            ShimSqlDataAdapter.ConstructorSqlCommand = (@this, value) => new ShimSqlDataAdapter(@this);
+            System.Data.Fakes.ShimDataSet.Constructor = (@this) => new System.Data.Fakes.ShimDataSet(@this)
+            {
+                // fake DataTableCollection of data set
+                TablesGet = () => new System.Data.Fakes.ShimDataTableCollection()
+                {
+                    ItemGetInt32 = (S) =>
+                    {
+                        var dt = new DataTable("Devices");
+                        dt.Columns.Add("Id");
+                        dt.Columns.Add("Column2");
+                        dt.Columns.Add("Column3");
+                        dt.Rows.Add(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>());
+                        return dt;
+                    }
+                },
+                // fake culture set for data set
+                LocaleSetCultureInfo = (c) => { }
+            };
+            //string commandText;
+            //ShimSqlCommand.AllInstances.ExecuteReader = command =>
+            //{
+            //    commandText = command.CommandText;
+            //    return new ShimSqlDataReader();
+            //};
+            // Faking Fill
+            System.Data.Common.Fakes.ShimDbDataAdapter.AllInstances.FillDataSetString = (a, b, c) => 0;
+
+
+            //Act
+            var dataService = new DataService();
+            var result = dataService.GetData();
+
+            //Assert
+            Assert.IsNotNull(result); 
+        }
+    }

@@ -1,0 +1,13 @@
+https://stacktoheap.com/blog/2013/01/20/using-typeconverters-to-get-appsettings-in-net/
+
+public static class AppSettings
+{
+    public static T Get<T>(string key)
+    {
+        var appSetting = ConfigurationManager.AppSettings[key];
+        if (string.IsNullOrWhiteSpace(appSetting)) throw new AppSettingNotFoundException(key);
+        
+        var converter = TypeDescriptor.GetConverter(typeof(T));
+        return (T)(converter.ConvertFromInvariantString(appSetting));
+    }
+}

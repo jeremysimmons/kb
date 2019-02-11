@@ -1,0 +1,6 @@
+([ADSISEARCHER]"samaccountname=sbrown").Findone().Properties.memberof -replace '^CN=([^,]+).+$','$1'
+([ADSISEARCHER]"samaccountname=sbrown").Findone().Properties.memberof
+([ADSISEARCHER]"samaccountname=jsimmons").Findone().Properties.memberof -replace '^CN=([^,]+).+$','$1'
+
+
+([ADSISEARCHER]"samaccountname=uMadhyapadhavu2").Findone().Properties.memberof -replace '^CN=([^,]+).+$','$1'

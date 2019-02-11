@@ -1,0 +1,8 @@
+How to determine when a Git branch was created?
+
+use the reflog...
+git log -g
+git reflog show <branch>
+
+git reflog --date=local
+git reflog --date=relative

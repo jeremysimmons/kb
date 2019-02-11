@@ -1,0 +1,190 @@
+https://kubernetes.io/docs/getting-started-guides/windows/
+
+> non-starter - manager doesn't start
+docker-machine create -d hyperv --hyperv-virtual-switch "Primary Virtual Switch" manager1
+C:\Program Files\Docker\Docker\Resources\bin\docker-machine.exe env manager1
+docker-machine create -d hyperv --hyperv-virtual-switch "Primary Virtual Switch" worker1
+docker-machine create -d hyperv --hyperv-virtual-switch "Primary Virtual Switch" worker2
+
+> current approach
+https://docs.microsoft.com/en-us/virtualization/windowscontainers/kubernetes/getting-started-kubernetes-windows
+Set-VMProcessor -VMName "<name>" -ExposeVirtualizationExtensions $true 
+Get-VMNetworkAdapter -VMName "<name>" | Set-VMNetworkAdapter -MacAddressSpoofing On
+
+https://docs.microsoft.com/en-us/virtualization/windowscontainers/kubernetes/creating-a-linux-master
+create an ubuntu hyperv instance
+
+jsimmons
+ExpoMarker123!
+
+configure linux
+# start a shell as root
+sudo -s
+apt-get update -y && apt-get upgrade -y
+sudo apt-get remove docker docker-engine docker.io
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    software-properties-common
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+sudo apt-key fingerprint 0EBFCD88
+$ sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+$ sudo apt-get install docker-ce
+$ sudo docker run hello-world
+
+$ sudo systemctl enable docker
+
+$ ip addr show
+$ sudo dhclient -r eth0
+$ sudo dhclient eth0
+$ when moving between home and work, change the ethernet adapter the hyper-v network is bound to (wifi -> eth or eth to wifi)
+
+start over?
+https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/#tear-down
+
+https://linuxconfig.org/how-to-install-kubernetes-on-ubuntu-18-04-bionic-beaver-linux
+$ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
+$ sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-bionic main"
+$ sudo apt install kubeadm 
+# todo - edit nano /etc/fstab
+$ sudo swapoff -a
+$ sudo hostnamectl set-hostname kubernetes-master
+$ sudo kubeadm init --pod-network-cidr=172.16.0.0/16 # failed
+# rats, we didn't have the right version of docker for kubernetes. suck it k8s...
+$ sudo apt-get remove docker-ce
+$ apt-get install docker-ce=<VERSION>
+which version to get?
+#output is nicer than apt-cache showpkg <name>
+$ apt-cache madison docker-ce
+The second column is the version string...
+4 kubeadm config images pull
+$ apt-get install docker-ce=18.06.1~ce~3-0~ubuntu
+$ kubeadm init 
+$ kubeadm init --pod-network-cidr=172.16.0.0/16
+> output from kubeadm
+
+--service-cidr=10.96.0.0/12
+--apiserver-advertise-address=<ip-address>
+
+$ mkdir -p $HOME/.kube
+$ cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+$ chown $(id -u):$(id -g) $HOME/.kube/config
+
+tokens only last 24 hours, so get it done.
+kubeadm token create --print-join-command
+kubeadm join 192.168.1.92:6443 --token qgxkd7.80zsrz2tj7qj50wi --discovery-token-ca-cert-hash sha256:2f8d032877c7f51b7ce3a226f3499ee03f4213ef50c3237afe4a4b91bb51864a
+kubeadm join --discovery-token-unsafe-skip-ca-verification --token=`kubeadm token list` 172.17.0.92:6443
+
+
+https://github.com/coreos/flannel/blob/master/Documentation/kubernetes.md
+# don't skip this step before running the flannel config
+$ mkdir -p $HOME/.kube
+$ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+$ sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+sudo kubeadm
+
+$ sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+$ kubectl get pods --all-namespaces
+
+$ curl https://raw.githubusercontent.com/Microsoft/SDN/master/Kubernetes/flannel/l2bridge/manifests/node-selector-patch.yml -o node-selector-patch.yml
+kubectl patch ds/kube-proxy --patch "$(cat node-selector-patch.yml)" -n=kube-system
+
+# confirm it's joined
+$ kubectl get nodes
+
+https://docs.microsoft.com/en-us/virtualization/windowscontainers/kubernetes/network-topologies
+sysctl net.bridge.bridge-nf-call-iptables=1
+modify kube-flannel.yml
+net-conf.json: |
+    {
+      "Network": "10.244.0.0/16",
+      "Backend": {
+        "Type": "host-gw"
+      }
+    }
+
+kubectl apply -f kube-flannel.yml
+
+
+# Deploying a service on Kubernetes cluster
+$ kubectl run --image=nginx nginx-server --port=80 --env="DOMAIN=cluster"
+$ kubectl expose deployment nginx-server --port=80 --name=nginx-http
+# You should now see a new nginx docker container deployed on your slave node:
+$ sudo docker ps
+$ kubectl get svc
+$ curl -I 10.101.230.239
+
+at some point, we need to make the ip address of the server static - 
+https://linuxconfig.org/how-to-configure-static-ip-address-on-ubuntu-18-04-bionic-beaver-linux
+/etc/netplan/*.yml
+$ sudo netplan apply
+$ sudo netplan --debug apply
+https://docs.microsoft.com/en-us/powershell/module/hyper-v/Add-VMNetworkAdapter?view=win10-ps
+Get-VMNetworkAdapter -vmname ubuntu
+
+
+https://docs.microsoft.com/en-us/virtualization/windowscontainers/kubernetes/joining-windows-workers
+configure windows node
+Install-Module -Name DockerMsftProvider -Repository PSGallery -Force
+Install-Package -Name Docker -ProviderName DockerMsftProvider
+Restart-Computer -Force
+
+-- using a proxy? thanks, no
+[Environment]::SetEnvironmentVariable("HTTP_PROXY", "http://proxy.example.com:80/", [EnvironmentVariableTarget]::Machine)
+[Environment]::SetEnvironmentVariable("HTTPS_PROXY", "http://proxy.example.com:443/", [EnvironmentVariableTarget]::Machine)
+
+docker version
+Start-Service docker
+set-service Docker -StartupType Automatic
+
+docker pull mcr.microsoft.com/windows/servercore/iis:windowsservercore-1803
+
+docker pull mcr.microsoft.com/windows/nanoserver:1809
+docker tag microsoft/nanoserver:1803 microsoft/nanoserver:latest
+docker run -i microsoft/nanoserver:latest
+
+# ick - you can't use -it on a powershell remote session to windows server core, and you can't subshell into cmd
+wget -UseBasicParsing https://github.com/rprichard/winpty/releases/download/0.4.3/winpty-0.4.3-msvc2015.zip -Outfile winpty.zip
+# ick, winpty package doesn't have an exe...
+just connect to the vm directly/rdp and use cmd.exe, which is fine...
+
+# setup the node
+wget -UseBasicParsing https://dl.k8s.io/v1.12.4/kubernetes-node-windows-amd64.tar.gz -o kubernetes-node-windows-amd64.tar.gz
+
+get k8s binaries and place in c:\k\
+
+$env:KUBECONFIG="C:\k\config"
+[Environment]::SetEnvironmentVariable("KUBECONFIG", "C:\k\config", [EnvironmentVariableTarget]::User)
+
+
+https://docs.microsoft.com/en-us/virtualization/windowscontainers/kubernetes/joining-windows-workers#joining-the-windows-node
+$env:Path += ";C:\k"
+[Environment]::SetEnvironmentVariable("Path", $env:Path + ";C:\k", [EnvironmentVariableTarget]::Machine)
+
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+wget https://github.com/Microsoft/SDN/archive/master.zip -o master.zip
+Expand-Archive master.zip -DestinationPath master
+mv master/SDN-master/Kubernetes/flannel/l2bridge/* C:/k/
+rm -recurse -force master,master.zip
+
+cd c:\k
+.\start.ps1 -ManagementIP <Windows Node IP> -ClusterCIDR <Cluster CIDR> -ServiceCIDR <Service CIDR> -KubeDnsServiceIP <Kube-dns Service IP>
+ManagementIP: The IP address of the machine you are trying to join.
+ClusterCIDR: The address range used by Kubernetes pods.
+ServiceCIDR: The address range used by Kubernetes services.
+KubeDnsServiceIP: The DNS service VIP used by kube-dns.
+
+Set-ExecutionPolicy Unrestricted
+cd \k\l2bridge\
+.\start.ps1 -ManagementIP 192.168.1.117 -ClusterCIDR 10.244.0.0/16 -ServiceCIDR 10.96.0.0/12 -KubeDnsServiceIP 10.96.0.10
+
+
+Kube Master Changing master IP address
+https://github.com/kubernetes/kubeadm/issues/338#issuecomment-407383077

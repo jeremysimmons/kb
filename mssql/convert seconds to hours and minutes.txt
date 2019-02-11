@@ -1,0 +1,1 @@
+convert(varchar, dateadd(second, amount, 0), 108)

@@ -1,0 +1,19 @@
+C:\Program Files (x86)\Microsoft Visual Studio\2017\<version>\Common7\IDE\devenv.isolation.ini
+
+<version> one-of: BuildTools, Professional, Enterprise
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\devenv.isolation.ini
+
+
+
+Microsoft.VisualStudio.Workload.CoreEditor
+Microsoft.VisualStudio.Workload.ManagedDesktop
+Microsoft.VisualStudio.Workload.NetWeb
+Microsoft.VisualStudio.Workload.Azure
+Microsoft.VisualStudio.Workload.NetCoreTools
+
+https://stackoverflow.com/questions/42696948/how-can-i-install-the-vs2017-version-of-msbuild-on-a-build-server-without-instal
+vs_buildtools.exe --add Microsoft.VisualStudio.Workload.MSBuildTools --quiet
+
+icrosoft.Component.MSBuild
+Microsoft.VisualStudio.Component.CoreBuildTools
+Microsoft.VisualStudio.Component.Roslyn.Compiler

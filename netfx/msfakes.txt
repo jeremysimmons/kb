@@ -1,0 +1,4 @@
+set COR_PROFILER_PATH_32=D:\NugetCache\Microsoft.TestPlatform.15.7.2\tools\net451\Common7\IDE\CommonExtensions\Microsoft\IntelliTrace\Microsoft.IntelliTrace.Profiler.dll
+set COR_PROFILER_PATH_64=D:\NugetCache\Microsoft.TestPlatform.15.7.2\tools\net451\Common7\IDE\CommonExtensions\Microsoft\IntelliTrace\x64\Microsoft.IntelliTrace.Profiler.dll
+set COR_PROFILER="{9317ae81-bcd8-47b7-aaa1-a28062e41c71}"
+https://www.nuget.org/packages/Microsoft.TestPlatform/

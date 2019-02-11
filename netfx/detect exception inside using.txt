@@ -1,0 +1,20 @@
+https://ayende.com/blog/2577/did-you-know-find-out-if-an-exception-was-thrown-from-a-finally-block
+
+Marshal.GetExceptionCode()
+
+using(new ExceptionDetector())
+{
+	if(new Random().Next(1,10)%2 == 0)
+          throw new Exception();
+}
+
+public class ExceptionDetector : IDisposable
+{
+    public void Dispose()
+    {
+        if (Marshal.GetExceptionCode()==0)
+            Console.WriteLine("Completed Successfully!");
+        else
+            Console.WriteLine("Exception!");
+    }
+}

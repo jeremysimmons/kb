@@ -1,0 +1,11 @@
+https://jamesone111.wordpress.com/2016/12/06/do-the-job-100-times-faster-with-parallel-processing-in-powershell/
+
+Invoke-Command –ComputerName $computer –scriptblock $InnerScriptBlock
+
+Start-Parallel –scriptblock ${Function:\QuickPing}
+
+1..255 | Start-Parallel -Command QuickPing -MaxThreads 500 
+
+Get-ListOfComputers | Start-Parallel Get-ComputerSettings.ps1  
+
+$x = Get-ListOfComputers ; Start-Parallel -InputObject $x -Command Get-ComputerSettings.ps1 

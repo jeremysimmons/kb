@@ -1,0 +1,12 @@
+DacFx Public Model Tutorial
+https://blogs.msdn.microsoft.com/ssdt/2013/12/23/dacfx-public-model-tutorial/
+
+https://www.mssqltips.com/sqlservertip/4759/sql-server-database-schema-synchronization-via-sqlpackageexe-and-powershell/
+
+https://archive.codeplex.com/?p=agilesqlclub
+https://github.com/GoEddie/DeploymentContributorFilterer
+
+grab the dll and put it in the same folder as sqlpackage.exe
+/p:AdditionalDeploymentContributors=AgileSqlClub.DeploymentFilterContributor
+
+/p:AdditionalDeploymentContributorArguments="SqlPackageFilter=IgnoreType(.*Proced.*)"

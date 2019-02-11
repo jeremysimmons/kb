@@ -1,0 +1,1 @@
+https://stackoverflow.com/questions/5894946/how-to-add-gits-branch-name-to-the-commit-message

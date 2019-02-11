@@ -1,0 +1,6 @@
+https://docs.microsoft.com/en-us/visualstudio/extensibility/internals/custom-tools?view=vs-2017
+https://github.com/Microsoft/VSSDK-Extensibility-Samples/tree/master/ArchivedSamples/Single_File_Generator
+
+https://www.codeproject.com/Articles/31257/Custom-Tools-Explained
+
+https://docs.microsoft.com/en-us/visualstudio/msbuild/xsd-task?view=vs-2017

@@ -1,0 +1,5 @@
+https://github.com/nbuilder/nbuilder
+https://github.com/AutoFixture/AutoFixture
+http://autopoco.codeplex.com/
+https://github.com/bchavez/Bogus
+http://jackhiston.com/2017/10/1/how-to-create-bogus-data-in-c/

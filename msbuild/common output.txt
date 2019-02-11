@@ -1,0 +1,57 @@
+https://blogs.msdn.microsoft.com/kirillosenkov/2015/04/04/using-a-common-intermediate-and-output-directory-for-your-solution/
+
+In Each Project
+<IntermediateOutputPath>$(SolutionDir)\obj\$(Configuration)\$(MSBuildProjectName)\</IntermediateOutputPath>
+
+<OutputPath>$(SolutionDir)\bin\$(Configuration)\</OutputPath>
+<OutDir>$(OutputPath)</OutDir>
+
+<!-- Don't transitively copy output files, since everything builds to the same folder. -->
+<UseCommonOutputDirectory>True</UseCommonOutputDirectory>cls
+
+
+<MultiProcessorCompilation>true</MultiProcessorCompilation>
+
+https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-response-files?view=vs-2017
+Directory.Build.rsp
+Response (.rsp) files are text files that contain MSBuild.exe command line switches. 
+Each switch can be on a separate line or all switches can be on one line.
+Comment lines are prefaced with a # symbol.
+The @ switch is used to pass another response file to MSBuild.exe.
+
+Directory.Build.rsp
+In version 15.6 and above, MSBuild will search parent directories of the project for a file named Directory.Build.props
+
+https://docs.microsoft.com/en-us/visualstudio/msbuild/customize-your-build?view=vs-2017
+
+<Project>
+ <PropertyGroup>
+  <IntermediateOutputPath>$(SolutionDir)\obj\$(Configuration)\$(MSBuildProjectName)\</IntermediateOutputPath>
+  <OutputPath>$(SolutionDir)\bin\$(Configuration)\</OutputPath>
+  <OutDir>$(OutputPath)</OutDir>
+  <UseCommonOutputDirectory>True</UseCommonOutputDirectory>
+ </PropertyGroup>
+</Project>
+
+
+Directory.Build.targets
+
+Use case: multi-level merging
+https://docs.microsoft.com/en-us/visualstudio/msbuild/customize-your-build?view=vs-2017#use-case-multi-level-merging
+
+  MySolution.sln
+  Directory.Build.props     (1)
+  \src
+    Directory.Build.props   (2-src)
+    \Project1
+    \Project2
+  \test
+    Directory.Build.props   (2-test)
+    \Project1Tests
+    \Project2Tests
+
+To make MSBuild correctly merge the "inner" files (2-src and 2-test) with the "outer" file (1), you must take into account that once MSBuild finds a Directory.Build.props file, it stops further scanning. 
+
+To continue scanning and merge into the outer file, place this code into both inner files:
+
+<Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />

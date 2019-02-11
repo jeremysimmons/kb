@@ -1,0 +1,9 @@
+<Project>
+    <!-- 
+    Prevent the IncrementalClean task from causing builds to be rebuilt
+    https://github.com/Microsoft/msbuild/issues/1054 
+    -->
+    <Target Name="ForceAssignProjectConfigurationBeforeSplitProjectReferencesByFileExistence_KLUDGE" 
+        BeforeTargets="_SplitProjectReferencesByFileExistence" 
+        DependsOnTargets="AssignProjectConfiguration" />
+</Project>

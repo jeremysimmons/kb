@@ -1,0 +1,11 @@
+adding nillable="true" will convert from a regular type to a nullable type.
+adding minOccurs="0" will add boolean …Specified properties in the generated C# for each element.
+you can have both nillable="true" and minOccurs="0" in an element which gets you a nullable type and a …Specified property.
+
+minOccurs default is 1
+The default values for minOccurs and maxOccurs are 1.
+
+
+an explicit nil in the XML element
+the XML element being absent
+the XML element being empty.

@@ -1,0 +1,4 @@
+Update to Visual Studio 2017 version 15.4.1 or newer (or 15.5 Preview 2 or newer if you use preview releases)
+Disable the Source Overview margin
+Tools -> Options -> Text Editor -> All Languages -> Scroll Bars
+Set Source overview to Off

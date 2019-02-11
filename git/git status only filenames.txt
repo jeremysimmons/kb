@@ -1,0 +1,5 @@
+https://stackoverflow.com/a/14736749/26877
+
+How can I run "git status" and just get the filenames
+
+git status -s | cut -c4-

@@ -1,0 +1,41 @@
+Administer a Server Core server
+https://docs.microsoft.com/en-us/windows-server/administration/server-core/server-core-administer
+
+Enable-PSRemoting
+Enable-PSRemoting -SkipNetworkProfileCheck -Force
+Set-NetFirewallRule –Name "WINRM-HTTP-In-TCP-PUBLIC" –RemoteAddress Any
+-- or everything... you know, for the kids.
+Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
+sconfig.cmd
+
+enable remoting on the client
+winrm set winrm/config/client @{TrustedHosts="10.0.2.33"}
+or powershell
+https://4sysops.com/archives/enable-powershell-remoting-on-a-standalone-workgroup-computer/
+Set-Item WSMan:\localhost\Client\TrustedHosts -Value "10.0.2.33" -Force
+Set-Item WSMan:\localhost\Client\TrustedHosts -Value "*" -Force
+Get-Item WSMan:\localhost\Client\TrustedHosts
+Set-Item WSMan:\localhost\Client\TrustedHosts -Value "" -Force
+
+Stop-VM -VMName "WinServer1809"
+Set-VMProcessor -VMName "WinServer1809" -ExposeVirtualizationExtensions $true 
+Get-VMNetworkAdapter -VMName "WinServer1809" | Set-VMNetworkAdapter -MacAddressSpoofing On
+Start-VM winserver1809
+
+Get-VMNetworkAdapter -VMName "WinServer1809" | Select IPAddresses
+
+Enter-PSSession
+enter-pssession -vmname winserver1809
+
+$c = Get-Credential
+$c = Get-Credential -Credential win1809\administrator
+enter-pssession -vmname winserver1809 -credential $c
+
+[requires powershell as admin]
+$username = "win1809\administrator"
+$password = ConvertTo-SecureString "ExpoMarker1!" -AsPlainText -Force
+$c = new-object -typename System.Management.Automation.PSCredential -argumentlist $username, $password
+enter-pssession -vmname winserver1809 -credential $c
+
+get windows version
+[System.Environment]::OSVersion.Version

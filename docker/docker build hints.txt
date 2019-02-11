@@ -1,0 +1,9 @@
+DOCKER_OPTS="--dns <your_dns_server_1> --dns <your_dns_server_2>"
+sudo service docker restart
+or
+start docker daemon with options
+sudo docker -d -D --dns <your_dns_server_1> --dns <your_dns_server_2> &
+or 
+update the daemon.json file
+C:\ProgramData\Docker\config\daemon.json
+{"dns": ["10.0.0.2", "8.8.8.8"] }

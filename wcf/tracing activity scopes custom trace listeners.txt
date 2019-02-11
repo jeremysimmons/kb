@@ -1,0 +1,3 @@
+https://docs.microsoft.com/en-us/dotnet/framework/wcf/diagnostics/tracing/emitting-user-code-traces
+https://stackoverflow.com/questions/9702379/queuing-in-oneway-wcf-messages-using-windows-service-and-sql-server
+https://weblogs.thinktecture.com/cweyer/2009/06/custom-tracelistener-writing-trace-messages-to-the-net-services-service-bus.html

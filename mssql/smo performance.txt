@@ -1,0 +1,60 @@
+
+db.DatabaseOptions.AutoClose = true;
+
+
+https://blogs.msdn.microsoft.com/mwories/2005/04/22/sql-server-tuning-your-smo-application-for-great-performance-part-1-featured-at-teched/
+$srv = new-Object Microsoft.SqlServer.Management.Smo.Server("(local)")  
+$db = New-Object Microsoft.SqlServer.Management.Smo.Database  
+$db = $srv.Databases.Item("AdventureWorks2012")  
+$tb = new-object Microsoft.SqlServer.Management.Smo.Table  
+$typ = $tb.GetType()  
+$sc = $srv.GetDefaultInitFields($typ)  
+$srv.SetDefaultInitFields($typ, "CreateDate")  
+foreach ($tb in $db.Tables)  
+{  
+   Write-Host $tb.Schema,".",$tb.Name,".",$tb.CreateDate  
+}  
+$srv.SetDefaultInitFields($typ, $sc)
+
+https://blogs.msdn.microsoft.com/mwories/2005/05/02/sql-server-tuning-your-smo-application-for-great-performance-part-2/
+StringCollection sc = svr.GetDefaultInitFields(typeof(Table));
+
+
+db.PrefetchObjects(typeof(Table),so);
+
+
+https://social.msdn.microsoft.com/Forums/sqlserver/en-US/1ff502e4-1558-424c-9ae8-34ca008afb5f/smo-table-script-generation-performance?forum=sqlsmoanddmo
+var urns = new Microsoft.SqlServer.Management.Sdk.Sfc.Urn[dt.Rows.Count];
+
+   //get urns of tables to script
+   for (int rowIndex = 0; rowIndex < dt.Rows.Count; ++rowIndex)
+   {
+    urns[rowIndex] = dt.Rows[rowIndex]["urn"].ToString();
+   }
+
+   //script tables
+   var scripter = new Scripter(srv);
+   var scripts = scripter.Script(urns);
+
+
+https://blogs.msdn.microsoft.com/mwories/2005/10/25/smo-sample-which-sql-server-version-is-supported-by-the-property/
+Which SQL Server version is supported by the property?
+
+foreach (SqlPropertyInfo i in db.Properties.EnumPropertyInfo())
+{
+   Console.WriteLine("{0,-35} {1,-25} {2}", i.Name, i.PropertyType.Name, i.Versions.ToString().Replace("Version", ""));
+}
+PrimaryFilePath             String             70, 80, 90
+ReplicationOptions          ReplicationOptions 70, 80, 90
+Size                        Double             70, 80, 90
+SpaceAvailable              Double             70, 80, 90
+Status                      DatabaseStatus     70, 80, 90
+UserName                    String             70, 80, 90
+CaseSensitive               Boolean            80, 90
+Collation                   String             80, 90
+IsUpdateable                Boolean            80, 90
+Version                     Int32              80, 90
+AutoCreateStatisticsEnabled Boolean            90
+AutoUpdateStatisticsEnabled Boolean            90
+DatabaseGuid                Guid               90
+

@@ -1,0 +1,1 @@
+msbuild pgi.SapLite.WebSite.csproj /p:_PackageTempDir=Docker\Package /p:SolutionDir=C:\dev\customer.saplite\src /p:PackageAsSingleFile=false;AutoParameterizationWebConfigConnectionStrings=false;DeployOnBuild=true

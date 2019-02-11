@@ -1,0 +1,1 @@
+https://developer.atlassian.com/bitbucket/api/2/reference/meta/authentication#api-key

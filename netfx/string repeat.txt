@@ -1,0 +1,20 @@
+https://stackoverflow.com/questions/3754582/is-there-an-easy-way-to-return-a-string-repeated-x-number-of-times
+
+Console.WriteLine(string.Concat(Enumerable.Repeat(indent, N)));
+
+public static class StringExtensions
+{
+    public static string Repeat(this string input, int count)
+    {
+        if (!string.IsNullOrEmpty(input))
+        {
+            StringBuilder builder = new StringBuilder(input.Length * count);
+
+            for(int i = 0; i < count; i++) builder.Append(input);
+
+            return builder.ToString();
+        }
+
+        return string.Empty;
+    }
+}

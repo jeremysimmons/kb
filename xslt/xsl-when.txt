@@ -1,0 +1,26 @@
+test="not(normalize-space(categoryName)='')"
+
+<xsl:choose>
+    <xsl:when test="categoryName and string-length(categoryName) &gt; 0">
+        <xsl:value-of select="categoryName " />
+    </xsl:when>
+    <xsl:otherwise>
+        <xsl:value-of select="other" />
+    </xsl:otherwise>
+</xsl:choose>
+
+<xsl:when test="not(string(categoryName))">
+    <xsl:value-of select="other" />
+</xsl:when>
+<otherwise>
+    <xsl:value-of select="categoryName" />
+</otherwise>
+
+<xsl:choose>
+    <xsl:when test="categoryName/text()">
+        <xsl:value-of select="categoryName" />
+    </xsl:when>
+    <xsl:otherwise>
+        <xsl:value-of select="other" />
+    </xsl:otherwise>
+</xsl:choose>

@@ -1,0 +1,1 @@
+https://jfrog.com/blog/from-code-to-cloud-with-jfrog-artifactory-and-azure-aks/

@@ -1,0 +1,4 @@
+XML Schema Definition Language Elements Binding Support
+https://docs.microsoft.com/en-us/previous-versions/dotnet/netframework-4.0/21b60k71(v%3dvs.100)
+Definition bindings between classes and XSD documents via the Xsd.exe tool
+Run-time bindings between objects and XML instance documents via the XmlSerializer class

@@ -1,0 +1,32 @@
+https://help.sumologic.com/05Search/Search-Cheat-Sheets/General-Search-Examples-Cheat-Sheet
+
+keyword search | parse | where | group-by | sort | limit
+
+_sourcecategory=apache | parse "* --" as src_ip | count by src_ip | sort _count
+or
+_sourcecategory=apache
+| parse "* --" as src_ip
+| count by src_ip
+| sort _count
+
+Select specific fields
+| fields _messagetime, Endpoint, Command, MessageText, MessageId
+
+Parse Anchors
+| parse "<start_anchor>*<stop_anchor>" as <field>
+| parse "<start_anchor>*<stop_anchor>" as <field> [no drop]
+| parse [field=<field_name>] "<start_anchor>*<stop_anchor>" as <field>
+
+
+In Operator
+status_code in ("500", "501", "502", "503", "504", "505", "506", "401", "402", "403", "404")
+https://help.sumologic.com/05Search/Search-Query-Language/Search-Operators/in-operator
+
+("Proton Service" ) 
+| count by _sourcehost 
+| sort by _count
+
+https://help.sumologic.com/05Search/Search-Query-Language/Search-Operators/formatDate
+formatDate(<date> [, <format> [, <timeZone>]]) as <field>
+https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+formatDate(_messagetime , "MM/dd/yyyy HH:mm:ss:SSS", "America/Denver"]) as MessageTimeDenver

@@ -1,0 +1,11 @@
+Runner type: Command Line
+Run: Custom Script
+Custom Script:
+%teamcity.tool.NuGet.CommandLine.4.9.2%\tools\nuget.exe install MSBuild.StructuredLogger -Version 2.0.64 -o packages
+
+Runner Type: MSBuild
+Working direcotyr: myProjects/proton/src/
+Build file Path: myProjects/proton/src/proton.sln
+Command Line Parameters: /noconlog /v:diag /logger:BinaryLogger,packages\MSBuild.StructuredLogger.2.0.64\lib\net46\StructuredLogger.dll;msbuild.binlog
+
+

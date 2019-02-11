@@ -1,0 +1,51 @@
+Install-Module -Name AWSPowerShell	
+https://docs.aws.amazon.com/powershell/latest/reference/
+
+Set-AWSCredentials -AccessKey $AKey -SecretKey $SKey -StoreAs For_Move
+Initialize-AWSDefaults -ProfileName For_Move -Region eu-west-1
+
+https://volkanpaksoy.com/archive/2014/12/04/uploading-files-to-s3-using-windows-powershell/
+$results = Get-ChildItem .\path\to\files -Recurse -Include "*.pdf" 
+foreach ($path in $results) {
+	Write-Host $path
+	$filename = [System.IO.Path]::GetFileName($path)
+	Write-S3Object -BucketName my-bucket -File $path -Key subfolder/$filename -CannedACLName Private -AccessKey accessKey -SecretKey secretKey
+}
+
+https://stackoverflow.com/a/34058720/26877
+Import-Module "C:\Program Files (x86)\AWS Tools\PowerShell\AWSPowerShell\AWSPowerShell.psd1"
+$bucket="<my bucket name>"
+$source="C:\dev\project\*"
+$outputpath="C:\dev\log.txt"
+$AKey="<key>"
+$SKey="<secret>"
+$region="<my AWS region>"
+
+Set-AWSCredentials -AccessKey $AKey -SecretKey $SKey -StoreAs For_Move
+Initialize-AWSDefaults -ProfileName For_Move -Region $region
+
+Start-Transcript -path $outputpath -Force
+foreach ($i in Get-ChildItem $source -include *.* -recurse)
+{
+    if ($i.CreationTime -lt ($(Get-Date).AddDays(-0)))
+    {
+        $fileName = (Get-ChildItem $i).Name
+        $parentFolderName = Split-Path $i -Parent
+        $key = "$i"
+
+        $localModified = (Get-ItemProperty -Path $i).LastWriteTime
+        $remoteObject = Get-S3Object -BucketName $bucket -Key $key -Region $region
+       if($remoteObject -eq $null) {
+           Write-S3Object -BucketName $bucket -Key $key -File $i
+           "Added new file $i"
+       } else {
+
+           $s3Modified = $remoteObject.LastModified | Get-Date
+
+           if ($s3Modified -lt $localModified) {
+               Write-S3Object -BucketName $bucket -Key $key -File $i
+               "Updated $i"
+           }
+       }
+   }
+}

@@ -1,0 +1,4 @@
+Publishing a web application with MSBuild
+https://www.lotushints.com/2012/12/quick-tip-publishing-a-web-application-with-msbuild/
+/target:ResolveReferences;_CopyWebApplication
+/p:WebProjectOutputDir=X:\Builds\myApp\;OutDir=X:\Builds\myApp\bin\

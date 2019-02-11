@@ -1,0 +1,17 @@
+https://stackoverflow.com/a/585290/26877
+
+Is there an XSLT name-of element?
+
+<xsl:value-of select ="local-name()"/>
+
+<xsl:value-of select ="name(.)"/>
+
+https://stackoverflow.com/a/586279/26877
+
+name(someNode) returns the full name of the node, and that includes the prefix and colon in case the node is an element or an attribute.
+
+local-name(someNode) returns only the local name of the node, and that doesn't include the prefix and colon in case the node is an element or an attribute.
+
+name() is an abbreviation for name(.)
+
+local-name() is an abbreviation for local-name(.)

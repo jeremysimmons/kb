@@ -1,0 +1,62 @@
+https://github.com/kubernetes/kubeadm/issues/338#issuecomment-418879755
+
+replace the IP address in all config files in /etc/kubernetes
+
+oldip=192.168.1.91
+newip=10.20.2.210
+cd /etc/kubernetes
+# see before
+find . -type f | xargs grep $oldip
+# modify files in place
+find . -type f | xargs sed -i "s/$oldip/$newip/"
+# see after
+find . -type f | xargs grep $newip
+backing up /etc/kubernetes/pki
+
+mkdir ~/k8s-old-pki
+cp -Rvf /etc/kubernetes/pki/* ~/k8s-old-pki
+identifying certs in /etc/kubernetes/pki that have the old IP address as an alt name (this could be cleaned up)
+
+cd /etc/kubernetes/pki
+for f in $(find -name "*.crt"); do 
+  openssl x509 -in $f -text -noout > $f.txt;
+done
+grep -Rl $oldip .
+for f in $(find -name "*.crt"); do rm $f.txt; done
+identify configmap in the kube-system namespace that referenced the old IP, edit them:
+
+# find all the config map names
+configmaps=$(kubectl -n kube-system get cm -o name | \
+  awk '{print $1}' | \
+  cut -d '/' -f 2)
+
+# fetch all for filename reference
+dir=$(mktemp -d)
+for cf in $configmaps; do
+  kubectl -n kube-system get cm $cf -o yaml > $dir/$cf.yaml
+done
+
+# have grep help you find the files to edit, and where
+grep -Hn $dir/* -e $oldip
+
+# edit those files, in my case, grep only returned these two:
+kubectl -n kube-system edit cm kubeadm-config
+kubectl -n kube-system edit cm kube-proxy
+change the IP address (via cli or gui for your distro)
+
+delete both the cert and key for each identified by grep in the prior step, regenerate those certs
+
+NOTE: prior to recreating the certs via kubeadm admin phase certs ..., you'll need to have the new IP address applied
+
+rm apiserver.crt apiserver.key
+kubeadm alpha phase certs apiserver
+
+rm etcd/peer.crt etcd/peer.key
+kubeadm alpha phase certs etcd-peer
+restart kubelet and docker
+
+sudo systemctl restart kubelet
+sudo systemctl restart docker
+copy over the new config
+
+sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config

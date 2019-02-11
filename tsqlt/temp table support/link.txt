@@ -1,0 +1,20 @@
+tSQLt.FakeTableTemporal
+Main proc and would be used in place of tSQLt.FakeTable
+Has 3 added parameters that allow you to specify whether you want to:
+Preserve nullabilty specification when faking the table
+Preserve the primary key when faking the table
+Preserve the temporal definition when faking the table
+The "deprecation" of @SchemaName has been removed
+It is left up to YOU as to whether you want to use @SchemaName + @TableName or just slam both parts of the name into the @TableName parameter
+The proc has logic to prevent mismatches in the parameters you send
+i.e. Setting @PreserveNullability = 0 when you have to have a not null column on the primary key
+The proc also has code to prevent attempting to set a configuration that does already exist
+i.e. Setting @PreservePrimaryKey = 1 on a table that does not originally have a primary key
+i.e. Setting @PreserveTemporal = 1 on a table that is not already defined as a temporal table
+tSQLt.Private_CreateFakeOfTablePreserveNullability
+Helper proc that mimics tSQLt.Private_CreateFakeOfTable but lets you wind up with a fake table with the original nullability definition
+I really have no idea why this wasn't an option from the very beginning.  It was the most trivial change in this entire stack, simply requiring an additional WHEN in the CASE statement
+tSQLt.Private_CreatePrimayKey
+Helper proc that adds the primary key to the fake table
+tSQLt.Private_FakeTableAddTemporal
+Helper proc that alters the fake table and adds the temporal specification

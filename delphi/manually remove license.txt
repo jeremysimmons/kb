@@ -1,0 +1,28 @@
+Launch the License Manager from the bin folder (by default "C:\Program Files (x86)\Embarcadero\Studio\19.0\bin\LicenseManager.exe") and delete any trial or beta (Test Field) license that you can find. Check it under “License Details” in the center column.
+
+Under your Control Panel's Program and Features Add/Remove Program uninstall the following entries:
+
+RAD Studio 10.2 version 19.0
+Please follow these instructions to remove any leftover files:
+
+If Windows 32-bit, remove the C:\Program Files\Embarcadero\Studio\19.0 directory (or the custom folder you had used).
+If Windows 64-bit, remove the C:\Program Files (x86)\Embarcadero\Studio\19.0 directory (or the custom folder you had used).
+Remove the C:\Users\Public\Documents\Embarcadero\Studio\19.0 directory
+Remove the C:\ProgramData\Embarcadero\Studio\19.0 directory.
+Remove the %APPDATA%\Embarcadero\BDS\19.0 directory.
+Remove the HKEY_CURRENT_USER\SOFTWARE\Embarcadero\BDS\19.0 registry key
+If Windows 32-bit, remove the HKEY_LOCAL_MACHINE\SOFTWARE\Embarcadero\BDS\19.0 registry key
+If Windows 64-bit, remove the HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Embarcadero\BDS\19.0
+If Windows 32-bit, remove the following files from C:\Windows\System32\:
+BDEAdmin.*
+CC32*.DLL
+Midas.*
+Xerces*.DLL
+If Windows 64-bit, remove the following files from C:\Windows\SysWOW64\:
+BDEAdmin.*
+CC32*.DLL
+Midas.*
+Xerces*.DLL
+Field testers should also do the following (and others may want to as well):
+
+Delete the Godzilla license from License manager before uninstalling it or during the installation of RAD Studio 10.2

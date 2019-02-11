@@ -1,0 +1,13 @@
+https://stackoverflow.com/a/23810429/26877
+
+SOURCE Database 
+sqlpackage.exe /a:Extract /scs:Server=%Server%;Database=AspBaselineDB; /tf:%DriveSpec%\%DacPath%\%AspBaselineDB%_baseline.dacpac
+
+TARGET Database 
+sqlpackage.exe /a:Extract /scs:Server=%Server%;Database=%AspTargetDB-2%; /tf:%DriveSpec%\%DacPath%\%AspTargetDB%.dacpac
+
+COMPARE & GENERATE the Delta script 
+sqlpackage.exe /a:Script /sf:%DriveSpec%\%DacPath%\%AspBaselineDB%_baseline.dacpac /tf:%DriveSpec%\%DacPath%\AspNetDb\%AspTargetDB%.dacpac /tdn:aspTargetdb /op:%DriveSpec%\%SqlPath%\AspNetDb\AspDbUpdate.sql
+
+EXECUTE the script 
+sqlcmd.exe -S %Server%\aspnetdbAmexDev -i %DriveSpec%\%SqlPath%\AspNetDb\AspDbUpdate.sql

@@ -1,0 +1,2 @@
+BACKUP MASTER KEY TO FILE = 'c:\temp\key' ENCRYPTION BY PASSWORD = '<Pass>';
+BACKUP CERTIFICATE MyEncryptCert TO FILE = 'c:\temp\cert' WITH PRIVATE KEY(ENCRYPTION BY PASSWORD='<Pass>', FILE='C:\temp\cert.pvk')

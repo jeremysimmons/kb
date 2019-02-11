@@ -1,0 +1,14 @@
+https://stackoverflow.com/a/8038792/26877
+
+SELECT CONVERT(datetime, 
+               SWITCHOFFSET(CONVERT(datetimeoffset, 
+                                    MyTable.UtcColumn), 
+                            DATENAME(TzOffset, SYSDATETIMEOFFSET()))) 
+       AS ColumnInLocalTime
+FROM MyTable
+
+You can also do the less verbose:
+
+SELECT DATEADD(mi, DATEDIFF(mi, GETUTCDATE(), GETDATE()), MyTable.UtcColumn) 
+       AS ColumnInLocalTime
+FROM MyTable

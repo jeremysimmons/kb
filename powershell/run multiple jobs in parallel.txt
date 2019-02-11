@@ -1,0 +1,31 @@
+https://stackoverflow.com/a/28587569/26877
+
+How to start 2 batch scripts in parralel and be able to ctrl+c them all?
+
+$job1 = Start-Job { sass -w styles/scss/main.scss:styles/css/main.css --style compressed --no-cache }
+$job2 = Start-Job { grunt watch }
+$job3 = Start-Job { php -S 127.0.0.1:8081 }
+
+Write-Host "Jobs started. Ctrl+C to terminate"
+
+[console]::TreatControlCAsInput = $true
+
+while($true) {
+
+    Sleep -milliseconds 500
+
+    if ([console]::KeyAvailable) {
+        $key = [system.console]::readkey($true)
+        if (($key.modifiers -band [consolemodifiers]"control") -and ($key.key -eq "C")) {
+            break;
+        }
+    }
+}
+
+Stop-Job $job1, $job2, $job3
+$job1, $job2, $job3 | Foreach-Object { 
+  Write-Host "Job $($_.id):"
+  Receive-Job $_ 
+  Remove-Job $_
+  Write-Host
+}

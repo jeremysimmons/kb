@@ -1,0 +1,3 @@
+https://superuser.com/a/520841/140457
+WMIC CPU Get DeviceID,NumberOfCores,NumberOfLogicalProcessors
+WMIC CPU Get /Format:List

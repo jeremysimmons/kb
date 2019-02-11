@@ -1,0 +1,11 @@
+git cherry-pick -n <commit>
+
+-n
+--no-commit
+
+https://www.tollmanz.com/git-cherry-pick-range/
+
+git cherry-pick ebe6942..905e279
+The first hash in the range is the oldest commit and the last hash in the range is the newest commit. The confusion with this form of the cherry pick merge is that the first hash listed in the range is not included in the commit.  The last hash is included. 
+
+git cherry-pick ebe6942^..905e279

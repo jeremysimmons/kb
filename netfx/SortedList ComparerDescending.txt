@@ -1,0 +1,16 @@
+class DecendingComparer<TKey>: IComparer<int>
+{
+
+    public int Compare(int x, int y)
+    {
+        return y.CompareTo(x);
+    }
+}
+
+SortedList<int, int> descSortedList = new SortedList<int, int>(new DecendingComparer<int>());
+
+or, anonymously
+
+var descendingComparer = Comparer<int>.Create((x, y) => y.CompareTo(x));
+        
+SortedList<int, int> descSortedList = new SortedList<int, int>(descendingComparer);

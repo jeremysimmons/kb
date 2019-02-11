@@ -1,0 +1,289 @@
+https://www.thomasmaurer.ch/2016/02/basic-networking-powershell-cmdlets-cheatsheet-to-replace-netsh-ipconfig-nslookup-and-more/
+
+ post about how to Replace netsh with Windows PowerShell which includes basic powershell networking cmdlets. After working with Microsoft Azure, Nano Server and Containers, Powershell together with networking becomes more and more important. I created this little cheat sheet so it becomes easy for people to get started.
+
+Basic Networking PowerShell cmdlets
+Get-NetIPConfiguration
+
+Get the IP Configuration (ipconfig with PowerShell)
+
+
+Get-NetIPConfiguration
+1
+Get-NetIPConfiguration
+List all Network Adapters
+
+
+Get-NetAdapter
+1
+Get-NetAdapter
+Get a spesific network adapter by name
+
+
+Get-NetAdapter -Name *Ethernet*
+1
+Get-NetAdapter -Name *Ethernet*
+Get more information VLAN ID, Speed, Connection status
+
+
+Get-NetAdapter | ft Name, Status, Linkspeed, VlanID
+1
+Get-NetAdapter | ft Name, Status, Linkspeed, VlanID
+Get driver information
+
+
+Get-NetAdapter | ft Name, DriverName, DriverVersion, DriverInformation, DriverFileName
+1
+Get-NetAdapter | ft Name, DriverName, DriverVersion, DriverInformation, DriverFileName
+Get adapter hardware information. This can be really usefull when you need to know the PCI slot of the NIC.
+
+
+Get-NetAdapterHardwareInfo
+1
+Get-NetAdapterHardwareInfo
+Disable and Enable a Network Adapter
+
+
+Disable-NetAdapter -Name "Wireless Network Connection"
+Enable-NetAdapter -Name "Wireless Network Connection"
+1
+2
+Disable-NetAdapter -Name "Wireless Network Connection"
+Enable-NetAdapter -Name "Wireless Network Connection"
+Rename a Network Adapter
+
+
+Rename-NetAdapter -Name "Wireless Network Connection" -NewName "Wireless"
+1
+Rename-NetAdapter -Name "Wireless Network Connection" -NewName "Wireless"
+IP Configuration using PowerShell
+Get-NetIPAddress
+
+Get IP and DNS address information
+
+
+Get-NetAdapter -Name "Local Area Connection" | Get-NetIPAddress
+1
+Get-NetAdapter -Name "Local Area Connection" | Get-NetIPAddress
+Get IP address only
+
+
+(Get-NetAdapter -Name "Local Area Connection" | Get-NetIPAddress).IPv4Address
+1
+(Get-NetAdapter -Name "Local Area Connection" | Get-NetIPAddress).IPv4Address
+Get DNS Server Address information
+
+
+Get-NetAdapter -Name "Local Area Connection" | Get-DnsClientServerAddress
+1
+Get-NetAdapter -Name "Local Area Connection" | Get-DnsClientServerAddress
+Set IP Address
+
+
+New-NetIPAddress -InterfaceAlias "Wireless" -IPv4Address 10.0.1.95 -PrefixLength "24" -DefaultGateway 10.0.1.1
+1
+New-NetIPAddress -InterfaceAlias "Wireless" -IPv4Address 10.0.1.95 -PrefixLength "24" -DefaultGateway 10.0.1.1
+or if you want to change a existing IP Address
+
+
+Set-NetIPAddress -InterfaceAlias "Wireless" -IPv4Address 192.168.12.25 -PrefixLength "24"
+1
+Set-NetIPAddress -InterfaceAlias "Wireless" -IPv4Address 192.168.12.25 -PrefixLength "24"
+Remove IP Address
+
+
+Get-NetAdapter -Name "Wireless" | Remove-NetIPAddress
+1
+Get-NetAdapter -Name "Wireless" | Remove-NetIPAddress
+Set DNS Server
+
+
+Set-DnsClientServerAddress -InterfaceAlias "Wireless" -ServerAddresses "10.10.20.1","10.10.20.2"
+1
+Set-DnsClientServerAddress -InterfaceAlias "Wireless" -ServerAddresses "10.10.20.1","10.10.20.2"
+Set interface to DHCP
+
+
+Set-NetIPInterface -InterfaceAlias "Wireless" -Dhcp Enabled
+1
+Set-NetIPInterface -InterfaceAlias "Wireless" -Dhcp Enabled
+Clear DNS Cache with PowerShell
+
+You can also manage your DNS cache with PowerShell.
+
+List DNS Cache:
+
+
+Get-DnsClientCache
+1
+Get-DnsClientCache
+Clear DNS Cache
+
+
+Clear-DnsClientCache
+1
+Clear-DnsClientCache
+Ping with PowerShell
+Test-NetConnection Ping
+
+How to Ping with PowerShell
+
+
+Test-NetConnection -ComputerName www.thomasmaurer.ch
+1
+Test-NetConnection -ComputerName www.thomasmaurer.ch
+Get some more details from the Test-NetConnection
+
+
+Test-NetConnection -ComputerName www.thomasmaurer.ch -InformationLevel Detailed
+1
+Test-NetConnection -ComputerName www.thomasmaurer.ch -InformationLevel Detailed
+Ping multiple IP using PowerShell
+
+
+1..99 | % { Test-NetConnection -ComputerName x.x.x.$_ } | FT -AutoSize
+1
+1..99 | % { Test-NetConnection -ComputerName x.x.x.$_ } | FT -AutoSize
+Tracert
+PowerShell Tracert
+
+Tracert with PowerShell
+
+
+Test-NetConnection www.thomasmaurer.ch –TraceRoute
+1
+Test-NetConnection www.thomasmaurer.ch –TraceRoute
+Portscan with PowerShell
+PowerShell Portscan
+
+Use PowerShell to check for open port
+
+
+Test-NetConnection -ComputerName www.thomasmaurer.ch -Port 80
+Test-NetConnection -ComputerName www.thomasmaurer.ch -CommonTCPPort HTTP
+1
+2
+Test-NetConnection -ComputerName www.thomasmaurer.ch -Port 80
+Test-NetConnection -ComputerName www.thomasmaurer.ch -CommonTCPPort HTTP
+NSlookup in PowerShell
+PowerShell NSlookup
+
+NSlookup using PowerShell:
+
+
+Resolve-DnsName www.thomasmaurer.ch
+Resolve-DnsName www.thomasmaurer.ch -Type MX -Server 8.8.8.8
+1
+2
+Resolve-DnsName www.thomasmaurer.ch
+Resolve-DnsName www.thomasmaurer.ch -Type MX -Server 8.8.8.8
+Route in PowerShell
+PowerShell Route
+
+How to replace Route command with PowerShell
+
+
+Get-NetRoute -Protocol Local -DestinationPrefix 192.168*
+Get-NetRoute -InterfaceAlias Wi-Fi
+
+New-NetRoute –DestinationPrefix "10.0.0.0/24" –InterfaceAlias "Ethernet" –NextHop 192.168.192.1
+1
+2
+3
+4
+Get-NetRoute -Protocol Local -DestinationPrefix 192.168*
+Get-NetRoute -InterfaceAlias Wi-Fi
+ 
+New-NetRoute –DestinationPrefix "10.0.0.0/24" –InterfaceAlias "Ethernet" –NextHop 192.168.192.1
+NETSTAT in PowerShell
+PowerShell Netstat
+
+How to replace NETSTAT with PowerShell
+
+
+Get-NetTCPConnection
+Get-NetTCPConnection –State Established
+1
+2
+Get-NetTCPConnection
+Get-NetTCPConnection –State Established
+NIC Teaming PowerShell commands
+Create a new NIC Teaming (Network Adapter Team)
+
+
+New-NetLbfoTeam -Name NICTEAM01 -TeamMembers Ethernet, Ethernet2 -TeamingMode SwitchIndependent -TeamNicName NICTEAM01 -LoadBalancingAlgorithm Dynamic
+1
+New-NetLbfoTeam -Name NICTEAM01 -TeamMembers Ethernet, Ethernet2 -TeamingMode SwitchIndependent -TeamNicName NICTEAM01 -LoadBalancingAlgorithm Dynamic
+SMB Related PowerShell commands
+SMB PowerShell SMB Client Configuration
+
+Get SMB Client Configuration
+
+
+Get-SmbClientConfiguration
+1
+Get-SmbClientConfiguration
+Get SMB Connections
+
+
+Get-SmbConnection
+1
+Get-SmbConnection
+Get SMB Mutlichannel Connections
+
+
+Get-SmbMutlichannelConnection
+1
+Get-SmbMutlichannelConnection
+Get SMB open files
+
+
+Get-SmbOpenFile
+1
+Get-SmbOpenFile
+Get SMB Direct (RDMA) adapters
+
+
+Get-NetAdapterRdma
+1
+Get-NetAdapterRdma
+Hyper-V Networking cmdlets
+Hyper-V PowerShell Get-VMNetwork Adapter
+
+Get and set Network Adapter VMQ settings
+
+
+Get-NetAdapterVmq
+# Disable VMQ
+Set-NetAdapterVmq -Enabled $false
+# Enable VMQ
+Set-NetAdapterVmq -Enabled $true
+1
+2
+3
+4
+5
+Get-NetAdapterVmq
+# Disable VMQ
+Set-NetAdapterVmq -Enabled $false
+# Enable VMQ
+Set-NetAdapterVmq -Enabled $true
+Get VM Network Adapter
+
+
+Get-VMNetworkAdapter -VMName Server01
+1
+Get-VMNetworkAdapter -VMName Server01
+Get VM Network Adapter IP Addresses
+
+
+(Get-VMNetworkAdapter -VMName NanoConHost01).IPAddresses
+1
+(Get-VMNetworkAdapter -VMName NanoConHost01).IPAddresses
+Get VM Network Adapter Mac Addresses
+
+
+(Get-VMNetworkAdapter -VMName NanoConHost01).MacAddress
+1
+(Get-VMNetworkAdapter -VMName NanoConHost01).MacAddress
+I hope you enjoyed it and the post was helpful, if you think something important is missing, please add it in the comments.

@@ -1,0 +1,28 @@
+https://github.com/docker/for-win/issues/1166#issuecomment-425616128
+
+(Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion").CurrentBuild
+
+Get-VMNetworkAdapter -ManagementOS
+
+Get-NetAdapter | Format-Table Name,InterfaceDescription,ifIndex,Status,LinkSpeed,MediaConnectionState
+
+Get-NetIPInterface
+
+THE SOLUTION:
+
+Get-NetIPInterface | Sort-Object -Property InterfaceMetric -Descending
+Set-NetIPInterface -InterfaceAlias 'Wi-Fi' -InterfaceMetric 3
+Get-NetNat | Remove-NetNat
+
+Stop both Docker services
+Stop the HNS service (may require stopping WDAG dependency service first)
+Delete any remaining NAT switches (except DockerNAT): Default Switch, nat, HvsiIcs
+Never delete the 'DockerNat' switch that's used for Docker in Linux Containers mode
+Delete HNS data file: del C:\ProgramData\Microsoft\Windows\HNS\hns.data
+Reboot (multiple times, if necessary, as described above)
+
+also - 
+https://docs.microsoft.com/en-us/virtualization/windowscontainers/container-networking/advanced
+
+https://docs.microsoft.com/en-us/virtualization/windowscontainers/container-networking/network-drivers-topologies
+https://docs.docker.com/engine/reference/commandline/network_create/

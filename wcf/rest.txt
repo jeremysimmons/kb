@@ -1,0 +1,27 @@
+A Guide to Designing and Building RESTful Web Services with WCF 3.5
+https://msdn.microsoft.com/en-us/library/dd203052.aspx
+
+<configuration>
+   <system.serviceModel>
+     <services>
+        <service name="BookmarkService">
+            <endpoint binding="webHttpBinding" contract="BookmarkService"
+                      behaviorConfiguration="webHttp"/>
+        </service>
+     </services>
+     <behaviors>
+        <endpointBehaviors>
+            <behavior name="webHttp">
+                <webHttp/>
+            </behavior>
+        </endpointBehaviors>
+     </behaviors>
+  </system.serviceModel>
+<configuration>
+
+Security Considerations
+
+
+Implementing Authentication and Authorization
+ implement the HMAC authentication scheme I described earlier.
+https://msdn.microsoft.com/en-us/library/dd203052.aspx#code-snippet-12

@@ -1,0 +1,14 @@
+head .\allLines.txt
+
+58 AvailabilityGraphTypes.pas
+101 BalloonHint.pas
+371 confGen.pas
+431 ControlResizeBugFix.pas
+418 dlgAddressEntry.pas
+2145 dlgAttendeeList.pas
+166 dlgAttendeeListComments.pas
+543 dlgAttendeeListEdit.pas
+139 dlgAttendeeListSave.pas
+160 dlgAttendeeListTemplates.pas
+
+get-content .\allLines.txt | % { ($_ -Split " ")[0] } | Measure-Object -Sum

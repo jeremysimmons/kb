@@ -1,0 +1,14 @@
+Data Contract Schema Reference
+https://docs.microsoft.com/en-us/dotnet/framework/wcf/feature-details/data-contract-schema-reference
+
+The DataContractSerializer also maps XSD to CLR types when Svcutil.exe is used to access Web Services Description Language (WSDL) or XSD documents and generate data contracts for services or clients.
+
+svcutil /o:Svc.cs /ct:System.Collections.Generic.List`1 http://example.com
+
+/dataContractOnly and /serializer:XmlSerializer
+
+svcutil.exe /target:code /dataContractOnly /serializer:XmlSerializer /importXmlTypes /collectionType:System.Collections.Generic.List`1 Example.xsd
+
+alternative
+https://archive.codeplex.com/?p=xsd2code
+http://www.xsd2code.com/

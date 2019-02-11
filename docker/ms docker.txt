@@ -1,0 +1,11 @@
+4.7\sample\Dockerfile
+https://github.com/Microsoft/dotnet-framework-docker-samples/tree/master/dotnetapp-4.7
+https://github.com/Microsoft/dotnet-framework-docker-samples/blob/master/dotnetapp-4.7/Dockerfile
+
+https://github.com/Microsoft/dotnet-framework-docker-samples/blob/master/aspnetapp/aspnetapp/Dockerfile
+
+make this go...
+C:\dev\dotnet-framework-docker-samples\aspnetapp
+
+$ docker build -t aspnet-site --build-arg site_root=/ .
+$ docker run -d -p 8000:80 --name my-running-site aspnet-site

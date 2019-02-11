@@ -1,0 +1,74 @@
+https://github.com/nunit/docs/wiki/SetUp-and-TearDown
+
+public class BaseClass
+{
+   [SetUp]
+   public void BaseSetUp() { ... } // Exception thrown!
+
+   [TearDown]
+   public void BaseTearDown() { ... }
+}
+
+[TestFixture]
+public class DerivedClass : BaseClass
+{
+   [SetUp]
+   public void DerivedSetUp() { ... }
+
+   [TearDown]
+   public void DerivedTearDown() { ... }
+
+   [Test]
+   public void TestMethod() { ... }
+}
+
+https://github.com/nunit/docs/wiki/OneTimeSetUp-Attribute
+
+OneTimeSetUp methods may be either static or instance methods and you may define more than one of them in a fixture. Normally, multiple OneTimeSetUp methods are only defined at different levels of an inheritance hierarchy, as explained below.
+
+If a OneTimeSetUp method fails or throws an exception, none of the tests in the fixture are executed and a failure or error is reported.
+
+namespace NUnit.Tests
+{
+  using System;
+  using NUnit.Framework;
+
+  [TestFixture]
+  public class SuccessTests
+  {
+    [OneTimeSetUp]
+    public void Init()
+    { /* ... */ }
+
+    [OneTimeTearDown]
+    public void Cleanup()
+    { /* ... */ }
+
+    [Test]
+    public void Add()
+    { /* ... */ }
+  }
+}
+
+https://github.com/nunit/docs/wiki/SetUpFixture-Attribute
+
+This is the attribute that marks a class that contains the one-time setup or teardown methods for all the test fixtures under a given namespace. The class may contain at most one method marked with the OneTimeSetUpAttribute and one method marked with the OneTimeTearDownAttribute.
+
+namespace NUnit.Tests
+{
+  [SetUpFixture]
+  public class MySetUpClass
+  {
+	[OneTimeSetUp]
+	public void RunBeforeAnyTests()
+	{
+	  // ...
+	}
+
+	[OneTimeTearDown]
+	public void RunAfterAnyTests()
+	{
+	  // ...
+	}
+  }
+}

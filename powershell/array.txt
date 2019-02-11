@@ -1,0 +1,3 @@
+$a = @()
+$user = "user info"
+$array += ,$user

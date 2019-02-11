@@ -1,0 +1,3 @@
+https://success.docker.com/article/certified-infrastructures-azure
+https://success.docker.com/training/courses/docker-fundamentals
+https://success.docker.com/certification

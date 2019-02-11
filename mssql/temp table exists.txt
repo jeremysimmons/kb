@@ -1,0 +1,4 @@
+IF OBJECT_ID('tempdb..#Results') IS NOT NULL DROP TABLE #Results
+GO
+CREATE TABLE #Results ( Company CHAR(3), StepId TINYINT, FieldId TINYINT )
+GO

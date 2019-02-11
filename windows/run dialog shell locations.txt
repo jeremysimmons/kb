@@ -1,0 +1,133 @@
+shell:AccountPictures
+shell:Roaming Tiles
+shell:Common Programs
+shell:PublicAccountPictures
+shell:GameTasks
+shell:UserProfiles
+shell:MyComputerFolder
+shell:SearchHistoryFolder
+shell:Local Pictures
+shell:SyncSetupFolder
+shell:DpapiKeys
+shell:Retail Demo
+shell:Favorites
+shell:My Video
+shell:SearchHomeFolder
+shell:RecordedTVLibrary
+shell:System
+shell:Libraries
+shell:ThisDeviceFolder
+shell:AppsFolder
+shell:MusicLibrary
+shell:CommonVideo
+shell:OneDriveDocuments
+shell:SyncResultsFolder
+shell:Cookies
+shell:CameraRollLibrary
+shell:Original Images
+shell:Recorded Calls
+shell:3D Objects
+shell:CommonMusic
+shell:OneDrivePictures
+shell:My Pictures
+shell:Cache
+shell:Local Videos
+shell:Downloads
+shell:SavedPictures
+shell:CommonDownloads
+shell:AppData
+shell:SyncCenterFolder
+shell:PublicLibraries
+shell:VideosLibrary
+shell:My Music
+shell:ConflictFolder
+shell:SavedGames
+shell:InternetFolder
+shell:HomeGroupFolder
+shell:Quick Launch
+shell:SystemCertificates
+shell:Contacts
+shell:UserProgramFiles
+shell:Device Metadata Store
+shell:Profile
+shell:Start Menu
+shell:Common AppData
+shell:ProgramFilesCommonX64
+shell:PhotoAlbums
+shell:ProgramFilesX64
+shell:ConnectionsFolder
+shell:Administrative Tools
+shell:ThisPCDesktopFolder
+shell:OneDriveCameraRoll
+shell:PrintersFolder
+shell:DocumentsLibrary
+shell:ProgramFilesX86
+shell:Searches
+shell:Local Downloads
+shell:SearchTemplatesFolder
+shell:Common Startup
+shell:ControlPanelFolder
+shell:SendTo
+shell:ResourceDir
+shell:ProgramFiles
+shell:CredentialManager
+shell:PrintHood
+shell:MAPIFolder
+shell:HomeGroupCurrentUserFolder
+shell:User Pinned
+shell:CD Burning
+shell:Local Music
+shell:UsersLibrariesFolder
+shell:AppUpdatesFolder
+shell:Application Shortcuts
+shell:Common Start Menu
+shell:Common Start Menu Places
+shell:LocalAppDataLow
+shell:OneDrive
+shell:Templates
+shell:Programs
+shell:PicturesLibrary
+shell:Roamed Tile Images
+shell:Camera Roll
+shell:Recent
+shell:Desktop
+shell:Virtual Machines
+shell:CommonPictures
+shell:RecycleBinFolder
+shell:Screenshots
+shell:CryptoKeys
+shell:Common Templates
+shell:Startup
+shell:ImplicitAppShortcuts
+shell:UserProgramFilesCommon
+shell:Links
+shell:OEM Links
+shell:OneDriveMusic
+shell:Common Desktop
+shell:NetHood
+shell:Ringtones
+shell:Games
+shell:Common Administrative Tools
+shell:NetworkPlacesFolder
+shell:SystemX86
+shell:History
+shell:Development Files
+shell:AddNewProgramsFolder
+shell:Playlists
+shell:ProgramFilesCommonX86
+shell:PublicGameTasks
+shell:ChangeRemoveProgramsFolder
+shell:Public
+shell:SavedPicturesLibrary
+shell:CommonRingtones
+shell:Common Documents
+shell:Captures
+shell:CSCFolder
+shell:Local AppData
+shell:StartMenuAllPrograms
+shell:Windows
+shell:UsersFilesFolder
+shell:Local Documents
+shell:ProgramFilesCommon
+shell:Fonts
+shell:Personal

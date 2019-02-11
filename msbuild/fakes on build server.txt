@@ -1,0 +1,1 @@
+https://developercommunity.visualstudio.com/content/problem/70229/fake-assemblies-are-not-generated-by-using-msbuild.html
