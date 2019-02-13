@@ -1,0 +1,6 @@
+$PSVersionTable.PSVersion
+
+do not use
+$Host.Version
+or
+(Get-Host).Version
