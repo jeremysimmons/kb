@@ -1,0 +1,16 @@
+\Windows\system32 - 64bit binaries
+\Windows\SysWOW64 - 32bit binaries
+
+when my process image is 32, and I request
+\Windows\system32, I really get \Windows\SysWOW64
+
+when my process image is 64, and I request
+\Windows\system32, I really get \Windows\system32
+
+you can turn this off via a win32 call
+Wow64DisableWow64FsRedirection
+Disables file system redirection for the calling thread. File system redirection is enabled by default.
+https://msdn.microsoft.com/en-us/library/windows/desktop/aa365743(v=vs.85).aspx
+
+when my process image is 32 bit, and I request
+\Windows\sysnative, I really get \Windows\system32 (the 64 bit apps)
