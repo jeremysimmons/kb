@@ -1,0 +1,3 @@
+https://www.itsupportguides.com/knowledge-base/windows-10/windows-10-how-to-fix-start-menu-search-not-working/
+
+Get-AppXPackage -AllUsers | Foreach {Add-AppxPackage -DisableDevelopmentMode -Register "$($_.InstallLocation)\AppXManifest.xml"}

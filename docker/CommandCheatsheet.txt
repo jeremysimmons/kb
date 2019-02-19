@@ -1,0 +1,15 @@
+docker container run microsoft/nanoserver hostname
+
+docker container ls --all
+ container ID is the container's hostname.
+
+docker container run --interactive --tty --rm `
+  microsoft/windowsservercore powershell
+
+https://github.com/docker/cli/blob/master/cli/command/formatter/container.go
+docker container ls --all --format "table {{ .ID }}\t{{ .Names}}"
+
+docker container run --detach --name sql `
+  --env ACCEPT_EULA=Y `
+  --env sa_password=DockerCon!!! `
+  microsoft/mssql-server-windows-express:2016-sp1

@@ -1,3 +1,15 @@
+https://smoothknowledge.com/2018/01/18/deploying-a-legacy-asp-net-app-to-docker/
+https://smoothknowledge.com/2018/01/30/deploy-legacy-asp-net-application-docker-swarm-mode/
+
+docker run -ti microsoft/windowsservercore cmd
+
+docker rm -vf $(docker ps -qa)
+
+curl -s http://localhost:52428/api/values/
+
+https://github.com/Microsoft/iis-docker/tree/master/samples/AdministrationApi
+
+https://hub.docker.com/r/microsoft/dotnet/
 https://success.docker.com/article/certified-infrastructures-azure
 https://success.docker.com/training/courses/docker-fundamentals
 https://success.docker.com/certification
