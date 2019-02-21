@@ -1,0 +1,5 @@
+https://www.codementor.io/pmbanugo/working-with-mongodb-in-net-1-basics-g4frivcvz
+
+https://www.codementor.io/pmbanugo/working-with-mongodb-in-net-2-retrieving-mrlbeanm5
+
+https://www.codementor.io/pmbanugo/working-with-mongodb-in-net-part-3-skip-sort-limit-and-projections-oqfwncyka

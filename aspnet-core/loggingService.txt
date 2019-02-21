@@ -1,0 +1,13 @@
+https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging
+
+public class TodoController : Controller
+{
+    private readonly ITodoRepository _todoRepository;
+    private readonly ILogger _logger;
+
+    public TodoController(ITodoRepository todoRepository,
+        ILogger<TodoController> logger)
+    {
+        _todoRepository = todoRepository;
+        _logger = logger;
+    }

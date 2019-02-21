@@ -1,0 +1,38 @@
+public class MyActivator : IJobActivator
+{
+    private readonly IUnityContainer _container;
+
+    public MyActivator(IUnityContainer container)
+    {
+        _container = container;
+    }
+
+    public T CreateInstance<T>()
+    {
+        return _container.Resolve<T>();
+    }
+}
+
+var config = new JobHostConfiguration
+{
+    JobActivator = new MyActivator(myContainer)
+};
+var host = new JobHost(config);
+
+
+public class MyFunctions
+{
+    private readonly ISomeDependency _dependency;
+
+    public MyFunctions(ISomeDependency dependency)
+    {
+        _dependency = dependency;
+    }
+
+    public Task DoStuffAsync([QueueTrigger("queue")] string message)
+    {
+        Console.WriteLine("Injected dependency: {0}", _dependency);
+
+        return Task.FromResult(true);
+    }
+}

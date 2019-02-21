@@ -1,0 +1,4 @@
+String to number (just add 0 to the variable):
+{% assign variablename = variablename | plus:0 %}
+
+ 

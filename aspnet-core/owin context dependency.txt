@@ -1,0 +1,18 @@
+
+builder.Register(ctx=>HttpContext.Current.GetOwinContext()).As<IOwinContext>();
+
+
+app.Use(async (ctx, next) =>
+{
+    // this creates a per-request, disposable scope
+    using (var scope = container.BeginLifetimeScope(b =>
+    {
+        // this makes owin context resolvable in the scope
+        b.RegisterInstance(ctx).As<IOwinContext>();
+    }))
+    {
+        // this makes scope available for downstream frameworks
+        ctx.Set<ILifetimeScope>("idsrv:AutofacScope", scope);
+        await next();
+    }
+}); 

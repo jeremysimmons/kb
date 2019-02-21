@@ -1,0 +1,47 @@
+https://ecommerce.shopify.com/c/shopify-apps/t/allowing-a-customer-to-edit-their-profile-and-metadata-186665
+
+<!-- 
+sineLABS example snippet, writable customer metafields. Replace example metafield inputs with your actual metafields.
+//-->
+<div>
+ <form action="/a/custmeta" method="POST" id="custmeta">  
+   <input type="hidden" name="customer[id]" value="{{ customer.id }}" />
+   <input type="text" name=“metafield[namespace1.key1]" value="{{ customer.metafields.namespace1.key1 }}" placeholder=“namespace1.key1" />
+   <input type="text" name=“metafield[namespace2.key2]" value="{{ customer.metafields.namespace2.key2 }}" placeholder=“namespace2.key2" />
+   <input type="submit" />
+  </form>
+  <script>
+    $('form#custmeta').submit(function(e) {
+      e.preventDefault();
+      $.ajax({
+        type: "POST",
+        dataType: "json",
+        data: $(this).serialize(),
+        url: $(this).attr('action'),
+        success: function (data) {
+          var formValid = (data.status === 'OK');
+          if (formValid) {
+            var msgs = '';
+            for (var i=0;i<data.messages.length;i++) {
+              msgs += '-- ' + data.messages[i] + '\n';
+            }
+            if (msgs > '') {
+              alert('SUCCESS WITH MESSAGES:\n\n' + msgs);
+            }
+            else {
+              alert('SUCCESS!');
+            }
+          }
+          else {
+              alert('Status: ' + data.status + '\nMessage: ' + data.message);
+          }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          alert('AJAX or Server 500 error occurred');
+        }
+      });
+      return false;
+    });
+  </script>
+</div>
+<!-- End of sineLABS example //-->

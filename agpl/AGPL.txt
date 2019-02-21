@@ -1,0 +1,31 @@
+http://www.gnu.org/licenses/gpl-faq.en.html#LinkingWithGPL
+
+https://en.wikipedia.org/wiki/GNU_General_Public_License#Linking_and_derived_works
+
+https://en.wikipedia.org/wiki/Multi-licensing
+
+https://tldrlegal.com/license/gnu-affero-general-public-license-v3-(agpl-3.0)
+
+https://www.nuget.org/packages/iTextSharp-LGPL/
+
+https://www.theregister.co.uk/2011/03/31/google_on_open_source_licenses/
+
+https://www.ghostscript.com/doc/current/Commprod.htm
+
+https://blog.codecentric.de/en/2012/05/using-gpl-licensed-components-in-proprietary-projects/
+The LGPL is intended to be a license for libraries
+
+The GNU Affero General Public License
+
+The AGPL can be regarded as an extension to the GPL. It is intended for licensing software that is not conveyed to users but rather accessed through a network. These users are granted the same rights as licensees who receive the software. In particular the users are granted access to the source code of the software.
+
+
+MONGO -
+https://www.mongodb.com/blog/post/the-agpl
+
+apps that USE mongo aren't required to be open source
+modifications to the engine are required to be shared.
+
+
+https://github.com/mongodb/mongo-csharp-driver
+https://github.com/mongodb/mongo-csharp-driver/blob/master/License.txt - APACHE!

@@ -1,0 +1,9 @@
+Some of the native IIS modules and all of the IIS managed modules are not available to process requests for ASP.NET Core apps
+ASP.NET Core offers an alternative to the features of IIS native and managed modules.
+https://docs.microsoft.com/en-us/aspnet/core/hosting/iis-modules
+
+sample app
+https://github.com/aspnet/Docs/tree/master/aspnetcore/fundamentals/servers/aspnet-core-module/sample
+
+configuration reference
+https://docs.microsoft.com/en-us/aspnet/core/hosting/aspnet-core-module

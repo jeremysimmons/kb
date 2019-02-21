@@ -1,0 +1,1 @@
+git branch --merged develop --no-color | grep -v '^* develop$' | xargs -n1 -r git branch -d

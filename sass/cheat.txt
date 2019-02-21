@@ -1,0 +1,5 @@
+https://sass-cheatsheet.brunoscopelliti.com/
+https://gist.github.com/AllThingsSmitty/3bcc79da563df756be46
+http://sass-lang.com/guide
+http://sass-lang.com/documentation/file.SASS_REFERENCE.html
+https://www.codecademy.com/learn/learn-sass

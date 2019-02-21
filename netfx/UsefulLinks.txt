@@ -1,0 +1,10 @@
+https://c2it.wordpress.com/2011/10/20/table-of-bible-books-chapters-verses/
+https://www.nrecosite.com/pdf_to_image_renderer_net.aspx
+
+https://blogs.msdn.microsoft.com/dotnet/2017/01/19/net-core-image-processing/
+https://github.com/SixLabors/ImageSharp
+https://github.com/mono/SkiaSharp/
+https://github.com/saucecontrol/PhotoSauce
+
+https://github.com/matt-cook/bible
+https://github.com/honza/bibles

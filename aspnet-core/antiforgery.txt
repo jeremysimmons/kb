@@ -1,0 +1,13 @@
+AutoValidateAntiforgeryTokenAttribute
+
+An attribute that causes validation of antiforgery tokens for all unsafe HTTP methods. An antiforgery token is required for HTTP methods other than GET, HEAD, OPTIONS, and TRACE.
+https://docs.microsoft.com/en-us/aspnet/core/api/microsoft.aspnetcore.mvc.autovalidateantiforgerytokenattribute
+
+AutoValidateAntiforgeryTokenAttribute can be applied at as a global filter to trigger validation of antiforgery tokens by default for an application. Use IgnoreAntiforgeryTokenAttribute to suppress validation of the antiforgery token for a controller or action.
+
+services.AddMvc(options =>
+{
+    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+});
+
+http://www.dotnetcurry.com/aspnet/1343/aspnet-core-csrf-antiforgery-token

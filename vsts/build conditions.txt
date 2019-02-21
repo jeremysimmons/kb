@@ -1,0 +1,2 @@
+and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+https://www.visualstudio.com/en-us/docs/build/concepts/process/conditions

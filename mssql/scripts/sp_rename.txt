@@ -1,0 +1,52 @@
+A. Renaming a table
+ 
+EXEC sp_rename 'Sales.SalesTerritory', 'SalesTerr';  
+GO
+
+B. Renaming a column
+
+EXEC sp_rename 'Sales.SalesTerritory.TerritoryID', 'TerrID', 'COLUMN';  
+GO
+
+C. Renaming an index
+ 
+EXEC sp_rename N'Purchasing.ProductVendor.IX_ProductVendor_VendorID', N'IX_VendorID', N'INDEX';  
+GO
+
+D. Renaming an alias data type
+
+EXEC sp_rename N'Phone', N'Telephone', N'USERDATATYPE';  
+GO
+
+E. Renaming constraints
+-- Return the current Primary Key, Foreign Key and Check constraints for the Employee table.  
+SELECT name, SCHEMA_NAME(schema_id) AS schema_name, type_desc  
+FROM sys.objects  
+WHERE parent_object_id = (OBJECT_ID('HumanResources.Employee'))   
+AND type IN ('C','F', 'PK');   
+GO  
+
+-- Rename the primary key constraint.  
+sp_rename 'HumanResources.PK_Employee_BusinessEntityID', 'PK_EmployeeID';  
+GO  
+
+-- Rename a check constraint.  
+sp_rename 'HumanResources.CK_Employee_BirthDate', 'CK_BirthDate';  
+GO  
+
+-- Rename a foreign key constraint.  
+sp_rename 'HumanResources.FK_Employee_Person_BusinessEntityID', 'FK_EmployeeID';  
+
+-- Return the current Primary Key, Foreign Key and Check constraints for the Employee table.  
+SELECT name, SCHEMA_NAME(schema_id) AS schema_name, type_desc  
+FROM sys.objects  
+WHERE parent_object_id = (OBJECT_ID('HumanResources.Employee'))   
+AND type IN ('C','F', 'PK');  
+
+F. Renaming statistics
+
+CREATE STATISTICS ContactMail1  
+    ON Person.Person (BusinessEntityID, EmailPromotion)  
+    WITH SAMPLE 5 PERCENT;  
+
+sp_rename 'Person.Person.ContactMail1', 'NewContact','Statistics';  

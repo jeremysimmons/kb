@@ -1,0 +1,11 @@
+http://joshclose.github.io/CsvHelper/
+
+var csv = new CsvWriter( textWriter );
+csv.Configuration.QuoteAllFields = true;
+csv.Configuration.Delimiter = ",";
+csv.Configuration.Quote = '"';
+csv.Configuration.Comment = '#';
+
+csv.WriteHeader<MyClass>();
+csv.WriteHeader( Type type );
+csv.NextRecord();

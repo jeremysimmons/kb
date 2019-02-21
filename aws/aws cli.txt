@@ -1,0 +1,11 @@
+https://aws.amazon.com/cli/
+
+http://docs.aws.amazon.com/cli/latest/reference/s3/index.html
+
+aws configure
+key
+password
+region
+empty
+
+aws s3 sync s3://bucket z:\path

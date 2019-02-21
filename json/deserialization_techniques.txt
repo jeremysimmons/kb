@@ -1,0 +1,1 @@
+http://skrift.io/articles/archive/bulletproof-interface-deserialization-in-jsonnet/

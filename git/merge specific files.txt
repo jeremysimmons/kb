@@ -1,0 +1,5 @@
+merge specific files from another branch
+
+git checkout source_branch <paths>...
+
+git checkout twitter_integration app/models/avatar.rb db/migrate/20090223104419_create_avatars.rb test/unit/models/avatar_test.rb test/functional/models/avatar_test.rb

@@ -1,0 +1,26 @@
+https://medium.com/@porteneuve/mastering-git-submodules-34c65e940407
+Adding or cloning
+Initial add: git submodule add <url> <path>
+Initial container clone: git clone --recursive <url> [<path>]
+Grabbing updates inside a submodule
+cd path/to/module
+git fetch
+git checkout -q <commit-sha1>
+cd -
+git commit -am “Updated submodule X to: blah blah”
+Grabbing container updates
+git pull
+git submodule sync --recursive
+git submodule update --init --recursive
+Updating a submodule inside container code
+git submodule update --remote --rebase -- path/to/module
+cd path/to/module
+Local work, testing, eventually staging
+git commit -am “Update to central submodule: blah blah”
+git push
+cd -
+git commit -am “Updated submodule X to: blah blah”
+Permanently removing a submodule (1.7.8+)
+git submodule deinit path/to/module
+git rm path/to/module
+git commit -am “Removed submodule X”

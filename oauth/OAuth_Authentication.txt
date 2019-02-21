@@ -1,0 +1,5 @@
+both know = user agent
+server knows = secret key
+client knows = token
+User agent + current time + secret key
+The server generates a hash based on this information and then stores a cookie containing only the hash on the client machine.

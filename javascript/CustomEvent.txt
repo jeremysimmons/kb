@@ -1,0 +1,48 @@
+// source: https://github.com/jonathantneal/EventListener/blob/master/EventListener.js
+// support standard properties for CustomEvent 
+// bubbles
+// cancelable
+// details
+// example: new CustomEvent('eventName', { bubbles: true, cancelable: true, details: { customData: true, foo: 'bar' } });
+Object.defineProperty(Window.prototype, "CustomEvent", {
+    get: function () {
+        var self = this;
+
+        return function CustomEvent(type, eventInitDict) {
+            var event = self.document.createEventObject(), key;
+
+            event.type = type;
+            for (key in eventInitDict) {
+                if (key == 'cancelable') {
+                    event.returnValue = !eventInitDict.cancelable;
+                } else if (key == 'bubbles') {
+                    event.cancelBubble = !eventInitDict.bubbles;
+                } else if (key == 'detail') {
+                    event.detail = eventInitDict.detail;
+                }
+            }
+            return event;
+        };
+    }
+});
+
+// support IE11 which does not have a constructor for CustomEvent
+(!this.CustomEvent || typeof this.CustomEvent === "object") && (function () {
+    // CustomEvent for browsers which don't natively support the Constructor method
+    this.CustomEvent = function CustomEvent(type, eventInitDict) {
+        var event;
+        eventInitDict = eventInitDict || { bubbles: false, cancelable: false, detail: undefined };
+
+        try {
+            event = document.createEvent('CustomEvent');
+            event.initCustomEvent(type, eventInitDict.bubbles, eventInitDict.cancelable, eventInitDict.detail);
+        } catch (error) {
+            // for browsers which don't support CustomEvent at all, we use a regular event instead
+            event = document.createEvent('Event');
+            event.initEvent(type, eventInitDict.bubbles, eventInitDict.cancelable);
+            event.detail = eventInitDict.detail;
+        }
+
+        return event;
+    };
+})();

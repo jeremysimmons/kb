@@ -1,0 +1,37 @@
+http://ashfordsoftware.com/rhino-etl-overview/
+
+SqlBatchOperation
+
+Batch your SQL operations to reduce server roundtrips.
+
+BranchingOperation
+
+Send rows to multiple operation pipelines
+
+JoinOperation
+
+Joins two datasets into one dataset. The left part is optional, and if it is not specified then it uses the current pipeline as input.
+
+PartialProcessOperation
+
+Typically used with BranchingOperations to create an operation pipeline within a branch.
+
+InputCommandOperation
+
+A generic input command operation.
+
+MultiThreadBranchingOperation
+
+Branches the current pipeline flow into all its inputs.
+
+NestedLoopsJoinOperation
+
+Joins two datasets. The left part is optional, and if it is not specified then it uses the current pipeline as input.
+
+OutputCommandOperation
+
+Generic output command.
+
+SortMergeJoinOperation
+
+Joins two datasets. The left part is optional, and if it is not specified then it uses the current pipeline as input.

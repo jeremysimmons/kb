@@ -1,0 +1,28 @@
+https://docs.microsoft.com/en-us/azure/sql-database/sql-database-aad-authentication-configure
+
+.NET Framework 4.6 or later from https://msdn.microsoft.com/library/5a4x27ek.aspx.
+Azure Active Directory Authentication Library for SQL Server (ADALSQL.DLL) is available in multiple languages (both x86 and amd64) from the download center at Microsoft Active Directory Authentication Library for Microsoft SQL Server.
+
+contained database user(other than the server administrator that owns the database)
+CREATE USER [bob@contoso.com] FROM EXTERNAL PROVIDER;
+
+contained database user representing an Azure AD or federated domain group
+CREATE USER [ICU Nurses] FROM EXTERNAL PROVIDER;
+
+
+Active Directory integrated authentication
+Data Source=n9lxnyuzhv.database.windows.net; Authentication=Active Directory Integrated; Initial Catalog=testdb;
+
+Active Directory password authentication
+Data Source=n9lxnyuzhv.database.windows.net; Authentication=Active Directory Password; Initial Catalog=testdb;  UID=bob@contoso.onmicrosoft.com; PWD=MyPassWord!
+
+sql accounts
+
+USE master
+CREATE LOGIN ApiUser WITH PASSWORD = 'v)jQ:*_CbCYNM'
+
+USE DATABASE_name;
+CREATE USER ApiUser FROM LOGIN ApiUser; 
+sp_addrolemember 'db_owner', 'ApiUser'  
+
+DBCC FLUSHAUTHCACHE

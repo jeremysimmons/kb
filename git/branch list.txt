@@ -1,0 +1,8 @@
+git branch 
+show local only
+
+git branch -a 
+show local and remote
+
+git branch -r 
+show remote only

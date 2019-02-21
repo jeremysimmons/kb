@@ -1,0 +1,17 @@
+custom header in webhook
+
+POST to /hooks
+scope: string (can include wildcards)
+headers:
+https://developer.bigcommerce.com/api/#list-of-webhook-events
+store/cart/lineItem/*
+store/cart/lineItem/created
+store/cart/lineItem/updated
+store/cart/lineItem/deleted
+
+store/cart/created
+store/cart/updated
+store/cart/deleted
+store/cart/couponApplied
+store/cart/abandoned
+store/cart/converted

@@ -1,0 +1,107 @@
+Walkthrough: Creating a Dataflow Pipeline
+https://docs.microsoft.com/en-us/dotnet/standard/parallel-programming/walkthrough-creating-a-dataflow-pipeline
+
+https://docs.microsoft.com/en-us/dotnet/standard/parallel-programming/how-to-perform-action-when-a-dataflow-block-receives-data
+https://docs.microsoft.com/en-us/dotnet/standard/parallel-programming/how-to-write-messages-to-and-read-messages-from-a-dataflow-block
+https://blog.stephencleary.com/2012/09/introduction-to-dataflow-part-1.html
+
+good examples
+http://blog.i3arnon.com/2016/05/23/tpl-dataflow/
+
+
+
+block = ActionBlock<T>(delegate (T) { }) 
+block.post(...)
+
+block = BufferBlock<T>()
+optionally throttle producer - new DataflowBlockOptions { 
+BoundedCapacity = 10,
+MaxDegreeOfParallelism = 5 
+ });
+Producer
+while(true) { block.Post(item) }
+
+Consumer
+while(true) { 
+item = block.ReceiveAsync()
+Process(item)
+}
+
+var p = Task.Factory.StartNew(Producer);
+var c = Task.Factory.StartNew(Consumer);
+Task.WaitAll(p,c);
+
+
+TransformBlock<TInput, TOutput>
+Action<T> is to ActionBlock<TInput>
+as
+Func<TInput,TOutput> is ot TransformBlock<TInput, TOutput>
+
+TransformManyBlock<TInput,TOutput>
+TInput is expected to be IEnumerable<T>.
+It produces a TOutput for each item in the input TInput Enumerable.
+
+BatchBlock<T>
+acts as a buffer to combines single items that arrive (ITargetBlock<T>)
+dispatches items of batch size as an Array (ISourceBlock<T[]>)
+if the source is told nothing more arrives, it sends final batch as items in buffer.
+can force a Batch to trigger with current items
+can be greedy or non-greedy
+greedy - items offered are accepted immediately and buffered
+non-greedy  - postponed until sources have offered enought messages to create a batch
+can track number of batches created
+could be configured to decline after N batches received.
+
+JoinBlock (JoinBlock<T1,T2> and JoinBlock<T1,T2,T3> 
+creates a set of Input Targets, and creates an output Tuple of inputs
+JoinBlock<string,double,int> has three inputs
+ITargetBlock<string>, ITargetBlock<double>, and ITargetBlock<int>
+Creates an output of 
+Tuple<string, double, int>
+
+BatchedJoinBlock<T1,T2,...>
+var batchedJoin = new BatchedJoinBlock<string,Exception>(10);
+for(int i=0; i<10; i++)
+{
+    Task.Factory.StartNew(() => {
+        try { batchedJoin.Target1.Post(DoWork()); }
+        catch(Exception e) { batchJoin.Target2.Post(e); }
+    });
+}
+var results = await batchedJoin.ReceiveAsync();
+foreach(string s in results.Item1) Console.WriteLine(s);
+foreach(Exception e in results.Item2) Console.WriteLine(e);
+
+
+https://stackoverflow.com/a/24966167/26877
+var block = new ActionBlock<Data>(
+    data => ProcessDataAsync(data),
+    new ExecutionDataflowBlockOptions
+    {
+        BoundedCapacity = 1000,
+        MaxDegreeOfParallelism = Environment.ProcessorCount
+    });
+
+using(var connection = new SqlConnection(...))
+{
+    // ...
+    while(await reader.ReadAsync().ConfigureAwait(false))
+    {
+        // ...
+       await block.SendAsync(item);
+    }
+}
+
+
+https://stackoverflow.com/a/35686494/26877
+var block = new ActionBlock<Uri>(
+    uri => SendRequestAsync(uri),
+    new ExecutionDataflowBlockOptions { MaxDegreeOfParallelism = 50 });
+
+foreach (var uri in uris)
+{
+    block.Post(uri);
+}
+
+block.Complete();
+await block.Completion;

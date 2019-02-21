@@ -1,0 +1,45 @@
+https://www.essentialsql.com/use-sql-server-to-sort-alphanumeric-values/
+
+Quick N Dirty, assumes all strings are ALPHA NUMERIC
+
+If there are characters other than NUMERIC in the last part, it breaks.
+
+SELECT Section
+FROM dbo.Section
+ORDER BY LEFT(Section, PATINDEX('%[0-9]%', Section)-1), -- alphabetical sort
+         CONVERT(INT, SUBSTRING(Section, PATINDEX('%[0-9]%', Section), LEN(Section))) -- numerical
+
+** demo **
+
+CREATE TABLE dbo.Section
+(
+       Section varchar(50) NULL
+)
+INSERT INTO dbo.Section (Section.Section) VALUES ('1')
+INSERT INTO dbo.Section (Section.Section) VALUES ('AB1')
+INSERT INTO dbo.Section (Section.Section) VALUES ('A1')
+INSERT INTO dbo.Section (Section.Section) VALUES ('B2')
+INSERT INTO dbo.Section (Section.Section) VALUES ('A11')
+INSERT INTO dbo.Section (Section.Section) VALUES ('B20')
+INSERT INTO dbo.Section (Section.Section) VALUES ('B21')
+INSERT INTO dbo.Section (Section.Section) VALUES ('AB10')
+INSERT INTO dbo.Section (Section.Section) VALUES ('B3')
+INSERT INTO dbo.Section (Section.Section) VALUES ('AB100')
+INSERT INTO dbo.Section (Section.Section) VALUES ('2')
+INSERT INTO dbo.Section (Section.Section) VALUES ('B1')
+INSERT INTO dbo.Section (Section.Section) VALUES ('B32')
+INSERT INTO dbo.Section (Section.Section) VALUES ('11')
+INSERT INTO dbo.Section (Section.Section) VALUES ('A10')
+SELECT Section
+FROM dbo.Section
+--Show normal Sort
+SELECT Section
+FROM dbo.Section
+ORDER BY Section
+--Show AlphaNumberic Sort
+SELECT Section
+FROM dbo.Section
+ORDER BY LEFT(Section,PATINDEX('%[0-9]%',Section)-1), -- alphabetical sort
+         CONVERT(INT,SUBSTRING(Section,PATINDEX('%[0-9]%',Section),LEN(Section))) -- numerical sort
+--cleanup our work
+DROP Table dbo.Section

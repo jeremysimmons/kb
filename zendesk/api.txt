@@ -1,0 +1,23 @@
+https://disciplr.zendesk.com/agent/admin/api/settings
+curl -u {email_address}:{password} https://{subdomain}.zendesk.com/api/v2/users/me.json
+curl -u {email_address}/token:{api_token} https://{subdomain}.zendesk.com/api/v2/users/me.json
+
+click the light grey plus button above the active api tokens
+Dynamics CRM 365
+zgOXuRgJib5coAPRNOlXckY5Io1AKUxcnvU8dmpy
+
+Rate Limit (700 rpm)
+
+https://disciplr.zendesk.com/agent/admin/extensions
+Url Target
+
+https://disciplr.zendesk.com/agent/admin/extensions
+Microsoft Dynamics target
+
+https://www.zendesk.com/apps/support/dynamics-crm-2015-2016-connector/?source=app_directory
+http://www.eonesolutions.com/help-article/zendesk-dynamics-crm-connector/
+
+https://developer.zendesk.com/rest_api/docs/core/tickets
+
+https://developer.zendesk.com/rest_api/docs/core/users
+agents, admins, customers

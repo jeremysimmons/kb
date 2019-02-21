@@ -1,0 +1,12 @@
+recommendation from josh (bsf)
+Gravity Forms, types toolset, widget Wrangler, Clicky, yoast
+
+https://wordpress.org/plugins/jetpack/
+https://wordpress.org/plugins/drafts-of-post-revisions/
+https://wordpress.org/plugins/duplicate-post/
+https://wordpress.org/plugins/simple-embed-code/
+https://wordpress.org/plugins/addfunc-head-footer-code/
+
+12:42 PM 2/28/2018
+https://wordpress.org/plugins/wp-mail-logging/
+https://de.wordpress.org/plugins/redux-framework/

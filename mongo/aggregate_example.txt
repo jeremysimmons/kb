@@ -1,0 +1,30 @@
+http://stackoverflow.com/a/42855926/26877
+db.taxon.aggregate([{
+    $match: {
+        _id: {
+            $in: listId
+        }
+    }
+}, {
+    $graphLookup: {
+        from: "taxon",
+        startWith: "$_id",
+        connectFromField: "pa",
+        connectToField: "_id",
+        as: "nameList"
+    }
+}, {
+    $project: {
+        nameList: {
+            $reduce: {
+                input: "$nameList",
+                initialValue: [],
+                in: {
+                    "$concatArrays": ["$$value", {
+                        $slice: ["$$this.na", 1]
+                    }]
+                }
+            }
+        }
+    }
+}])

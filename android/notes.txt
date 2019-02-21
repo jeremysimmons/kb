@@ -1,0 +1,54 @@
+Activity - a single focused thing that a user can do
+maintains activities on a stack - popping an activity when touching 'back'
+returns to launcher if the stack is empty
+<activity>
+<intent-filter>
+<action/>
+<category />
+</intent-filter>
+</activity>
+
+activities have a layout
+
+setContentView(...)
+findViewById(...)
+
+layouts have views
+(android.widget) - interaction components
+TextView - display text - a label
+EditText - edit text - an inputbox
+ImageView - draw an image
+Button - something you tap on 
+Chronometer - a simple timer 
+
+layout or container views
+abstract ViewGroup
+LinearLayout - single column or row
+RelativeLayout - relative position to eachother and the view
+FrameLayout - contains a single child view
+ScrollView - a scroll through the content
+ConstraintLayout - (newer) provides flexibility 
+
+width and height
+dp - density-independent pixels. e.g. 200pd or 300pd
+wrap_content = shrink to wrap what is inside the view (measure text)
+match_parent = expand to be as large as the parent view
+sp - dp + user's scale preference - use this for text
+https://stackoverflow.com/questions/2025282/what-is-the-difference-between-px-dip-dp-and-sp
+
+
+Padding and margin
+same as DOM box model
+
+associate an XML Layout to an Activity
+@override 
+onCreate(Bundle state) {
+setContentView(R.layout.activity_main)
+}
+
+
+
+Service
+BroadcastReceiver
+BroadcastProvider
+

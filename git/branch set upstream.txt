@@ -1,0 +1,12 @@
+git branch -u origin/my-branch
+git push -u origin/my-branch
+
+the shortcut to pushing the current branch to a remote with the same name:
+git push -u origin HEAD
+
+link the upstream branch each time you create or checkout a new branch.
+> git config --global branch.autosetupmerge always
+change the way your push works:
+> git config --global push.default current
+This will infer the origin my_branch part, thus you can do:
+> git push -u

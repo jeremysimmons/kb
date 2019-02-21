@@ -1,0 +1,4 @@
+https://jwiegley.github.io/git-from-the-bottom-up/4-Stashing-and-the-reflog.html
+
+$ git stash clear  # DON'T! You'll lose all that history
+$ git reflog expire --expire=30.days refs/stash

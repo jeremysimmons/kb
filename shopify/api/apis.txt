@@ -1,0 +1,3 @@
+https://help.shopify.com/api/reference/product
+https://help.shopify.com/api/reference/product_variant
+https://help.shopify.com/api/reference/metafield

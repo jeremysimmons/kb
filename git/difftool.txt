@@ -1,0 +1,8 @@
+git difftool -d develop feature/#57-upgrades
+
+git difftool -d --cached
+
+[diff]
+    tool = bc4
+[difftool "bc4"]
+    cmd = \"C:\\Program Files\\Beyond Compare 4\\BComp.exe\" \"$LOCAL\" \"$REMOTE\"

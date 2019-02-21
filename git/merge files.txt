@@ -1,0 +1,4 @@
+The local-checkin that your git tree has: LOCAL (mine)
+The head of the remote repository (that is going to be merged): REMOTE
+common ancestor to both LOCAL and REMOTE: BASE
+The file that will be written as a result: MERGED.

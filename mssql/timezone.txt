@@ -1,0 +1,15 @@
+DECLARE @tzname NVARCHAR(256) = N'US Mountain Standard Time'
+SELECT * FROM sys.time_zone_info WHERE name = @tzname
+SELECT CONVERT(datetime2(0), '2015-03-29T02:01:00', 126) AT TIME ZONE @tzname
+
+https://sqlperformance.com/2016/07/sql-plan/at-time-zone
+
+SELECT SWITCHOFFSET('20160101 00:00 +10:30', '-05:00');
+ 
+-- 2015-12-31 08:30:00.0000000 -05:00
+
+
+declare @offsetTime datetimeoffset = '2017-08-29 22:12:14.6146967 +00:00'
+DECLARE @offset NVARCHAR(6)
+SELECT @offset = current_utc_offset FROM sys.time_zone_info WHERE name = N'US Mountain Standard Time'
+SELECT SWITCHOFFSET(@offsetTime, @offset);

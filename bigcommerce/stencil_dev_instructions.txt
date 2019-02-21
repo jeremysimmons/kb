@@ -1,0 +1,36 @@
+npm install -g @bigcommerce/stencil-cli
+stencil --version
+1.14.1 at 12:38 PM 3/9/2018
+
+npm install
+
+create a .stencil file
+> stencil init
+home page: https://dcclive.mybigcommerce.com
+port: 3000
+clientid: 1eikwztlmx4za8x39kugk5kyotnymu7
+access: smnxgucotm7sv1e43mi2lwks4vsm8l9
+
+stencil start
+Launch Theme Editor:  only tested in chrome
+stencil start -e 
+defaults to (http://localhost:8181/)
+stencil start -e --theme-editor-port 9000
+
+
+By default, Stencil caches API resource data per storefront page
+This minimizes server traffic while you develop your theme locally.
+
+stencil start --no-cache
+stencil start -n
+
+ --------------------------------------
+       Local: http://localhost:3000
+    External: http://172.26.112.65:3000
+ --------------------------------------
+ BrowserSync 
+          UI: http://localhost:3002
+ UI External: http://172.26.112.65:3002
+ --------------------------------------
+
+https://stencil.bigcommerce.com/docs/anatomy-of-the-stencil-theme

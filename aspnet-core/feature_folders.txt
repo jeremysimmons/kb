@@ -1,0 +1,46 @@
+http://www.hossambarakat.net/2016/02/16/asp-net-core-mvc-feature-folders/
+
+https://weblogs.asp.net/imranbaloch/view-location-expander-aspnet5-mvc6
+
+
+https://weblogs.asp.net/imranbaloch/custom-viewengine-aspnet5-mvc6
+
+public class MyRazorViewEngine : RazorViewEngine
+{
+    public MyRazorViewEngine(IRazorPageFactory pageFactory,
+        IRazorViewFactory viewFactory,
+        IViewLocationExpanderProvider viewLocationExpanderProvider,
+        IViewLocationCache viewLocationCache) 
+        : base(pageFactory, 
+              viewFactory, 
+              viewLocationExpanderProvider, 
+              viewLocationCache)
+    {
+    }
+
+    public override IEnumerable<string> AreaViewLocationFormats
+    {
+        get
+        {
+            var value = new Random().Next(0, 1);
+            var theme = value == 0 ? "Theme1" : "Theme2";
+            return base.AreaViewLocationFormats.Select(f => f.Replace("/Views/", "/Views/" + theme + "/"));
+        }
+    }
+
+    public override IEnumerable<string> ViewLocationFormats
+    {
+        get
+        {
+            var value = new Random().Next(0, 1);
+            var theme = value == 0 ? "Theme1" : "Theme2";
+            return base.ViewLocationFormats.Select(f => f.Replace("/Views/", "/Views/" + theme + "/"));
+        }
+    }
+}
+
+services.AddMvc().Configure<MvcOptions>(options =>
+{
+    options.ViewEngines.Clear();
+    options.ViewEngines.Add(typeof(MyRazorViewEngine));
+});

@@ -1,0 +1,10 @@
+http://stackoverflow.com/a/27240225/26877
+
+<System.Runtime.CompilerServices.Extension> _
+Public Shared Function AsTask(cancellationToken As CancellationToken) As Task
+  Dim tcs = New TaskCompletionSource(Of Object)()
+  cancellationToken.Register(Function() tcs.TrySetCanceled(), useSynchronizationContext := False)
+  Return tcs.Task
+End Function
+
+Await Task.WhenAny(Task.WhenAll(taskCollection), cancellationToken.AsTask())

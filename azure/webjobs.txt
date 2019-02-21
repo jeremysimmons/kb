@@ -1,0 +1,28 @@
+
+D:\home\site\wwwroot\app_data\jobs\
+
+https://docs.microsoft.com/en-us/azure/app-service/web-sites-create-web-jobs
+https://docs.microsoft.com/en-us/azure/app-service/websites-dotnet-deploy-webjobs
+
+
+https://chriskirby.net/blog/deploy-your-webjob-projects-with-your-azure-website-using-continuous-delivery
+https://azure.microsoft.com/en-us/blog/enabling-command-line-or-continuous-delivery-of-azure-webjobs/
+
+https://blog.kloud.com.au/2016/03/14/azure-webjob-logs-demystified/
+connection strings
+AzureWebJobsDashboard
+	containers:
+	azure-webjobs-dashboard
+		host and execution endpoint (function) details
+	azure-jobs-host-archive
+		archive for execution logs
+AzureWebJobsStorage
+primarily used for logging
+	containers:
+	azure-jobs-host-output
+		key for troubleshooting web jobs
+		logs created by the WebJob runtime during initialization and termination of every execution
+	azure-webjobs-host
+		Heartbeats – Containing 0 byte blogs for every heartbeat check performed on the service.
+		Ids – Containing the directory with a single blog holding a unique identifier for this service.
+		Output-logs – Hosts the output of the explicit logs for each run. Explicit logs being logs introduced by WebJob developers within the execution code.

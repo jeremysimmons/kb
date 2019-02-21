@@ -1,0 +1,6 @@
+Increase the dynamic port range.  As stated above, the default is 5000 but this can be raised up to 65534.
+Using Regedit, navigate to  HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\Tcpip\Parameters\MaxUserPort (if this key does not exist, create it as DWORD value)
+Set the value to 65534, or a value of your choice
+Reduce the amount of time that the connection is in a TIME_WAIT state.
+Using Regedit, navigate to  HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\Tcpip\Parameters\TCPTimedWaitDelay (if this key does not exist, create it as DWORD value)
+Set the value to 30

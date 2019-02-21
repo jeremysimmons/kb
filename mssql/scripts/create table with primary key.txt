@@ -1,0 +1,5 @@
+CREATE TABLE Production.TransactionHistoryArchive1  
+(  
+   TransactionID int IDENTITY (1,1) NOT NULL,  
+   CONSTRAINT PK_TransactionHistoryArchive_TransactionID PRIMARY KEY CLUSTERED (TransactionID)  
+);  

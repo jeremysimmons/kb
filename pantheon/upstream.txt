@@ -1,0 +1,14 @@
+https://pantheon.io/docs/upstream-updates/#apply-upstream-updates-manually-from-the-command-line-and-resolve-merge-conflicts
+
+git remote add pantheon-wordpress git://github.com/pantheon-systems/WordPress.git
+
+git fetch pantheon-wordpress
+git rebase pantheon-wordpress/master
+
+resolve the conflict looking for <<<<<< HEAD and =======
+
+git status - what's different
+git add .
+git rebase --continue
+
+git push origin master --force

@@ -1,0 +1,30 @@
+https://stackoverflow.com/a/9322781/26877
+
+public class MyObject {
+}
+
+public interface IMyInterface {
+    MyObject DoStuff(MyObject o);
+}
+
+public static class Program {
+  public static void Main(string[] args) {
+    var code = @"
+    class MyInterfaceImpl
+        include IMyInterface
+
+        def DoStuff(o)
+            # Do some stuff with o
+            puts o
+            return o
+        end
+    end
+
+    MyInterfaceImpl.new";
+
+    var ruby = IronRuby.Ruby.CreateEngine();
+    ruby.Runtime.LoadAssembly(typeof(MyObject).Assembly);
+    var obj = ruby.Execute<IMyInterface>(code);
+    obj.DoStuff(new MyObject());
+  }
+}

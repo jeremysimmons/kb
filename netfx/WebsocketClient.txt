@@ -1,0 +1,6 @@
+obj.Options.SetRequestHeader("foo", "bar");
+https://www.codeproject.com/Articles/618032/Using-WebSocket-in-NET-4-5-Part-2
+
+3rd party websocket#
+https://github.com/sta/websocket-sharp#websocket-client
+http://stackoverflow.com/a/30524243/26877

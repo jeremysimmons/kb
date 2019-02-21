@@ -1,0 +1,20 @@
+https://www.visualstudio.com/en-us/docs/reference/markdown-guidance
+
+[Headers]
+# This is an H1 header
+## This is an H2 header
+### This is an H3 header
+#### This is an H4 header
+##### This is an H5 header
+
+[Paragraphs] and line breaks
+In a Markdown file or widget, enter two spaces prior to the line break to begin a new paragraph, or enter two line breaks consecutively to begin a new paragraph. 
+
+Add two spaces prior to the end of the line.(space, space)     
+
+
+Quotes
+> Single line quote
+>> Nested quote   
+> multiple line
+> quote

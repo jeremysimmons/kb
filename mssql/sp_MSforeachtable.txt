@@ -1,0 +1,1 @@
+https://www.mssqltips.com/sqlservertip/1905/iterate-through-sql-server-database-objects-without-cursors/

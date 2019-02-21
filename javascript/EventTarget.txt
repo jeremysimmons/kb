@@ -1,0 +1,38 @@
+﻿// classier version of https://developer.mozilla.org/en-US/docs/Web/API/EventTarget
+class EventTarget {
+    constructor() {
+        this._listeners = {};
+    }
+    addEventListener(type, callback) {
+        if (!(type in this._listeners)) {
+            this._listeners[type] = [];
+        }
+        this._listeners[type].push(callback);
+    }
+    removeEventListener(type, callback) {
+        if (!(type in this._listeners)) {
+            return;
+        }
+        var stack = this._listeners[type];
+        for (var i = 0, l = stack.length; i < l; i++) {
+            if (stack[i] === callback) {
+                stack.splice(i, 1);
+                return;
+            }
+        }
+    }
+    dispatchEvent(event) {
+        if (!(event.type in this._listeners)) {
+            return true;
+        }
+        var stack = this._listeners[event.type];
+        /* 
+        event.target = this; CustomEvent target property is readonly
+        */
+        for (var i = 0, l = stack.length; i < l; i++) {
+            stack[i].call(this, event);
+        }
+        return !event.defaultPrevented;
+    }
+}
+export { EventTarget }

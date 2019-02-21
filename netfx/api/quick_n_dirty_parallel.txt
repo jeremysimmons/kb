@@ -1,0 +1,29 @@
+ static async Task ProcessUrls(string[] urls) {
+        var tasks = new List<Task>();
+        // semaphore, allow to run 10 tasks in parallel
+        SemaphoreSlim semaphore = new SemaphoreSlim(10);
+        foreach (var url in urls) {
+            // await here until there is a room for this task
+            await semaphore.WaitAsync();
+            tasks.Add(MakeRequest(semaphore, url));
+        }
+        // await for the rest of tasks to complete
+        await Task.WhenAll(tasks);
+    }
+
+    private static async Task MakeRequest(SemaphoreSlim semaphore, string url) {
+        try {
+            var request = (HttpWebRequest) WebRequest.Create(url);
+
+            using (var response = await request.GetResponseAsync().ConfigureAwait(false)) {
+                // do something with response    
+            }
+        }
+        catch (Exception ex) {
+            // do something
+        }
+        finally {
+            // don't forget to release
+            semaphore.Release();
+        }
+    }

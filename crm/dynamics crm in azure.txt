@@ -1,0 +1,6 @@
+Azure integration with Microsoft Dynamics 365
+https://msdn.microsoft.com/en-us/library/gg334766.aspx
+
+Microsoft CRM + Azure Service Bus, part 1 (creating queues and adding service endpoints)
+
+https://community.dynamics.com/crm/b/crmviking/archive/2016/10/23/microsoft-crm-azure-service-bus-part-1-creating-queues-and-adding-service-endpoints

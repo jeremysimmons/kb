@@ -1,0 +1,8 @@
+# 2017-12-4 delete 1day and saturday shipping per cheryl rider
+Input.shipping_rates.delete_if do |r|
+  
+r.source != "David C Cook" ? false : r.code == "OV" || r.code == "OS"
+
+end
+
+Output.shipping_rates = Input.shipping_rates

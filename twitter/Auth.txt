@@ -1,0 +1,41 @@
+S54LVb7PxP7wO2ouVJ1H7ourA:JLAZJkNZGgHROEnyi27tufa8KaqjzPRZdkIfFrBqAQC7C1RZMi
+UzU0TFZiN1B4UDd3TzJvdVZKMUg3b3VyQTpKTEFaSmtOWkdnSFJPRW55aTI3dHVmYThLYXFqelBSWmRrSWZGckJxQVFDN0MxUlpNaQ==
+
+~~REQUEST
+POST https://api.twitter.com/oauth2/token HTTP/1.1
+User-Agent: Jeremys Twitter Test
+Authorization: Basic UzU0TFZiN1B4UDd3TzJvdVZKMUg3b3VyQTpKTEFaSmtOWkdnSFJPRW55aTI3dHVmYThLYXFqelBSWmRrSWZGckJxQVFDN0MxUlpNaQ==
+Content-Type: application/x-www-form-urlencoded;charset=UTF-8
+Host: api.twitter.com
+Content-Length: 29
+Accept-Encoding: gzip
+
+grant_type=client_credentials
+
+~~RESPONSE
+HTTP/1.1 200 OK
+cache-control: no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+content-disposition: attachment; filename=json.json
+content-length: 155
+content-type: application/json;charset=utf-8
+date: Tue, 30 Jan 2018 22:40:56 GMT
+expires: Tue, 31 Mar 1981 05:00:00 GMT
+last-modified: Tue, 30 Jan 2018 22:40:56 GMT
+ml: S
+pragma: no-cache
+server: tsa_a
+set-cookie: personalization_id="v1_NTABDlTw05sXuvY3/L5d9A=="; Expires=Thu, 30 Jan 2020 22:40:56 UTC; Path=/; Domain=.twitter.com
+set-cookie: guest_id=v1%3A151735205608322333; Expires=Thu, 30 Jan 2020 22:40:56 UTC; Path=/; Domain=.twitter.com
+status: 200 OK
+strict-transport-security: max-age=631138519
+x-connection-hash: 6dd697a593016f8402ba28464bdd9cde
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-response-time: 100
+x-transaction: 0073e15b0001f553
+x-tsa-request-body-time: 0
+x-twitter-response-tags: BouncerCompliant
+x-ua-compatible: IE=edge,chrome=1
+x-xss-protection: 1; mode=block; report=https://twitter.com/i/xss_report
+
+{"token_type":"bearer","access_token":"AAAAAAAAAAAAAAAAAAAAANb%2F4AAAAAAAlzvdOv6OEgxagsWwCTSRqrTkxNY%3DDAGYd4hg9onwnIY33uZRsZYshUxqvbMZsFjXmRas2wPFnJEXRU"}

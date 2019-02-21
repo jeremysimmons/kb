@@ -1,0 +1,8 @@
+https://blog.maximerouiller.com/post/hosting-static-site-for-cheap-on-azure-with-storage-and-serverless/
+
+https://docs.microsoft.com/en-us/azure/azure-functions/functions-proxies
+
+https://stackoverflow.com/questions/34413300/azure-cdn-default-document-index-html
+
+Static website hosting in Azure blob storage
+https://feedback.azure.com/forums/217298-storage/suggestions/6417741-static-website-hosting-in-azure-blob-storage

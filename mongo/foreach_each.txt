@@ -1,0 +1,23 @@
+http://stackoverflow.com/a/24222084/26877
+
+forEach() is going to iterate over every document in the batch
+each() will iterate over every document in the cursor.
+
+// Grab a cursor
+var cursor = collection.find();
+
+// Execute the each command, triggers for each document
+cursor.each(function(err, item) {
+
+  // If the item is null then the cursor is exhausted/empty and closed
+  if(item == null) {
+
+    // Show that the cursor is closed
+    cursor.toArray(function(err, items) {
+      assert.ok(err != null);
+
+      // Let's close the db
+      db.close();
+    });
+  };
+});

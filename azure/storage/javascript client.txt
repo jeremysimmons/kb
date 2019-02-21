@@ -1,0 +1,2 @@
+https://dmrelease.blob.core.windows.net/azurestoragejssample/samples/sample-blob.html
+https://azure.microsoft.com/en-us/blog/new-azure-storage-javascript-client-library-for-browsers-preview/

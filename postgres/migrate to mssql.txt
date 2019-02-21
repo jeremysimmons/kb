@@ -1,0 +1,29 @@
+https://stackoverflow.com/a/6567036/26877
+
+pg_dump --data-only --column-inserts your_db_name > data_load_script.sql
+
+pg_dump --schema-only --no-owner --no-privileges your_db_name > schema_create_script.sql
+
+PostgreSQL does auto-increment fields by linking a NOT NULL INTEGER field to a SEQUENCE using a DEFAULT. In SQL Server, this is an IDENTITY column, but they're not exactly the same thing. I'm not sure if they are equivalent, but if your original schema is full of "id" fields, you may be in for some trouble. I don't know if SQL Server has CREATE SEQUENCE, so you may have to remove those.
+Database functions / Stored Procedures do not translate between RDBMS platforms. You'll need to remove any CREATE FUNCTION statements and translate the algorithms manually.
+Be careful about encoding of the data file. I'm a Linux person, so I have no idea how to verify encoding in Windows, but you need to make sure that what SQL Server expects is the same as the file you are importing from PostgreSQL.  pg_dump has an option --encoding= that will let you set a specific encoding. I seem to recall that Windows tends to use two-byte, UTF-16 encoding for Unicode where PostgreSQL uses UTF-8. I had some issue going from SQL Server to PostgreSQL due to UTF-16 output so it would be worth researching.
+The PostgreSQL datatype TEXT is simply a VARCHAR without a max length. In SQL Server, TEXT is... complicated (and deprecated). Each field in your original schema that are declared as TEXT will need to be reviewed for an appropriate SQL Server data type.
+SQL Server has extra data types for UNICODE data. I'm not familiar enough with it to make suggestions. I'm just pointing out that it may be an issue.
+
+https://stackoverflow.com/a/46436118/26877
+
+COPY (SELECT siteid, searchdist, listtype, list, sitename, county, street, 
+   city, state, zip, georesult, elevation, lat, lng, wkt, unlocated_bool, 
+   id, status, standard_status, date_opened_or_reported, date_closed, 
+   notes, list_type_description FROM mlocal) TO 'c:\SQLAzureImportFiles\data_script_mlocal.tsv' NULL E''
+
+bcp MyDb.dbo.mlocal in "\\NEWDBSERVER\SQLAzureImportFiles\data_script_mlocal.tsv" -S tcp:YourDBServer.database.windows.net -U YourUserName -P YourPassword -c
+
+A couple of things of note that I encountered. Postgres and SQL Server handle boolean fields differently. Your SQL Server schema need to have your boolean fields set to varchar(1) and the resulting data will be 'f', 't' or null. You will then have to convert this field to a bit. doing something like:
+
+ALTER TABLE mlocal ADD unlocated bit;
+UPDATE mlocal SET unlocated=1 WHERE unlocated_bool='t';
+UPDATE mlocal SET unlocated=0 WHERE unlocated_bool='f';
+ALTER TABLE mlocal DROP COLUMN unlocated_bool;
+
+Another thing is the geography/geometry fields are very different between the two platforms. Export the geometry fields as WKT using ST_AsText(geo) and convert appropriately on the SQL Server end.

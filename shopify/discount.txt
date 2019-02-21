@@ -1,0 +1,29 @@
+
+https://help.shopify.com/manual/promoting-marketing/discount-codes
+
+a dollar value discount
+a percentage discount
+a free shipping discount
+	all countries
+	selected countries
+	exclude shipping rates over a certain amouhnt
+
+dates for which the code is valid
+the number of times a code can be used
+a minimum order amount before the code can be used
+
+applies to:
+entire order
+selected products (and variants)
+selected collections
+product variants the discount can be applied
+only apply once per order (or once per eligible product)
+
+usage limits:
+limit number of times this discount can be used in total
+limit to one use per customer
+
+Active dates
+start date, start time
+(optional) end date, end time
+

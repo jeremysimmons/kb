@@ -1,0 +1,27 @@
+https://blogs.msdn.microsoft.com/benjaminperkins/2017/01/11/sending-email-from-an-azure-web-app-using-an-o365-smtp-server/
+
+protected void sendEmailButton_Click(object sender, EventArgs e)         
+ {             
+  MailMessage msg = new MailMessage();
+  msg.To.Add(new MailAddress("To Email Address", "Benjamin"));
+  msg.From = new MailAddress("From Email Address", "You");
+  msg.Subject = "Azure Web App Email using smtp.office365.com";
+  msg.Body = "Test message using smtp.office365.com on Azure from a Web App";
+  msg.IsBodyHtml = true;
+SmtpClient client = new SmtpClient();
+  client.UseDefaultCredentials = false;
+  client.Credentials = new System.Net.NetworkCredential("O365 UID", "O365 PASS");
+  client.Port = 587;
+  client.Host = "smtp.office365.com";
+  client.DeliveryMethod = SmtpDeliveryMethod.Network;
+  client.EnableSsl = true;
+  try
+  {
+   client.Send(msg);
+   statusLabel.Text = "Message Sent Succesfully";
+  }
+catch (Exception ex)
+  {
+   statusLabel.Text = ex.ToString();
+  }
+}

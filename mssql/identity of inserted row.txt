@@ -1,0 +1,11 @@
+https://stackoverflow.com/a/42655/26877
+
+Best way to get identity of inserted row?
+
+@@IDENTITY returns the last identity value generated for any table in the current session, across all scopes. You need to be careful here, since it's across scopes. You could get a value from a trigger, instead of your current statement.
+
+SCOPE_IDENTITY() returns the last identity value generated for any table in the current session and the current scope. Generally what you want to use.
+
+IDENT_CURRENT('tableName') returns the last identity value generated for a specific table in any session and any scope. This lets you specify which table you want the value from, in case the two above aren't quite what you need (very rare). Also, as @Guy Starbuck mentioned, "You could use this if you want to get the current IDENTITY value for a table that you have not inserted a record into."
+
+The OUTPUT clause of the INSERT statement will let you access every row that was inserted via that statement. Since it's scoped to the specific statement, it's more straightforward than the other functions above. However, it's a little more verbose (you'll need to insert into a table variable/temp table and then query that) and it gives results even in an error scenario where the statement is rolled back. That said, if your query uses a parallel execution plan, this is the only guaranteed method for getting the identity (short of turning off parallelism). However, it is executed before triggers and cannot be used to return trigger-generated values.

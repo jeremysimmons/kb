@@ -1,0 +1,4 @@
+https://msdn.microsoft.com/en-us/library/hh550080(v=vs.103).aspx
+
+http://sqlblog.com/blogs/jamie_thomson/archive/2012/05/08/publish-profile-files-in-sql-server-data-tools-ssdt.aspx
+>sqlpackage.exe /sf:MyDB.dacpac /pr:DEV.publish.xml

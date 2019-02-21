@@ -1,0 +1,2 @@
+openssl pkcs12 -in publicCert.pem -inkey privateKey.pem -export -out merged.pfx
+

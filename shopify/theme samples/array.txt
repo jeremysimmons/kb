@@ -1,0 +1,4 @@
+{% assign args = (1..200) %}
+{% for a in args %}
+{{ a }}
+{% endfor %}

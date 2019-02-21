@@ -1,0 +1,16 @@
+https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+.container {
+  display: flex; /* or inline-flex */
+}
+
+
+https://philipwalton.github.io/solved-by-flexbox/
+http://www.sketchingwithcss.com/samplechapter/cheatsheet.html
+
+
+https://codepen.io/imohkay/pen/gpard
+EQUAL HEIGHT COLUMNS
+EQUAL HEIGHT + WIDTH COLUMNS
+EQUAL HEIGHT + WIDTH COLUMNS WITH MARGINS
+EQUAL HEIGHT COLUMNS WITH MARGINS IN MULTIPLE ROWS
+EQUAL HEIGHT COLUMNS WITH MARGINS IN MULTIPLE ROWS and VARIABLE NO OF BOXES

@@ -1,0 +1,43 @@
+https://github.com/Shopify/Shopify-Developer-Book/blob/master/README.md
+https://github.com/mikeyhew/shopify-app-proxy-example
+https://ecommerce.shopify.com/c/shopify-apps/t/application-proxy-for-a-private-app-141572
+https://help.shopify.com/api/getting-started/authentication/oauth
+http://gavinballard.com/shopify-oauth-flow-for-dummies/
+
+https://shopify.github.io/themekit/
+https://shopify.github.io/slate/
+https://help.shopify.com/api/reference/scripttag
+
+run a website on localhost, expose to the internet
+https://pagekite.net/
+https://ngrok.com/
+
+http://gavinballard.com/securing-customer-pages-shopify-app-proxy/
+
+getting permission to install an app
+https://dcc-jde.myshopify.com/
+
+https://{shop}.myshopify.com/admin/oauth/authorize?client_id={api_key}&scope={scopes}&redirect_uri={redirect_uri}&state={nonce}&grant_options[]={option}
+
+https://help.shopify.com/api/getting-started/authentication/oauth#scopes
+
+dcc-jde
+https://dcc-jde.myshopify.com/admin/oauth/authorize?client_id=6f676f3e5e6047e36229a8b9529228cf&scope=read_customers,read_products&redirect_uri=http://localhost:52033/reorder-app/oauth&state=0123456789ABCDEF
+
+<client accepts>
+http://localhost:52033/reorder-app/oauth?code=18c382132dfaac5fdcf7a998a3c435ee&hmac=0fef839abe97dcd3a6032769daef3774119043d04834e2186648c4eb3c94694d&shop=dcc-jde.myshopify.com&state=0123456789ABCDEF&timestamp=1508172628
+code=18c382132dfaac5fdcf7a998a3c435ee
+hmac=0fef839abe97dcd3a6032769daef3774119043d04834e2186648c4eb3c94694d
+shop=dcc-jde.myshopify.com
+state=0123456789ABCDEF
+timestamp=1508172628
+
+<we then ask for a token>
+POST https://{shop}.myshopify.com/admin/oauth/access_token
+
+POST https://dcc-jde.myshopify.com/admin/oauth/access_token
+<body>
+client_id=6f676f3e5e6047e36229a8b9529228cf	
+
+http://localhost:52033/reorder-app/
+http://localhost:52033/reorder-app/oauth

@@ -1,0 +1,27 @@
+https://pantheon.io/docs/upstream-updates/
+https://pantheon.io/docs/pantheon-workflow/#combine-code-from-dev-and-content-from-live-in-test
+
+https://pantheon.io/docs/terminus/
+Our command line interface, Terminus, provides advanced interaction with Pantheon.
+
+terminus wp can run a wp-cli command
+https://pantheon.io/docs/wp-cli/
+https://pantheon.io/docs/guides/wordpress-commandline/
+examples
+
+terminus auth:login --machine-token=<token>
+terminus site:list
+
+terminus site:list --field=name --format=list
+terminus wp standard-publishing.live -- plugin list --format=csv >
+
+tail -n+2 my_file
+
+terminus wp pantheon-demo.dev -- option get home
+terminus wp $TERMINUS_SITE.dev -- plugin install contact-form-7 --activate
+terminus env:diffstat $TERMINUS_SITE.dev
+terminus env:commit $TERMINUS_SITE.dev --message="Install CF7"
+terminus env:deploy $TERMINUS_SITE.test --sync-content  --updatedb --cc --note="Deploy C7 plugin"
+terminus wp $TERMINUS_SITE.test -- plugin activate contact-form-7
+terminus env:deploy $TERMINUS_SITE.live --updatedb --cc --note="Deploy after CF7 Install"
+terminus wp $TERMINUS_SITE.live -- plugin activate contact-form-7

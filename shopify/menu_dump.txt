@@ -1,0 +1,13 @@
+<h1>Main Menu</h1>
+{% for link in linklists.main-menu.links %}
+	<div class="link">
+	title {{ link.title }}<br/>
+	type {{ link.type }}<br/>
+	object.id {{ link.object.id }}<br/>
+	object.handle {{ link.object.handle }}<br/>
+	object.title {{ link.object.title }}<br/>
+	url {{ link.url }} <br/>
+	active {{ link.active }}
+	</div>
+{% endfor %}
+		   

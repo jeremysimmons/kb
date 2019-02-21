@@ -1,0 +1,20 @@
+refer to form-capture-working-sample.txt for markup used
+refer to setup form capture in https://davidccook.crm.dynamics.com/
+
+Settings > Click Dimensions > Form Captures
+
+Create a Form Capture
+
+Create Name
+Associate with an existing Campaign
+Visitor Entity (Lead or Contact)
+Redirect on Error (Url on target site) e.g. http://runningclubrecords.com/?error=contact_form
+Redirect on Success (Url on target site) e.g. http://runningclubrecords.com/?success=contact_form
+Form Action (set by system)
+
+Configure Form Capture Fields (sub-form) associated with this Form Capture
+
+example - 
+Hidden SMU has a label of dcc_smu and a form name of dcc_SMU
+Lead Source has a form name of txtLeadSource
+

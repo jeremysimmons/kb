@@ -1,0 +1,22 @@
+https://github.com/dahlbyk/posh-git/wiki/Customizing-Your-PowerShell-Prompt
+
+"C:\Users\jeremy.simmons\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1"
+
+function prompt {
+    $origLastExitCode = $LASTEXITCODE
+    Write-VcsStatus
+
+    $maxPathLength = 40
+    $curPath = $ExecutionContext.SessionState.Path.CurrentLocation.Path
+    if ($curPath.Length -gt $maxPathLength) {
+        $curPath = '...' + $curPath.SubString($curPath.Length - $maxPathLength + 3)
+    }
+
+    Write-Host $curPath -ForegroundColor Green
+    $LASTEXITCODE = $origLastExitCode
+    "$('>' * ($nestedPromptLevel + 1)) "
+}
+
+Import-Module posh-git
+$global:GitPromptSettings.BeforeText = '['
+$global:GitPromptSettings.AfterText  = '] '

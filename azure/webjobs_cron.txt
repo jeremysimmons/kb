@@ -1,0 +1,7 @@
+https://docs.microsoft.com/en-us/azure/app-service/web-sites-create-web-jobs
+A CRON expression is composed of six fields: {second} {minute} {hour} {day} {month} {day of the week}. Here are some examples:+
+Every 15 minutes: 0 */15 * * * *
+Every hour (that is, whenever the count of minutes is 0): 0 0 * * * *
+Every hour from 9 AM to 5 PM: 0 0 9-17 * * *
+At 9:30 AM every day: 0 30 9 * * *
+At 9:30 AM every weekday: 0 30 9 * * 1-5

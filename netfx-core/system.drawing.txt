@@ -1,0 +1,3 @@
+https://www.nuget.org/packages/SkiaSharp/
+https://github.com/matgr1/FreeImage-dotnet-core/
+https://github.com/JaCraig/Structure.Sketching

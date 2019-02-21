@@ -1,0 +1,16 @@
+min_discount_order_amount = Money.new(cents:100) * 30 #number of dollars needed in cart to get the discount
+total = Input.cart.subtotal_price_was
+discount = if total > min_discount_order_amount
+              0.2 #discount percentage in decimal form
+            else
+              0
+            end
+message = "My message"
+
+Input.cart.line_items.each do |line_item|
+  product = line_item.variant.product
+  next if product.gift_card?
+  line_item.change_line_price(line_item.line_price * (1-discount), message: message) unless discount == 0
+end
+
+Output.cart = Input.cart

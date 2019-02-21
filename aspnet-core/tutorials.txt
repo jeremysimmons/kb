@@ -1,0 +1,5 @@
+https://channel9.msdn.com/Series/aspnetmonsters
+Introduction to ASP.NET Core with Visual Studio 2017
+https://mva.microsoft.com/en-US/training-courses/introduction-to-aspnet-core-10-16841?l=JWZaodE6C_5706218965
+Intermediate ASP.NET Core 1.0
+https://mva.microsoft.com/en-US/training-courses/16964?l=Kvl35KmJD_4306218965

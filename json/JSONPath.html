@@ -1,0 +1,1025 @@
+
+<!-- saved from url=(0051)http://goessner.net/articles/JsonPath/index.html#e2 -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <title>JSONPath - XPath for JSON</title>
+    
+    <meta name="aid" content="a121">
+    <meta name="base" content="/articles/JsonPath/index.html">
+    <meta name="template" content="archive">
+    <meta name="created" content="2007-02-21">
+    <meta name="modified" content="2007-08-31">
+    <meta name="nextid" content="6">
+    <meta name="append" content="true">
+    <meta name="entrytemplate" content="entryhtml">
+    <meta name="entrycommentable" content="false">
+    <meta name="entryeditable" content="true">
+    <meta name="lockedentry">
+    <meta name="locktime">
+    <meta name="maxlocktime" content="20">
+    <link rel="home" title="Mechanik, das Web und ..." href="http://goessner.net/">
+    <link id="a15" rel="parent" title="Articles" href="http://goessner.net/articles/index.html">
+    <link rel="child">
+    <link id="a88" rel="prev" title="SVG" href="http://goessner.net/articles/svg/index.html">
+    <link rel="next">
+    <link rel="stylesheet" type="text/css" href="./JSONPath_files/main.css">
+    <link rel="shortcut icon" href="http://goessner.net/favicon.ico" type="image/x-icon">
+    <script src="./JSONPath_files/ca-pub-4579615353600997.js.download"></script><script type="text/javascript" src="./JSONPath_files/core.js.download"> </script>  <!-- blank required for recreating an empty script element -->
+    <script type="text/javascript" src="./JSONPath_files/http.js.download"> </script>
+    <script type="text/javascript" src="./JSONPath_files/drag.js.download"> </script>
+    <script type="text/javascript" src="./JSONPath_files/archive.js.download"> </script>
+    <script type="text/javascript" src="./JSONPath_files/wikiwiz.js.download"> </script>
+    <script type="text/javascript" src="./JSONPath_files/wikiwiz.lang.js.download"> </script>
+    <script type="text/javascript" src="./JSONPath_files/wikiwiz.math.js.download"> </script>
+    <script type="text/javascript" src="./JSONPath_files/fileinc.php"> </script>
+    <script type="text/javascript" src="./JSONPath_files/fileinc(1).php"> </script>
+    <script type="text/javascript"><!--//--><![CDATA[//><!--
+//-->]]></script>
+  <script type="text/javascript" id="remotejson" src="./JSONPath_files/public"></script></head>
+  <body id="root">
+    <div id="frame">
+    <div id="header" style="border:1px solid;">
+      <div class="dark" style="color:#eee; text-decoration:none; padding:0 0.25em 0 0.25em;">
+        <a href="http://fh-dortmund.de/">
+          <img style="float:right" src="./JSONPath_files/FHPICTO.GIF" width="30" height="30" alt="fh pictogramm" title="Fachhochschule Dortmund">
+        </a>
+        <a style="font-size:160%; color:#eee;" href="http://goessner.net/index.html">&lt;stefan.goessner/&gt;</a><br>
+        Mechanik, das Web und der ganze Rest
+      </div>
+      <div class="mediumlight" style="font-weight:bold;width:100%;text-align:center;">
+         | <a href="http://goessner.net/">Home</a> | <a href="http://goessner.net/learn/">Lehre</a> | <a href="http://goessner.net/download/">Download</a> | <a href="http://goessner.net/info/">Info</a> |
+      </div>
+    </div>
+    <div id="content">
+<div id="e1" class="entry">
+ <h4 class="unlocked">
+   <span class="right">
+     <span class="noeditbutton" onclick="Archive.startEdit(this.parentNode.parentNode.parentNode.attributes[&#39;id&#39;].value, &#39;entry&#39;);">[edit]</span>
+     <span class="nocommentbutton" onclick="Archive.startEdit(this.parentNode.parentNode.parentNode.attributes[&#39;id&#39;].value, &#39;comment&#39;);">[comment]</span>
+     <span class="noremovebutton" onclick="Archive.removeEntry(this.parentNode.parentNode.parentNode.attributes[&#39;id&#39;].value);">[remove]</span>
+     |<span class="created" title="modified: 2007-08-28">2007-02-21</span>|
+     <span class="eid">e1</span>
+   </span>
+   <a style="text-decoration:none;color:inherit;" href="http://goessner.net/articles/JsonPath/index.html#e1" title="permanent link" rel="bookmark">#</a>
+   <span class="entryTitle">JSONPath - XPath for JSON</span>
+ </h4>
+ <div class="content wiki" lang="x-wiki"><p>A frequently emphasized advantage of <abbr title="extended Markup Language">XML</abbr> is the availability of plenty tools to analyse, transform and selectively extract data out of XML documents. <a href="http://en.wikipedia.org/wiki/XPath">XPath</a> is one of these powerful tools.</p>
+<p>It's time to wonder, if there is a need for something like XPath4JSON and what are the problems it can solve.
+</p><ul>
+<li class="u">Data may be interactively found and extracted out of <a href="http://json.org/">JSON</a> structures on the client without special scripting.</li>
+<li class="u">JSON data requested by the client can be reduced to the relevant parts on the server, such minimizing the bandwidth usage of the server response.</li></ul>
+<p>If we agree, that a tool for picking parts out of a JSON structure at hand does make sense, some questions come up. How should it do its job? How do JSONPath expressions look like?</p>
+<p>Due to the fact, that JSON is a natural representation of data for the C family of programming languages, the chances are high, that the particular language has native syntax elements to access a JSON structure.</p>
+<p>The following XPath expression</p>
+<p><code>/store/book[1]/title</code></p>
+<p>would look like</p>
+<p><code>x.store.book[0].title</code></p>
+<p>or</p>
+<p><code>x['store']['book'][0]['title']</code></p>
+<p>in Javascript, Python and PHP with a variable <code>x</code> holding the JSON structure. Here we observe, that the particular language usually has a fundamental XPath feature already built in.</p>
+<p>The JSONPath tool in question should …</p><ul>
+<li class="u">be naturally based on those language characteristics.</li>
+<li class="u">cover only essential parts of XPath 1.0.</li>
+<li class="u">be lightweight in code size and memory consumption.</li>
+<li class="u">be runtime efficient. 
+</li></ul></div>
+ <div class="nocomment" lang="x-wiki">&nbsp;</div>
+<!-- entry --></div>
+<div id="e2" class="entry">
+ <h4 class="unlocked">
+   <span class="right">
+     <span class="noeditbutton" onclick="Archive.startEdit(this.parentNode.parentNode.parentNode.attributes[&#39;id&#39;].value, &#39;entry&#39;);">[edit]</span>
+     <span class="nocommentbutton" onclick="Archive.startEdit(this.parentNode.parentNode.parentNode.attributes[&#39;id&#39;].value, &#39;comment&#39;);">[comment]</span>
+     <span class="noremovebutton" onclick="Archive.removeEntry(this.parentNode.parentNode.parentNode.attributes[&#39;id&#39;].value);">[remove]</span>
+     |<span class="created" title="modified: 2007-08-31">2007-08-17</span>|
+     <span class="eid">e2</span>
+   </span>
+   <a style="text-decoration:none;color:inherit;" href="http://goessner.net/articles/JsonPath/index.html#e2" title="permanent link" rel="bookmark">#</a>
+   <span class="entryTitle">JSONPath expressions</span>
+ </h4>
+ <div class="content wiki" lang="x-wiki"><p>JSONPath expressions always refer to a JSON structure in the same way as XPath expression are used in combination with an XML document. Since a JSON structure is usually anonymous and doesn't necessarily have a "root member object" JSONPath assumes the abstract name <code>$</code> assigned to the outer level object.</p>
+<p>JSONPath expressions can use the <em>dot</em>–notation</p>
+<p><code>$.store.book[0].title</code></p>
+<p>or the <em>bracket</em>–notation</p>
+<p><code>$['store']['book'][0]['title']</code></p>
+<p>for input pathes. Internal or output pathes will always be converted to the more general <em>bracket</em>–notation.</p>
+<p>JSONPath allows the <em>wildcard</em> symbol * for member names and array indices.
+It borrows the <em>descendant</em> operator '..' from <a href="http://en.wikipedia.org/wiki/E4X">E4X</a> and the <em><a href="http://developer.mozilla.org/es4/proposals/slice_syntax.html">array slice syntax</a></em> proposal <code>[start:end:step]</code> from <a href="http://www.ecmascript.org/">ECMASCRIPT 4</a>.</p>
+<p>Expressions of the underlying scripting language <code>(&lt;expr&gt;)</code> can be used as an alternative to explicit names or indices as in</p>
+<p><code>$.store.book[(@.length-1)].title</code></p>
+<p>using the symbol '@' for the current object. Filter expressions are supported via the syntax <code>?(&lt;boolean expr&gt;)</code> as in</p>
+<p><code>$.store.book[?(@.price &lt; 10)].title</code></p>
+<p>Here is a complete overview and a side by side comparison of the JSONPath syntax elements with its XPath counterparts.</p>
+<table><tbody><tr class="evn"><td> <strong>XPath</strong> </td><td> <strong>JSONPath</strong> </td><td> <strong>Description</strong> </td></tr>
+<tr class="odd"><td> / </td><td> $ </td><td class="lft">the root object/element </td></tr>
+<tr class="evn"><td> . </td><td> @ </td><td class="lft">the current object/element </td></tr>
+<tr class="odd"><td> / </td><td> . or [] </td><td class="lft">child operator </td></tr>
+<tr class="evn"><td> .. </td><td> n/a </td><td class="lft">parent operator </td></tr>
+<tr class="odd"><td> // </td><td> .. </td><td class="lft">recursive descent. JSONPath borrows this syntax from E4X. </td></tr>
+<tr class="evn"><td> * </td><td> * </td><td class="lft">wildcard. All objects/elements regardless their names. </td></tr>
+<tr class="odd"><td> @ </td><td> n/a </td><td class="lft">attribute access. JSON structures don't have attributes. </td></tr>
+<tr class="evn"><td> [] </td><td> [] </td><td class="lft">subscript operator. XPath uses it to iterate over element collections and for <a href="http://www.w3.org/TR/xpath#predicates">predicates</a>. In Javascript and JSON it is the native array operator. </td></tr>
+<tr class="odd"><td> | </td><td> [,] </td><td class="lft">Union operator in XPath results in a combination of node sets. JSONPath allows alternate names or array indices as a set. </td></tr>
+<tr class="evn"><td> n/a </td><td> [start:end:step] </td><td class="lft">array slice operator borrowed from ES4. </td></tr>
+<tr class="odd"><td> [] </td><td> ?() </td><td class="lft">applies a filter (script) expression. </td></tr>
+<tr class="evn"><td> n/a </td><td> () </td><td class="lft">script expression, using the underlying script engine. </td></tr>
+<tr class="odd"><td> () </td><td> n/a </td><td class="lft">grouping in Xpath </td></tr></tbody></table>
+<p>XPath has a lot more to offer (Location pathes in not abbreviated syntax, operators and functions) than listed here. Moreover there is a remarkable difference how the subscript operator works in Xpath and JSONPath.</p><ul>
+<li class="u">Square brackets in XPath expressions always operate on the <em>node set</em> resulting from the previous path fragment. Indices always start by 1.</li>
+<li class="u">With JSONPath square brackets operate on the <em>object</em> or <em>array</em> addressed by the previous path fragment. Indices always start by 0. </li></ul></div>
+ <div class="nocomment" lang="x-wiki">&nbsp;</div>
+<!-- entry --></div>
+<div id="e3" class="entry">
+ <h4 class="unlocked">
+   <span class="right">
+     <span class="noeditbutton" onclick="Archive.startEdit(this.parentNode.parentNode.parentNode.attributes[&#39;id&#39;].value, &#39;entry&#39;);">[edit]</span>
+     <span class="nocommentbutton" onclick="Archive.startEdit(this.parentNode.parentNode.parentNode.attributes[&#39;id&#39;].value, &#39;comment&#39;);">[comment]</span>
+     <span class="noremovebutton" onclick="Archive.removeEntry(this.parentNode.parentNode.parentNode.attributes[&#39;id&#39;].value);">[remove]</span>
+     |<span class="created" title="modified: 2007-08-28">2007-08-18</span>|
+     <span class="eid">e3</span>
+   </span>
+   <a style="text-decoration:none;color:inherit;" href="http://goessner.net/articles/JsonPath/index.html#e3" title="permanent link" rel="bookmark">#</a>
+   <span class="entryTitle">JSONPath examples</span>
+ </h4>
+ <div class="content wiki" lang="x-wiki"><p>Let's practice JSONPath expressions by some more examples. We start with a simple JSON structure built after an XML example representing a bookstore (original <a href="http://coli.lili.uni-bielefeld.de/~andreas/Seminare/sommer02/books.xml">XML file</a>).
+</p><pre class="code syntax_js">{ <span class="str">"store"</span>: {
+    <span class="str">"book"</span>: [ 
+      { <span class="str">"category"</span>: <span class="str">"reference"</span>,
+        <span class="str">"author"</span>: <span class="str">"Nigel Rees"</span>,
+        <span class="str">"title"</span>: <span class="str">"Sayings of the Century"</span>,
+        <span class="str">"price"</span>: 8.95
+      },
+      { <span class="str">"category"</span>: <span class="str">"fiction"</span>,
+        <span class="str">"author"</span>: <span class="str">"Evelyn Waugh"</span>,
+        <span class="str">"title"</span>: <span class="str">"Sword of Honour"</span>,
+        <span class="str">"price"</span>: 12.99
+      },
+      { <span class="str">"category"</span>: <span class="str">"fiction"</span>,
+        <span class="str">"author"</span>: <span class="str">"Herman Melville"</span>,
+        <span class="str">"title"</span>: <span class="str">"Moby Dick"</span>,
+        <span class="str">"isbn"</span>: <span class="str">"0-553-21311-3"</span>,
+        <span class="str">"price"</span>: 8.99
+      },
+      { <span class="str">"category"</span>: <span class="str">"fiction"</span>,
+        <span class="str">"author"</span>: <span class="str">"J. R. R. Tolkien"</span>,
+        <span class="str">"title"</span>: <span class="str">"The Lord of the Rings"</span>,
+        <span class="str">"isbn"</span>: <span class="str">"0-395-19395-8"</span>,
+        <span class="str">"price"</span>: 22.99
+      }
+    ],
+    <span class="str">"bicycle"</span>: {
+      <span class="str">"color"</span>: <span class="str">"red"</span>,
+      <span class="str">"price"</span>: 19.95
+    }
+  }
+}</pre>
+<table><tbody><tr class="evn"><td> <strong>XPath</strong> </td><td> <strong>JSONPath</strong> </td><td> <strong>Result</strong> </td></tr>
+<tr class="odd"><td class="lft"><code>/store/book/author</code> </td><td class="lft"><code>$.store.book[*].author</code> </td><td class="lft">the authors of all books in the store </td></tr>
+<tr class="evn"><td class="lft"><code>//author</code> </td><td class="lft"><code>$..author</code> </td><td class="lft">all authors </td></tr>
+<tr class="odd"><td class="lft"><code>/store/*</code> </td><td class="lft"><code>$.store.*</code> </td><td class="lft">all things in store, which are some books and a red bicycle. </td></tr>
+<tr class="evn"><td class="lft"><code>/store//price</code> </td><td class="lft"><code>$.store..price</code> </td><td class="lft">the price of everything in the store. </td></tr>
+<tr class="odd"><td class="lft"><code>//book[3]</code> </td><td class="lft"><code>$..book[2]</code> </td><td class="lft">the third book </td></tr>
+<tr class="evn"><td class="lft"><code>//book[last()]</code> </td><td class="lft"><code>$..book[(@.length-1)]</code><br>
+<code>$..book[-1:]</code> </td><td class="lft">the last book in order. </td></tr>
+<tr class="odd"><td class="lft"><code>//book[position()&lt;3]</code> </td><td class="lft"><code>$..book[0,1]</code><br>
+<code>$..book[:2]</code> </td><td class="lft">the first two books </td></tr>
+<tr class="evn"><td class="lft"><code>//book[isbn]</code> </td><td class="lft"><code>$..book[?(@.isbn)]</code> </td><td class="lft">filter all books with isbn number </td></tr>
+<tr class="odd"><td class="lft"><code>//book[price&lt;10]</code> </td><td class="lft"><code>$..book[?(@.price&lt;10)]</code> </td><td class="lft">filter all books cheapier than 10 </td></tr>
+<tr class="evn"><td class="lft"><code>//*</code> </td><td class="lft"><code>$..*</code> </td><td class="lft">all Elements in XML document. All members of JSON structure. </td></tr></tbody></table></div>
+ <div class="nocomment" lang="x-wiki">&nbsp;</div>
+<!-- entry --></div>
+<div id="e4" class="entry">
+ <h4 class="unlocked">
+   <span class="right">
+     <span class="noeditbutton" onclick="Archive.startEdit(this.parentNode.parentNode.parentNode.attributes[&#39;id&#39;].value, &#39;entry&#39;);">[edit]</span>
+     <span class="nocommentbutton" onclick="Archive.startEdit(this.parentNode.parentNode.parentNode.attributes[&#39;id&#39;].value, &#39;comment&#39;);">[comment]</span>
+     <span class="noremovebutton" onclick="Archive.removeEntry(this.parentNode.parentNode.parentNode.attributes[&#39;id&#39;].value);">[remove]</span>
+     |<span class="created" title="modified: 2007-08-28">2007-08-22</span>|
+     <span class="eid">e4</span>
+   </span>
+   <a style="text-decoration:none;color:inherit;" href="http://goessner.net/articles/JsonPath/index.html#e4" title="permanent link" rel="bookmark">#</a>
+   <span class="entryTitle">JSONPath implementation</span>
+ </h4>
+ <div class="content wiki" lang="x-wiki"><p>JSONPath is implemented in Javascript for clientside usage and ported over to PHP for use on the server.
+</p>
+<h3> Usage </h3>
+
+<p>All you need to do is downloading either of the files
+</p><ul>
+<li class="u"><a href="http://code.google.com/p/jsonpath/">jsonpath.js</a></li>
+<li class="u"><a href="http://code.google.com/p/jsonpath/">jsonpath.php</a></li></ul>
+<p>include it in your program and use the simple API consisting of one single function.</p>
+<p><code class="syntax_js">jsonPath(obj, expr [, args])</code></p>
+<p><strong>parameters:</strong></p><dl>
+<dt><code class="syntax_js">obj (object|array)</code>:</dt><dd>Object representing the JSON structure.</dd>
+<dt><code class="syntax_js">expr (string)</code>:</dt><dd>JSONPath expression string.</dd>
+<dt><code class="syntax_js">args (object|undefined)</code>:</dt><dd>Object controlling path evaluation and output. Currently only one member is supported.</dd>
+<dt><code class="syntax_js">args.resultType (<span class="str">"VALUE"</span>|<span class="str">"PATH"</span>)</code>:</dt><dd>causes the result to be either matching values <em>(default)</em> or normalized path expressions.</dd></dl>
+<p><strong>return value:</strong> 
+</p><dl>
+<dt><code class="syntax_js">(array|<span class="kwd">false</span>)</code>:</dt><dd>Array holding either values or normalized path expressions matching the input path expression, which can be used for lazy evaluation. <code>false</code> in case of no match.</dd></dl>
+<p><strong>Javascript Example</strong>:
+</p><pre class="code syntax_js"><span class="kwd">var</span> o = { <span class="cmt">/*...*/</span> },  <span class="cmt">// the <span class="str">'store'</span> JSON object from above</span>
+    res1 = jsonPath(o, <span class="str">"$..author"</span>).toJSONString(),
+    res2 = jsonPath(o, <span class="str">"$..author"</span>, {resultType:<span class="str">"PATH"</span>}).toJSONString();</pre>
+<p><strong>PHP example</strong>:</p>
+<p>We need here to convert the JSON string to a PHP array first. I am using <a href="http://mike.teczno.com/">Michal Migurski</a>'s <a href="http://mike.teczno.com/json.html">JSON parser</a> for that. 
+</p><pre class="code syntax_js">require_once(<span class="str">'json.php'</span>);      <span class="cmt">// JSON parser</span>
+require_once(<span class="str">'jsonpath.php'</span>);  <span class="cmt">// JSONPath evaluator</span>
+
+$json = <span class="str">'{ ... }'</span>;  <span class="cmt">// JSON structure from above</span>
+
+$parser = <span class="kwd">new</span> Services_JSON(SERVICES_JSON_LOOSE_TYPE);
+$o = $parser-&gt;decode($json);
+$match1 = jsonPath($o, <span class="str">"$..author"</span>);
+$match2 = jsonPath($o, <span class="str">"$..author"</span>, array(<span class="str">"resultType"</span> =&gt; <span class="str">"PATH"</span>));
+$res1 = $parser-&gt;encode($match1);
+$res2 = $parser-&gt;encode($match2);</pre><p>
+<strong>results</strong></p>
+<p>Both <em>Javascript</em> and <em>PHP</em> example result in the following JSON arrays (as strings):
+</p><pre class="code syntax_js">res1:
+[ <span class="str">"Nigel Rees"</span>,
+  <span class="str">"Evelyn Waugh"</span>,
+  <span class="str">"Herman Melville"</span>,
+  <span class="str">"J. R. R. Tolkien"</span>
+]
+res2:
+[ <span class="str">"$['store']['book'][0]['author']"</span>,
+  <span class="str">"$['store']['book'][1]['author']"</span>,
+  <span class="str">"$['store']['book'][2]['author']"</span>,
+  <span class="str">"$['store']['book'][3]['author']"</span>
+]</pre><p>
+Please note, that the return value of <code>jsonPath</code> is an array, which is also a valid JSON structure. So you might want to apply <code>jsonPath</code> to the resulting structure again or use one of your favorite array methods as <code>sort</code> with it.
+</p></div>
+ <div class="nocomment" lang="x-wiki">&nbsp;</div>
+<!-- entry --></div>
+<div id="e5" class="entry">
+ <h4 class="unlocked">
+   <span class="right">
+     <span class="noeditbutton" onclick="Archive.startEdit(this.parentNode.parentNode.parentNode.attributes[&#39;id&#39;].value, &#39;entry&#39;);">[edit]</span>
+     <span class="nocommentbutton" onclick="Archive.startEdit(this.parentNode.parentNode.parentNode.attributes[&#39;id&#39;].value, &#39;comment&#39;);">[comment]</span>
+     <span class="noremovebutton" onclick="Archive.removeEntry(this.parentNode.parentNode.parentNode.attributes[&#39;id&#39;].value);">[remove]</span>
+     |<span class="created" title="modified: 2007-08-31">2007-08-24</span>|
+     <span class="eid">e5</span>
+   </span>
+   <a style="text-decoration:none;color:inherit;" href="http://goessner.net/articles/JsonPath/index.html#e5" title="permanent link" rel="bookmark">#</a>
+   <span class="entryTitle">Issues</span>
+ </h4>
+ <div class="content wiki" lang="x-wiki"><ul>
+<li class="u">Currently only single quotes allowed inside of JSONPath expressions.</li>
+<li class="u">Script expressions inside of JSONPath locations are currently not recursively evaluated by <code>jsonPath</code>. Only the global <code>$</code> and local <code>@</code> symbols are expanded by a simple regular expression.</li>
+<li class="u">An alternative for <code>jsonPath</code> to return <code>false</code> in case of <em>no match</em> may be to return an empty array in future.
+</li></ul></div>
+ <div class="nocomment" lang="x-wiki">&nbsp;</div>
+<!-- entry --></div>
+</div> <!-- content -->
+    <div id="right">
+      <div id="googsearch" class="block light">
+        <h4 class="medium">» Search ..</h4>
+<!-- SiteSearch Google -->
+<form method="get" action="http://www.google.de/custom" target="_top">
+<table border="0" bgcolor="#cccccc">
+<tbody><tr><td nowrap="nowrap" valign="top" align="left" height="32">
+
+<br>
+<input type="hidden" name="domains" value="goessner.net">
+<input type="text" name="q" size="24" maxlength="255">
+</td></tr>
+<tr>
+<td nowrap="nowrap">
+<table>
+<tbody><tr>
+<td>
+<input type="radio" name="sitesearch">
+<font size="-1" color="#000000">Web</font>
+</td>
+<td>
+<input type="radio" name="sitesearch" value="goessner.net" checked="checked">
+<font size="-1" color="#000000">goessner.net</font>
+</td>
+</tr>
+</tbody></table>
+<input type="submit" name="sa" value="Google Search">
+<input type="hidden" name="client" value="pub-4579615353600997">
+<input type="hidden" name="forid" value="1">
+<input type="hidden" name="channel" value="0798163864">
+<input type="hidden" name="ie" value="ISO-8859-1">
+<input type="hidden" name="oe" value="ISO-8859-1">
+<input type="hidden" name="safe" value="active">
+<input type="hidden" name="flav" value="0000">
+<input type="hidden" name="sig" value="D5-SKdOlKxl20D6v">
+<input type="hidden" name="cof" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:336699;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;FORID:1;">
+<input type="hidden" name="hl" value="en">
+</td></tr></tbody></table>
+</form>
+<!-- SiteSearch Google -->
+      </div>
+      <div id="tocbox" class="block light">
+        <h4 class="medium">» Inhalt ..</h4>
+      <div id="a0" onkeyup="122">
+  <a href="http://goessner.net/index.html">Home</a>
+  <div id="a2" title="Lehre">
+    <a href="http://goessner.net/learn/index.html">Lehre</a>
+    <div id="a4" class="hidden" title="TM">
+      <a href="http://goessner.net/learn/tm/index.html">TM</a>
+      <div id="a11" title="Aufgaben">
+        <a href="http://goessner.net/learn/tm/exercises/index.html">Aufgaben</a>
+        <div id="a12" class="hidden" title="Klausur 2005-07-06 II">
+          <a href="http://goessner.net/learn/tm/exercises/exm/2005-07-06-II/index.html">Klausur 2005-07-06 II</a>
+        </div>
+        <div id="a13" class="hidden" title="Klausur 2005-07-06 I">
+          <a href="http://goessner.net/learn/tm/exercises/exm/2005-07-06-I/index.html">Klausur 2005-07-06 I</a>
+        </div>
+        <div id="a54" class="hidden" title="Schnittgr&#65533;ssen">
+          <a href="http://goessner.net/learn/tm/exercises/schnittgr/index.html">Schnittgr&#65533;ssen</a>
+        </div>
+        <div id="a66" class="hidden" title="St&#65533;be">
+          <a href="http://goessner.net/learn/tm/exercises/staebe/index.html">St&#65533;be</a>
+        </div>
+        <div id="a67" class="hidden" title="Fl&#65533;chenmomente">
+          <a href="http://goessner.net/learn/tm/exercises/flaechenmom/index.html">Fl&#65533;chenmomente</a>
+        </div>
+        <div id="a68" class="hidden" title="Biegebalken">
+          <a href="http://goessner.net/learn/tm/exercises/biegebalken/index.html">Biegebalken</a>
+        </div>
+        <div id="a69" class="hidden" title="Schub">
+          <a href="http://goessner.net/learn/tm/exercises/schub/index.html">Schub</a>
+        </div>
+        <div id="a24" title="D&#39;Alembert&#39;sches Prinzip" class="hidden">
+          <a href="http://goessner.net/learn/tm/exercises/dalembert/index.html">D'Alembert</a>
+        </div>
+        <div id="a39" class="hidden" title="Arbeits- und Energieerhaltungssatz">
+          <a href="http://goessner.net/learn/tm/exercises/arbeit/index.html">Arbeit</a>
+        </div>
+        <div id="a48" class="hidden" title="Klausur 2006-02-01 II">
+          <a href="http://goessner.net/learn/tm/exercises/exm/2006-02-01-II/index.html">2006-02-01-II</a>
+        </div>
+        <div id="a49" class="hidden" title="Aufgaben HAP">
+          <a href="http://goessner.net/learn/tm/exercises/examination/index.html">Aufgaben HAP</a>
+        </div>
+        <div id="a75" class="hidden" title="Einzelk&#65533;rper">
+          <a href="http://goessner.net/learn/tm/exercises/einzelkoerper/index.html">Einzelk&#65533;rper</a>
+        </div>
+        <div id="a76" class="hidden" title="Tragwerk">
+          <a href="http://goessner.net/learn/tm/exercises/tragwerk/index.html">Tragwerk</a>
+        </div>
+        <div id="a77" class="hidden" title="Fachwerk">
+          <a href="http://goessner.net/learn/tm/exercises/fachwerk/index.html">Fachwerk</a>
+        </div>
+        <div id="a78" class="hidden" title="Haftung">
+          <a href="http://goessner.net/learn/tm/exercises/haftung/index.html">Haftung</a>
+        </div>
+        <div id="a79" class="hidden" title="Schwerpunkt">
+          <a href="http://goessner.net/learn/tm/exercises/schwerpunkt/index.html">Schwerpunkt</a>
+        </div>
+        <div id="a94" class="hidden" title="Kinematik">
+          <a href="http://goessner.net/learn/tm/exercises/kinematik/index.html">Kinematik</a>
+        </div>
+      </div>
+      <div id="a28" class="hidden" title="Skripte">
+        <a href="http://goessner.net/learn/tm/skripte/index.html">Skripte</a>
+        <div id="a29" class="hidden" title="Statik">
+          <a href="http://goessner.net/learn/tm/skripte/statik/index.html">Statik</a>
+          <div id="a32" class="hidden" title="Der belastete Einzelk&#65533;rper">
+            <a href="http://goessner.net/learn/tm/skripte/statik/belE/index.html">Einzelk&#65533;rper</a>
+          </div>
+          <div id="a33" class="hidden" title="Einf&#65533;hrung Statik">
+            <a href="http://goessner.net/learn/tm/skripte/statik/einf/index.html">Einf&#65533;hrung</a>
+          </div>
+          <div id="a34" class="hidden" title="Grundlagen Statik">
+            <a href="http://goessner.net/learn/tm/skripte/statik/grun/index.html">Grundlagen</a>
+          </div>
+          <div id="a35" class="hidden" title="Haftung und Reibung">
+            <a href="http://goessner.net/learn/tm/skripte/statik/haft/index.html">Haftung</a>
+          </div>
+          <div id="a36" class="hidden" title="Literatur Statik">
+            <a href="http://goessner.net/learn/tm/skripte/statik/lit/index.html">Literatur</a>
+          </div>
+          <div id="a37" class="hidden" title="Schwerpunkt">
+            <a href="http://goessner.net/learn/tm/skripte/statik/schw/index.html">Schwerpunkt</a>
+          </div>
+          <div id="a38" class="hidden" title="System starrer K&#65533;rper">
+            <a href="http://goessner.net/learn/tm/skripte/statik/sys/index.html">Starrk&#65533;rper</a>
+          </div>
+        </div>
+        <div id="a55" class="hidden" title="Elastostatik">
+          <a href="http://goessner.net/learn/tm/skripte/elastostatik/index.html">Elastostatik</a>
+          <div id="a56" class="hidden" title="Biegung">
+            <a href="http://goessner.net/learn/tm/skripte/elastostatik/biegung/index.html">Biegung</a>
+          </div>
+          <div id="a57" class="hidden" title="Ebener Spannungszustand">
+            <a href="http://goessner.net/learn/tm/skripte/elastostatik/ebener_spannungszustand/index.html">Spannungszustand</a>
+          </div>
+          <div id="a59" class="hidden" title="Einf&#65533;hrung">
+            <a href="http://goessner.net/learn/tm/skripte/elastostatik/einfuehrung/index.html">Einf&#65533;hrung</a>
+          </div>
+          <div id="a60" class="hidden" title="Fl&#65533;chenmomente zweiten Grades">
+            <a href="http://goessner.net/learn/tm/skripte/elastostatik/flaechentraegheitsmomente/index.html">Fl&#65533;chenmomente</a>
+          </div>
+          <div id="a61" class="hidden" title="Schnittgr&#65533;ssen">
+            <a href="http://goessner.net/learn/tm/skripte/elastostatik/schnittgroessen/index.html">Schnittgr&#65533;ssen</a>
+          </div>
+          <div id="a62" class="hidden" title="Schub und Scherung">
+            <a href="http://goessner.net/learn/tm/skripte/elastostatik/schub/index.html">Schub</a>
+          </div>
+          <div id="a63" class="hidden" title="Spannung">
+            <a href="http://goessner.net/learn/tm/skripte/elastostatik/spannung/index.html">Spannung</a>
+          </div>
+          <div id="a64" class="hidden" title="Zug/- Druckstab">
+            <a href="http://goessner.net/learn/tm/skripte/elastostatik/zugdruckstab/index.html">Zug-/Druckstab</a>
+          </div>
+          <div id="a71" class="hidden" title="Zusammengesetzte Beanspruchungen">
+            <a href="http://goessner.net/learn/tm/skripte/elastostatik/zusammenbeanspruch/index.html">Zusammengesetzte Beanspruchungen</a>
+          </div>
+        </div>
+        <div id="a40" title="Kinematik und Kinetik" class="hidden">
+          <a href="http://goessner.net/learn/tm/skripte/kinematik/index.html">Kinematik und Kinetik</a>
+          <div id="a41" title="Kinematik des Massenpunktes" class="hidden">
+            <a href="http://goessner.net/learn/tm/skripte/kinematik/massenpunkt/index.html">Kinematik des Massenpunktes</a>
+          </div>
+          <div id="a42" title="Kinematik des starren K&#65533;rpers" class="hidden">
+            <a href="http://goessner.net/learn/tm/skripte/kinematik/starrer_koerper/index.html">Kinematik des starren K&#65533;rpers</a>
+          </div>
+          <div id="a43" title="Kinetik" class="hidden">
+            <a href="http://goessner.net/learn/tm/skripte/kinematik/kinetik/index.html">Kinetik</a>
+          </div>
+          <div id="a44" title="Arbeitssatz, Energiesatz" class="hidden">
+            <a href="http://goessner.net/learn/tm/skripte/kinematik/arbeitsenergie/index.html">Arbeitssatz, Energiesatz</a>
+          </div>
+          <div id="a45" title="Impuls und Impulsmoment" class="hidden">
+            <a href="http://goessner.net/learn/tm/skripte/kinematik/impuls/index.html">Impuls und Impulsmoment</a>
+          </div>
+          <div id="a47" class="hidden" title="Einf&#65533;hrung der Kinematik">
+            <a href="http://goessner.net/learn/tm/skripte/kinematik/einfuerung/index.html">Einf&#65533;hrung</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="a5" class="hidden" title="INP">
+      <a href="http://goessner.net/learn/inp/index.html">INP</a>
+      <div id="a7" class="hidden" title="L&#65533;sungen der &#65533;bungsaufgaben">
+        <a href="http://goessner.net/learn/inp/solution/index.html">L&#65533;sung</a>
+        <div id="a8" class="hidden" title="JS (03)">
+          <a href="http://goessner.net/learn/inp/solution/js/03/index.html">JS (03)</a>
+        </div>
+        <div id="a9" class="hidden" title="JS (04)">
+          <a href="http://goessner.net/learn/inp/solution/js/04/index.html">JS (04)</a>
+        </div>
+        <div id="a10" class="hidden" title="JS (05)">
+          <a href="http://goessner.net/learn/inp/solution/js/05/index.html">JS (05)</a>
+        </div>
+        <div id="a14" class="hidden" title="JS (06)">
+          <a href="http://goessner.net/learn/inp/solution/js/06/index.html">JS (06)</a>
+        </div>
+        <div id="a18" class="hidden" title="JS (07)">
+          <a href="http://goessner.net/learn/inp/solution/js/07/index.html">JS (07)</a>
+        </div>
+      </div>
+      <div id="a22" class="hidden" title="Aufgaben">
+        <a href="http://goessner.net/learn/inp/exercises/index.html">Aufgaben</a>
+      </div>
+      <div id="a58" class="hidden" title="INP - SS-2006">
+        <a href="http://goessner.net/learn/inp/2006/index.html">SS-2006</a>
+        <div id="a65" class="hidden" title="INP (1)">
+          <a href="http://goessner.net/learn/inp/2006/lec01/index.html">INP (1)</a>
+        </div>
+        <div id="a70" class="hidden" title="Excercise 02">
+          <a href="http://goessner.net/learn/inp/2006/exc02/index.html">Exc (2)</a>
+        </div>
+        <div id="a21" class="hidden" title="Tmp">
+          <a href="http://goessner.net/learn/inp/2006/lec02/index.html">INP (2)</a>
+        </div>
+        <div id="a73" class="hidden" title="INP (3)">
+          <a href="http://goessner.net/learn/inp/2006/lec03/index.html">INP (3)</a>
+        </div>
+        <div id="a74" class="hidden" title="Excercise 03">
+          <a href="http://goessner.net/learn/inp/2006/exc03/index.html">Exc (03)</a>
+        </div>
+        <div id="a80" class="hidden" title="INP (4)">
+          <a href="http://goessner.net/learn/inp/2006/lec04/index.html">INP (4)</a>
+        </div>
+        <div id="a81" class="hidden" title="Exercise 04">
+          <a href="http://goessner.net/learn/inp/2006/exc04/index.html">Exc (4)</a>
+        </div>
+        <div id="a82" class="hidden" title="Excercise 05">
+          <a href="http://goessner.net/learn/inp/2006/exc05/index.html">Exc (05)</a>
+        </div>
+        <div id="a83" class="hidden" title="INP (05)">
+          <a href="http://goessner.net/learn/inp/2006/lec05/index.html">INP (05)</a>
+        </div>
+        <div id="a84" class="hidden" title="Exercise 06">
+          <a href="http://goessner.net/learn/inp/2006/exc06/index.html">Exc (06)</a>
+        </div>
+        <div id="a85" class="hidden" title="INP (06)">
+          <a href="http://goessner.net/learn/inp/2006/lec06/index.html">INP (06)</a>
+        </div>
+        <div id="a86" class="hidden" title="Excercise 07">
+          <a href="http://goessner.net/learn/inp/2006/exc07/index.html">Exc 07</a>
+        </div>
+        <div id="a87" class="hidden" title="INP (07)">
+          <a href="http://goessner.net/learn/inp/2006/lec07/index.html">INP (07)</a>
+        </div>
+        <div id="a91" class="hidden" title="INP (08)">
+          <a href="http://goessner.net/learn/inp/2006/lec08/index.html">INP (08)</a>
+        </div>
+        <div id="a93" class="hidden" title="Excercise 08">
+          <a href="http://goessner.net/learn/inp/2006/exc08/index.html">Exc (08)</a>
+        </div>
+        <div id="a95" class="hidden" title="INP (09)">
+          <a href="http://goessner.net/learn/inp/2006/lec09/index.html">INP (09)</a>
+        </div>
+        <div id="a96" class="hidden" title="Exercise 09">
+          <a href="http://goessner.net/learn/inp/2006/exc09/index.html">Exc09</a>
+        </div>
+      </div>
+    </div>
+    <div id="a6" class="hidden" title="MWT">
+      <a href="http://goessner.net/learn/mwt/index.html">MWT</a>
+      <div id="a25" class="hidden" title="WS-2005">
+        <a href="http://goessner.net/learn/mwt/2005/index.html">WS-2005</a>
+        <div id="a26" class="hidden" title="WebTech (1)">
+          <a href="http://goessner.net/learn/mwt/2005/lec01/index.html">WebTech (1)</a>
+        </div>
+        <div id="a27" class="hidden" title="WebTech (2)">
+          <a href="http://goessner.net/learn/mwt/2005/lec02/index.html">WebTech (2)</a>
+        </div>
+        <div id="a31" class="hidden" title="WebTech (3)">
+          <a href="http://goessner.net/learn/mwt/2005/lec03/index.html">WebTech (3)</a>
+        </div>
+        <div id="a50" class="hidden" title="WebTech (4)">
+          <a href="http://goessner.net/learn/mwt/2005/lec04/index.html">WebTech (4)</a>
+        </div>
+        <div id="a52" class="hidden" title="WebTech (5)">
+          <a href="http://goessner.net/learn/mwt/2005/lec05/index.html">WebTech (5)</a>
+        </div>
+        <div id="a53" class="hidden" title="WebTech (7)">
+          <a href="http://goessner.net/learn/mwt/2005/lec07/index.html">WebTech (7)</a>
+        </div>
+      </div>
+    </div>
+    <div id="a92" class="hidden" title="Documentation Wikieditor">
+      <a href="http://goessner.net/learn/documentation/index.html">Documentation Wikieditor</a>
+    </div>
+    <div id="a98" title="Dynamik">
+      <a href="http://goessner.net/learn/dynamik/index.html">Dynamik</a>
+      <div id="a99" class="hidden" title="Lecture 01">
+        <a href="http://goessner.net/learn/dynamik/lec01/index.html">Lecture 01</a>
+      </div>
+      <div id="a100" class="hidden" title="Lecture 02">
+        <a href="http://goessner.net/learn/dynamik/lec02/index.html">Lecture 02</a>
+      </div>
+      <div id="a101" class="hidden" title="Lecture 03">
+        <a href="http://goessner.net/learn/dynamik/lec03/index.html">Lecture 03</a>
+      </div>
+      <div id="a102" class="hidden" title="Lecture 04">
+        <a href="http://goessner.net/learn/dynamik/lec04/index.html">Lecture 04</a>
+      </div>
+      <div id="a103" class="hidden" title="Exercise 01">
+        <a href="http://goessner.net/learn/dynamik/exc01/index.html">Exercise 01</a>
+      </div>
+      <div id="a104" class="hidden" title="Excercise 02">
+        <a href="http://goessner.net/learn/dynamik/exc02/index.html">Excercise 02</a>
+      </div>
+      <div id="a105" class="hidden" title="Excercise 03">
+        <a href="http://goessner.net/learn/dynamik/exc03/index.html">Excercise 03</a>
+      </div>
+      <div id="a106" class="hidden" title="Excercise 04">
+        <a href="http://goessner.net/learn/dynamik/exc04/index.html">Excercise 04</a>
+      </div>
+      <div id="a109" class="hidden" title="Lecture 05">
+        <a href="http://goessner.net/learn/dynamik/lec05/index.html">Lecture 05</a>
+      </div>
+      <div id="a110" class="hidden" title="Lecture 06">
+        <a href="http://goessner.net/learn/dynamik/lec06/index.html">Lecture 06</a>
+      </div>
+      <div id="a111" class="hidden" title="Exercise 05">
+        <a href="http://goessner.net/learn/dynamik/exc05/index.html">Exercise 05</a>
+      </div>
+      <div id="a112" class="hidden" title="Exercise 06">
+        <a href="http://goessner.net/learn/dynamik/exc06/index.html">Exercise 06</a>
+      </div>
+      <div id="a113" class="hidden" title="Lecture 07">
+        <a href="http://goessner.net/learn/dynamik/lec07/index.html">Lecture 07</a>
+      </div>
+      <div id="a114" class="hidden" title="Excercise 07">
+        <a href="http://goessner.net/learn/dynamik/exc07/index.html">Excercise 07</a>
+      </div>
+      <div id="a115" class="hidden" title="Lecture 08">
+        <a href="http://goessner.net/learn/dynamik/lec08/index.html">Lecture 08</a>
+      </div>
+      <div id="a116" class="hidden" title="Exercise 08">
+        <a href="http://goessner.net/learn/dynamik/exc08/index.html">Exercise 08</a>
+      </div>
+      <div id="a117" class="hidden" title="Lecture 09">
+        <a href="http://goessner.net/learn/dynamik/lec09/index.html">Lecture 09</a>
+      </div>
+      <div id="a118" class="hidden" title="Exercise 09">
+        <a href="http://goessner.net/learn/dynamik/exc09/index.html">Exercise 09</a>
+      </div>
+      <div id="a119" class="hidden" title="Lecture 10">
+        <a href="http://goessner.net/learn/dynamik/lec10/index.html">Lecture 10</a>
+      </div>
+      <div id="a120" class="hidden" title="Exercise 10">
+        <a href="http://goessner.net/learn/dynamik/exc10/index.html">Exercise 10</a>
+      </div>
+    </div>
+    <div id="a107" class="hidden" title="Praxisseminar">
+      <a href="http://goessner.net/learn/praxisseminar/index.html">Praxisseminar</a>
+      <div id="a108" class="hidden" title="Praxisseminar 2006/07">
+        <a href="http://goessner.net/learn/praxisseminar/2006/index.html">2006/07</a>
+      </div>
+    </div>
+  </div>
+  <div id="a15" title="Articles">
+    <a href="http://goessner.net/articles/index.html">Articles</a>
+    <div id="a16" title="DOM Events">
+      <a href="http://goessner.net/articles/domevents/index.html">DOM Events</a>
+    </div>
+    <div id="a17" title="Wiky: A Bidirectional Markup Converter">
+      <a href="http://goessner.net/articles/wiky/">Wiky</a>
+    </div>
+    <div id="a20" class="hidden" title="Dragging the Box Model">
+      <a href="http://goessner.net/articles/drag/">Dragging the Box Model</a>
+    </div>
+    <div id="a23" title="2D Vectors">
+      <a href="http://goessner.net/articles/vectormath/">2D Vectors</a>
+    </div>
+    <div id="a30" title="Slideous">
+      <a href="http://goessner.net/articles/slideous/">Slideous</a>
+    </div>
+    <div id="a46" title="JsonT - Transforming JSON">
+      <a href="http://goessner.net/articles/jsont/">JsonT</a>
+    </div>
+    <div id="a121" title="JSONPath - XPath for JSON">
+      <a href="http://goessner.net/articles/jsonpath/">JSONPath</a>
+      <div id="a121" class="hidden" title="Lecture 11">
+        <a href="http://goessner.net/learn/informatik/lec11/index.html">Lecture 11</a>
+      </div>
+    </div>
+    <div id="a51" class="hidden" title="A Pragmatic Approach of XML/JSON Conversion">
+      <a href="http://goessner.net/articles/xmljson/index.html">Xml-Json</a>
+    </div>
+    <div id="a88" title="SVG">
+      <a href="http://goessner.net/articles/svg/index.html">SVG</a>
+      <div id="a89" class="hidden" title="The Beauty of SVG Fractals">
+        <a href="http://goessner.net/articles/svg/fractals/index.html">Fractals</a>
+      </div>
+      <div id="a90" class="hidden" title="Lissajou Curves">
+        <a href="http://goessner.net/articles/svg/lissajou/index.html">Lissajou</a>
+      </div>
+    </div>
+  </div>
+  <div id="">
+    <a href="http://goessner.net/download/">Download</a>
+  </div>
+  <div id="a1" title="Administration">
+    <a href="http://goessner.net/admin/index.html">Admin</a>
+    <div id="a19" class="hidden" title="Test Area">
+      <a href="http://goessner.net/admin/test/index.html">Test Area</a>
+    </div>
+  </div>
+  <div id="a72" class="hidden" title="ToDo">
+    <a href="http://goessner.net/todo/index.html">
+  </a></div><a href="http://goessner.net/todo/index.html">
+  </a><div id="a97" class="hidden" title="The Band"><a href="http://goessner.net/todo/index.html">
+    </a><a href="http://goessner.net/band/index.html">
+  </a></div><a href="http://goessner.net/band/index.html">
+  </a><div id="a3" title="Info"><a href="http://goessner.net/band/index.html">
+    </a><a href="http://goessner.net/info/index.html">Info</a>
+  </div></div></div>
+      <div id="googads" class="block light" style="text-align:center">
+<script type="text/javascript"><!--//--><![CDATA[//><!--
+google_ad_client = "pub-4579615353600997";
+google_ad_width = 180;
+google_ad_height = 150;
+google_ad_format = "180x150_as";
+google_ad_type = "text";
+google_ad_channel ="6287811822";
+google_color_border = "CCCCCC";
+google_color_bg = "CCCCCC";
+google_color_link = "000000";
+google_color_text = "333333";
+google_color_url = "666666";
+//-->]]></script>
+<script type="text/javascript" src="./JSONPath_files/show_ads.js.download"> </script><ins id="aswift_0_expand" style="display:inline-table;border:none;height:150px;margin:0;padding:0;position:relative;visibility:visible;width:180px;background-color:transparent"><ins id="aswift_0_anchor" style="display:block;border:none;height:150px;margin:0;padding:0;position:relative;visibility:visible;width:180px;background-color:transparent"><iframe width="180" height="150" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;width:180px;height:150px;" src="./JSONPath_files/saved_resource.html"></iframe></ins></ins>
+      </div>
+      <div class="block light" style="font-size:100%">
+        <h4 class="medium">» comments ..</h4>
+		<div id="commentbox" style="width:100%; height:16em; overflow:auto;"> <div id="modified" count="100" max="100">
+  <ins cite="./JSONPath_files/89.248.145.103" datetime="2012-07-27T09:39:56" class="editEnt">
+    <a href="http://goessner.net/learn/tm/skripte/statik/schw/index.html#e10" title="Linienschwerpunktsbeispiele">Schwerpunkt</a>
+  </ins>
+  <ins cite="./JSONPath_files/122.82.230.112" datetime="2012-07-23T13:53:02" class="newEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e16" title="Excercise 02-#e16">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/114.32.37.135" datetime="2012-06-15T09:24:14" class="newEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e15" title="Excercise 02-#e15">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/143.93.249.1" datetime="2012-06-13T11:29:59" class="newEnt">
+    <a href="http://goessner.net/learn/tm/exercises/arbeit/index.html#e14" title="Arbeits- und Energieerhaltungssatz-#e14">Arbeits- und Energieerhaltungssatz</a>
+  </ins>
+  <ins cite="./JSONPath_files/114.32.37.135" datetime="2012-06-07T05:14:07" class="newEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e14" title="Excercise 02-#e14">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/193.25.26.217" datetime="2012-06-06T13:06:19" class="editEnt">
+    <a href="http://goessner.net/learn/web/index.html#e2" title="Themen Ausarbeitung/Pr&#65533;sentation">Webtechnologien</a>
+  </ins>
+  <ins cite="./JSONPath_files/193.25.26.217" datetime="2012-05-30T14:24:16" class="editEnt">
+    <a href="http://goessner.net/learn/web/index.html#e2" title="Themen Ausarbeitung/Pr&#65533;sentation">Webtechnologien</a>
+  </ins>
+  <ins cite="./JSONPath_files/122.180.77.178" datetime="2012-05-25T11:02:05" class="newEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e13" title="Excercise 02-#e13">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/193.25.19.161" datetime="2012-05-23T12:02:45" class="editEnt">
+    <a href="http://goessner.net/learn/web/index.html#e2" title="Themen Ausarbeitung/Pr&#65533;sentation">Webtechnologien</a>
+  </ins>
+  <ins cite="./JSONPath_files/193.25.19.161" datetime="2012-05-23T12:01:37" class="editEnt">
+    <a href="http://goessner.net/learn/web/index.html#e2" title="Themen Ausarbeitung/Pr&#65533;sentation">Webtechnologien</a>
+  </ins>
+  <ins cite="./JSONPath_files/193.136.19.132" datetime="2012-05-16T17:10:09" class="newEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e12" title="Excercise 02-#e12">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/193.25.19.161" datetime="2012-05-09T12:08:19" class="editEnt">
+    <a href="http://goessner.net/learn/web/index.html#e2" title="Themen Ausarbeitung/Pr&#65533;sentation">Webtechnologien</a>
+  </ins>
+  <ins cite="./JSONPath_files/193.25.19.161" datetime="2012-05-09T12:04:38" class="editEnt">
+    <a href="http://goessner.net/learn/web/index.html#e2" title="Themen Ausarbeitung/Pr&#65533;sentation">Webtechnologien</a>
+  </ins>
+  <ins cite="./JSONPath_files/92.201.78.142" datetime="2012-05-02T10:11:00" class="editEnt">
+    <a href="http://goessner.net/learn/web/lec02/index.html#e20" title="Links zum Thema">Lecture 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/92.201.78.142" datetime="2012-05-02T10:09:00" class="editEnt">
+    <a href="http://goessner.net/learn/web/lec02/index.html#e20" title="Links zum Thema">Lecture 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/92.201.78.142" datetime="2012-05-02T09:05:46" class="editEnt">
+    <a href="http://goessner.net/learn/web/lec02/index.html#e6" title="Beispiel">Lecture 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/92.201.78.142" datetime="2012-05-02T09:05:09" class="editEnt">
+    <a href="http://goessner.net/learn/web/lec02/index.html#e6" title="Beispiel">Lecture 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/92.201.78.142" datetime="2012-05-02T08:57:12" class="editEnt">
+    <a href="http://goessner.net/learn/web/lec02/index.html#e6" title="Beispiel">Lecture 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/92.201.78.142" datetime="2012-05-02T08:50:55" class="editEnt">
+    <a href="http://goessner.net/learn/web/lec02/index.html#e6" title="Beispiel">Lecture 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/92.201.78.142" datetime="2012-05-02T08:50:41" class="editEnt">
+    <a href="http://goessner.net/learn/web/lec02/index.html#e5" title="Grundger&#65533;st">Lecture 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/92.201.78.142" datetime="2012-05-02T08:50:12" class="editEnt">
+    <a href="http://goessner.net/learn/web/lec02/index.html#e5" title="Grundger&#65533;st">Lecture 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/92.201.78.142" datetime="2012-05-02T08:49:58" class="editEnt">
+    <a href="http://goessner.net/learn/web/lec02/index.html#e6" title="Beispiel">Lecture 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/92.201.78.142" datetime="2012-05-02T08:49:38" class="editEnt">
+    <a href="http://goessner.net/learn/web/lec02/index.html#e5" title="Grundger&#65533;st">Lecture 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/92.201.36.88" datetime="2012-05-02T00:24:45" class="editEnt">
+    <a href="http://goessner.net/learn/web/index.html#e2" title="Themen Ausarbeitung/Pr&#65533;sentation">Webtechnologien</a>
+  </ins>
+  <ins cite="./JSONPath_files/193.25.19.161" datetime="2012-04-18T13:07:13" class="editEnt">
+    <a href="http://goessner.net/learn/web/index.html#e2" title="Themen Ausarbeitung/Pr&#65533;sentation">Webtechnologien</a>
+  </ins>
+  <ins cite="./JSONPath_files/193.25.19.161" datetime="2012-04-18T13:04:08" class="editEnt">
+    <a href="http://goessner.net/learn/web/index.html#e2" title="Themen Ausarbeitung/Pr&#65533;sentation">Webtechnologien</a>
+  </ins>
+  <ins cite="./JSONPath_files/193.25.19.161" datetime="2012-04-18T13:00:31" class="editEnt">
+    <a href="http://goessner.net/learn/web/index.html#e2" title="Themen Ausarbeitung/Pr&#65533;sentation">Webtechnologien</a>
+  </ins>
+  <ins cite="./JSONPath_files/92.201.123.122" datetime="2012-04-18T11:19:41" class="editEnt">
+    <a href="http://goessner.net/learn/web/index.html#e2" title="Themen Ausarbeitung/Pr&#65533;sentation">Webtechnologien</a>
+  </ins>
+  <ins cite="./JSONPath_files/92.201.123.122" datetime="2012-04-18T11:05:41" class="editEnt">
+    <a href="http://goessner.net/learn/web/index.html#e2" title="Themen Ausarbeitung/Pr&#65533;sentation">Webtechnologien</a>
+  </ins>
+  <ins cite="./JSONPath_files/92.201.123.122" datetime="2012-04-18T11:01:29" class="editEnt">
+    <a href="http://goessner.net/learn/web/index.html#e2" title="Themen Ausarbeitung/Pr&#65533;sentation">Webtechnologien</a>
+  </ins>
+  <ins cite="./JSONPath_files/92.201.123.122" datetime="2012-04-18T11:00:51" class="editEnt">
+    <a href="http://goessner.net/learn/web/index.html#e2" title="Themen Ausarbeitung/Pr&#65533;sentation">Webtechnologien</a>
+  </ins>
+  <ins cite="./JSONPath_files/92.201.123.122" datetime="2012-04-18T10:43:35" class="editEnt">
+    <a href="http://goessner.net/learn/web/index.html#e2" title="Themen Ausarbeitung/Pr&#65533;sentation">Webtechnologien</a>
+  </ins>
+  <ins cite="./JSONPath_files/92.201.216.1" datetime="2012-04-04T10:38:46" class="editEnt">
+    <a href="http://goessner.net/learn/web/lec01/index.html#e25" title="Web 2.0 - Beispiel">Lecture 01</a>
+  </ins>
+  <ins cite="./JSONPath_files/92.201.216.1" datetime="2012-04-04T10:37:40" class="editEnt">
+    <a href="http://goessner.net/learn/web/lec01/index.html#e24" title="Aktuelle Webanwendung - Web 2.0">Lecture 01</a>
+  </ins>
+  <ins cite="./JSONPath_files/92.201.216.1" datetime="2012-04-04T10:28:35" class="editEnt">
+    <a href="http://goessner.net/learn/web/lec01/index.html#e18" title="Webstandards  - W3C">Lecture 01</a>
+  </ins>
+  <ins cite="./JSONPath_files/92.201.216.1" datetime="2012-04-04T10:21:00" class="editEnt">
+    <a href="http://goessner.net/learn/web/lec01/index.html#e9" title="IP-Adressen">Lecture 01</a>
+  </ins>
+  <ins cite="./JSONPath_files/92.201.216.1" datetime="2012-04-04T10:14:53" class="editEnt">
+    <a href="http://goessner.net/learn/web/lec01/index.html#e3" title="Literatur / Software">Lecture 01</a>
+  </ins>
+  <ins cite="./JSONPath_files/92.201.216.1" datetime="2012-04-04T09:35:09" class="editEnt">
+    <a href="http://goessner.net/learn/web/index.html#e2" title="Themen Ausarbeitung/Pr&#65533;sentation">Webtechnologien</a>
+  </ins>
+  <ins cite="./JSONPath_files/92.201.216.1" datetime="2012-04-04T09:34:50" class="editEnt">
+    <a href="http://goessner.net/learn/web/index.html#e2" title="Themen Ausarbeitung/Pr&#65533;sentation">Webtechnologien</a>
+  </ins>
+  <ins cite="./JSONPath_files/79.233.114.220" datetime="2012-03-20T19:01:34" class="editCmt">
+    <a href="http://goessner.net/learn/dynamik/exc09/index.html#e2" title="10.1 Schwungscheibe">Exercise 09</a>
+  </ins>
+  <ins cite="./JSONPath_files/84.137.124.94" datetime="2012-02-10T12:46:11" class="editEnt">
+    <a href="http://goessner.net/learn/dynamik/exc05/index.html#e15" title="new">Exercise 05</a>
+  </ins>
+  <ins cite="./JSONPath_files/84.137.124.94" datetime="2012-02-10T12:45:52" class="editEnt">
+    <a href="http://goessner.net/learn/dynamik/exc05/index.html#e15" title="new">Exercise 05</a>
+  </ins>
+  <ins cite="./JSONPath_files/103.22.237.216" datetime="2012-02-03T08:38:25" class="newEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e11" title="Excercise 02-#e11">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/178.4.227.240" datetime="2012-01-28T12:14:34" class="newEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e10" title="Excercise 02-#e10">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/193.25.18.119" datetime="2012-01-23T16:01:41" class="removeEnt">
+    <a href="http://goessner.net/learn/dynamik/exc01/index.html#e12" title="Exercise 01-#e12">Exercise 01</a>
+  </ins>
+  <ins cite="./JSONPath_files/78.94.165.219" datetime="2012-01-11T16:29:49" class="newEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e9" title="Excercise 02-#e9">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/79.203.56.252" datetime="2011-12-24T13:52:26" class="newEnt">
+    <a href="http://goessner.net/learn/dynamik/exc01/index.html#e12" title="Exercise 01-#e12">Exercise 01</a>
+  </ins>
+  <ins cite="./JSONPath_files/79.203.56.252" datetime="2011-12-24T13:50:36" class="removeEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e9" title="Excercise 02-#e9">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/79.203.56.252" datetime="2011-12-24T13:50:27" class="newEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e9" title="Excercise 02-#e9">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/91.50.100.203" datetime="2011-12-21T21:02:34" class="newEnt">
+    <a href="http://goessner.net/learn/dynamik/exc01/index.html#e11" title="Exercise 01-#e11">Exercise 01</a>
+  </ins>
+  <ins cite="./JSONPath_files/87.123.174.150" datetime="2011-12-15T14:31:21" class="newEnt">
+    <a href="http://goessner.net/learn/dynamik/exc01/index.html#e10" title="Exercise 01-#e10">Exercise 01</a>
+  </ins>
+  <ins cite="./JSONPath_files/80.144.151.181" datetime="2011-12-11T17:58:18" class="newEnt">
+    <a href="http://goessner.net/learn/dynamik/exc09/index.html#e11" title="Exercise 09-#e11">Exercise 09</a>
+  </ins>
+  <ins cite="./JSONPath_files/80.144.151.181" datetime="2011-12-11T17:58:05" class="newEnt">
+    <a href="http://goessner.net/learn/dynamik/exc10/index.html#e13" title="Exercise 10-#e13">Exercise 10</a>
+  </ins>
+  <ins cite="./JSONPath_files/85.22.113.92" datetime="2011-12-05T14:42:20" class="newEnt">
+    <a href="http://goessner.net/learn/dynamik/exc01/index.html#e9" title="Exercise 01-#e9">Exercise 01</a>
+  </ins>
+  <ins cite="./JSONPath_files/87.202.122.45" datetime="2011-11-24T20:36:20" class="newEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e8" title="Excercise 02-#e8">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/87.202.122.45" datetime="2011-11-24T20:36:02" class="editEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e5" title="Lokomotivdrehscheibe">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/88.141.210.8" datetime="2011-11-22T14:24:48" class="editEnt">
+    <a href="http://goessner.net/learn/dynamik/exc05/index.html#e17" title="new">Exercise 05</a>
+  </ins>
+  <ins cite="./JSONPath_files/109.90.136.13" datetime="2011-11-16T14:47:48" class="removeEnt">
+    <a href="http://goessner.net/learn/dynamik/exc05/index.html#e23" title="Exercise 05-#e23">Exercise 05</a>
+  </ins>
+  <ins cite="./JSONPath_files/109.90.136.13" datetime="2011-11-16T14:47:40" class="newEnt">
+    <a href="http://goessner.net/learn/dynamik/exc05/index.html#e23" title="Exercise 05-#e23">Exercise 05</a>
+  </ins>
+  <ins cite="./JSONPath_files/109.90.136.13" datetime="2011-11-16T14:47:31" class="removeEnt">
+    <a href="http://goessner.net/learn/dynamik/exc05/index.html#e23" title="Exercise 05-#e23">Exercise 05</a>
+  </ins>
+  <ins cite="./JSONPath_files/109.90.136.13" datetime="2011-11-16T14:47:25" class="newEnt">
+    <a href="http://goessner.net/learn/dynamik/exc05/index.html#e23" title="Exercise 05-#e23">Exercise 05</a>
+  </ins>
+  <ins cite="./JSONPath_files/93.131.119.37" datetime="2011-11-09T21:17:09" class="editEnt">
+    <a href="http://goessner.net/learn/dynamik/exc01/index.html#e2" title=" 1.1 F&#65533;rderband">Exercise 01</a>
+  </ins>
+  <ins cite="./JSONPath_files/93.131.119.37" datetime="2011-11-09T21:16:41" class="editEnt">
+    <a href="http://goessner.net/learn/dynamik/exc01/index.html#e2" title=" 1.1 F&#65533;rderband">Exercise 01</a>
+  </ins>
+  <ins cite="./JSONPath_files/93.131.119.37" datetime="2011-11-09T21:13:21" class="editEnt">
+    <a href="http://goessner.net/learn/dynamik/exc01/index.html#e2" title=" 1.1 F&#65533;rderband">Exercise 01</a>
+  </ins>
+  <ins cite="./JSONPath_files/93.131.119.37" datetime="2011-11-09T21:12:04" class="editEnt">
+    <a href="http://goessner.net/learn/dynamik/exc01/index.html#e2" title=" 1.1 F&#65533;rderband">Exercise 01</a>
+  </ins>
+  <ins cite="./JSONPath_files/93.131.119.37" datetime="2011-11-09T21:10:53" class="editEnt">
+    <a href="http://goessner.net/learn/dynamik/exc01/index.html#e2" title=" 1.1 F&#65533;rderband">Exercise 01</a>
+  </ins>
+  <ins cite="./JSONPath_files/193.104.84.201" datetime="2011-11-05T10:24:53" class="newEnt">
+    <a href="http://goessner.net/learn/dynamik/exc05/index.html#e22" title="Exercise 05-#e22">Exercise 05</a>
+  </ins>
+  <ins cite="./JSONPath_files/94.170.117.171" datetime="2011-10-29T07:46:49" class="newEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e7" title="Excercise 02-#e7">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/210.94.41.89" datetime="2011-10-24T09:02:15" class="newEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e6" title="Excercise 02-#e6">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/188.101.94.146" datetime="2011-10-12T21:54:06" class="editCmt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e5" title="Lokomotivdrehscheibe">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/188.101.94.146" datetime="2011-10-12T21:52:00" class="editEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e5" title="Lokomotivdrehscheibe">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/188.101.94.146" datetime="2011-10-12T21:51:37" class="newEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e5" title="Excercise 02-#e5">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/188.101.94.146" datetime="2011-10-12T21:51:30" class="removeEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e5" title="Excercise 02-#e5">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/188.101.94.146" datetime="2011-10-12T21:48:10" class="editEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e5" title="new">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/188.101.94.146" datetime="2011-10-12T21:46:45" class="editEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e5" title="new">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/188.101.94.146" datetime="2011-10-12T21:45:17" class="editEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e5" title="new">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/188.101.94.146" datetime="2011-10-12T21:43:56" class="newEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e5" title="Excercise 02-#e5">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/188.101.94.146" datetime="2011-10-12T21:43:09" class="editCmt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e3" title="2.2 W&#65533;schetrommel">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/188.101.94.146" datetime="2011-10-12T21:42:49" class="editCmt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e4" title="2.3Riementrieb">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/188.101.94.146" datetime="2011-10-12T21:42:24" class="editCmt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e4" title="2.3Riementrieb">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/188.101.94.146" datetime="2011-10-12T21:41:46" class="editCmt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e4" title="2.3Riementrieb">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/188.101.94.146" datetime="2011-10-12T21:39:23" class="editCmt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e4" title="2.3Riementrieb">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/188.101.94.146" datetime="2011-10-12T21:39:03" class="editCmt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e4" title="2.3Riementrieb">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/188.101.94.146" datetime="2011-10-12T21:35:21" class="editEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e4" title="2.3Riementrieb">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/188.101.94.146" datetime="2011-10-12T21:35:03" class="editEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e4" title="2.3Riementrieb">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/188.101.94.146" datetime="2011-10-12T21:34:04" class="editEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e4" title="2.3Riementrieb">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/188.101.94.146" datetime="2011-10-12T21:32:52" class="editEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e4" title="2.3Riementrieb">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/188.101.94.146" datetime="2011-10-12T21:29:26" class="editEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e4" title="2.3Riementrieb">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/188.101.94.146" datetime="2011-10-12T21:25:13" class="editEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e3" title="2.2 W&#65533;schetrommel">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/188.101.94.146" datetime="2011-10-12T21:24:01" class="editEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e3" title="2.2 W&#65533;schetrommel">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/188.101.94.146" datetime="2011-10-12T21:23:47" class="editEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e3" title="2.2 W&#65533;schetrommel">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/188.101.94.146" datetime="2011-10-12T21:22:54" class="editEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e4" title="2.3Riementrieb">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/188.101.94.146" datetime="2011-10-12T21:21:59" class="editEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e4" title="2.3Riementrieb">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/188.101.94.146" datetime="2011-10-12T21:21:44" class="editEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e4" title="2.3Riementrieb">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/188.101.94.146" datetime="2011-10-12T21:19:45" class="editEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e4" title="2.3Riementrieb">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/188.101.94.146" datetime="2011-10-12T21:16:05" class="editEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e4" title="new">Excercise 02</a>
+  </ins>
+  <ins cite="./JSONPath_files/188.101.94.146" datetime="2011-10-12T21:15:28" class="editEnt">
+    <a href="http://goessner.net/learn/dynamik/exc02/index.html#e4" title="new">Excercise 02</a>
+  </ins></div></div>
+      </div>
+      <div id="mydeliciousbox" class="block light" style="font-size:100%">
+        <h4 class="medium">» delicious ..</h4>
+      </div>
+      <div class="block light">
+        <h4 class="medium">» Lizenz ..</h4>
+        <div style="text-align:center; font-size:80%;">
+           Sofern nicht ausdrücklich etwas anderes angegeben ist, gelten für die Inhalte auf diesen 
+           Seiten die Bedingungen der <br>
+           <a rel="license" href="http://creativecommons.org/licenses/by/2.5/">(cc) Creative Commons License</a><br><br>
+           (c) 2006 <a href="http://goessner.net/info">Stefan Gössner</a>
+        </div>
+      </div>
+    </div>
+    <div id="footer" class="medium">&nbsp;</div>
+    </div> <!-- frame -->
+	<!-- invisible tools -->
+    <img id="wait" src="./JSONPath_files/wait.gif" style="display:none; position:fixed; top:50%; left:50%; background:white; border:solid 1px black;">
+    <div id="drag" style="position:absolute; left:5px; top:5px; width:400px; border:1px solid black; display:none;">
+	<!-- Google Analytics -->
+<script src="./JSONPath_files/urchin.js.download" type="text/javascript"> </script>
+<script type="text/javascript">
+_uacct = "UA-430455-1";
+urchinTracker();
+</script>
+  
+</div></body></html>

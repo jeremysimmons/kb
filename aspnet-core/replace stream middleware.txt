@@ -1,0 +1,26 @@
+app.Use(async (httpContext, next) =>
+{
+using (var memoryResponse = new MemoryStream())
+{
+var originalResponse = httpContext.Response.Body;
+try
+{
+httpContext.Response.Body = memoryResponse;
+await next.Invoke();
+memoryResponse.Seek(0, SeekOrigin.Begin);
+await memoryResponse.CopyToAsync(originalResponse);
+}
+finally
+{
+// This is what you're missing
+httpContext.Response.Body = originalResponse;
+}
+}
+});
+app.Run(async (context) =>
+{
+context.Response.ContentType = "text/other";
+await context.Response.WriteAsync("Hello World!");
+});
+
+https://github.com/benaadams/aspnetcore.ben/blob/master/samples/OverlappedFileStream/TwoGBFileStream.cs

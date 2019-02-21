@@ -1,0 +1,12 @@
+[diff]
+    tool = bc4
+[difftool "bc4"]
+    cmd = \"C:\\Program Files\\Beyond Compare 4\\BComp.exe\" \"$LOCAL\" \"$REMOTE\"
+    trustExitCode = true
+[merge]
+    tool = bc4
+
+BCompare.exe C:\Left.ext C:\Right.ext C:\Center.ext C:\Output.ext
+[mergetool "bc4"]
+    cmd = \"C:\\Program Files\\Beyond Compare 4\\BComp.exe\" -automerge -ignoreunimportant -reviewconflicts \"$REMOTE\" \"$LOCAL\" \"$BASE\" \"$MERGED\"
+    trustExitCode = true

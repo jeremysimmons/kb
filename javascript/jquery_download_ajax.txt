@@ -1,0 +1,74 @@
+op = Object.prototype,
+        ostring = op.toString
+
+    function isArray(it) {
+        return ostring.call(it) === '[object Array]';
+    }
+
+	
+The answer mentioning "jQuery Plugin for Requesting Ajax-like File Downloads" got me headed down the right direction, but it didn't work entirely for my situation since I have a complex object and array of objects to pass in as my search criteria/filter data. I figured I'd share my code in case someone else runs into this situation too.
+
+function tempForm(url, data, method) {
+
+    function isArray(it) {
+        return Object.prototype.toString.call(it) === '[object Array]';
+    }
+
+    function remove(el) {
+        el.parentNode.removeChild(el);
+    }
+
+    if (!(url && data)) return;
+
+    var inputs = '';
+    var convertToInput = function (key, keyStr, obj) {
+        if (typeof obj === 'undefined') {
+            return;
+        } else if (typeof obj === "object") {
+            for (var innerKey in obj) {
+                if (obj.hasOwnProperty(innerKey)) {
+                    var innerKeyStr = '';
+                    if (keyStr === '') {
+                        innerKeyStr = innerKey.toString();
+                    } else {
+                        innerKeyStr = keyStr + "[" + innerKey.toString() + "]";
+                    }
+                    convertToInput(innerKey, innerKeyStr, obj[innerKey]);
+                }
+            }
+            return;
+        } else if ($.isArray(obj)) {
+            /* obj is an Array, and has a forEach */
+            obj.forEach(function (item) {
+                convertToInput(key, keyStr + "[]", item);
+            });
+            return;
+        }
+
+        inputs += "<input type='hidden' name='" + keyStr + "' value='" + obj + "' />";
+    };
+    convertToInput(null, '', data);
+
+    var tempForm = document.createElement('<form action="' + url + '" method="' + (method || 'post') + '">' + inputs + '</form>');
+    tempForm.appendTo(document.body);
+    tempForm.submit();
+    remove(tempForm);
+};
+$.download('/api/search?format=csv', searchData, 'POST');
+
+jQuery.download = function(url, data, method){
+    //url and data options required
+    if( url && data ){
+        //data can be string of parameters or array/object
+        data = typeof data == 'string' ? data : jQuery.param(data);
+        //split params into form inputs
+        var inputs = '';
+        jQuery.each(data.split('&'), function(){
+            var pair = this.split('=');
+            inputs+='<input type="hidden" name="'+ pair[0] +'" value="'+ pair[1] +'" />';
+        });
+        //send request
+        jQuery('<form action="'+ url +'" method="'+ (method||'post') +'">'+inputs+'</form>')
+        .appendTo('body').submit().remove();
+    };
+};

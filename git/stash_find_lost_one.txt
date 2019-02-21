@@ -1,0 +1,8 @@
+find the lost stashes - 
+look for WIP on...
+
+gitk --all (git fsck --no-reflog | select-string 'dangling commit' | foreach { $bits = $_ -split ' '; echo $bits[2];})
+
+and restore it with
+
+git stash apply <SHA1>

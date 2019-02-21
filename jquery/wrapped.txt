@@ -1,0 +1,12 @@
+(function(globaljquery) {
+(function( factory ) {
+	if ( typeof define === "function" && define.amd ) {
+		// AMD. Register as an anonymous module.
+		define([ "jquery" ], factory );
+	} else {
+		factory( globaljquery );
+	}
+}(function( $ ) {
+... the rest of jquery ui ...
+}));
+})($j);

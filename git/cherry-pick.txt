@@ -9,3 +9,9 @@ git cherry-pick ebe6942..905e279
 The first hash in the range is the oldest commit and the last hash in the range is the newest commit. The confusion with this form of the cherry pick merge is that the first hash listed in the range is not included in the commit.  The last hash is included. 
 
 git cherry-pick ebe6942^..905e279
+Make a commit with those desired changes.
+Checkout to the branch you want those changes to be on.
+From that branch git cherry-pick 23h123kjb(<-- replace this hash with the one found in a git log specific to the commit you want to bring in)
+Profit!
+
+Add authenticated state to top navigation bar

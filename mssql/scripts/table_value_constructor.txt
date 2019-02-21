@@ -1,0 +1,10 @@
+	(VALUES (1, 2), (3, 4), (5, 6), (7, 8), (9, 10) ) AS MyTable(a, b)
+
+B. Inserting multiple rows with DEFAULT and NULL values
+CREATE TABLE Sales.MySalesReason(  
+SalesReasonID int IDENTITY(1,1) NOT NULL,  
+Name dbo.Name NULL ,  
+ReasonType dbo.Name NOT NULL DEFAULT 'Not Applicable' );  
+GO  
+INSERT INTO Sales.MySalesReason   
+VALUES ('Recommendation','Other'), ('Advertisement', DEFAULT), (NULL, 'Promotion');  

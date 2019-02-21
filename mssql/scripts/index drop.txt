@@ -1,0 +1,3 @@
+DROP INDEX IX_ProductVendor_BusinessEntityID   
+    ON Purchasing.ProductVendor;  
+GO  

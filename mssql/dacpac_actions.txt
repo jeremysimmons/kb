@@ -1,0 +1,11 @@
+dbo.sysdac_instances
+https://docs.microsoft.com/en-us/sql/relational-databases/system-catalog-views/data-tier-application-views-dbo-sysdac-instances
+
+dbo.sysdac_history_internal
+https://docs.microsoft.com/en-us/sql/relational-databases/system-tables/data-tier-application-tables-sysdac-history-internal
+
+https://docs.microsoft.com/en-us/sql/relational-databases/data-tier-applications/validate-a-dac-package
+
+https://docs.microsoft.com/en-us/sql/relational-databases/data-tier-applications/delete-a-data-tier-application#Delete_datatier_application
+
+dbo.sysdac_instances, dbo.sysdac_history_internal

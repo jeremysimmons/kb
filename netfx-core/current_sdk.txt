@@ -1,0 +1,11 @@
+.NET Command Line Tools (1.0.0-preview2-1-003177)
+
+Product Information:
+ Version:            1.0.0-preview2-1-003177
+ Commit SHA-1 hash:  a2df9c2576
+
+Runtime Environment:
+ OS Name:     Windows
+ OS Version:  10.0.15063
+ OS Platform: Windows
+ RID:         win10-x64

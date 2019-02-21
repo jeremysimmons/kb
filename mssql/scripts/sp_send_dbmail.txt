@@ -1,0 +1,7 @@
+https://docs.microsoft.com/en-us/sql/relational-databases/system-stored-procedures/sp-send-dbmail-transact-sql
+
+EXEC msdb.dbo.sp_send_dbmail  
+    @profile_name = 'Adventure Works Administrator',  
+    @recipients = 'yourfriend@Adventure-Works.com',  
+    @body = 'The stored procedure finished successfully.',  
+    @subject = 'Automated Success Message' ;  

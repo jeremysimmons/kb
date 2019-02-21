@@ -1,0 +1,2 @@
+https://docs.microsoft.com/en-us/rest/api/storageservices/service-sas-examples
+https://docs.microsoft.com/en-us/rest/api/storageservices/service-sas-examples#blob-examples

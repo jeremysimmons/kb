@@ -1,0 +1,15 @@
+https://stackoverflow.com/a/6827937/26877
+
+git diff --name-only SHA1 SHA2
+git diff --name-only HEAD~10 HEAD~5
+
+is like --name-only, except you get a simple prefix telling you what happened to the file (modified, deleted, added...)
+git diff --name-status [SHA1 [SHA2]]
+
+File status flags:
+M modified - File has been modified
+C copy-edit - File has been copied and modified
+R rename-edit - File has been renamed and modified
+A added - File has been added
+D deleted - File has been deleted
+U unmerged - File has conflicts after a merge

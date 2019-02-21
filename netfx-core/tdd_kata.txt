@@ -1,0 +1,7 @@
+create solution
+create library project
+create library project with xunit
+create a fact based on a class in another library
+create a fact based on header line of data
+create a fact based on a line item of data
+create a fact on file with multiple headers + lines

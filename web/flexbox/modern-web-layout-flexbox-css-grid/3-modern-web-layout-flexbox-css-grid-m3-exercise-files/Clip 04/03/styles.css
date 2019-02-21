@@ -1,0 +1,35 @@
+html,
+body {
+	padding: 0;
+	margin: 0;
+	font-family: arial, sans-serif;
+}
+
+.grid-container {
+	border: solid 4px #000;
+    display: inline-grid;
+    grid-template-columns: 6em 1em 6em 1em 6em 1em 6em;
+}
+
+.grid-item {
+    background-color: #A62E5C;
+	color: #fff;
+    box-sizing: border-box;
+	font-size: 1.2em;
+	padding: 1em;
+    overflow: hidden;
+	text-align: center;
+    /*grid-column-start: 1;
+    grid-column-end: 2;*/
+    /*grid-column-start: 2;
+    grid-column-end: 3;*/
+    /*grid-column-start: 3;
+    grid-column-end: 4;*/
+    grid-column-start: 3;
+    grid-column-end: 6;
+}
+
+.grid-item strong {
+	display: block;
+	font-size: 130%;  
+}	

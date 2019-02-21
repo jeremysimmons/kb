@@ -1,0 +1,22 @@
+C:\Users\jeremy.simmons\Documents\WindowsPowerShell\
+
+"C:\Users\jeremy.simmons\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1"
+
+https://technet.microsoft.com/en-us/library/bb613488(v=vs.85).aspx
+
+You can have four different profiles in Windows PowerShell. The profiles are listed in load order. The most specific profiles have precedence over less specific profiles where they apply.
+%windir%\system32\WindowsPowerShell\v1.0\profile.ps1 
+
+This profile applies to all users and all shells.
+
+%windir%\system32\WindowsPowerShell\v1.0\ Microsoft.PowerShell_profile.ps1 
+
+This profile applies to all users, but only to the Microsoft.PowerShell shell.
+
+%UserProfile%\My Documents\WindowsPowerShell\profile.ps1 
+
+This profile applies only to the current user, but affects all shells. 
+
+%UserProfile%\My Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1 
+
+This profile applies only to the current user and the Microsoft.PowerShell shell.

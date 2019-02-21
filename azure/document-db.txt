@@ -1,0 +1,5 @@
+https://azure.microsoft.com/en-us/blog/backing-up-documentdb-databases/
+
+https://github.com/Azure/azure-documentdb-dotnet
+
+https://docs.microsoft.com/en-us/azure/cosmos-db/consistency-levels

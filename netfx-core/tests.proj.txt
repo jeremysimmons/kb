@@ -1,0 +1,48 @@
+<Project ToolsVersion="4.0" DefaultTarget="RunTests" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <results_file>./TestResults/results.trx</results_file>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <MsTestExePath Condition="'$(MsTestExePath)'==''">C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\MSTest.exe</MsTestExePath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <TestAssemblies Include=".\**\bin\**\*.Tests.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ResultsFile Include="$(results_file)" />
+  </ItemGroup>
+
+  <Target Name="RunTests">
+    <Message Text="Found test assemblies: @(TestAssemblies)" />
+
+    <MakeDir Directories="./TestResults" />
+    <CallTarget Targets="RunMsTest" />
+  </Target>
+
+  <Target Name="RunMsTest" >
+    <Message Text="Running to results file: %(ResultsFile.Identity)" />
+
+    <PropertyGroup>
+      <MsTestCommand>"$(MsTestExePath)" @(TestAssemblies ->'/testcontainer:"%(RecursiveDir)%(Filename)%(Extension)" ', ' ') /resultsfile:TestResults\%(ResultsFile.Identity)</MsTestCommand>
+    </PropertyGroup>
+
+    <Message Text="Running command $(MsTestCommand)" />
+
+    <Exec Condition=" '@(TestAssemblies)' != ''" Command="$(MsTestCommand)" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" ItemName="ErrorCode"/>
+    </Exec>
+    <Message Text="Tests complete" />
+    <Message Text="The exit code is $(ErrorCode)"/>
+    <Error Text="Error while executing MSTest" Condition="'$(ErrorCode)' != ''" />
+    <OnError ExecuteTargets="MessageErrorHandler"/>       
+  </Target>
+
+  <Target Name="MessageErrorHandler">
+    <Message Text="An error has occurred while executing MSTest"/>
+  </Target>
+
+</Project>

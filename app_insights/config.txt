@@ -1,0 +1,1 @@
+https://docs.microsoft.com/en-us/azure/application-insights/app-insights-configuration-with-applicationinsights-config

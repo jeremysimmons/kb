@@ -1,0 +1,58 @@
+az login
+az cosmosdb list-keys --name disciplr-dev --resource-group disciplr-develop
+
+{
+  "primaryMasterKey": "fH76cR37S1bUIsLOzTduL8jcXlBoqqYcrzWYZOdqT5P6csMolzvDaH63CMwMS5pRl7VLKkTxLU3VbfcwR8QZOA==",
+  "primaryReadonlyMasterKey": "HyXwUmcyRRAz5AG7y6m2rVi3mwIMahdcfnDUiLgInmXI4RCqKwyc3Vm42mMYwtyDSiQ7H1xg9QXKRJQcyqMXIQ==",
+  "secondaryMasterKey": "ZBKOkSgkbpZjFBbcRN1D7e5cPZ3TgPgKlzshrTTiC4zgGTgmT0oFo4Sr7aeNYM6DA0wGFhRy7dS7O8eycL6YsA==",
+  "secondaryReadonlyMasterKey": "y5q5TotTdJDMuLNGCORF14qlYLyZsx0Dnu8ioJQuWuEP9bq5DVgNKDeoqNLQ8yQ4IKThhyhCsAhCRSVVd5YAmw=="
+}
+
+https://disciplr-dev.documents.azure.com:443/
+/subscriptions/e0957ee6-745a-42ac-aa48-1b5f26c5022f/resourceGroups/disciplr-develop/providers/Microsoft.Docum
+entDB/databaseAccounts/disciplr-dev
+
+az cosmosdb list-keys --name disciplr-dev --resource-group disciplr-develop
+{
+  "primaryMasterKey": "fH76cR37S1bUIsLOzTduL8jcXlBoqqYcrzWYZOdqT5P6csMolzvDaH63CMwMS5pRl7VLKkTxLU3VbfcwR8QZOA==",
+  "primaryReadonlyMasterKey": "HyXwUmcyRRAz5AG7y6m2rVi3mwIMahdcfnDUiLgInmXI4RCqKwyc3Vm42mMYwtyDSiQ7H1xg9QXKRJQcyqMXIQ==",
+  "secondaryMasterKey": "ZBKOkSgkbpZjFBbcRN1D7e5cPZ3TgPgKlzshrTTiC4zgGTgmT0oFo4Sr7aeNYM6DA0wGFhRy7dS7O8eycL6YsA==",
+  "secondaryReadonlyMasterKey": "y5q5TotTdJDMuLNGCORF14qlYLyZsx0Dnu8ioJQuWuEP9bq5DVgNKDeoqNLQ8yQ4IKThhyhCsAhCRSVVd5YAmw=="
+}
+
+az cosmosdb list-connection-strings --name disciplr-dev --resource-group disciplr-develop
+{
+  "connectionStrings": [
+    {
+      "connectionString": "mongodb://disciplr-dev:fH76cR37S1bUIsLOzTduL8jcXlBoqqYcrzWYZOdqT5P6csMolzvDaH63CMwMS5pRl7VLKk
+TxLU3VbfcwR8QZOA==@disciplr-dev.documents.azure.com:10255/?ssl=true",
+      "description": "Default MongoDB Connection String"
+    }
+  ]
+}
+
+      "IndexName": "disciplr-curriculum-search-index",
+      "ServiceName": "disciplr-search-dev",
+
+indexer - prod-curriculum-search-indexe
+prod-curriculum
+
+
+idxer - disciplr-curriculum-search-indexer
+index = disicplr-curriclum
+disciplr-prod-product-datasource
+
+Failed to update indexer "disciplr-curriculum-search-indexer", error: "Connection string could not be parsed. The connection string must be in the following format:AccountName|AccountEndpoint=...;AccountKey=...;Database=..."
+
+
+SELECT p.id,p.type,p.meta.name as productName,
+p.meta.publisher.name as publisherName,
+p.content.description,
+p.content.subText,
+p.content.images.image.filename as imageSrc,
+p.meta.brand.name as brandName,
+p._ts
+FROM resources p
+where p._ts>@HighWaterMark and p.type = 'product' and 
+not contains(p.meta.name, 'HIDE')
+

@@ -1,0 +1,2 @@
+get the product-id a lesson belongs to.
+db.resources.findOne({ _id: ObjectId('58b455140960a1788ef49883') }).meta['product-id']

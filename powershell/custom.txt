@@ -1,0 +1,3 @@
+Set-Alias -Name egsc -Value Enable-GitSshCommands
+Set-Alias -Name sagsa -Value Start-GitSshAgent
+Set-Alias -Name spgsa -Value Stop-GitSshAgent

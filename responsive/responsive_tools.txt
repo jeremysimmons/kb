@@ -1,0 +1,16 @@
+http://quirktools.com/screenfly/#u=https%3A//app-stage.disciplr.com&w=360&h=640&a=39
+
+http://www.responsinator.com/?url=https%3A%2F%2Fapp-stage.disciplr.com
+
+https://www.browserling.com/#pricing
+$19-$29
+
+https://turbo.net/browsers
+
+https://turbo.net/pricing
+
+http://browsershots.org/
+
+neat automation tools 10:52 AM 8/1/2017
+https://github.com/segmentio/nightmare
+https://github.com/graphcool/chromeless

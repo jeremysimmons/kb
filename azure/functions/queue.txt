@@ -1,0 +1,7 @@
+
+https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-storage-queue#trigger
+
+POCO object. Use if the queue payload is a JSON object. The Functions runtime deserializes the payload into the POCO object.
+string
+byte[]
+CloudQueueMessage

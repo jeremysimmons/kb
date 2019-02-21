@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<!-- saved from url=(0034)https://www.linqpad.net/lprun.aspx -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="./lprun_files/pure.css"><link rel="stylesheet" href="./lprun_files/styles.css">
+	
+	<script id="twitter-wjs" src="./lprun_files/widgets.js.download"></script><script type="text/javascript">
+		function ValidateRegName(textBox) {
+			if (textBox.value.replace(/^\s*/, '').replace(/\s*$/, '').length < 3) {
+				alert("Registration name must be at least 3 characters");
+				return (false);
+			}
+			return (true);
+		}
+		function currentYPosition() {
+			// Firefox, Chrome, Opera, Safari
+			if (self.pageYOffset) return self.pageYOffset;
+			// Internet Explorer 6 - standards mode
+			if (document.documentElement && document.documentElement.scrollTop)
+				return document.documentElement.scrollTop;
+			// Internet Explorer 6, 7 and 8
+			if (document.body.scrollTop) return document.body.scrollTop;
+			return 0;
+		}
+		function elmYPosition(eID) {
+			var elm = document.getElementById(eID);
+			var y = elm.offsetTop;
+			var node = elm;
+			while (node.offsetParent && node.offsetParent != document.body) {
+				node = node.offsetParent;
+				y += node.offsetTop;
+			} return y;
+		}
+		function smoothScroll(eID) {
+			var startY = currentYPosition();
+			var stopY = elmYPosition(eID);
+			var distance = stopY > startY ? stopY - startY : startY - stopY;
+			if (distance < 100) {
+				scrollTo(0, stopY); return;
+			}
+			var speed = Math.round(distance / 100);
+			if (speed >= 20) speed = 20;
+			var step = Math.round(distance / 25);
+			var leapY = stopY > startY ? startY + step : startY - step;
+			var timer = 0;
+			if (stopY > startY) {
+				for (var i = startY; i < stopY; i += step) {
+					setTimeout("window.scrollTo(0, " + leapY + ")", timer * speed);
+					leapY += step; if (leapY > stopY) leapY = stopY; timer++;
+				} return;
+			}
+			for (var i = startY; i > stopY; i -= step) {
+				setTimeout("window.scrollTo(0, " + leapY + ")", timer * speed);
+				leapY -= step; if (leapY < stopY) leapY = stopY; timer++;
+			}
+		}
+	</script>
+<title>
+	LINQPad Command-Line and Scripting
+</title><script type="text/javascript" charset="utf-8" async="" src="./lprun_files/timeline.fe37195db6188934961bb169bf5784a6.js.download"></script></head>
+<body>
+	<form name="aspnetForm" method="post" action="https://www.linqpad.net/lprun.aspx" id="aspnetForm" class="pure-form">
+<div>
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwULLTEwMDUyNjYzMjgPFgIeE1ZhbGlkYXRlUmVxdWVzdE1vZGUCARYCZg9kFgICAw9kFgICAQ8WAh4JaW5uZXJodG1sBdwCPGxpPjxhIGhyZWY9Jy8nPkhvbWU8L2E+PC9saT48bGk+PGEgaHJlZj0nRG93bmxvYWQuYXNweCc+RG93bmxvYWQ8L2E+PC9saT48bGk+PGEgaHJlZj0nUHVyY2hhc2UuYXNweCc+UHVyY2hhc2U8L2E+PC9saT48bGk+PGEgaHJlZj0nQ3VzdG9tVXBncmFkZS5hc3B4Jz5VcGdyYWRlPC9hPjwvbGk+PGxpPjxhIGhyZWY9J0ZBUS5hc3B4Jz5GQVE8L2E+PC9saT48bGk+PGEgaHJlZj0nUmVzb3VyY2VzLmFzcHgnPlJlc291cmNlczwvYT48L2xpPjxsaT48YSBocmVmPSdSZXNlbGxlclB1cmNoYXNlLmFzcHgnPlJlc2VsbGVyczwvYT48L2xpPjxsaT48YSBocmVmPSdGZWVkYmFjay5hc3B4Jz5TdXBwb3J0PC9hPjwvbGk+ZGSYe7F2b6IFuZu5587MN/68T2n46g==">
+</div>
+
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="D5F5855B">
+</div>
+		<header>
+			<div class="mainmenu-outer">
+				<div class="mainmenu-inner">
+					<div class="pure-menu pure-menu-open pure-menu-horizontal">
+						<a href="http://www.linqpad.net/" class="pure-menu-heading">
+							<img src="./lprun_files/lambda.png" height="28" width="30" class="lambda">LINQPad</a>
+						<ul id="ctl00_nav"><li><a href="https://www.linqpad.net/">Home</a></li><li><a href="https://www.linqpad.net/Download.aspx">Download</a></li><li><a href="https://www.linqpad.net/Purchase.aspx">Purchase</a></li><li><a href="https://www.linqpad.net/CustomUpgrade.aspx">Upgrade</a></li><li><a href="https://www.linqpad.net/FAQ.aspx">FAQ</a></li><li><a href="https://www.linqpad.net/Resources.aspx">Resources</a></li><li><a href="https://www.linqpad.net/ResellerPurchase.aspx">Resellers</a></li><li><a href="https://www.linqpad.net/Feedback.aspx">Support</a></li></ul>
+					</div>
+				</div>
+			</div>
+		</header>
+		<div id="body">
+			
+
+	<div class="cardouter">
+		<div class="cardnarrow">
+
+			<h2>LINQPad Command-Line and Scripting</h2>
+
+			<p>
+				LINQPad now ships with <code>lprun.exe</code> which offers a full command-line experience.
+			</p>
+
+			<blockquote>
+				<b>Note: if you've automatically upgraded from an older version of LINQPad, lprun.exe may not be present in your LINQPad folder.</b>
+				To get lprun.exe, download the latest LINQPad from <a href="http://www.linqpad.net/">www.linqpad.net</a>. You can either re-install LINQPad, or
+		download the standalone executable which includes lprun.exe.
+			</blockquote>
+
+			<p>Here are some examples to get you started:</p>
+
+			<table class="columnmargin">
+				<tbody><tr>
+					<td>
+						<pre>lprun foo.linq</pre>
+					</td>
+					<td>Executes <b>foo.linq</b>, writing the result to the Console.
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<pre>lprun -format=html foo.linq &gt; output.html</pre>
+					</td>
+					<td>Formats the output as HTML and redirects it to <b>output.html</b>.
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<pre>lprun "queries\foo bar.linq" CustomArg</pre>
+					</td>
+					<td>Runs <b>foo bar.linq</b>, passing 'CustomArg' into its main method.
+					</td>
+				</tr>
+			</tbody></table>
+
+			<p>
+				<b>NB:</b> The command-line functionality is all inside LINQPad.exe. lprun.exe is merely a thin wrapper
+		around LINQPad.exe that ensures proper Console behavior. There are separate versions for X64 vs. X86
+		(both target Framework 4.x). Both are shipped alongside the respective LINQPad.exe file, and there's no
+		dependency on Roslyn.
+			</p>
+
+			<h3>Output Formatting</h3>
+
+			<p>
+				The default output format is plain <b>text</b>. Lists and non-basic objects
+	are formatted as JSON. To change the output format, use the <b>-format</b> option:
+			</p>
+
+			<p><b>-format={text|html|htmlfrag|csv|csvi}</b></p>
+
+			<p>
+				<b>html</b> returns complete HTML that can be written to a file, whereas <b>htmlfrag</b> returns a fragment
+		that can be inserted into an existing HTML document.
+			</p>
+
+			<p>
+				<b>csv</b> renders simple lists in Excel-friendly CSV. <b>csvi</b> is the same, but forces culture-insensitive formatting.
+		Csv/csvi generates the same output as LINQPad's <b>Util.WriteCsv</b> method.
+			</p>
+
+			<h3>Output Redirection</h3>
+
+			<p>To redirect output, use the standard &gt; operator:</p>
+
+			<pre>lprun foo.linq &gt; output.txt</pre>
+
+			<p>Error messages and warnings are written to stderr and so are not redirected, unless <a href="https://support.microsoft.com/en-us/help/110930/redirecting-error-messages-from-command-prompt-stderr-stdout">you request otherwise</a>. </p>
+
+			<p>
+				Another way to write output to a file is to have the script itself do the job. To make this easier,
+		LINQPad has the following new methods in the Util class:
+			</p>
+
+			<ul>
+				<li><b>Util.ToCsvString</b> (IEnumerable&lt;T&gt; elements, ...)</li>
+				<li><b>Util.ToHtmlString</b> (params object[] objectsToDump, ...)</li>
+			</ul>
+
+			<p>The latter pushes the objects you supply through LINQPad's standard Dump-to-HTML pipeline. For instance:</p>
+
+			<pre>File.WriteAllText (@"c:\temp\foo.html", Util.ToHtmlString (myQuery));
+</pre>
+
+			<p>
+				There's also a method called <b>Util.WriteCsv</b> for efficiently streaming large data sets directly to a file or TextWriter in CSV format.
+		To stream HTML to a file, use <b>Util.CreateXhtmlWriter()</b> and then call its Write/WriteLine methods.
+			</p>
+
+			<h3>Input</h3>
+
+			<p>
+				<code>Console.ReadLine</code> accepts user input just as you'd expect. And you can pipe the output of one query into another:
+			</p>
+
+			<pre>lprun script1.linq | lprun script2.linq
+</pre>
+
+			<p>More on piping later.</p>
+
+			<h3>Error Handling</h3>
+
+			Errors and warnings are written to stderr (Console.Error). Errors set the <code>%errorlevel%</code> variable:
+	
+			<pre>lprun test.linq
+if %errorlevel% neq 0 echo Error!
+</pre>
+
+			<h3>Plain Text Scripts</h3>
+
+			<p><code>lprun</code> will execute plain-text files if you tell it the language via the <b>-lang</b> switch. The valid options are:</p>
+
+			<p><b>Expression, Statements, Program, VBExpression, VBStatements, VBProgram, FSharpExpression, FSharpProgram, SQL, ESQL</b></p>
+
+			<p>The first three can be abbreviated to their first letter. For example, the following prints 24:</p>
+
+			<pre>echo 12+12 &gt; script.txt
+lprun -lang=e script.txt
+</pre>
+
+			<p>script.txt is equivalent to a <b>.linq</b> file that looks like this:</p>
+
+			<pre>&lt;Query Kind="Expression" /&gt;
+
+12+12
+</pre>
+
+			<p>
+				A <b>.linq</b> file is merely a text file with an XML header that describes properties of the query, such as its language,
+		connection, namespaces to import, etc. Not having a header can save a bit of typing with ad-hoc scripts. It also lets
+		you execute scripts written for scriptcs.
+			</p>
+
+			<h4>Connections</h4>
+
+			<p>
+				For plain-text queries that require a connection, you must specify the connection name with the <b>-cxname</b> option.
+		(Queries in the <b>.linq</b> format don't require this because the connection details are stored in the file, but 
+		 specifying a connection is still useful for <i>overriding</i> the connection.)
+		The name of a connection is as it appears in LINQPad's Schema Explorer tree. (You can rename a connection by right-clicking it
+		and choosing 'Rename').
+			</p>
+
+			<pre>echo Customers.Take(100) &gt; script.txt
+lprun -lang=e -cxname=CustomerDB script.txt
+</pre>
+
+			<p>If the connection refers to a server rather than a database, add a period, followed by the name of the db:</p>
+
+			<pre>echo Customers.Take(100) &gt; script.txt
+lprun -lang=e -cxname=CompanyServer.CustomerDb script.txt
+</pre>
+
+			<p>
+				Connection details are normally stored in <b>%appdata%\LINQPad\ConnectionsV2.xml</b>. However, if you move/copy
+		this file into the folder where LINQPad.exe resides, LINQPad will use that copy instead. (This makes life easy when
+		xcopy-deploying LINQPad for <a href="https://www.linqpad.net/PortableDeployment.aspx">portable or shared deployments</a>.) 
+		And if you put the scripts into a subfolder called <b>queries</b>, the LINQPad GUI will show these in the 'My Queries' treeview.
+			</p>
+
+			<h4>Namespaces</h4>
+
+			<p>To import additional namespaces in plain-text queries, LINQPad supports <code>using</code> directives:</p>
+
+			<pre>using Foo.Bar;
+using Bar.Foo;
+	
+Customers.Take(100)
+</pre>
+
+			<h4>Assemblies and NuGet</h4>
+
+			<p>
+				LINQPad also supports the <code>ref</code> directive for referencing additional assemblies. You can specify
+		the assembly either via its filename (including the directory if it's outside the .NET Framework) or its
+		fully qualified name (if it's in the GAC):
+			</p>
+
+			<pre>ref System.Windows.Forms.dll;
+ref System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a;
+
+using System.Windows.Forms;
+using System.Drawing;
+	
+new Label().Anchor
+</pre>
+
+			<p>(<b>ref</b> directives must precede <b>using</b> directives.)</p>
+
+			<p>Best of all, you can reference NuGet assemblies by prefixing the package ID with <b>nuget:</b> </p>
+
+			<pre>ref nuget:Rx-Main;
+using System.Reactive.Linq;
+			
+Observable.Range(1,10)
+</pre>
+
+			<p>Here's the same thing as a <b>.linq</b> file</p>
+
+			<pre>&lt;Query Kind="Expression"&gt;
+   &lt;NuGetReference&gt;Rx-Main&lt;/NuGetReference&gt;
+   &lt;Namespace&gt;System.Reactive.Linq&lt;/Namespace&gt;
+&lt;/Query&gt;
+
+Observable.Range(1,10)
+</pre>
+
+			<p>
+				lprun will automatically download the required NuGet packages and dependencies upon first execution.
+		(This will work whether or not you have a registered edition of LINQPad.)
+		And if you want to force lprun to download them again (to update to a later version, for instance),
+		use the <b>-nunuget</b> switch.
+			</p>
+
+			<h3>Passing Arguments To Your Scripts</h3>
+
+			<p>
+				Any command-line arguments that follow the script path are ignored by lprun and instead forwarded
+		to your script. You can pick these up by writing a query whose language is 'Program' and writing
+		a main method that accepts a string array, like this:
+			</p>
+
+			<pre>&lt;Query Kind="Program" /&gt;
+
+void Main (string[] args)
+{
+   args.Dump();
+}
+</pre>
+
+			<p>Assuming that file was called script.linq, the following would write [ "Hello", "World" ]:</p>
+
+			<pre>lprun script.linq Hello World
+</pre>
+
+			<p>If the script didn't have the XML header, you'd call it as follows</p>
+
+			<pre>lprun -lang=program script.txt Hello World
+</pre>
+
+			<h3>The CMD symbol</h3>
+
+			<p>
+				If you need to programmatically determine whether you're running in the GUI or from
+		the command line, you can do this as follows:
+			</p>
+
+			<pre>#if CMD
+   "I'm been called from lprun!".Dump();
+#else
+   "I'm running in the LINQPad GUI!".Dump();
+#endif
+</pre>
+
+			<h3>Compilation Options</h3>
+
+			<p>
+				To enable compiler optimizations, use the <b>-optimize</b> switch.
+		This incurs the usual trade-off: slightly faster exection with compute-intensive code
+		in exchange for less accurate error reporting.
+			</p>
+			<p>
+				lprun.exe also supports the <b>-warn</b> switch to output compiler warnings. Warnings
+		are written to stderr (Console.Error) so they will not find their way into output
+		if the redirection operator (&gt;) is used.
+			</p>
+			<p>
+				The <b>-compileonly</b> switch tells lprun to check that the query will compile, without actually running anything.
+			</p>
+
+			<h3>Composing and Piping</h3>
+
+			<p>
+				You can use the standard pipe (|) operator to feed the output of one query into the input of another.
+		For example, suppose you want to email the output of a query. The first step is to write a query called SendMail.linq
+		that emails the content of Console.In, using command-line arguments for the host, sender, recipient, and subject:
+			</p>
+
+			<pre>&lt;Query Kind="Program"&gt;
+   &lt;Namespace&gt;System.Net.Mail&lt;/Namespace&gt;
+&lt;/Query&gt;
+
+void Main (string[] args)
+{
+   new SmtpClient (args[0]).Send (from:args[1], recipients:args[2], subject:args[3],
+                                  body:Console.In.ReadToEnd());
+}
+</pre>
+
+			<p>
+				If you write such a script via the LINQPad GUI, you'll want to be able to test it just by hitting F5.
+		LINQPad accepts console input in GUI mode (press Ctrl+Z to 'end' the input), so there's no problem with
+		getting input, but we need some way to supply command-line arguments. The easiest solution is to 
+		leverage the CMD symbol we talked about earlier:
+			</p>
+
+			<pre>&lt;Query Kind="Program"&gt;
+   &lt;Namespace&gt;System.Net.Mail&lt;/Namespace&gt;
+&lt;/Query&gt;
+
+void Main (string[] args)
+{
+#if !CMD
+   args = new[] { "testhost", "test@foo.com", "test@foo.com", "Test Subject" };
+#endif
+   new SmtpClient (args[0]).Send (from:args[1], recipients:args[2], subject:args[3],
+                                  body:Console.In.ReadToEnd());
+}
+</pre>
+
+			<p>You can now pipe another query into this. For example</p>
+
+			<pre>lprun -format=html foo.linq | lprun SendMail.linq testhost from@foo.com to@foo.com "Test Subject"
+</pre>
+
+			<h3>Calling One Script From Another</h3>
+
+			<p>
+				Another way to combine scripts is to dynamically execute one script from another. The <b>Util.Run</b> method does exactly that,
+		and is useful in both interactive and command-line scenarios:
+			</p>
+
+			<pre>string htmlResult = Util.Run ("test.linq", QueryResultFormat.Html).AsString();
+</pre>
+
+			<blockquote>
+				Note: If you feed <b>Util.Run</b> a relative path, it will resolve it relative to the 'My Queries' directory rather than the current directory.
+		You can switch its behavior by specifying <b>.\test.linq</b> instead of <b>test.linq</b> in this example.
+			</blockquote>
+
+			<p>Extending the previous example, we could then e-mail the result to someone:</p>
+
+			<pre>new SmtpClient ("myhost").Send ("test@foo.com", "test@foo.com", "Test Subject", htmlResult);
+</pre>
+
+			<p>
+				<b>Util.Run</b> returns an object of type <b>QueryExecuter</b>, which exposes methods to
+		extract the result in various ways. There's even a <b>AsMailAttachment</b> method which
+		assists with emailing results as attachments:
+			</p>
+
+			<pre>var mm = new MailMessage (...);
+mm.Attachments.Add (Util.Run (@"test.linq", QueryResultFormat.Html).AsMailAttachment("test"));
+new SmtpClient ("myhost").Send (mm);
+</pre>
+
+			<p>To pass custom arguments to a query, just include them when calling Util.Run:</p>
+
+			<pre>var mm = new MailMessage (...);
+
+for (int i = 0; i &lt; 5; i++)
+{
+   var attach = Util.Run (@"test.linq", QueryResultFormat.Html, <b>i.ToString()</b>)
+                    .AsMailAttachment ("test" + i);
+
+   mm.Attachments.Add (attach);
+}
+
+new SmtpClient ("myhost").Send (mm);
+</pre>
+
+			<p>
+				The latter query sends a mail message with five attachments, each being the result of calling the <b>test.linq</b>
+				query with an argument ranging from 0 to 4.
+			</p>
+
+			<p>
+				<b>QueryExecuter</b> also exposes asynchronous versions of its methods. This is useful
+		for efficiently executing queries in parallel. For instance, we can parallelize
+		the preceding script as follows:
+			</p>
+
+			<pre>var tasks = 
+   from i in Enumerable.Range (0, 5)
+   select Util.Run (@"test.linq", QueryResultFormat.Html, i.ToString())
+              .<b>AsMailAttachmentAsync</b> ("test" + i));
+
+var attachments = await Task.WhenAll (tasks);
+	
+var mm = new MailMessage (...);
+foreach (var attach in attachments) mm.Attachments.Add (attach);
+new SmtpClient ("myhost").Send (mm);</pre>
+
+			<p>
+				You can also dump a QueryExecuter object itself, in which case the output will be merged into the current query's output.
+		This is particularly useful with the HTML formatting option.
+			</p>
+
+			<p>
+				For example, the following script executes <b>TestQuery.linq</b> five times in parallel, collating the output
+		into a single HTML table:
+			</p>
+
+			<pre>from i in Enumerable.Range (0, 5)
+select Util.Run (@"TestQuery.linq", QueryResultFormat.Html)
+	
+	</pre>
+
+		</div>
+	</div>
+
+
+		</div>
+		<footer>
+			<div class="footer-outer">
+				<div class="footer-inner">
+					<div class="footer-column">
+						<table style="margin-bottom: 3px; width:100%">
+							<tbody><tr>
+								<td>
+									<a href="https://twitter.com/intent/follow?original_referer=http%3A%2F%2Fwww.linqpad.net%2F&amp;region=follow_link&amp;screen_name=linqpad&amp;tw_p=followbutton">
+									<img src="./lprun_files/twitter.png" width="25" height="20">
+										</a>
+								</td>
+								<td>
+									<a href="https://twitter.com/intent/follow?original_referer=http%3A%2F%2Fwww.linqpad.net%2F&amp;region=follow_link&amp;screen_name=linqpad&amp;tw_p=followbutton" class="twitter-follow-text" style="margin-left: 3px; color: #c7c7c7; font-weight: bold; font-size: 12pt">follow @linqpad</a>
+								</td>
+								<td style="text-align:right">
+									<a href="https://twitter.com/linqpad" style="margin-left: 20px; margin-right:3px; color: #c7c7c7; font-size: 10pt">View on Twitter</a>
+								</td>
+							</tr>
+						</tbody></table>
+						<iframe id="twitter-widget-0" scrolling="no" frameborder="0" allowtransparency="true" allowfullscreen="true" class="twitter-timeline twitter-timeline-rendered" style="position: static; visibility: visible; display: inline-block; width: 520px; height: 300px; padding: 0px; border: none; max-width: 100%; min-width: 180px; margin-top: 0px; margin-bottom: 0px; min-height: 200px;" data-widget-id="349757402578554880" title="Twitter Timeline" src="./lprun_files/saved_resource.html"></iframe>
+						<script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + "://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+					</div>
+					<div class="footer-column">
+						<table style="margin-bottom: 3px">
+							<tbody><tr>
+								<td>
+									<a href="http://www.facebook.com/LINQPad">
+										<img src="./lprun_files/facebook.png" width="20" height="20" style="margin-left: 3px">
+									</a>
+								</td>
+								<td>
+									<a href="http://linqpad.uservoice.com/">
+										<img src="./lprun_files/uservoice.png" width="20" height="20" style="margin-left: 8px">
+									</a>
+								</td>
+								<td>
+									<a href="http://forum.linqpad.net/">
+										<img src="./lprun_files/forum.png" width="20" height="20" style="margin-left: 8px">
+									</a>
+								</td>
+							</tr>
+						</tbody></table>
+						<div class="footer-panel" style="height: 293px;">
+							<p style="font-size:11pt; padding:0">Follow <a href="http://www.facebook.com/LINQPad">LINQPad on Facebook</a></p>
+							<p>
+								<iframe src="./lprun_files/like.html" scrolling="no" frameborder="0" style="border: none; overflow: hidden; width: 265px; height: 80px;" allowtransparency="true"></iframe>
+							</p>
+							<p>
+								<a class="footer-button pure-button" href="http://linqpad.uservoice.com/">Make a Feature Request</a>
+							</p>
+							<p>
+								<a class="footer-button pure-button" href="http://forum.linqpad.net/">Visit the LINQPad Forum</a>
+							</p>
+							<p>
+								<a class="footer-button pure-button" href="https://www.linqpad.net/Feedback.aspx">Contact Customer Support</a>
+							</p>
+						</div>
+					</div>
+					<div style="clear: both"></div>
+				</div>
+				<p class="footer-footer">
+					© Joseph Albahari 2007-2018
+				</p>
+			</div>
+		</footer>
+	</form>
+
+
+<iframe scrolling="no" frameborder="0" allowtransparency="true" src="./lprun_files/widget_iframe.83d5793f6ebbe2046330abda6016ae93.html" style="display: none;"></iframe><iframe id="rufous-sandbox" scrolling="no" frameborder="0" allowtransparency="true" allowfullscreen="true" style="position: absolute; visibility: hidden; display: none; width: 0px; height: 0px; padding: 0px; border: none;" title="Twitter analytics iframe" src="./lprun_files/saved_resource(1).html"></iframe></body></html>

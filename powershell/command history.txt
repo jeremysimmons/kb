@@ -1,0 +1,3 @@
+%userprofile%\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt
+
+get-history | % { $_.CommandLine }

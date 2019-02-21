@@ -1,0 +1,7 @@
+https://docs.microsoft.com/en-us/aspnet/core/mvc/models/model-binding
+https://www.simple-talk.com/dotnet/asp-net/model-binding-asp-net-core/
+https://www.simple-talk.com/dotnet/asp-net/improved-model-binding-asp-net-core/
+https://docs.microsoft.com/en-us/aspnet/core/mvc/advanced/custom-model-binding
+
+http://intellitect.com/custom-model-binding-in-asp-net-core-1-0/
+https://www.stevejgordon.co.uk/html-encode-string-aspnet-core-model-binding

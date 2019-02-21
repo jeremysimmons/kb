@@ -1,0 +1,4 @@
+Creating a symbolic link to mapped network drive in Windows
+
+mklink /D C:\temp11111 \\server\share\foldername\
+mklink /D %userprofile%\music \\server\music

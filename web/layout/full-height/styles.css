@@ -1,0 +1,34 @@
+html{
+    min-height: 100%;
+    position: relative;
+}
+body{
+    height: 100%;
+}
+.page{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: maroon;
+    overflow: hidden;
+}
+.main {
+    height: 100%;
+    background: black;
+}
+
+.left_sidebar {
+  float: left;
+  max-width: 197px;
+  height: auto;
+}
+.content {
+  width: 517px;
+  float: left;
+}
+.right_sidebar {
+  width: 359px;
+  float: right;
+}

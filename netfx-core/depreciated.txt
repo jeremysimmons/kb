@@ -1,0 +1,1 @@
+https://docs.microsoft.com/en-us/nuget/schema/target-frameworks#deprecated-frameworks

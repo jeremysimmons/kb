@@ -1,0 +1,4 @@
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Confirm
+
+more dangerous
+Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Confirm

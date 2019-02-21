@@ -1,0 +1,31 @@
+https://www.danclarke.com/linqpad-tips-and-tricks
+https://www.danclarke.com/linqpad-tips-and-tricks-part2
+
+Util.ProgressBar(...): progress bar for your longer running LP scripts
+
+quick n dirty - use the status bar.
+Util.Progress = <percentage>
+
+Util.Break(): Explicitly breaks into the debugger
+Util.Cache<T>(...): Allows caching an object between query executions
+Util.Cmd(...): Executes an external process
+Util.GetPassword(): Prompts user for a password
+Util.ClearResults(): Clears the result pane
+Util.Run(...): Runs another query
+Util.Image(...): Loads and image that can then be rendered to the query window using the Dump method
+
+new Hyperlinq ("www.danclarke.com", "My Blog")
+
+overload to run code when clicked
+new Hyperlinq (() => MessageBox.Show("Dada!"), "Click me")
+
+Current Directory
+Path.GetDirectoryName (Util.CurrentQueryPath)
+or maybe set the working directory
+Directory.SetCurrentDirectory (Path.GetDirectoryName (Util.CurrentQueryPath));
+
+Ctrl+[1-9]: Quickly switch the current query type from the options in the Language dropdown - eg. C# Expression, C# Statement(s), C# Program, etc.
+Ctrl+r: Toggle results window
+Shift+f8: Show/Hide left panes (Explorer pane)
+Ctrl+.: Open smart tag - usual for fixing errors like missing using references, etc.
+Ctrl+d: Toggle current database connection

@@ -1,0 +1,6 @@
+windows server 2012 r2 IIS 8.5
+dism /online /enable-feature /featurename:IIS-ASPNET45
+
+or 
+import-module servermanager
+add-windowsfeature web-server -includeallsubfeature

@@ -1,0 +1,5 @@
+https://www.sitepoint.com/modular-javascript-systemjs-jspm/
+http://2ality.com/2014/09/es6-modules-final.html
+https://www.sitepoint.com/javascript-modules-bundling-transpiling/
+https://github.com/frankwallis/plugin-typescript
+http://david-barreto.com/how-to-use-typescript-with-systemjs/

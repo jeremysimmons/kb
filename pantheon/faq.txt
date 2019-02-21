@@ -1,0 +1,21 @@
+https://pantheon.io/docs/faq/
+
+Does Pantheon have FTP or shell access?
+Pantheon supports toggling between local development mode using git push to transfer all code changes, and an on-server development mode, which provides access to the codebase via SFTP.
+
+Direct SSH access is not supported, but you are able to directly interface with mysql, use CLI tools (Terminus, drush, WP-CLI, and SFTP files.
+
+https://pantheon.io/security
+Container-based infrastructure
+Automated, one-click core updates
+Denial of service protection
+Automated security monitoring
+Network intrusion protection
+Automated HTTPS
+SAML/SSO/2FA
+Role-based change management
+Automated backup and retention
+Secure code and database access
+Secure integration to resources
+Secure datacenters
+https://pantheon.io/blog/open-source-components-valhalla

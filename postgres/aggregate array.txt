@@ -1,0 +1,6 @@
+https://www.postgresql.org/docs/9.1/static/functions-aggregate.html
+SELECT         
+  rnp.grp_id,
+  array_to_string(array_agg(distinct rnp.cabinets),',') AS cabinets,
+  array_to_string(array_agg(distinct ips.address),',')  AS addresses
+FROM rnp JOIN ips ON rnp.grp_id=ips.grp_id GROUP BY rnp.grp_id, ips.grp_id;

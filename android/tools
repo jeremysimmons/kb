@@ -1,0 +1,16 @@
+apktool d Gmail.apk && cat Gmail/AndroidManifest.xml
+https://ibotpeaches.github.io/Apktool/
+
+aapt dump badging <path-to-apk>
+C:\Users\jeremy.simmons\AppData\Local\Android\sdk\build-tools\25.0.2
+set path=C:\Users\jeremy.simmons\AppData\Local\Android\sdk\build-tools\25.0.2;%PATH%;
+aapt dump resources "AB Moseum beta 1.0.1.apk"
+aapt dump strings "AB Moseum beta 1.0.1.apk"
+aapt dump badging "AB Moseum beta 1.0.1.apk"
+
+9patch
+http://radleymarx.com/blog/simple-guide-to-9-patch/
+
+https://github.com/skylot/jadx - Dex to Java decompiler
+
+https://romannurik.github.io/AndroidAssetStudio/

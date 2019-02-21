@@ -1,0 +1,3 @@
+https://www.nuget.org/packages/Moq.AutoMock/
+
+https://github.com/AutoFixture/AutoFixture

@@ -1,0 +1,17 @@
+customer = Input.cart.customer
+discount = 0
+message = ""
+if customer
+  if customer.accepts_marketing? #determines if the customer accepts marketing
+    discount = 1000 #number of Dollars to discount in cents
+    message = "Accepts Marketing Discount" #message to customer when they get the discount
+  end
+end
+puts discount
+Input.cart.line_items.each do |line_item|
+  product = line_item.variant.product
+  next if product.gift_card?
+  line_item.change_line_price(line_item.line_price - Money.new(cents: discount), message: message) unless discount == 0
+end
+
+Output.cart = Input.cart

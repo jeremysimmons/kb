@@ -1,0 +1,72 @@
+http://galenframework.com/
+
+http://galenframework.com/docs/browsers/
+
+width: ###px to ###px
+width: 100% of screen/widgth
+
+near: selector ##px top|right|left|bottom
+
+contains: selector1, selector2, selectorN
+
+id: header-container
+css: #header-container h1
+xpath: //ul[@data-name='menu']
+
+galen check home-page.spec
+--url "http://example.com/home"
+--size 1024x800
+--include desktop
+--htmlreport report.html
+
+search-textfield
+near: search-button 20px left
+search-textfield should be 20px from the left of search button
+
+search-button
+inside: header 20px top right
+
+search-button should be inside the header 20px from the top and 20px from the right
+
+items are aligned along an x-horizontal line
+menu-item-home
+aligned horizontally all: menu-item-categories, menu-item-about, menu-item-rss
+
+right edges aligned y-vertical line
+menu-item-home
+aligned vertically right: menu-item-categories, menu-item-about, menu-item-rss
+
+absent
+near http://galenframework.com/docs/reference-galen-spec-language-guide/#Near
+left-of, right-of http://galenframework.com/docs/reference-galen-spec-language-guide/#LeftofandRightof
+inside http://galenframework.com/docs/reference-galen-spec-language-guide/#Inside
+aligned http://galenframework.com/docs/reference-galen-spec-language-guide/#Aligned
+above http://galenframework.com/docs/reference-galen-spec-language-guide/#BelowandAbove
+below
+
+
+centered
+on
+image
+text is
+text starts
+text ends
+text matches
+text contains
+width http://galenframework.com/docs/reference-galen-spec-language-guide/#WidthandHeight
+height
+contains
+component
+
+menu-item-*
+
+parametertized specification
+[ 1 - 7]
+menu-item-@:
+width:
+width: 150px;
+height: 40px;
+
+geckodriver is newer firefoxdriver.exe
+https://github.com/mozilla/geckodriver/releases/tag/v0.18.0
+

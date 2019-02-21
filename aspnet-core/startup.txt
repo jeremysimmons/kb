@@ -1,0 +1,3 @@
+https://docs.microsoft.com/en-us/aspnet/core/fundamentals/startup
+https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware
+http://developer.telerik.com/featured/understanding-asp-net-core-initialization/

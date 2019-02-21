@@ -1,0 +1,17 @@
+customer = Input.cart.customer
+discount = 0
+message = ""
+if customer
+  if customer.orders_count == 0
+    discount = 0.1 #change the discount given here
+    message = "Thanks for placing your first order" #change the message shown here
+    
+end
+puts discount
+Input.cart.line_items.each do |line_item|
+  product = line_item.variant.product
+  next if product.gift_card?
+  line_item.change_line_price(line_item.line_price * (1-discount), message: message) unless discount == 0
+end
+
+Output.cart = Input.cart

@@ -1,0 +1,23 @@
+DISCOUNTS_BY_QUANTITY = {
+  10_000 => 20,
+  1_000 => 15,
+  100 => 10,
+  10 => 5,
+}
+
+Input.cart.line_items.each do |line_item|
+  next if line_item.variant.product.gift_card?
+
+  quantity, discount = DISCOUNTS_BY_QUANTITY.find do |quantity, _|
+    line_item.quantity >= quantity
+  end
+  next unless discount
+
+  message = "$#{discount} off when buying at least #{quantity}."
+  line_item.change_line_price(
+    line_item.line_price - (Money.new(cents:100) * discount),
+    message: message,
+  )
+end
+
+Output.cart = Input.cart

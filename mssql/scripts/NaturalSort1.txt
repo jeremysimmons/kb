@@ -1,0 +1,47 @@
+// https://stackoverflow.com/a/523012/26877
+CREATE FUNCTION [dbo].[fnMixSort]
+(
+    @ColValue NVARCHAR(255)
+)
+RETURNS NVARCHAR(1000)
+AS
+
+BEGIN
+    DECLARE @p1 NVARCHAR(255),
+        @p2 NVARCHAR(255),
+        @p3 NVARCHAR(255),
+        @p4 NVARCHAR(255),
+        @Index TINYINT
+
+    IF @ColValue LIKE '[a-z]%'
+        SELECT  @Index = PATINDEX('%[0-9]%', @ColValue),
+            @p1 = LEFT(CASE WHEN @Index = 0 THEN @ColValue ELSE LEFT(@ColValue, @Index - 1) END + REPLICATE(' ', 255), 255),
+            @ColValue = CASE WHEN @Index = 0 THEN '' ELSE SUBSTRING(@ColValue, @Index, 255) END
+    ELSE
+        SELECT  @p1 = REPLICATE(' ', 255)
+
+    SELECT  @Index = PATINDEX('%[^0-9]%', @ColValue)
+
+    IF @Index = 0
+        SELECT  @p2 = RIGHT(REPLICATE(' ', 255) + @ColValue, 255),
+            @ColValue = ''
+    ELSE
+        SELECT  @p2 = RIGHT(REPLICATE(' ', 255) + LEFT(@ColValue, @Index - 1), 255),
+            @ColValue = SUBSTRING(@ColValue, @Index, 255)
+
+    SELECT  @Index = PATINDEX('%[0-9,a-z]%', @ColValue)
+
+    IF @Index = 0
+        SELECT  @p3 = REPLICATE(' ', 255)
+    ELSE
+        SELECT  @p3 = LEFT(REPLICATE(' ', 255) + LEFT(@ColValue, @Index - 1), 255),
+            @ColValue = SUBSTRING(@ColValue, @Index, 255)
+
+    IF PATINDEX('%[^0-9]%', @ColValue) = 0
+        SELECT  @p4 = RIGHT(REPLICATE(' ', 255) + @ColValue, 255)
+    ELSE
+        SELECT  @p4 = LEFT(@ColValue + REPLICATE(' ', 255), 255)
+
+    RETURN  @p1 + @p2 + @p3 + @p4
+
+END

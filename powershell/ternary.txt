@@ -1,0 +1,13 @@
+$(If ($condition) {"true"} Else {"false"})
+
+set-alias ?: Invoke-Ternary -Option AllScope -Description "PSCX filter alias"
+filter Invoke-Ternary ([scriptblock]$decider, [scriptblock]$ifTrue, [scriptblock]$ifFalse) 
+{
+   if (&$decider) { 
+      &$ifTrue
+   } else { 
+      &$ifFalse 
+   }
+}
+
+$total = ($quantity * $price ) * (?:  {$quantity -le 10} {.9} {.75})

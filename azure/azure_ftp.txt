@@ -1,0 +1,7 @@
+https://stackoverflow.com/a/40963889/26877
+
+If you are okay with a little programming with Node.js, you can host a FTP server directly backed by Azure Blob.
+
+You can use nodeftpd combined with azure-storage-fs. nodeftpd is the FTP server written in Node.js and support third-party file system manager. azure-storage-fs is a file system manager that is designed to use for nodeftpd and talks to Azure Blob directly.
+
+The file system manager integration code is clearly written under README.md of azure-storage-fs. But you will need to write your own authentication code.

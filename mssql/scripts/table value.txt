@@ -1,0 +1,5 @@
+(VALUES 
+('Blade'), 
+('Crown Race'), 
+('AWC Logo Cap')
+) AS b(Name) 

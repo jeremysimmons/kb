@@ -1,0 +1,3 @@
+git diff commitid1 commitid2 > something.patch
+cd deploy
+git apply something.patch

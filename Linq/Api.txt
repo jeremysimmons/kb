@@ -1,0 +1,1 @@
+https://stackoverflow.com/questions/3555317/linqpad-extension-methods

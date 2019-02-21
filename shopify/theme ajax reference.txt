@@ -1,0 +1,1 @@
+https://help.shopify.com/themes/development/getting-started/using-ajax-api

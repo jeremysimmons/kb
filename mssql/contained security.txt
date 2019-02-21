@@ -1,0 +1,11 @@
+sp_configure 'contained database authentication', 1;  
+GO  
+RECONFIGURE;  
+GO  
+
+USE [master]
+GO
+ALTER DATABASE [disciplr-appdb-stage] SET CONTAINMENT = PARTIAL WITH NO_WAIT
+GO
+
+GO

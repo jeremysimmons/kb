@@ -1,0 +1,11 @@
+total = Input.cart.subtotal_price_was
+discount = 0.2 #discount percent in decimal format
+message = "20% off Sitewide" #message to show when discount is applied
+
+Input.cart.line_items.each do |line_item|
+  product = line_item.variant.product
+  next if product.gift_card?
+  line_item.change_line_price(line_item.line_price * (1-discount), message: message) unless discount == 0
+end
+
+Output.cart = Input.cart

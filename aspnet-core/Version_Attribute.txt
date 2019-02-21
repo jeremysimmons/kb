@@ -1,0 +1,14 @@
+this.EnsureFileVersionProvider();
+        if (this.Href != null)
+        {
+          int index = output.Attributes.IndexOfName("href");
+          TagHelperAttribute attribute2 = output.Attributes[index];
+          output.Attributes[index] = new TagHelperAttribute(attribute2.Name, (object) this._fileVersionProvider.AddFileVersionToPath(this.Href), attribute2.ValueStyle);
+        }
+
+    private void EnsureFileVersionProvider()
+    {
+      if (this._fileVersionProvider != null)
+        return;
+      this._fileVersionProvider = new FileVersionProvider(this.HostingEnvironment.WebRootFileProvider, this.Cache, this.ViewContext.HttpContext.Request.PathBase);
+    }

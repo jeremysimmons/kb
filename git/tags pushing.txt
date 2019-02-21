@@ -1,0 +1,22 @@
+git push --follow-tags
+
+It pushes both commits and only tags that are both:
++ annotated
++ reachable (an ancestor) from the pushed commits
+is is sane because:
+you should only push annotated tags to the remote, and keep lightweight tags for local development to avoid tag clashes.
+
+Delete a Tag on origin
+git tag -d 12345
+git push origin :refs/tags/12345
+
+AVOID USING THESE!
+
+To push a single tag:
+git push origin <tag_name>
+
+And the following command should push all tags (not recommended):
+git push --tags
+
+To push a moved tag
+git push origin <tag_name> --force

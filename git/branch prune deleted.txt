@@ -1,0 +1,4 @@
+git remote update --prune
+git remote prune origin
+git gc --prune=now
+

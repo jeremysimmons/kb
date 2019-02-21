@@ -1,0 +1,71 @@
+Store Info
+updated (datetime)
+installs (picklist)
+current version
+requires android
+content rating
+permissions
+offered bykk
+
+filename
+
+androidmanifest
+    platformBuildVersionCode
+    platformBuildVersionName
+        <uses-sdk
+            android:minSdkVersion="14"
+            android:targetSdkVersion="22" />
+        minSdkVersion
+    	targetSdkVersion
+    features---
+        <uses-feature
+            android:name="android.hardware.camera" />
+
+    supports-screen
+        <supports-screens
+            android:anyDensity="true"
+            android:smallScreens="true"
+            android:normalScreens="true"
+            android:largeScreens="true"
+            android:xlargeScreens="true" />
+
+        <uses-permission
+            android:name="android.permission.CAMERA" />
+
+        <uses-permission
+            android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+        <uses-permission
+            android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+
+        <application
+            android:theme="@ref/0x01030007"
+            android:label="@ref/0x7f030000"
+            android:icon="@ref/0x7f020001"
+            android:debuggable="false"
+            android:banner="@ref/0x7f020000"
+            android:isGame="true">
+
+        <uses-feature
+            android:glEsVersion="0x20000" />
+
+        <uses-feature
+            android:name="android.hardware.camera.autofocus"
+            android:required="false" />
+
+        <uses-feature
+            android:name="android.hardware.camera.front"
+            android:required="false" />
+
+        <uses-feature
+            android:name="android.hardware.touchscreen"
+            android:required="false" />
+
+        <uses-feature
+            android:name="android.hardware.touchscreen.multitouch"
+            android:required="false" />
+
+        <uses-feature
+            android:name="android.hardware.touchscreen.multitouch.distinct"
+            android:required="false" />

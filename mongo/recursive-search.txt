@@ -1,0 +1,22 @@
+http://stackoverflow.com/a/31200456/26877
+
+using $where
+http://docs.mongodb.org/manual/reference/operator/query/where/
+
+db.collection.find(
+  function () {
+    var findKey = "find-this",
+        findVal = "please find me";
+
+    function inspectObj(doc) {
+      return Object.keys(doc).some(function(key) {
+        if ( typeof(doc[key]) == "object" ) {
+          return inspectObj(doc[key]);
+        } else {
+          return ( key == findKey && doc[key] == findVal );
+        }
+      });
+    }
+    return inspectObj(this);
+  }
+)

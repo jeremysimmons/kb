@@ -1,0 +1,16 @@
+https://github.com/aspnet/Mvc/issues/5504
+
+Actually, you can use an HtmlHelper from within a TagHelper also now, with no need for further features:
+
+Add an IHtmlHelperargument to the constructor of your TagHelper, say: IHtmlHelper html, so that a fresh Html instance is injected when your TagHelper is created.
+Store it in a private variable, say html. The injected TagHlper is "neutral", not specific for your View, so you have to "contextualize" it for the current View Viecontext as explained in the steps below
+Add a property:
+        [HtmlAttributeNotBound]
+        [ViewContext]
+        public ViewContext ViewContext { get; set; }
+It will be automatically bound to your View ViewContext
+4. In the TagHelper ProcessAsync method contextualize the HtmlHelper:
+
+(html as IViewContextAware).Contextualize(ViewContext );
+
+Done! Now you have a working HtmlHelper.

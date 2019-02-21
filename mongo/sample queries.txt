@@ -1,0 +1,166 @@
+ db.getCollection('resources').find({_id:ObjectId("58b468e80960a1788ef4a30f")})
+
+db.getCollection('resources').find({"type":"product"})
+db.getCollection('resources').find({"type":"product"}).count()
+db.getCollection('resources').count({"type":"product"})
+db.getCollection('resources').find({"type":"lesson"})
+db.getCollection('resources').find({ $and: [ {"type":"asset"}, {"meta.type":"video/mp4"}]}, {"content": 1} )
+db.getCollection('resources').find({ $and: [ {"type":"asset"}, {"content.is_s3":false}]}, {"content": 1} )
+
+db.getCollection('resources').find({ $and: [ {"type":"lesson"}, {"meta.name":{ $regex: /God is Generous/i }} ]}, {"meta": 1} )
+
+db.getCollection('resources').find({"type":"lesson"}, {"content.assets" : 1, "meta.name": 1, "meta.product-id": 1})
+
+{$and: [{"type":"asset", {"meta.brand":{$exists: true}}]
+
+
+qty: { $exists: true
+
+db.getCollection('resources').find({ meta: { name: { $eq: "lesson"  } } })
+"meta" : {
+	"name" : "FOR TESTING PURPOSES ONLY",
+	"type" : "test-insert"
+}
+
+
+ { $and: [ { price: { $ne: 1.99 } }, { price: { $exists: true } } ] } )
+
+db.getCollection('resources').find({"properties.linked-resources": {$gt: 1} });
+properties.linked-resources
+
+{ field: { $in: [<value1>, <value2>, ... <valueN> ] } }
+
+db.getCollection('resources').find({ _id: { $in: [ .... ] }})
+
+db.getCollection('resources').find({ _id: { $in: [ ObjectId("58bd864e0960a1788ef4c70a"), ObjectId("58bd864e0960a1788ef4c709"), ObjectId("58bd864e0960a1788ef4c708") ] } })
+
+// curriculumns by query 10:54 AM 7/26/2017
+db.getCollection('resources').find({$and: [{"type":"product"}, {"meta.brand.name": "Kidamazoo Studios"}]}, {"meta.name":1, "meta.brand.name":1 })
+
+var myCursor = db.resources.find({ "meta.age-levels": { $exists: true } });
+myCursor.forEach((resource) => {
+    printjsononeline(resource);
+    print(myCursor.objsLeftInBatch());
+});
+
+db.getCollection('resources').find({$and: [{"type":"asset"}, {"content.is_s3":true}, {"content.url":{$exists: false}} ]})
+
+db.resources.find({ "meta.age-levels": { $exists: true } }).forEach((resource) => {
+    resource.meta['grade-levels'] = resource.meta['age-levels']
+        .sort((a, b) => parseInt(a) < parseInt(b) ? -1 : 1)
+        .map((age) => mapping[age])
+        .reduce((array, values) => {
+            values
+                .filter((value) => !array.includes(value))
+                .forEach((value) => array.push(value));
+            return array;
+        }, [])
+    db.resources.save(resource);
+});
+
+11:11 AM 8/28/2017
+db.getCollection('resources').find({$and:[{"type":"asset"}, {"meta.type":{$ne: null}}]}, {"type":1,"meta.type":1})
+
+9:00 AM 8/29/2017
+db.getCollection('resources').find({$and:[{"type":"asset"},{"content.is_s3":false},{"content.broken":{$exists:false}}]}, {"schema":0, "linked-assets":0, "meta":0})
+
+7:20 AM 9/12/2017
+print a list of curriculum ids
+var cursor = db.resources.find({"type":"product"}, {"meta.name":1});
+cursor.forEach(function(item) {
+    print("'" + item._id + "','" + item.meta.name.replace("'", "''").replace(/^HIDE - /, "") + "'," + (item.meta.name.startsWith("HIDE") ? 1 : 0));
+})
+
+4:30 PM 9/18/2017
+db.collection.update(
+   <query>,
+   <update>,
+   {
+     upsert: <boolean>,
+     multi: <boolean>,
+     writeConcern: <document>,
+     collation: <document>
+   }
+)
+
+{ field: { $type: <BSON type number> | <String alias> } }
+Type	Number	Alias	Notes
+Double	1	"double"	 
+String	2	"string"	 
+Object	3	"object"	 
+Array	4	"array"	 
+Binary data	5	"binData"	 
+Undefined	6	"undefined"	Deprecated.
+ObjectId	7	"objectId"	 
+Boolean	8	"bool"	 
+Date	9	"date"	 
+Null	10	"null"	 
+Regular Expression	11	"regex"	 
+DBPointer	12	"dbPointer"	Deprecated.
+JavaScript	13	"javascript"	 
+Symbol	14	"symbol"	Deprecated.
+JavaScript (with scope)	15	"javascriptWithScope"	 
+32-bit integer	16	"int	 
+Timestamp	17	"timestamp"	 
+64-bit integer	18	"long"	 
+Decimal128	19	"decimal"	New in version 3.4.
+Min key	-1	"minKey"	 
+Max key	127	maxKey"	 
+
+db.getCollection('resources').find({$and:[{"type":"product"}, {"content.images.image":{$regex: /^http/i}}]}, {"content.images":1})
+
+db.getCollection('resources').find({$and:[{"type":"product"}, {"content.images.image":{$regex: /^http/i}}]}, {"content.images":1})
+
+db.getCollection('resources').update(
+    // query 
+    {
+        "_id" : ObjectId("59c2d648557d830f840c1986")
+    },
+    
+    // update 
+    {
+        $set:{"content.images" : { "image" : { "filename": "https://unsplash.it/550/351/?image=220" } } }
+    },
+    
+    // options 
+    {
+        "multi" : false,  // update only one document 
+        "upsert" : false  // insert a new document, if no existing document match the query 
+    }
+);
+
+
+var cursor = db.resources.find({"type":"product"});
+var items = [];
+cursor.forEach(function(item) {
+    items.push({id:item._id.valueOf(), name:item.meta.name.replace("'", "''"), brand:item.meta.brand.name.replace("'", "''") });
+})
+printjsononeline(items);
+
+10:35 AM 12/5/2017
+db.getCollection('resources').update(
+    // query 
+    {
+        $and: [{"type":"lesson"}, {"meta.translation": "New International Version"}]
+    },
+    
+    // update 
+    {
+        $set:{"meta.translation": "NIV" }
+    },
+    
+    // options 
+    {
+        "multi" : true,  // update only one document 
+        "upsert" : false  // insert a new document, if no existing document match the query 
+    }
+);
+
+10:56 AM 12/5/2017
+var count = 0;
+var cursor = db.getCollection('resources').find(
+    {$and: [{"type":"lesson"}, {"meta.translation": "New International Version"}]},
+    {"_id":1, "meta.translation":1, "meta.name": 1, "meta.lesson-number":1}
+);
+cursor.forEach(function(item) {count++; printjson(item);});
+print(count);

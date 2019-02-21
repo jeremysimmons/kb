@@ -1,0 +1,1 @@
+https://blogs.msdn.microsoft.com/benjaminperkins/2013/07/31/enabling-failed-request-logging-on-a-windows-azure-web-site/

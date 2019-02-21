@@ -1,0 +1,1 @@
+https://blogs.technet.microsoft.com/dataplatforminsider/2014/07/10/new-asp-net-session-state-provider-for-sql-server-in-memory-oltp/

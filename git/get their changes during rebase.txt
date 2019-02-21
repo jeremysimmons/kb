@@ -1,0 +1,16 @@
+git checkout --ours foo/bar.java
+git checkout --theirs foo/bar.java
+
+don't do this
+git checkout branch1 -- filenamefoo.txt
+ in the middle of a rebase as it would pull the file from the head of that branch not at the detached head point you would be at in a conflicted rebase state
+
+emulate functionality on versions prior to 1.6
+
+for --theirs
+git reset -- _layouts/default.html
+git checkout MERGE_HEAD -- _layouts/default.html
+
+for --ours:
+git reset -- index.html
+git checkout ORIG_HEAD -- index.html

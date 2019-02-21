@@ -1,0 +1,1 @@
+https://darkiri.wordpress.com/2013/02/26/bson-serialization-with-mongodb-c-driver/

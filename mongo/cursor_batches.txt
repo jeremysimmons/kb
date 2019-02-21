@@ -1,0 +1,12 @@
+https://docs.mongodb.com/manual/tutorial/iterate-a-cursor/#cursor-batches
+
+
+
+var myCursor = db.getCollection('resources').find( { type: "asset" } );
+var count = 0;
+while (myCursor.hasNext()) {
+   printjson(myCursor.next());
+// or printjsononeline(myCursor.next());
+    count++;
+    if(count > 50) break;
+}

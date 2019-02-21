@@ -1,0 +1,25 @@
+javascript UUID helpers
+https://github.com/rstam/mongo-csharp-driver/blob/master/uuidhelpers.js
+
+https://stackoverflow.com/a/417137/26877
+public struct Guid
+{
+  public ulong Data1; // 8
+  public ushort Data2; // 2
+  public ushort Data3; // 2
+  public fixed byte Data4[8]; //8
+}
+
+https://docs.mongodb.com/manual/reference/method/ObjectId/
+
+ObjectId(<hexadecimal>)
+Returns a new ObjectId value. The 12-byte ObjectId value consists of:
+
+a 4-byte value representing the seconds since the Unix epoch,
+a 3-byte machine identifier,
+a 2-byte process id, and
+a 3-byte counter, starting with a random value.
+
+https://github.com/mongodb/mongo-csharp-driver/blob/master/src/MongoDB.Bson/ObjectModel/ObjectId.cs
+
+GenerateNewId()

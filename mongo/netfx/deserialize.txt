@@ -1,0 +1,7 @@
+string json = "{ 'foo' : 'bar' }";
+MongoDB.Bson.BsonDocument document
+    = MongoDB.Bson.Serialization.BsonSerializer.Deserialize<BsonDocument>(json);
+
+string json = "{'foo' : 'bar' }";
+var document = new BsonDocument();
+document.Add(BsonDocument.Parse(json));

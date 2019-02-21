@@ -1,0 +1,26 @@
+<form action= "http://analytics.clickdimensions.com/forms/h/a7DjVeWmRUG0ucFO7VYP8w" method="post" name="frmWebCapture" id="frmWebCapture"> 
+    <input id="cd_visitorkey" name="cd_visitorkey" type="hidden" />
+    <input id="dcc_smu" name="dcc_smu" type="hidden" value="804960006" />
+    <input id="txtTopic" name="txtTopic" type="hidden" value="Running Club Records - Advance Sign-Up" />
+    <div><input type="text" id="txtEmail" name="txtEmail" placeholder="Email Address" /></div>
+    <div><input type="text" id="txtFirstName" name="txtFirstName" placeholder="First Name" /></div>
+    <div><input type="text" id="txtLastName" name="txtLastName" placeholder="Last Name" /></div>
+    <div><input type="text" id="txtCountry" name="txtCountry" placeholder="Country" /></div>
+    <input type="submit" value="Submit" id="emaillistbtn" name="Submit">
+    <span id="form-error-message" class="hidden error">All fields are required, Email must be valid.</span>
+</form>
+
+<script type="text/javascript" src="https://analytics.clickdimensions.com/ts.js" ></script>
+<script type="text/javascript">
+function getCookie(name) {
+    var value = "; " + document.cookie;
+    var parts = value.split("; " + name + "=");
+    if (parts.length == 2) return parts.pop().split(";").shift();
+}
+var cdAnalytics = new clickdimensions.Analytics('analytics.clickdimensions.com');
+cdAnalytics.setAccountKey('a9HybdaLigEye3seiOC3FU');
+cdAnalytics.setDomain('runningclubrecords.com');
+cdAnalytics.setScore(typeof(cdScore) == "undefined" ? 0 : (cdScore == 0 ? null : cdScore));
+cdAnalytics.trackPage();
+document.getElementById("cd_visitorkey").value = getCookie("cuvid");
+</script>

@@ -1,0 +1,151 @@
+Terminus 1.6.1
+
+Usage:
+  command [options] [arguments]
+
+Options:
+  -h, --help            Display this help message
+  -q, --quiet           Do not output any message
+  -V, --version         Display this application version
+      --ansi            Force ANSI output
+      --no-ansi         Disable ANSI output
+  -n, --no-interaction  Do not ask any interactive question
+  -y, --yes             Answer all confirmations with "yes"
+  -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+Available commands:
+  aliases                    [drush:aliases] Generates Pantheon Drush aliases for sites on which the currently logged-in user is on the team.
+  art                        Displays Pantheon ASCII artwork.
+  help                       Displays help for a command
+  list                       Lists commands
+ auth
+  auth:login                 [login] Logs in a user to Pantheon.
+  auth:logout                [logout] Logs out the currently logged-in user and deletes any saved machine tokens.
+  auth:whoami                [whoami] Displays information about the currently logged-in user.
+ backup
+  backup:automatic:disable   Disables automatic backups.
+  backup:automatic:enable    Enables automatic daily backups that are retained for one week and weekly backups retained for one month.
+  backup:automatic:info      Displays the hour when daily backups are created and the day of the week when weekly backups are created.
+  backup:create              Creates a backup of a specific site and environment.
+  backup:get                 Displays the download URL for a specific backup or latest backup.
+  backup:info                Displays information about a specific backup or the latest backup.
+  backup:list                [backups] Lists backups for a specific site and environment.
+  backup:restore             Restores a specific backup or the latest backup.
+ branch
+  branch:list                [branches] Displays list of git branches for a site.
+ connection
+  connection:info            Displays connection information for Git, SFTP, MySQL, and Redis.
+  connection:set             Sets Git or SFTP connection mode on a development environment (excludes Test and Live).
+ dashboard
+  dashboard:view             [dashboard] Displays the URL for the Pantheon Dashboard or opens the Dashboard in a browser.
+ domain
+  domain:add                 Associates a domain with the environment.
+  domain:dns                 Displays recommended DNS settings for the environment.
+  domain:list                [domains] Displays domains associated with the environment.
+  domain:lookup              Displays site and environment with which a given domain is associated. Note: Only sites for which the user is authorized will appear.
+  domain:remove              [domain:rm] Disassociates a domain from the environment.
+ env
+  env:clear-cache            [env:cc] Clears caches for the environment.
+  env:clone-content          Clones database/files from one environment to another environment.
+  env:code-log               Displays the code log for the environment.
+  env:commit                 Commits code changes on a development environment. Note: The environment's connection mode must be set to SFTP.
+  env:deploy                 [deploy] Deploys code to the Test or Live environment. Notes: - Deploying the Test environment will deploy code from the Dev environment. - Deploying the Live environment will deploy code from the Test environment.
+  env:diffstat               Displays the diff of uncommitted code changes on a development environment.
+  env:info                   Displays environment status and configuration.
+  env:list                   [envs] Displays a list of the site's environments.
+  env:view                   [site:view] Displays the URL for the environment or opens the environment in a browser.
+  env:wake                   Wakes the environment by pinging it. Note: Development environments and Sandbox sites will automatically sleep after a period of inactivity.
+  env:wipe                   Deletes all files and database content in the environment.
+ https
+  https:info                 Provides information for HTTPS on being used for the environment.
+  https:remove               [https:disable|https:rm] Disables HTTPS and removes the SSL certificate from the environment.
+  https:set                  [https:add|https:enable] Enables HTTPS and/or updates the SSL certificate for the environment.
+ import
+  import:complete            [site:import:complete] Finalizes the Pantheon import process.
+  import:database            [import:db] Imports a database archive to the environment.
+  import:files               Imports a database archive to the environment.
+  import:site                [site:import] Imports a site archive (code, database, and files) to the site.
+ lock
+  lock:disable               Disables HTTP basic authentication on the environment.
+  lock:enable                Enables HTTP basic authentication on the environment. Note: HTTP basic authentication username and password are stored in plaintext.
+  lock:info                  Displays HTTP basic authentication status and configuration for the environment.
+ machine-token
+  machine-token:delete       [mt:delete] Deletes a currently logged-in user's machine token.
+  machine-token:delete-all   [mt:delete-all] Delete all stored machine tokens and log out.
+  machine-token:list         [machine-tokens|mt:list|mts] Lists the currently logged-in user's machine tokens.
+ multidev
+  multidev:create            [env:create] Creates a multidev environment.
+  multidev:delete            [env:delete] Deletes a Multidev environment.
+  multidev:list              [multidevs] Lists a site's Multidev environments.
+  multidev:merge-from-dev    [env:merge-from-dev] Merges code commits from the Dev environment into a Multidev environment.
+  multidev:merge-to-dev      [env:merge-to-dev] Merges code commits from a Multidev environment into the Dev environment.
+ new-relic
+  new-relic:disable          Disables New Relic for a site.
+  new-relic:enable           Enables New Relic for a site.
+  new-relic:info             Displays New Relic configuration.
+ org
+  org:list                   [orgs] Displays the list of organizations.
+  org:people:add             [org:ppl:add] Adds a user to an organization.
+  org:people:list            [org:ppl:list] Displays the list of users associated with an organization.
+  org:people:remove          [org:people:rm|org:ppl:remove|org:ppl:rm] Removes a user from an organization.
+  org:people:role            [org:ppl:role] Changes a user's role within an organization.
+  org:site:list              [org:sites] Displays the list of sites associated with an organization.
+  org:site:remove            [org:site:rm] Removes a site from an organization.
+  org:upstream:list          [org:upstreams] Displays the list of upstreams belonging to an organization.
+ owner
+  owner:set                  Change the owner of a site
+ payment-method
+  payment-method:add         [pm:add] Associates an existing payment method with a site.
+  payment-method:list        [payment-methods|pm:list|pms] Displays the list of payment methods for the currently logged-in user.
+  payment-method:remove      [pm:remove|pm:rm] Disassociates the active payment method from a site.
+ redis
+  redis:disable              Disables Redis add-on for a site.
+  redis:enable               Enables Redis add-on for a site.
+ remote
+  remote:drush               [drush] Runs a Drush command remotely on a site's environment.
+  remote:wp                  [wp] Runs a WP-CLI command remotely on a site's environment.
+ self
+  self:clear-cache           [self:cc] Clears the local Terminus command cache.
+  self:config:dump           Displays the local Terminus configuration.
+  self:console               Opens an interactive PHP console within Terminus. Note: This functionality is useful for debugging Terminus or prototyping Terminus plugins.
+  self:info                  Displays the local PHP and Terminus environment configuration.
+ service-level
+  service-level:set          Upgrades or downgrades a site's service level.
+ site
+  site:create                Creates a new site.
+  site:delete                Deletes a site from Pantheon.
+  site:info                  Displays a site's information.
+  site:list                  [sites] Displays the list of sites accessible to the currently logged-in user.
+  site:lookup                Displays the UUID of a site given its name.
+  site:org:add               Associates a supporting organization with a site.
+  site:org:list              [site:orgs] Displays the list of supporting organizations associated with a site.
+  site:org:remove            [site:org:rm] Disassociates a supporting organization from a site.
+  site:team:add              Adds a user to a site's team. Note: An invite will be sent if the email is not associated with a Pantheon account.
+  site:team:list             Displays the list of team members for a site.
+  site:team:remove           [site:team:rm] Removes a user from a site's team.
+  site:team:role             Updates a user's role on a site's team.
+  site:upstream:clear-cache  [site:upstream:cc|upstream:cache-clear|upstream:cc] Clears caches for the site's codeserver.
+  site:upstream:set          Changes a site's upstream.
+ solr
+  solr:disable               Disables Solr add-on for a site.
+  solr:enable                Enables Solr add-on for a site.
+ ssh-key
+  ssh-key:add                Associates a SSH public key with the currently logged-in user.
+  ssh-key:list               [ssh-keys] Displays the list of SSH public keys associated with the currently logged-in user.
+  ssh-key:remove             [ssh-key:rm] Disassociates a SSH public key from the currently logged-in user.
+ tag
+  tag:add                    Adds a tag on a site within an organization.
+  tag:list                   [tags] Displays the list of tags for a site within an organization.
+  tag:remove                 [tag:rm] Removes a tag from a site within an organization.
+ upstream
+  upstream:info              Displays information about an upstream.
+  upstream:list              [upstreams] Displays the list of upstreams accessible to the currently logged-in user.
+  upstream:updates:apply     Applies upstream updates to a site's development environment.
+  upstream:updates:list      Displays a list of new code commits available from the upstream for a site's development environment.
+  upstream:updates:status    Displays a whether there are updates available from the upstream for a site's environment.
+ workflow
+  workflow:info:logs         Displays the details of a workflow including Quicksilver operation logs.
+  workflow:info:operations   Displays Quicksilver operation details of a workflow.
+  workflow:info:status       Displays the status of a workflow.
+  workflow:list              [workflows] Displays the list of the workflows for a site.
+  workflow:watch             Streams new and finished workflows from a site to the console.

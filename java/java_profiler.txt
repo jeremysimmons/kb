@@ -1,0 +1,9 @@
+-Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n
+
+http://docs.oracle.com/javase/6/docs/technotes/guides/jpda/conninv.html#Connectors
+
+https://h20392.www2.hpe.com/portal/swdepot/displayProductInfo.do?productNumber=HPJMETER
+
+http://docs.oracle.com/javase/7/docs/technotes/samples/hprof.html
+
+https://profiler.netbeans.org/

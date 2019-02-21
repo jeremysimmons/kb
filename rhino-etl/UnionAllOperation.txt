@@ -1,0 +1,84 @@
+<summary>
+/// Combines rows from all operations.
+/// </summary>
+public class UnionAllOperation : AbstractOperation {
+ 
+    private readonly List<IOperation> _operations = new List<IOperation>();
+ 
+    /// <summary>
+    /// Executes the added operations in parallel.
+   /// </summary>
+   /// <param name="rows"></param>
+   /// <returns></returns>
+   public override IEnumerable<Row> Execute(IEnumerable<Row> rows) {
+
+       var blockingCollection = new BlockingCollection<Row>();
+
+       Debug("Creating tasks for {0} operations.", _operations.Count);
+
+       var tasks = _operations.Select(currentOp => Task.Factory.StartNew(() => {
+           Trace("Executing {0} operation.", currentOp.Name);
+           foreach (var row in currentOp.Execute(null)) {
+               blockingCollection.Add(row);
+           }
+           blockingCollection.Add(null); // free the consumer thread
+       })).ToArray();
+
+       Row r;
+       while (true) {
+           if (tasks.All(x => x.IsFaulted || x.IsCanceled || x.IsCompleted)) {
+               Debug("All tasks have been canceled, have faulted, or have completed.");
+               break;
+           }
+
+           r = blockingCollection.Take();
+           if (r == null)
+               continue;
+
+           yield return r;
+
+       }
+
+       while (blockingCollection.TryTake(out r)) {
+           if (r == null)
+               continue;
+           yield return r;
+       }
+
+       Task.WaitAll(tasks); // raise any exception that were raised during execption
+
+   }
+
+   /// <summary>
+   /// Initializes this instance
+   /// </summary>
+   /// <param name="pipelineExecuter">The current pipeline executer.</param>
+   public override void PrepareForExecution(IPipelineExecuter pipelineExecuter) {
+       foreach (var operation in _operations) {
+           operation.PrepareForExecution(pipelineExecuter);
+       }
+   }
+
+   /// <summary>
+   /// Add operation parameters
+   /// </summary>
+   /// <param name="ops">operations delimited by commas</param>
+   /// <returns></returns>
+   public UnionAllOperation Add(params IOperation[] ops) {
+       foreach (var operation in ops) {
+           _operations.Add(operation);
+       }
+       return this;
+   }
+
+   /// <summary>
+   /// Add operations
+   /// </summary>
+   /// <param name="ops">an enumerable of operations</param>
+   /// <returns></returns>
+   public UnionAllOperation Add(IEnumerable<IOperation> ops) {
+       _operations.AddRange(ops);
+       return this;
+   }
+
+}

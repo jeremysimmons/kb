@@ -1,0 +1,6 @@
+
+list current remotes
+> git remote -v 
+
+add a new upstream remote
+> git remote add upstream https://github.com/ORIGINAL_OWNER/ORIGINAL_REPOSITORY.git

@@ -1,0 +1,19 @@
+https://stackoverflow.com/a/22973330/26877
+
+<li @(Html.Attr("class", "new", () => example.isNew))>
+...
+</li>
+
+public static MvcHtmlString Attr(this HtmlHelper helper, string name, string value, Func<bool> condition = null)
+{
+    if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(value))
+    {
+        return MvcHtmlString.Empty;
+    }
+
+    var render = condition != null ? condition() : true;
+
+    return render ? 
+        new MvcHtmlString(string.Format("{0}=\"{1}\"", name, HttpUtility.HtmlAttributeEncode(value))) : 
+        MvcHtmlString.Empty;
+}

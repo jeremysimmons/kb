@@ -1,0 +1,32 @@
+https://blogs.msdn.microsoft.com/webdev/2013/10/17/attribute-routing-in-asp-net-mvc-5/#route-constraints
+
+http://csharp-video-tutorials.blogspot.com/2017/02/web-api-attribute-routing-constraints.html
+
+Constraint 
+Description 
+Example 
+min 
+Matches an integer with a minimum value 
+{x:min(0)} 
+max 
+Matches an integer with a maximum value 
+{x:max(100)} 
+length 
+Matches a string with the specified length or within a specified range of lengths 
+{x:length(3)} {x:length(1,10)} 
+minlength 
+Matches a string with a minimum length 
+{x:minlength(1)} 
+maxlength 
+Matches a string with a maximum length 
+{x:maxlength(100)} 
+range 
+Matches an integer within a range of values 
+{x:range(1,100)} 
+
+
+[Route("{id:int:min(1)}")]
+public Student Get(int id)
+{
+    return students.FirstOrDefault(s => s.Id == id);
+}

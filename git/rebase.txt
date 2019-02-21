@@ -1,0 +1,16 @@
+git rebase <new-base>
+Move the current branch’s commits to the tip of <new-base>, which can be either a branch name or a commit ID.
+git rebase -i <new-base>
+Perform an interactive rebase and select actions for each commit.
+git commit --amend
+Add staged changes to the most recent commit instead of creating a new one.
+git rebase --continue
+Continue a rebase after amending a commit.
+git rebase --abort
+Abandon the current interactive rebase and return the repository to its former state.
+git merge --no-ff <branch-name>
+Force a merge commit even if Git could do a fast-forward merge.
+
+
+https://git-scm.com/book/en/v2/Git-Branching-Rebasing
+git rebase --onto master server client

@@ -1,0 +1,4 @@
+https://stackoverflow.com/a/5596984/26877
+$MyFile = Get-Content $MyPath
+$Utf8NoBomEncoding = New-Object System.Text.UTF8Encoding $False
+[System.IO.File]::WriteAllLines($MyPath, $MyFile, $Utf8NoBomEncoding)

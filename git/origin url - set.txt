@@ -1,0 +1,6 @@
+git remote set-url <remote> <new-url>
+example
+git remote set-url origin ssh://dccprojects@vs-ssh.visualstudio.com:22/DCC-API/_ssh/dcc-erp-api
+
+ssh://git@github.com:jeremysimmons/ShopifySharp.git
+git remote set-url origin git@jeremysimmons-github.com:jeremysimmons/ShopifySharp.git

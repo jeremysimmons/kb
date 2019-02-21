@@ -1,0 +1,5 @@
+Introduction to ASP.NET Core Module
+https://docs.microsoft.com/en-us/aspnet/core/fundamentals/servers/aspnet-core-module
+
+https://docs.microsoft.com/en-us/aspnet/core/hosting/aspnet-core-module
+

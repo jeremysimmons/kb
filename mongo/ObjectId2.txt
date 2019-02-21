@@ -1,0 +1,8 @@
+
+Size	Description
+4 bytes	a 4-byte value representing the seconds since the Unix epoch
+3 bytes	a 3-byte machine identifier
+2 bytes	2-byte process id
+3 bytes	3-byte counter, starting with a random value
+
+https://github.com/mongodb/mongo-csharp-driver/blob/master/src/MongoDB.Bson/ObjectModel/ObjectId.cs

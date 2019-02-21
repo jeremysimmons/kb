@@ -1,0 +1,24 @@
+Type of resource	Location of metafields
+Articles	/admin/blogs/#{id}/articles/#{id}/metafields.json
+Blogs	/admin/blogs/#{id}/metafields.json
+Collections	/admin/collections/#{id}/metafields.json
+Customers	/admin/customers/#{id}/metafields.json
+Draft orders	/admin/draft_orders/#{id}/metafields.json
+Orders	/admin/orders/#{id}/metafields.json
+Pages	/admin/pages/#{id}/metafields.json
+Products	/admin/products/#{id}/metafields.json
+Product variants	/admin/products/#{id}/variants/#{id}/metafields.json
+Product images	GET admin/metafields.json?metafield[owner_id]=#{id}&metafield[owner_resource]=product_image
+
+
+"metafield": {
+    "namespace": "inventory",
+    "key": "warehouse",
+    "value": 25,
+    "value_type": "integer"
+  }
+  
+This endpoint will let you view the metafields for a product image. To add or change product image metafields, you need to use the product image endpoint.
+
+Shop	/admin/metafields.json
+Smart collections	/admin/collections/#{id}/metafields.json

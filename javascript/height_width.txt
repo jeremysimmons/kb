@@ -1,0 +1,18 @@
+Cross-browser @media (width) and @media (height) values 
+
+var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+
+https://stackoverflow.com/a/8876069/26877
+
+window.innerWidth and .innerHeight
+
+gets CSS viewport @media (width) and @media (height) which include scrollbars
+initial-scale and zoom variations may cause mobile values to wrongly scale down to what PPK calls the visual viewport and be smaller than the @media values
+zoom may cause values to be 1px off due to native rounding
+undefined in IE8-
+document.documentElement.clientWidth and .clientHeight
+
+equals CSS viewport width minus scrollbar width
+matches @media (width) and @media (height) when there is no scrollbar
+same as jQuery(window).width() which jQuery calls the browser viewport

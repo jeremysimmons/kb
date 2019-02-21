@@ -1,0 +1,16 @@
+discounted_product = 1522083265
+products_needed = [592406273, 4283854977, 4284984897]
+products_seen = []
+
+Input.cart.line_items.each do |line_item|
+  product = line_item.variant.product
+  products_seen << product.id if products_needed.include?(product.id)
+end
+
+Input.cart.line_items.each do |line_item|
+  product = line_item.variant.product
+  next unless product.id == discounted_product
+  line_item.change_line_price(line_item.line_price * 0.90, message: "My Sale") if products_seen.uniq.sort == products_needed.uniq.sort
+end
+
+Output.cart = Input.cart

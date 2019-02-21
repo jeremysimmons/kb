@@ -1,0 +1,122 @@
+void Main()
+{
+    string json = @"[
+    {
+        ""FirstName"": ""Basic"",
+        ""LastName"": ""Person""
+
+    },{
+        ""Department"": ""Department1"",
+        ""JobTitle"": ""JobTitle1"",
+        ""FirstName"": ""FirstName1"",
+        ""LastName"": ""LastName1""
+
+    },{
+        ""Department"": ""Department2"",
+        ""JobTitle"": ""JobTitle2"",
+        ""FirstName"": ""FirstName2"",
+        ""LastName"": ""LastName2""
+
+    },{
+        ""Skill"": ""Painter"",
+        ""FirstName"": ""FirstName3"",
+        ""LastName"": ""LastName3""
+    }]";
+
+List<Person> persons =
+    JsonConvert.DeserializeObject<List<Person>>(json, new PersonConverter());
+    
+    persons.Dump();
+}
+
+public class Person
+{
+    public string Type => GetType().Name;
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+}
+
+public class Employee : Person
+{
+    public string Department { get; set; }
+    public string JobTitle { get; set; }
+}
+
+public class Artist : Person
+{
+    public string Skill { get; set; }
+}
+
+public class PersonConverter : JsonCreationConverter<Person>
+{
+    protected override Person Create(Type objectType, JObject jObject)
+    {
+        if (FieldExists("Skill", jObject))
+        {
+            return new Artist();
+        }
+        else if (FieldExists("Department", jObject))
+        {
+            return new Employee();
+        }
+        else
+        {
+            return new Person();
+        }
+    }
+
+    private bool FieldExists(string fieldName, JObject jObject)
+    {
+        return jObject[fieldName] != null;
+    }
+}
+
+public abstract class JsonCreationConverter<T> : JsonConverter
+{
+    protected abstract T Create(Type objectType, JObject jObject);
+
+    public override bool CanConvert(Type objectType)
+    {
+        return typeof(T).IsAssignableFrom(objectType);
+    }
+
+    public override bool CanWrite => false;
+    
+    public override bool CanRead => true;
+
+    public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+    {
+        if (reader.TokenType == JsonToken.Null)
+            return null;
+        JObject jObject = JObject.Load(reader);
+        T target = Create(objectType, jObject);
+        using (JsonReader jObjectReader = CopyReaderForObject(reader, jObject))
+        {
+            serializer.Populate(jObjectReader, target);
+        }
+        return target;
+    }
+    
+    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+    {
+        throw new InvalidOperationException();
+    }
+
+    /// <summary>Creates a new reader for the specified jObject by copying the settings
+    /// from an existing reader.</summary>
+    /// <param name="reader">The reader whose settings should be copied.</param>
+    /// <param name="jObject">The jObject to create a new reader for.</param>
+    /// <returns>The new disposable reader.</returns>
+    public static JsonReader CopyReaderForObject(JsonReader originalReader, JObject jObject)
+    {
+        JsonReader jObjectReader = jObject.CreateReader();
+        jObjectReader.Culture = originalReader.Culture;
+        jObjectReader.DateFormatString = originalReader.DateFormatString;
+        jObjectReader.DateParseHandling = originalReader.DateParseHandling;
+        jObjectReader.DateTimeZoneHandling = originalReader.DateTimeZoneHandling;
+        jObjectReader.FloatParseHandling = originalReader.FloatParseHandling;
+        jObjectReader.MaxDepth = originalReader.MaxDepth;
+        jObjectReader.SupportMultipleContent = originalReader.SupportMultipleContent;
+        return jObjectReader;
+    }
+}

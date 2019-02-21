@@ -1,0 +1,23 @@
+Input.shipping_rates.each do |shipping_rate|
+  
+puts "#{shipping_rate.source} #{shipping_rate.code} #{shipping_rate.name}"
+
+end
+
+source          code  name
+'David C Cook', 'BW', Standard Ground
+
+'David C Cook', '2D', 2-Day Air
+
+'David C Cook', 'OV', 1-Day Air
+
+'David C Cook', 'OS', Saturday Delivery
+
+.code	String	Returns the code of the shipping rate.
+.markup	String	Returns the markup for shipping rate's description.
+.name	String	Returns the name of the shipping rate.
+.price	Money	Returns the price of the shipping rate.
+.source	String	Returns the source (the carrier) associated with the shipping rate.
+.change_name(String new_name, { message: String })	String	Changes the name of the shipping rate. A message is required.
+.apply_discount(Money discount, { message: String })	Money	Applies a discount of the specified fixed amount. The price cannot be reduced below 0. A message is required.
+.phone_required?	Boolean	Returns true if a phone number is required to get the shipping rate, or false if a phone number is not required.

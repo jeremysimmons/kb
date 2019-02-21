@@ -1,0 +1,3 @@
+
+branch, check out and set upstream in a single command:
+git checkout -b my-branch -t origin/my-branch

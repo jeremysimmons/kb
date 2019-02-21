@@ -1,0 +1,16 @@
+http://mongodb.github.io/mongo-csharp-driver/2.4/reference/bson/mapping/polymorphism/
+
+https://stackoverflow.com/a/16922645/26877
+
+[BsonDiscriminator(Required = true)]
+[BsonKnownTypes(typeof(Cat))]
+public class Animal { ... }
+
+public class Cat : Animal { ... }
+Now, if you store a Cat like
+
+db.GetCollection<Animal>("Animal").Insert(new Cat());
+you will see
+
+db.Animal.find();
+> { "_id" : ObjectId("..."),  "_t" : "Cat" }

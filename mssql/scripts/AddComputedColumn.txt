@@ -1,0 +1,3 @@
+ALTER TABLE dbo.Products DROP COLUMN RetailValue;  
+GO  
+ALTER TABLE dbo.Products ADD RetailValue AS (QtyAvailable * UnitPrice * 1.5);  

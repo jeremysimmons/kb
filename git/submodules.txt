@@ -1,0 +1,56 @@
+https://medium.com/@porteneuve/mastering-git-submodules-34c65e940407
+
+https://git-scm.com/book/en/v2/Git-Tools-Submodules
+
+already cloned repos
+git fetch --recurse-submodules --jobs=4
+git submodule update --init --recursive
+
+git 1.9+
+git clone --recursive -j8 git://github.com/foo/bar.git
+
+git 1.6.5+
+git clone --recursive git://github.com/foo/bar.git
+
+- status for submodules
+git config --global status.submoduleSummary true
+
+- get latest code for a submodule
+git fetch
+git log --oneline origin/master -10
+0e90143 Pseudo-commit #2
+e6f5bb6 Pseudo-commit #1
+
+git diff --submodule=log
+
+git config --global diff.submodule log
+
+git checkout -q 0e90143 # -q spares us the reminder we'll end up in a detatched head
+
+cd to module directory
+
+git commit -m "update the module reference"
+git push
+
+git pull
+git submodule update
+
+- create a new submodule inside of a repository
+~/git_dev/SampleTheme/
+> git submodule add git@mygithost:billboard lib/billboard
+
+  creates
+  ~/git_dev/SampleTheme/lib/billboard/.git/
+
+- fill in the submodule’s path with the files from the external repository,
+git submodule init
+
+- pull down the files
+git submodule update
+
+- this doesn't work
+git submodule rm lib/billboard
+
+submodule’s entry in the .gitmodules file
+
+deinit

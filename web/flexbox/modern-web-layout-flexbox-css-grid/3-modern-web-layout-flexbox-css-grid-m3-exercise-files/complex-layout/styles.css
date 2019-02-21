@@ -1,0 +1,56 @@
+html {
+	font-family: arial;
+}
+body {
+    box-sizing: border-box;
+    color: #fff;
+    font-size: 80%;
+    padding: 1em;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+main { 
+	height: 100%; 
+	display: flex;
+}
+
+article { 
+background-color: #675BA7; 
+flex: 2 2 12em;
+}
+
+nav,
+aside {
+flex: 1;
+}
+article { 
+	order: -1;
+}
+
+@media screen and (max-width: 500px) {
+	main { 
+	flex-direction: column; 
+	}
+}
+
+
+.page-header {
+	background-color: #A42E5A
+}
+.content-navigation {
+background-color: #98C851;
+}
+.content-article {
+background-color: #665AA5;
+}
+
+.content-sidebar {
+background-color: #2C9FBF;
+}
+
+.page-footer {
+background-color: 	#EF5A28
+}

@@ -1,0 +1,3 @@
+https://www.goodreads.com/about/review_program
+Reviews API method (must be whitelisted - contact us)
+https://www.goodreads.com/api/index#book.show_by_isbn

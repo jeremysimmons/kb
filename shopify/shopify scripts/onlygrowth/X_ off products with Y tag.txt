@@ -1,0 +1,10 @@
+@percent = Decimal.new(25) / 100.0
+Input.cart.line_items.each do |line_item|
+product = line_item.variant.product
+next if product.gift_card?
+next unless product.tags.include?('myTag')
+line_discount = line_item.line_price * @percent
+line_item.change_line_price(line_item.line_price - line_discount, message: "25% Off")
+end
+
+Output.cart = Input.cart

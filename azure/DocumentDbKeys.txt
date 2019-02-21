@@ -1,0 +1,5 @@
+https://stackoverflow.com/questions/44247726/is-there-a-way-to-configure-cosmosdb-to-use-both-the-sql-documentdb-and-mongod
+
+az cosmosdb list-keys --name "<your cosmosdb account name>" --resource-group "<name of resource group your cosmosdb lives in>"
+
+az cosmosdb list-keys --name disciplr-dev --resource-group disciplr-develop

@@ -1,0 +1,5 @@
+https://github.com/StephenClearyExamples/AsyncDynamicZip/tree/full-dotnetzip
+
+https://blog.stephencleary.com/2016/11/streaming-zip-on-aspnet-core.html
+
+https://github.com/StephenClearyExamples/AsyncDynamicZip/tree/core-ziparchive

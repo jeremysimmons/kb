@@ -1,0 +1,18 @@
+https://stackoverflow.com/a/11830287/26877
+
+IEnumerable<MyNode> Flatten(IEnumerable<MyNode> e) {
+    return e.SelectMany(c => Flatten(c.Elements)).Concat(new[] {e});
+}
+
+public static IEnumerable<MyNode> Traverse(this MyNode root)
+{
+    var stack = new Stack<MyNode>();
+    stack.Push(root);
+    while(stack.Count > 0)
+    {
+        var current = stack.Pop();
+        yield return current;
+        foreach(var child in current.Elements)
+            stack.Push(child);
+    }
+}

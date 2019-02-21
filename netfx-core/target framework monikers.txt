@@ -1,0 +1,53 @@
+https://andrewlock.net/understanding-net-core-netstandard-and-asp-net-core/
+
+https://blogs.msdn.microsoft.com/cesardelatorre/2016/06/28/running-net-core-apps-on-multiple-frameworks-and-what-the-target-framework-monikers-tfms-are-about/
+What are the Target Framework Monikers (TFMs)
+The Target Framework Monikers are IDs of the type framework+version that you can target from your apps in .NET Core and ASP.NET Core.
+As examples (there are more), you can use:
+– “netcoreapp1.0” For .NET Core 1.0
+– “net45”, “net451”, “net452”, “net46”, “net461” for .NET Framework versions 
+– “portable-net45+win8” for PCL profiles
+– “dotnet5.6”, “dnxcore50” and others, for older .NET Core preview versions (Before .NET Core 1.0 RTM and .NET Core RC2 were released)
+– “netstandard1.2”, “netstandard1.5”, etc. for .NET Standard Platform monikers.
+
+List of monikers
+https://portablelibraryprofiles.stephencleary.com/
+portable-net45+wp80+win8+wpa81+MonoAndroid10+MonoTouch10
+
+
+
+The "framework" section in project.json specifies the framework or list of frameworks supported by your app.
+The "imports" section in project.json is a way to use packages/libraries that are not based on the same version than your target Core platform version, such as "dnxcore" and portable-* libs, as shown below in one of the examples. It is important to use "imports" only for versions of .NET Core and PCL (Portable Class Libraries). Using it with TFMS from the traditional .NET Framework can cause issues or malfunction. 
+When supporting multiple frameworks in your app, you can selectively run your app on top of one or the other framework by selecting that default framework from Visual Studio or from the command line (as explained below). 
+
+https://github.com/dotnet/standard/blob/master/docs/versions.md
+
+What does the "imports" mean in frameworks project.json? 
+https://github.com/aspnet/Home/issues/1540
+
+ "frameworks":  {
+    "net451":  {},
+    "netstandard1.5":  {
+      "imports":  [
+        "dotnet5.6",
+        "dnxcore50",
+        "portable-net45+win8"
+      ]
+    }
+ },
+
+imports enables using packages that have not been updated to use new monikers. 
+It is like telling "trust me - dotnet5.6, dnxcore50 etc. packages will work if I target netstandard1.5".
+
+What are the Target Framework Monikers (TFMs)
+The Target Framework Monikers are IDs of the type framework+version that you can target from your apps in .NET Core and ASP.NET Core.
+
+As examples (there are more), you can use:
+– "netcoreapp1.0" For .NET Core 1.0
+– "net45", "net451", "net452", "net46", "net461" for .NET Framework versions 
+– "portable-net45+win8" for PCL profiles
+– "dotnet5.6", "dnxcore50" and others, for older .NET Core preview versions (Before .NET Core 1.0 RTM and .NET Core RC2 were released)
+– "netstandard1.2", "netstandard1.5", etc. for .NET Standard Platform monikers.
+
+Portability Service
+https://github.com/Microsoft/dotnet-apiport

@@ -1,0 +1,6 @@
+https://sqlstudies.com/2014/06/02/what-is-the-difference-between-money-and-decimal194/
+Size	Min	Max	Precision
+Money	8	-922,337,203,685,477.5808	922,337,203,685,477.5807	Static
+Decimal(19,4)	9	-999,999,999,999,999.9999	999,999,999,999,999.9999	Changes
+SmallMoney	4	-214,748.3648	214,748.3647	Fixed
+Decimal(10,4)	9	-999,999.9999	999,999.9999	Changes

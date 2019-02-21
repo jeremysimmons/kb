@@ -1,0 +1,12 @@
+	//	var runtime = Ruby.CreateRuntime();
+	//	var engine = runtime.GetEngine("Ruby");
+	//var source = engine.CreateScriptSourceFromString("1+2");
+	//	var source = engine.CreateScriptSourceFromString("a+b");
+	//	SetVariable(scope, "a", 1);
+	//	SetVariable(scope, "b", 2);
+	//SetVariable(scope, "input", new ScriptContext());
+	//	var source = engine.CreateScriptSourceFromString(@"
+	//puts 'hello, script world'
+	//return 1
+	//");
+

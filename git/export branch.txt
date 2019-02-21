@@ -1,0 +1,4 @@
+git archive master | tar -x -C /somewhere/else
+git archive master | bzip2 >source-tree.tar.bz2
+git archive --format zip --output /full/path/to/zipfile.zip master 
+git archive --format zip --output "output.zip" master -0

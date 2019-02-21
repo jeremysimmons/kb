@@ -1,0 +1,61 @@
+{
+  shop {
+    name
+    collections(first:250) { 
+      edges {
+        node {
+          id
+          title
+          handle
+        }
+      }
+    }
+  }
+}
+
+{
+  "data": {
+    "shop": {
+      "name": "graphql",
+      "collections": {
+        "edges": [
+          {
+            "node": {
+              "id": "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzI0MzYzODAxOQ==",
+              "title": "Home page",
+              "handle": "frontpage"
+            }
+          },
+          {
+            "node": {
+              "id": "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzI1NzY5NzY2Nw==",
+              "title": "Antiperistaltic Gold Socks",
+              "handle": "antiperistaltic-gold-socks"
+            }
+          }
+        ]
+      }
+    }
+  }
+}
+
+{
+  node(id:"Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzI0MzYzODAxOQ==") {
+    id
+		... on Collection {
+      id
+      handle
+      description
+      products(first: 250) {
+        edges {
+          node {
+            id
+            title
+            handle
+          }
+        }
+      }
+    }
+  }
+  
+}

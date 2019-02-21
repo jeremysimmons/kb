@@ -1,0 +1,1 @@
+https://stackoverflow.com/questions/41088492/json-net-contractresolver-vs-jsonconverter

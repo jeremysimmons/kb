@@ -1,0 +1,3 @@
+https://blogs.msdn.microsoft.com/dotnet/2017/07/21/what-weve-learned-from-net-core-sdk-telemetry/
+https://blogs.msdn.microsoft.com/dotnet/2017/07/20/profile-guided-optimization-in-net-core-2-0/
+https://blogs.msdn.microsoft.com/dotnet/2017/06/07/performance-improvements-in-net-core/

@@ -1,0 +1,40 @@
+%userprofile%\Documents\IISExpress\config\applicationhost.config
+$(solutionDir)\.vs\config\applicationhost.config (VS2015)
+
+ http://johan.driessen.se/posts/Accessing-an-IIS-Express-site-from-a-remote-computer
+
+<binding protocol="http" bindingInformation="*:58938:192.168.1.42" />
+run as admin
+netsh http add urlacl url=http://172.27.12.34:52033/ user=everyone
+netsh http show urlacl
+netsh http delete urlacl url=http://172.27.12.34:52033
+
+netsh advfirewall firewall add rule name="IISExpressWeb" dir=in protocol=tcp localport=52033 profile=domain remoteip=any action=allow
+netsh advfirewall firewall add rule name="IISExpressWeb" dir=in protocol=tcp localport=52033 profile=public remoteip=any action=allow
+netsh advfirewall firewall show rule name=IISExpressWeball profile=domain
+netsh advfirewall firewall show rule name=IISExpressWeb
+netsh advfirewall firewall delete rule name=IISExpressWeb
+
+https://blogs.iis.net/vaidyg/serving-external-traffic-with-webmatrix-beta
+netsh http add urlacl url=http://vaidesg:8080/ user=everyone
+netsh http delete urlacl url=http://vaidesg1:8080/
+
+
+"C:\Program Files (x86)\IIS Express\iisexpress.exe"  /config:"C:\dev\disciplr-mvc\.vs\config\applicationhost.config" /site:"Disciplr.Mvc" /apppool:"Clr4IntegratedAppPool"
+
+*:50463:172.27.12.27
+
+https://weblog.west-wind.com/posts/2016/Sep/28/External-Network-Access-to-Kestrel-and-IIS-Express-in-ASPNET-Core#ExposingIISExpresstotheNetwork
+<solutionRoot>\.vs\config\applicationhost.config
+<site name="AlbumViewerNetCore" id="2">
+    <application path="/" applicationPool="Clr4IntegratedAppPool">
+      <virtualDirectory path="/" physicalPath="C:\projects2010\AlbumViewerVNext\src\AlbumViewerNetCore" />
+    </application>
+    <bindings>          
+      <binding protocol="http" bindingInformation="*:26448:*" />
+      <binding protocol="https" bindingInformation="*:44319:*" />
+    </bindings>
+</site>
+
+netsh http add urlacl url=http://*:26448/ user=Interactive listen=yes
+netsh advfirewall firewall add rule name="Http Port 26448" dir=in action=allow protocol=TCP localport=26448

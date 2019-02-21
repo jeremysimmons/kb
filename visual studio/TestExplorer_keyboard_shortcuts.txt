@@ -1,0 +1,6 @@
+OpenTest - F12
+TestExplorer.DebugAllTests - Ctrl+R, Ctrl+A
+TestExplorer.DebugAllTestsInContext - Ctrl+R, Ctrl+T
+
+TestExplorer.RunAllTests - Ctrl+R, A
+TestExplorer.RunAllTestsInContext - Ctrl+R, T

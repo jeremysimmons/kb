@@ -1,0 +1,36 @@
+
+https://help.shopify.com/manual/apps/apps-by-shopify/script-editor	
+https://help.shopify.com/api/tutorials/shopify-scripts
+
+line item scripts
+ - change prices
+ - grant discounts
+shipping scripts
+ - change methods
+ - grant discounts on shipping rates
+
+Ideas
+Percentage (%) off a product
+Amount ($) off a product
+Percentage (%) and amount ($) off a product
+Tiered discounts 1-5 10%, 5-10 15%
+Buy one get one free (BOGO)
+Blank template (that is, no template code)
+
+Examples
+https://help.shopify.com/manual/apps/apps-by-shopify/script-editor/examples#discount-codes
+Percentage off all items
+Percentage off all shipping rates
+Remove shipping rates by name
+
+
+Customer has X amount of total sales
+Customer is international
+Customer is a denomination HQ
+A pricing structure applies to a customer because of who they are
+A promo code applies to a cart because they add the code to the cart
+
+example scripts
+https://github.com/discolabs/scripts-examples
+
+https://onlygrowth.com/blogs/posts/17-shopify-scripts-to-maximize-conversions

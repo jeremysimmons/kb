@@ -1,0 +1,65 @@
+Form Tag Helper: http://www.davepaquette.com/archive/2015/05/18/mvc-6-form-tag-helper.aspx
+Input Tag Helper: http://www.davepaquette.com/archive/2015/05/13/mvc6-input-tag-helper-deep-dive.aspx
+Label Tag Helper: http://www.davepaquette.com/archive/2015/05/18/mvc-6-label-tag-helper.aspx
+Textarea Tag Helper: http://www.davepaquette.com/archive/2015/05/18/mvc-6-textarea-tag-helper.aspx
+Select Tag Helper: http://www.davepaquette.com/archive/2015/05/18/mvc6-select-tag-helper.aspx
+Validation Tag Helpers: http://www.davepaquette.com/archive/2015/05/14/mvc6-validation-tag-helpers-deep-dive.aspx
+
+https://docs.microsoft.com/en-us/aspnet/core/mvc/views/tag-helpers/intro
+https://www.exceptionnotfound.net/tag-helpers-in-asp-net-core-1-0-an-overview/
+
+managing scope
+@addTagHelper, @removeTagHelper
+Views/_ViewImports.cshtml 
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper "*, AuthoringTagHelpers"
+@addTagHelper "AuthoringTagHelpers.TagHelpers.E*, AuthoringTagHelpers"
+@addTagHelper "AuthoringTagHelpers.TagHelpers.Email*, AuthoringTagHelpers"
+
+opt out individually
+<!span asp-validation-for="Email" class="text-danger"></!span>
+
+
+
+environment
+
+link@asp-append-version (previously named asp-file-version)
+
+a@asp-route
+a@asp-route-id
+a@asp-route-foo
+a@asp-route-bar
+
+
+
+script@asp-src-include
+~/app/**/*.js
+
+
+top-nav
+
+HtmlAttributeNotBoundAttribute
+
+ViewContextAttribute
+
+HtmlAttributeNameAttribute
+
+public class Foo : TagHelper
+{
+public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
+{
+output.SuppressOutput()
+}
+}
+
+
+Custom
+
+@requires-access - RequiredAccessHelper
+
+<avatar>
+
+@condition
+	Condition="@Model.IsTeamMember"
+
+

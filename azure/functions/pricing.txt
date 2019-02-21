@@ -1,0 +1,7 @@
+https://azure.microsoft.com/en-us/pricing/details/functions/
+Memory used by a function is measured to the nearest 128MB up to the maximum memory size of 1,536MB. Functions pricing includes a monthly free grant of 400,000 GB-s.
+
+https://github.com/Azure/Azure-Functions/issues/179
+https://github.com/Azure/Azure-Functions/wiki
+
+%HOME%\data\SomeFolderOfYourChoice.

@@ -1,0 +1,25 @@
+https://stackoverflow.com/questions/34833120/azure-web-apps-how-to-access-specific-instance-directly-via-url
+
+The first step is to get the list of instance names. There is an Azure API for it, which you can easily invoke using Resource Explorer (https://resources.azure.com/). Use these steps:
+In Resource Explorer, find your Web App (in the tree or using search box)
+Under the app, click on Instances, which gives you an array of instances. Each instance has a long name like 622e6b27f9077701f23789e5e512844d22a7dfdd29261bc226f65cd000e2d94a
+Once you have the instance names, you can add a cookie in your requests to aim at a specific instance by setting the ARRAffinity cookie to that value. e.g.
+
+ARRAffinity=622e6b27f9077701f23789e5e512844d22a7dfdd29261bc226f65cd000e2d94a
+
+Microsoft.WindowsAzure.ServiceRuntime.RoleEnvironment.CurrentRoleInstance.Id
+
+https://msdn.microsoft.com/library/azure/microsoft.windowsazure.serviceruntime.roleinstance.instanceendpoints.aspx
+
+foreach (var role in RoleEnvironment.Roles) 
+{
+   foreach (var roleInstance in role.Value.Instances)      
+   {
+      foreach (RoleInstanceEndpoint instanceEndpoint in roleInstance.InstanceEndpoints.Values) 
+      {
+         Trace.WriteLine("Instance endpoint IP address and port: " + instanceEndpoint.IPEndpoint, "Information"); 
+      }
+   }
+}
+
+http://blog.amitapple.com/post/2014/03/access-specific-instance/#.Wd_R3bpFxGM

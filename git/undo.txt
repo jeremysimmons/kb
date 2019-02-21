@@ -1,0 +1,2 @@
+https://github.com/blog/2019-how-to-undo-almost-anything-with-git
+https://stackoverflow.com/questions/34519665/how-to-move-head-back-to-a-previous-location-detached-head/34519716#34519716

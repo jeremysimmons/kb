@@ -1,0 +1,2 @@
+http://faithlife.codes/blog/2010/03/the_visitor_pattern_and_dynamic_in_c_4/
+http://wiki.c2.com/?HierarchicalVisitorPattern

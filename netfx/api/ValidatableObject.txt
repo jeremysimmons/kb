@@ -1,0 +1,26 @@
+bool validateAllProperties = false;
+
+var results = new List<ValidationResult>();
+
+bool isValid = Validator.TryValidateObject(
+            toValidate,
+            new ValidationContext(toValidate, null, null),
+            results,
+            validateAllProperties);
+
+down vote
+Quote from Jeff Handley's Blog Post on Validation Objects and Properties with Validator:
+
+When validating an object, the following process is applied in Validator.ValidateObject:
+
+Validate property-level attributes
+If any validators are invalid, abort validation returning the failure(s)
+Validate the object-level attributes
+If any validators are invalid, abort validation returning the failure(s)
+If on the desktop framework and the object implements IValidatableObject, then call its Validate method and return any failure(s)
+
+Here are the constructor parameters for ValidationContext:
+
+object instance – The object instance being validated – such as your Customer entity.  Note that this is not the property value when you are validating a property.
+IServiceProvider serviceProvider – This is an optional source to use for the ValidationContext IServiceProvider implementation.  If you have services that you need to expose to your validation attributes, you can provide a service provider to the validation context, and then the attributes can retrieve the services through the ValidationContext’s implementation of IServiceProvider.  Essentially, ValidationContext just serves as a wrapper around your provider.
+IDictionary<object, object> items – This is just a state bag that you can optionally provide to give your validation attributes any other state information that you so desire.  The dictionary is available through the Items property on ValidationContext.  Note that the dictionary is immutable during validation, so your validation attributes cannot change the dictionary values such that they would be available to subsequent validation attributes, as validation order is indeterminate.

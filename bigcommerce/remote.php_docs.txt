@@ -1,0 +1,14 @@
+remote.php
+POST https://store-vw6yweipog.mybigcommerce.com/admin/remote.php
+w:checkemailuniqueness
+remoteSection:customers
+customerId:1
+email:jeremy.simmons@davidccook.com
+
+
+https://www.goruck.com/remote/v1/product-attributes/2675
+https://www.goruck.com/products.php?productId=2297
+https://www.goruck.com/remote/v1/cookie-notification
+https://www.goruck.com/internalapi/v1/checkout/quote?includes=customer
+https://www.goruck.com/internalapi/v1/checkout/quote?includes=customer
+

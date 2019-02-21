@@ -1,0 +1,22 @@
+CREATE FUNCTION dbo.SplitStrings
+(
+   @List      NVARCHAR(MAX),
+   @Delimiter NVARCHAR(255)
+)
+RETURNS TABLE
+WITH SCHEMABINDING AS
+RETURN
+   WITH cteTally(N)  AS 
+   (
+	   SELECT TOP (DATALENGTH(ISNULL(@List,1))+1) Number-1 FROM dbo.Numbers ORDER BY Number
+   ),
+   cteStart(N1) AS 
+   (
+       SELECT t.N+1 
+          FROM cteTally t
+    	  WHERE (SUBSTRING(@List,t.N,1) = @Delimiter OR t.N = 0)
+   )
+   SELECT Item = SUBSTRING(@List, s.N1, 
+      ISNULL(NULLIF(CHARINDEX(@Delimiter, @List, s.N1), 0) - s.N1, 8000))
+   FROM cteStart AS s;
+

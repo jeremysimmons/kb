@@ -1,0 +1,3 @@
+https://github.com/dotnet/cli/tree/rel/1.0.1/TestAssets/TestPackages
+
+http://dotnetthoughts.net/building-a-custom-dotnet-cli-tool/

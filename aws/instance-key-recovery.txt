@@ -1,0 +1,69 @@
+/home/ec2-user/.ssh/authorized_keys
+/home/ubuntu/.ssh/authorized_keys
+/root/.ssh/authorized_keys
+
+Default ssh Usernames For Connecting To EC2 Instances
+https://alestic.com/2014/01/ec2-ssh-username/
+ubuntu - ubuntu
+
+us-east-1b 
+DCC Web Server
+ubuntu/images/hvm-ssd/ubuntu-trusty-14.04-amd64-server-20150325 (ami-d05e75b8)
+
+create a new instance in the same availability zone
+configure the security group
+create a new key pair
+start recovery machine
+connect using known PEM
+
+/dev/sda1
+EBS ID vol-0ff25742d1eae193a
+Root device type EBS
+Attachment time 2018-01-26T16:24:49.000Z
+
+trying to recover - vol-1d6deb07
+
+stop instance to be recovered
+go to the root EBS volume
+select instance in the instances grid.
+in the detail panel, scroll to root device, click on link to show popup window,
+then click to open EBS ID
+
+it will open an EBS volumes grid, with a filter of the EBS volume ID (vol-db8e6773)
+use the actions button above the grid to detach'
+
+attach the same volume to the recovery instance...
+
+Actions (Button above grid) attach volume
+choose the recovery EC2 instance, choose device /dev/sdf (default)
+return to recovery instance, validate the EBS volume is attached
+
+connect via ssh to the recovery EC2 instance 
+
+> sudo -i
+> lsblk
+name   type  mountpoint
+xvda   disk
+-xvda1 part  /
+xvdf   disk 
+-xvdf1 part 
+
+this output tells me there are two disks
+the first disk, xvda has a single partition, xvda1 which is mounted to /
+
+lets mount that partition to a directory
+> mkdir /mnt/recovery
+> mount /dev/xvdf1 /mnt/recovery
+
+append the current authorized keys to the recovery volume
+
+> cat /home/ubuntu/.ssh/authorized_keys >> /mnt/recovery/home/ubuntu/.ssh/authorized_keys
+
+unmount the drive
+> umount /mnt/recovery
+
+stop the recovery instance
+detach the root volume from the recovery EC2 instance
+attach the root volume back to the original EC2 instance as /dev/sda1
+change instance state of original EC2 instance to running
+connect to original EC2 instance like a boss

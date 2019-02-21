@@ -1,0 +1,2 @@
+https://dzone.com/articles/single-wcf-generic-endpoint-on
+http://blogs.microsoft.co.il/sasha/2008/03/15/wcf-router-and-publishsubscribe-sample-implementation/

@@ -1,0 +1,15 @@
+http://stackoverflow.com/a/15321456/26877
+
+git reset --soft HEAD~1
+
+Then reset the unwanted files in order to leave them out from the commit:
+
+git reset HEAD path/to/unwanted_file
+Now commit again, you can even re-use the same commit message:
+
+git commit -c ORIG_HEAD  
+
+
+-shortcut-
+git reset HEAD^ -- path/to/file
+git commit --amend --no-edit

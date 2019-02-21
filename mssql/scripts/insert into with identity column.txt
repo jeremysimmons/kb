@@ -1,0 +1,5 @@
+SELECT 
+IDENTITY(INT,1,1) 'id',
+[NewTable.columns]
+INTO dbo.NewTable
+FROM dbo.ExistingTable

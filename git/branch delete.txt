@@ -1,0 +1,14 @@
+https://stackoverflow.com/questions/2003505/how-do-i-delete-a-git-branch-both-locally-and-remotely
+
+delete a remote branch on the server (assuming origin is the name of the remote)
+$ git push origin --delete <branch_name>
+$ git push origin :<branch_name>
+
+delete locally (only deletes the branch if it has already been fully merged in its upstream branch)
+$ git branch -d <branch_name>
+delete locally (without checking merge status)
+$ git branch -D <branch_name>
+
+remember to cleanup afterwards
+git fetch --all --prune
+

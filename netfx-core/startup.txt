@@ -1,0 +1,9 @@
+https://docs.microsoft.com/en-us/aspnet/core/fundamentals/environments
+
+ASP.NET Core supports a convention-based approach to configuring an application's startup based on the current environment.
+
+When an ASP.NET Core application starts, the Startup class is used to bootstrap the application
+
+if a class exists named Startup{EnvironmentName} (for example StartupDevelopment), and the ASPNETCORE_ENVIRONMENT environment variable matches that name, then that Startup class is used instead
+
+Configure() and ConfigureServices() methods support environment-specific versions similar to the Startup class itself, of the form Configure{EnvironmentName}() and Configure{EnvironmentName}Services()

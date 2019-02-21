@@ -1,0 +1,6 @@
+https://stackoverflow.com/a/38688492/26877
+
+dotnet publish
+  --framework netcoreapp1.0 
+  --output "c:\temp\AlbumViewerWeb" 
+  --configuration Release

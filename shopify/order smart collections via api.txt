@@ -1,0 +1,32 @@
+https://ecommerce.shopify.com/c/shopify-apis-and-technology/t/manual-order-of-smart-collection-371745
+
+PUT https://username:password@modish-home-garden.myshopify.com/admin/smart_collections/96320581.json
+
+{
+  "smart_collection": {
+    "id": 96320581,
+    "collects": [{"product_id":177958185,"position":937},{"product_id":147377632,"position":1},{"product_id":177987517,"position":2}, {"product_id":440542232,"position":936}]
+  }
+}
+
+PUT /admin/smart_collections/96320581/order.json?products[]=921728736&products[]=632910392
+
+
+PUT /admin/smart_collections/367945352/order.json HTTP/1.1
+Host: yourstore.myshopify.com
+Content-Type: application/json
+X-Shopify-Access-Token: youraccesstoken
+
+{"products":[7830790344,7830837960,7830777096,7833295944]}
+
+12210307101
+
+You can order the products like this.
+
+PUT https://integrity-music-store.myshopify.com/admin/smart_collections/12210307101/order.json HTTP/1.1
+Content-Type: application/json
+X-Shopify-Access-Token: a5ebb0783e85666a34384a6c0223d582
+Host: integrity-music-store.myshopify.com
+Content-Length: 387
+
+{"products":[293604196381,10002845382,10002843142,10002847174,10002845830,10002847302,10021442566,10002847366,10002846982,10002846854,10002847494,10002846726,10002847430,10002847238,10002845766,10002846022,10002843974,10002846086,10021576838,10021577222,10021577350,10021577414,10002846406,10002846278,10002845958,10002844102,10002846470,10002846214,10002846662,10002843910,10002843846]}

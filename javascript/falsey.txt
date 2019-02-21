@@ -1,0 +1,30 @@
+https://dorey.github.io/JavaScript-Equality-Table/
+
+false
+0 and -0
+"" and ''
+null
+undefined
+NaN
+document.all
+
+Truthy values that actually == false
+"0" and '0' - they're non-empty strings, which are truthy, but Javascript's == matches numbers with equivalent strings (e.g. 42 == "42"). Since 0 == false, if  "0"==0, "0"==false.
+new Number(0) and new Boolean(false) - they're objects, which are truthy, but == sees their values, which == false.
+0 .toExponential(); - an object with a numerical value equivalent to 0
+Any similar constructions that give you a false-equaling value wrapped in a type that is truthy
+[], [[]] and [0]
+
+Truthy
+-1 and all non-zero negative numbers
+' ', " " and all non-empty strings, even if they're just whitespace
+Anything from typeof, which always returns a non-empty string, for example:
+typeof null (returns a string 'object' due to a longstanding bug/quirk)
+typeof undefined (returns a string 'undefined')
+Any object (keep in mind that null isn't really an object), including:
+{}
+[]
+function(){} (any variable defined as a function, including empty functions)
+Any regular expression
+Anything created with new (including otherwise-falsey values created with new, see above)
+true, 1, "1" and [1] return true when compared to each other with ==.

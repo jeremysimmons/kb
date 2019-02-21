@@ -1,0 +1,13 @@
+https://www.nrecosite.com/dalc_net.aspx
+
+
+@FransBouma you can access your registered factory the same ways as the old ways in .NET Frameworks.
+
+DbFactories.GetFactory(string providerInvariantName);
+DbFactories.GetFactory(DbConnection connection);
+In CoreFx, you will need to use DbProviderFactoriesConfiguration to register your provider.
+
+DbProviderFactoriesConfiguration.Add("Sytem.Data.SqlClient", () => SqlClientFactory.Instance);
+But in .NET Frameworks, you don't need to do anything, it will read from the machine config as it is.
+
+

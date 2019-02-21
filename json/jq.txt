@@ -1,0 +1,4 @@
+get the array of widgets and pipe to recurse
+for each item in context, recurse over the .widgets array property and pipe to a projection
+in the projection, extract the composition-template property
+.content.widgets[] | recurse(.widgets[]) | .["composition-template"]

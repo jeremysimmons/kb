@@ -1,0 +1,7 @@
+Remote Profiling support in Azure App Service
+
+https://azure.microsoft.com/en-us/blog/remote-profiling-support-in-azure-app-service/
+https://github.com/projectkudu/kudu/wiki/Process-Threads-list-and-minidump-gcdump-diagsession
+
+
+https://blogs.msdn.microsoft.com/jpsanders/2017/02/02/how-to-get-a-full-memory-dump-in-azure-app-services/

@@ -1,0 +1,26 @@
+https://coderwall.com/p/yeh5tw/how-to-create-and-apply-a-patch-with-git
+
+Patching is a way to share out one branch commit to another developer or another branch
+Create a patch fixemptyposter branch against master:
+git format-patch master --stdout > fixemptyposter.patch
+Above command create a patch file which has all commits which is present on fixemptyposter branch but not on master
+
+Applying the patch
+git apply --stat fixemptyposter.patch
+This will show commits which is present in path file
+
+Patch also provide a way to test code before applying
+git apply --check fixemptyposter.patch
+
+Apply patch on branch
+git am --signoff < fixemptyposter.patch
+Above command add all patch commit to current branch
+
+For generating the patches from the topmost commits from a specific sha1 hash:
+git format-patch -<n> <SHA1> --stdout > ntosha1.patch
+
+The last 10 patches from head in a single patch file:
+git format-patch -10 HEAD --stdout > 0001-last-10-commits.patch
+
+To generate path from a specific commit (not the last commit):
+git format-patch -1 <sha> --stdout > specific_commit.patch

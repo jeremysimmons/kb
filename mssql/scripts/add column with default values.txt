@@ -1,0 +1,6 @@
+Add a column with a default value to an existing table in SQL Server
+
+ALTER TABLE {TABLENAME} 
+ADD {COLUMNNAME} {TYPE} {NULL|NOT NULL} 
+CONSTRAINT {CONSTRAINT_NAME} DEFAULT {DEFAULT_VALUE}
+WITH VALUES

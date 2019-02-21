@@ -1,0 +1,22 @@
+https://javascript.info/onload-ondomcontentloaded
+
+1. DOMContentLoaded – the browser fully loaded HTML, and the DOM tree is built, but external resources like pictures <img> and stylesheets may be not yet loaded.
+careful when using this. Might not fire if you have a race condition.
+https://javascript.info/onload-ondomcontentloaded#readystate
+
+2. load – the browser loaded all resources (images, styles etc).
+3. beforeunload/unload – when the user is leaving the page.
+
+$(window).on('load', function() {
+    // your code here
+});
+
+fires after
+
+$(document).ready(function() { ... })
+same as 
+$(function() { ... });
+same as 
+jQuery( document ).ready(function( $ ) {
+  // Code using $ as usual goes here.
+});

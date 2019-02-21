@@ -1,0 +1,12 @@
+SET QUOTED_IDENTIFIER ON
+-- disable all constraints
+EXEC sp_MSForEachTable "ALTER TABLE ? NOCHECK CONSTRAINT all"
+
+-- delete data in all tables
+EXEC sp_MSForEachTable 'PRINT ''?''; DELETE FROM ?'
+
+-- enable all constraints
+exec sp_MSForEachTable "ALTER TABLE ? WITH CHECK CHECK CONSTRAINT all"
+EXEC sp_MSForEachTable "DBCC CHECKIDENT ( '?', RESEED, 0)"
+EXEC sp_MSForEachTable "ALTER TABLE ? DISABLE TRIGGER ALL"
+EXEC sp_msforeachtable "ALTER TABLE ? ENABLE TRIGGER ALL"

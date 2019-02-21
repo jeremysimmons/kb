@@ -1,0 +1,9 @@
+INSERT INTO `pantheon`.`wp_vpsg077zk4_options` (option_name, option_value, autoload) VALUES ('wp_mail_smtp', 'a:7:{s:4:"mail";a:3:{s:10:"from_email";s:22:"website@davidccook.com";s:9:"from_name";s:15:"Standard Lesson";s:6:"mailer";s:4:"smtp";}s:5:"gmail";a:2:{s:9:"client_id";s:0:"";s:13:"client_secret";s:0:"";}s:7:"mailgun";a:2:{s:7:"api_key";s:0:"";s:6:"domain";s:0:"";}s:8:"sendgrid";a:1:{s:7:"api_key";s:0:"";}s:8:"pepipost";a:5:{s:4:"host";s:0:"";s:4:"port";s:0:"";s:10:"encryption";s:4:"none";s:4:"user";s:0:"";s:4:"pass";s:0:"";}s:4:"smtp";a:5:{s:4:"host";s:18:"smtp.office365.com";s:4:"port";i:587;s:10:"encryption";s:3:"tls";s:4:"auth";b:1;s:4:"user";s:22:"website@davidccook.com";}s:7:"general";a:1:{s:23:"am_notifications_hidden";b:1;}}', 'yes');
+
+INSERT INTO `pantheon`.`wp_vpsg077zk4_options` (option_name, option_value, autoload) VALUES ('wp_mail_smtp_debug', 'a:0:{}', 'no');
+
+INSERT INTO `pantheon`.`wp_vpsg077zk4_options` (option_name, option_value, autoload) VALUES ('wp_mail_smtp_version', '1.2.2', 'yes');
+
+select * from `pantheon`.`wp_vpsg077zk4_options` where option_name like 'wp_mail%'
+;
+delete from `pantheon`.`wp_vpsg077zk4_options` where option_name like 'wp_mail%';

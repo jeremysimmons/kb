@@ -1,0 +1,5 @@
+https://docs.microsoft.com/en-us/azure/storage/storage-table-design-guide
+
+https://docs.microsoft.com/en-us/azure/storage/storage-dotnet-how-to-use-tables#next-steps
+
+https://azure.microsoft.com/en-us/resources/samples/storage-table-dotnet-getting-started/?v=17.23h

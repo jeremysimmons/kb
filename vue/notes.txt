@@ -1,0 +1,317 @@
+vue.js
+
+reference for vue.js
+reference for axiom.js (http library)
+
+[Basic Setup]
+var growler = new Vue({
+  el: '#growler',
+  data: {
+    appName: 'Growler'
+  }
+});
+
+<div id="growler"></div>
+
+[Semantic Bindings]
+<h2>{{ appName }}</h2>
+
+[Declarative Bindings]
+all directives begin with v-
+
+v-text:
+<h2 v-text="appName"></h2>
+
+works great for whole element content
+if you need partial value, use Semantic binding instead
+
+[One Time Binding]
+add v-once directive
+<h2 v-once>{{ appName }}</h2>
+
+[Binding to HTML]
+var growler = new Vue({
+  el: '#growler',
+  data: {
+    appName: '<a href="/">Growler</a>'
+  }
+});
+<div id="growler">
+<h2 v-html="appName"></h2>
+</div>
+
+[Bind Directive]
+v-bind, for HTML attributes
+
+var growler = new Vue({
+  el: '#growler',
+  data: {
+    appName: 'Growler',
+    appLogo: '/public/img/logo.png"
+  }
+});
+
+You cannot do this
+<div id="growler">
+<img src="{{appLogo}}" />
+</div>
+
+You must use the v-bind attribute to do this
+<div id="growler">
+<img v-bind:src="appLogo" />
+</div>
+or shorthand
+<div id="growler">
+<img :src="appLogo" />
+</div>
+
+[Binding to CSS Properties]
+
+**from a javascript object
+
+data: {
+ appName: 'Growler', 
+ color: '#FF6A00';
+}
+<h2 v-bind:style="{ color: color}">{{ appName }}</h2>
+
+simple to bind to simple 
+if you want to bind to a property that uses -, you use camel casing
+font-family because fontFamily
+
+data: {
+ appName: 'Growler', 
+ color: '#FF6A00',
+ appNameFontFamily: 'Arial';
+}
+
+<h2 v-text="appName" v-bind:style="{ 
+color: color, 
+fontFamily:appNameFontFamily,
+margin: 0
+}"></h2>
+
+eww. getting messy. lets clean it up with a sub-object in our vue data.
+the keys all become css-style-property names
+
+data: {
+ appName: 'Growler', 
+ appStyle: {
+   color: '#FF6A00',
+   fontFamily: 'Arial',
+   margin: 0
+ }
+}
+
+<h2 v-text="appName" v-bind:style="appStyle"></h2>
+
+**from a javascript array
+
+data: {
+ appName: 'Growler', 
+ accentColor: {
+   color: '#FF6A00'
+ },
+ headers: {
+   fontFamily: 'Arial',
+   margin: 0
+ }
+}
+
+we can combine multiple style-rules from the vue data with an array in the element.
+values are applied from left to right
+
+<div id="growler">
+<h2
+  v-text="appName"
+  v-bind:style="[accentColor, headers]">
+</h2>
+</div>
+
+but, we really should keep the values in css.
+
+** binding to CSS classes
+
+// data defines a mapping between vue data property and css name
+data: {
+ appName: 'Growler', 
+ accentColor: 'accent-color',
+ headers: 'headers'
+}
+
+// define classes per normal css
+<style>
+ .accent-color: {
+   color: '#FF6A00'
+ },
+ .headers {
+   fontFamily: 'Arial',
+   margin: 0
+ }
+</style>
+
+// reference the property names from vue data, which de-reference to css classes
+<div id="growler">
+<h2
+  v-text="appName"
+  v-bind:class="[accentColor, headers]">
+</h2>
+</div>
+
+alternate definition. Class names are defined in an array in vue-data.
+data: {
+  headerStyles: [ 'accent-color', 'headers' ]
+}
+// class binding uses the array vue-data property
+<h2
+  v-text="appName"
+  v-bind:class="headerStyles">
+</h2>
+
+Another alternative. 
+Key = css class. Value = whether to apply it.
+<h2
+  v-text="appName"
+  v-bind:class="{
+    'headers':true;
+  }">
+</h2>
+
+this becomes useful when you want to toggle the inclusion of a class
+
+data: {
+  appName: 'Growler',
+  isOnline: false
+}
+// headers class always applied, accent-color class conditionally applied when the isOnline of the vue data is true
+<h2
+  v-text="appName"
+  v-bind:class="{
+    'headers':true,
+    'accentColor': isOnline
+  }">
+</h2>
+
+** JavaScript expressions
+
+Statement
+var isLocal = location.host.includes('localhost');
+
+Expression - line of code that produces a value
+location.host.includes('localhost')
+
+Expressions are evaluated within the context of a view
+
+<h2
+v-bind:style="{ color: isOnline? '#FF6A00':'#000' }>
+
+Expressions are evaluated in a sandbox...
+These globals are available.
+Properties
+Infinity, undefined, NaN
+Functions
+parseFloat, parseInt, isNaN, isFinite, decodeURI, decodeURIComponent, encodeURI, encodeURIComponent,
+Objects
+Math, Number, Date, Array, Object, Boolean, String, RegExp, Map, Set, JSON, Intl
+Webpack/Browserify
+require
+no way to whitelist globals
+
+[forms]
+
+## two way bindings
+v-model
+
+- text fields 
+- checkboxes
+- radio button
+- drop down
+
+### text fields
+
+- input 
+- text area
+
+<input type="text" v-model="query" placeholder="Search...">
+<div>Searchg for <span v-bind="query"></span></div>
+
+works with these types of inputs
+- color
+- date
+- datetime-local
+- email
+- month
+- number
+- password
+- range
+- search
+- tel
+- text
+- time
+- url
+- week
+
+<textarea v-model="emailMessage"></textarea>
+
+!! Vue doesn't support mustaches for binding in a text area
+
+### checkboxes
+
+<input type="checkbox" v-model="isPowerSyntaxEnabled">
+
+      <label for="powersyntax">
+        <input type="checkbox" v-model="isPowerSyntaxEnabled" name="powersyntax">
+        isPowerSyntaxEnabled
+      </label><br/>
+      <span>{{isPowerSyntaxEnabled}}</span>
+
+data: {
+isPowerSyntaxEnabled: false
+}
+
+## radio buttons
+      <label class="form-check-label"><input type="radio" value="beers" v-model="searchIndex"/>beers</label><br/>
+      <label class="form-check-label"><input type="radio" value="breweries" v-model="searchIndex"/>breweries</label>
+data: {
+      searchIndex: 'beers'
+}
+
+## drop down list
+      <select v-model="selectedSearchIndex">
+        <option>one</option>
+        <option>two</option>
+        <option>three</option>
+      </select><br/>
+      <span>{{selectedSearchIndex}}</span>
+data: {
+      selectedSearchIndex: 'one'
+}
+
+## multi-select
+      <select multiple v-model="selectedSearchIndexes">
+        <option>one</option>
+        <option>two</option>
+        <option>three</option>
+      </select><br/>
+      <span>{{selectedSearchIndexes}}</span>
+
+data: {
+      selectedSearchIndexes: ['one','three']
+}
+
+[trim modifier]
+<input v-model.trim="query" placeholder="Search...">
+
+tries to use parseFloat
+[number modifier]
+<input v-model.number="result" placeholder="2+3=">
+
+!! Custom modifier definitions not available.
+
+[lazy binding modifier]
+
+<input v-model.lazy="query" placeholder="2+3=">
+changes from oninput to onchange
+
+chaining modifiers
+<input v-model.lazy.trim="query" placeholder="2+3=">

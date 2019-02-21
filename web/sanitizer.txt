@@ -1,0 +1,14 @@
+Markdown
+https://github.com/Knagis/CommonMark.NET/wiki
+
+HTML Santizing
+A+
+https://github.com/mganss/HtmlSanitizer
+https://github.com/AngleSharp/AngleSharp
+
+C
+https://www.nuget.org/packages/Vereyon.Web.HtmlSanitizer/
+
+https://github.com/andresriancho/owaspantisamy/tree/master/dotNet/current/source/owaspantisamy
+
+

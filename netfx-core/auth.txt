@@ -1,0 +1,48 @@
+10:33 AM 6/16/2017
+http://benjamincollins.com/blog/practical-permission-based-authorization-in-asp-net-core/
+https://stackoverflow.com/questions/36445780/how-to-implement-permission-based-access-control-with-asp-net-core
+
+blowdart: how it works
+https://stackoverflow.com/questions/31464359/how-do-you-create-a-custom-authorizeattribute-in-asp-net-core/31465227#31465227
+
+https://docs.microsoft.com/en-us/aspnet/core/security/authorization/
+
+https://github.com/blowdart/AspNetAuthorizationWorkshop
+
+https://andrewlock.net/introduction-to-authorisation-in-asp-net-core/
+
+https://andrewlock.net/exploring-the-cookieauthenticationmiddleware-in-asp-net-core/
+
+https://andrewlock.net/introduction-to-authentication-with-asp-net-core/
+
+Microsoft.AspNetCore.Authorization.AuthorizationOptions, Microsoft.AspNetCore.Authorization.IAuthorizationRequirement
+
+https://andrewlock.net/modifying-the-ui-based-on-user-authorisation-in-asp-net-core/
+
+@inject IAuthorizationService AuthorizationService
+
+@if (await AuthorizationService.AuthorizeAsync(User, "CanAccessVIPArea"))
+{
+  <li>
+    <a asp-area="" 
+       asp-controller="VIPLounge" asp-action="ViewTheFancySeatsInTheLounge"
+    >View seats in the lounge</a>
+  </li>
+}
+
+SignInManager<TApplicationUser>
+UserManager<TApplicationUser>
+
+https://andrewlock.net/custom-authorisation-policies-and-requirements-in-asp-net-core/
+
+services.AddDisciplrAuthorizationPolicies();
+
+[Authorize(Policy.IsAtLeastOwner)]
+[Authorize(Policy.ResourceAccess)]
+public async Task<IActionResult> GetPrintDetailAsync([ResourceAccess(AccessView)]OrderId orderId, CancellationToken ct)
+
+
+https://blogs.msdn.microsoft.com/webdev/2016/03/23/get-started-with-asp-net-core-authorization-part-2-of-2/
+
+https://channel9.msdn.com/Blogs/Seth-Juarez/ASPNET-Core-Authorization-with-Barry-Dorrans
+https://channel9.msdn.com/Blogs/Seth-Juarez/Advanced-aspNET-Core-Authorization-with-Barry-Dorrans

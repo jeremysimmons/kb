@@ -1,0 +1,1 @@
+filterBox.addEventListener("input", this._filterBoxInput.bind(this), true);

@@ -1,0 +1,9 @@
+https://github.com/Microsoft/vstest-docs/blob/master/docs/filter.md
+I found the answer:
+dotnet test --filter TraitName=TraitValue
+
+Alternatively, you can filter by not having a trait value
+dotnet test --filter TraitName!=TraitValue
+
+In my example above, this means I can run:
+dotnet test --filter Color=Blue

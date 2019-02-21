@@ -1,0 +1,1 @@
+https://github.com/dotnet/cli/blob/rel/1.0.0/Documentation/specs/runtime-configuration-file.md#runtimeoptions-section-runtimeconfigjson

@@ -1,0 +1,34 @@
+"Owner"
+	Azure AA, SA, CA
+
+
+Access control in Azure starts from a billing perspective. 
+The owner of an Azure account, accessed by visiting the Azure Accounts Center, is the Account Administrator (AA)
+
+Subscriptions are a container for billing, but they also act as a security boundary: each subscription has a Service Administrator (SA) who can add, remove, and modify Azure resources in that subscription by using the Azure portal.
+
+Subscriptions are accessible by a subset of those directory users who have been assigned as either Service Administrator (SA) or Co-Administrator (CA); 
+
+Types of Azure admin accounts
+Account Administrator (AA)	
+1 per Azure account	
+
+This is the person who signed up for or bought Azure subscriptions, and is authorized to access the Account Center and perform various management tasks. These include being able to create subscriptions, cancel subscriptions, change the billing for a subscription, and change the Service Administrator.
+
+Service Administrator (SA)
+1 per Azure subscription
+This role is authorized to manage services in the Azure portal. By default, for a new subscription, the Account Administrator is also the Service Administrator.
+
+Co-administrator (CA) 
+200 per subscription
+This role has the same access privileges as the Service Administrator, but can’t change the association of subscriptions to Azure directories.
+
+https://docs.microsoft.com/en-us/azure/billing/billing-add-change-azure-subscription-administrator
+Change the Service Administrator for an Azure subscription
+Make sure your scenario is supported by checking the limits for changing Service Administrators.
+Sign in to Account Center as the Account Administrator.
+Select a subscription.
+On the right side, select Edit subscription details.
+In the SERVICE ADMINISTRATOR box, enter the email address of the new Service Administrator.
+
+

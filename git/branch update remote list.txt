@@ -1,0 +1,11 @@
+To show all local and remote branches that (local) git knows about
+git branch -a
+
+git branch -d -r remote_name/branch_name 
+only removes local checkout
+
+git push origin :branch_name
+will remove the the remote branch (note the ':')
+
+git branch -d branch_name
+remove your local checkout

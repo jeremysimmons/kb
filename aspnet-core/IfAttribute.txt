@@ -1,0 +1,7 @@
+https://stackoverflow.com/a/26888884/26877
+
+<div class="menuitem @("active".If(Model.Active))">
+
+public static MvcHtmlString If(this string text, bool condition) {
+    return new MvcHtmlString(condition ? text : string.Empty);
+}

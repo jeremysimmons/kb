@@ -1,0 +1,8 @@
+
+https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection#using-framework-provided-services
+LoggerFactory https://stackify.com/net-core-loggerfactory-use-correctly/
+
+http://intellitect.com/net-core-dependency-injection/#ActivatorUtilities
+
+
+https://stackoverflow.com/questions/32459670/resolving-instances-with-asp-net-core-di

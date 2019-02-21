@@ -1,0 +1,27 @@
+https://help.shopify.com/api/reference/product_variant
+
+Update a variant's inventory
+
+PUT /admin/variants/#{id}.json
+{
+  "variant": {
+    "id": 808950810,
+    "inventory_quantity": 100,
+    "old_inventory_quantity": 10
+  }
+}
+
+old_inventory_quantity
+The original stock level the client believes the product variant has.
+This should be sent to avoid a race condition when the item being adjusted is simultaneously sold online.
+
+
+Update a variant's inventory using an adjustment
+
+PUT /admin/variants/#{id}.json
+{
+  "variant": {
+    "id": 808950810,
+    "inventory_quantity_adjustment": -5
+  }
+}

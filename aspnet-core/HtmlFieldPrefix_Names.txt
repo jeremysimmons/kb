@@ -1,0 +1,12 @@
+@{
+    
+    var IdAttributeDotReplacement = Html.IdAttributeDotReplacement;
+    var templateInfo = ViewContext.ViewData.TemplateInfo;
+    var cityFullName = templateInfo.GetFullHtmlFieldName("City");
+    var cityName = Html.Name("City");
+    var cityNameFromExpression = Html.NameFor(x => x.City);
+    var cityId = Html.Id("City");
+    var cityIdFromExpression = Html.IdFor(x => x.City);
+    var cityIdFromName = Html.GenerateIdFromName(cityFullName);
+    var fieldPrefix = templateInfo.HtmlFieldPrefix;
+}

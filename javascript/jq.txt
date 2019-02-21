@@ -1,0 +1,71 @@
+map({id:._id, name: .meta.name, content: .content.s3_key})
+
+input
+[
+{
+    "_id" : "58b454f40960a1788ef48ebc",
+    "meta" : {
+        "name" : "TruStory Year 1 Scope & Sequence"
+    },
+    "content" : {
+        "s3_key" : "7d7e89d2-68bc-4479-88bf-061047605441.doc"
+    }
+}
+
+,
+{
+    "_id" : "58b454f40960a1788ef48ec2",
+    "meta" : {
+        "name" : "Master Timeline"
+    },
+    "content" : {
+        "s3_key" : "c6877076-d157-42ec-a548-b27f3b7a2286.jpg"
+    }
+}
+
+,
+{
+    "_id" : "58b454f40960a1788ef48ec8",
+    "meta" : {
+        "name" : "Customizable copy of Lesson 1"
+    },
+    "content" : {
+        "s3_key" : "084018aa-3ec6-4af1-8177-6b56acb397e0.doc"
+    }
+}
+
+,
+{
+    "_id" : "58b45dd50960a1788ef49901",
+    "meta" : {
+        "name" : "TruWonder Year 1 Scope & Sequence"
+    },
+    "content" : {
+        "s3_key" : "13b4e0a7-a874-4cf7-97a1-b938438c6be0.doc"
+    }
+}
+]
+
+output
+[
+  {
+    "id": "58b454f40960a1788ef48ebc",
+    "name": "TruStory Year 1 Scope & Sequence",
+    "content": "7d7e89d2-68bc-4479-88bf-061047605441.doc"
+  },
+  {
+    "id": "58b454f40960a1788ef48ec2",
+    "name": "Master Timeline",
+    "content": "c6877076-d157-42ec-a548-b27f3b7a2286.jpg"
+  },
+  {
+    "id": "58b454f40960a1788ef48ec8",
+    "name": "Customizable copy of Lesson 1",
+    "content": "084018aa-3ec6-4af1-8177-6b56acb397e0.doc"
+  },
+  {
+    "id": "58b45dd50960a1788ef49901",
+    "name": "TruWonder Year 1 Scope & Sequence",
+    "content": "13b4e0a7-a874-4cf7-97a1-b938438c6be0.doc"
+  }
+]

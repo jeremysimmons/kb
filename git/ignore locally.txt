@@ -1,0 +1,7 @@
+https://stackoverflow.com/questions/1753070/how-do-i-configure-git-to-ignore-some-files-locally
+
+The .git/info/exclude file has the same format as any .gitignore file. Another option is to set core.excludesFile to the name of a file containing global patterns.
+
+ if you already have unstaged changes you must run the following after editing your ignore-patterns:
+
+git update-index --assume-unchanged [<file>...]

@@ -1,0 +1,1 @@
+http://www.michael-whelan.net/using-humanizer-with-asp-dotnet-core/

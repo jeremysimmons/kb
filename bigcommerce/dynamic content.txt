@@ -1,0 +1,30 @@
+https://stencil.bigcommerce.com/docs/dynamic-content
+
+[Dropzones]
+
+<div id="gr-dropzone-top"></div>
+where the div's id defines the dropzone's name
+
+in custom HTML editor for Categories
+<div class="gr-dropzone" data-gr-zone="gr-dropzone-top">
+    <p>This content will be placed in a dropzone at the top of the page, because that dropzone has the id matching our data-gr-zone attribute.</p>
+</div>
+
+PageManager.before calls gr_moveHtmlToDropzones
+
+gr_moveHtmlToDropzones () {
+        $(".gr-dropzone").each(function () {
+            const $this = $(this);
+            const zoneId = $this.data("gr-zone");
+            if (zoneId) {
+                $("#" + zoneId).html($this.html());   // copy the html to where it should be
+                $this.remove();             // remove the html from its temporary location
+            } else {
+                console.warn("PageManager.gr_moveHtmlToDropzones: dropzone has no target.");
+            }
+        });
+    }
+
+.gr-dropzone class to display: none.
+
+[Dynamic Tabs]

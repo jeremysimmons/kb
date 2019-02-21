@@ -1,0 +1,2 @@
+mongodump /host:disciplr-prod.documents.azure.com /port:10255 /ssl /username:disciplr-prod /password:INxPReRICcqbwaEsXMBTSMsWti12dsGUa8FIPd95khihDhMa9GX614yhVXC9Cpcu9Y4t2j5SncfjNvSUa8BoJg== /db:admin /collection:resources /out:C:\docdb_backup\
+

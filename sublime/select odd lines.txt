@@ -1,0 +1,10 @@
+(.*(\n|$)){2} every other line
+
+(.*\n){10} every 10 lines
+
+Find: Ctrl+F
+If regular expressions are not already enabled, enable them: Alt+R
+Type in the expression .*\n.*\n
+Find all: Alt+Enter
+Press left arrow to get rid of the selections, leaving just the cursors: ?
+You now have a cursor at the start of every odd-numbered line. If you wanted even-numbered lines, press down: ?

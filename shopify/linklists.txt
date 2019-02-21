@@ -1,0 +1,99 @@
+{% for link in linklists.main-menu.links %}
+      <a href="{{ link.url }}">{{ link.title }}</a>
+{% endfor %}
+
+linklist.handle
+linklist.links
+linklist.title
+
+link.active
+link.object
+link.title
+link.type
+link.url
+
+link.object can be one of
+product (https://help.shopify.com/themes/liquid/objects/product)
+product.available
+product.collections
+product.compare_at_price_max
+product.compare_at_price_min
+product.compare_at_price_varies
+product.content
+product.description
+product.featured_image
+product.first_available_variant
+product.handle
+product.has_only_default_variant
+product.id
+product.images
+product.options
+product.options_with_values
+product.price
+product.price_max
+product.price_min
+product.price_varies
+product.selected_variant
+product.selected_or_first_available_variant
+product.tags
+product.template_suffix
+product.title
+product.type
+product.url
+product.variants
+product.vendor
+
+collection (https://help.shopify.com/themes/liquid/objects/collection)
+collection.all_tags
+collection.all_types
+collection.all_products_count
+collection.all_vendors
+collection.current_type
+collection.current_vendor
+collection.default_sort_by
+collection.description
+collection.handle
+collection.id
+collection.image
+collection.next_product
+collection.previous_product
+collection.products
+collection.products_count
+collection.published_at
+collection.template_suffix
+collection.title
+collection.tags
+collection.url
+
+page (https://help.shopify.com/themes/liquid/objects/page)
+page.author
+page.content
+page.handle
+page.id
+page.published_at
+page.template_suffix
+page.title
+page.url
+
+blog (https://help.shopify.com/themes/liquid/objects/blog)
+blog.all_tags
+blog.articles
+blog.articles_count
+blog.comments_enabled?
+blog.handle
+blog.id
+blog.moderated?
+blog.next_article
+blog.previous_article
+blog.tags
+blog.title
+blog.url
+
+link.type
+collection_link: if the link points to a collection
+product_link: if the link points to a product page
+page_link: if the link points to a page
+blog_link: if the link points to a blog
+relative_link: if the link points to the search page, the home page or /collections/all
+http_link: if the link points to an external web page, or a type or vendor collection (ex: /collections/types?q=Pants)
+

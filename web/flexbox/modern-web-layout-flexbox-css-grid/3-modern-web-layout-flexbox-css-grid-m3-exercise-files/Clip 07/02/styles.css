@@ -1,0 +1,109 @@
+html,
+body {
+	padding: 0;
+	margin: 0;
+	font-family: arial, sans-serif;
+}
+
+body {
+    padding: 1em;
+}
+
+h1 {
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    height: auto;
+    max-width: 100%;
+    margin-bottom: 0.5em;
+}
+
+.grid-container {
+    display: grid;
+    grid: [image-column] 1fr
+          repeat(3, [gutter] 1em [image-column] 1fr)
+          [image-column-end] /
+          5.4em 1em [image-row] 1fr
+          repeat(2, [gutter] 1em [image-row] 1fr);
+}
+
+.grid-item-header {
+    background-color: #A62E5C;
+    color: #fff;
+    grid-column: image-column 1 / image-column-end;
+    grid-row: 1 / 2;
+}
+
+.grid-item-image-01 {
+    grid-column: image-column 1 / gutter 1;
+    grid-row: image-row 1 / gutter 1;
+}
+
+.grid-item-image-02 {
+    grid-column: image-column 2 / gutter 2;
+    grid-row: image-row 1 / gutter 1;
+}
+
+.grid-item-image-03 {
+    grid-column: image-column 3 / gutter 3;
+    grid-row: image-row 1 / gutter 1;
+}
+
+.grid-item-image-04 {
+    grid-column: image-column 4 / image-column-end;
+    grid-row: image-row 1 / gutter 1;
+}
+
+.grid-item-image-05 {
+    grid-column: image-column 1 / gutter 1;
+    grid-row: image-row 2 / gutter 2;
+}
+
+.grid-item-image-06 {
+    grid-column: image-column 2 / gutter 2;
+    grid-row: image-row 2 / gutter 2;
+}
+
+.grid-item-image-07 {
+    grid-column: image-column 3 / gutter 3;
+    grid-row: image-row 2 / gutter 2;
+}
+
+.grid-item-image-08 {
+    grid-column: image-column 4 / image-column-end;
+    grid-row: image-row 2 / gutter 2;
+}
+
+.grid-item-image-09 {
+    grid-column: image-column 1 / gutter 1;
+    grid-row: image-row 3 / gutter 3;
+}
+
+.grid-item-image-10 {
+    grid-column: image-column 2 / gutter 2;
+    grid-row: image-row 3 / gutter 3;
+}
+
+.grid-item-image-11 {
+    grid-column: image-column 3 / gutter 3;
+    grid-row: image-row 3 / gutter 3;
+}
+
+.grid-item-image-12 {
+    grid-column: image-column 4 / image-column-end;
+    grid-row: image-row 3 / gutter 3;
+}	
+
+.grid-item {
+    box-sizing: border-box;
+	font-size: 1.2em;
+	padding: 1em;
+    overflow: hidden;
+	text-align: center;
+}
+
+.grid-item-image {
+    border: solid 1px #ccc;
+}

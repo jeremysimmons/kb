@@ -1,0 +1,17 @@
+How to Redirect the default *.azurewebsites.net domain to your custom domain on Azure Web Apps
+http://zainrizvi.io/2016/04/07/block-default-azure-websites-domain/
+<configuration>
+  <system.webServer>  
+    <rewrite>  
+        <rules>  
+          <rule name="Redirect rquests to default azure websites domain" stopProcessing="true">
+            <match url="(.*)" />  
+            <conditions logicalGrouping="MatchAny">
+              <add input="{HTTP_HOST}" pattern="^zainrizvi\.azurewebsites\.net$" />
+            </conditions>
+            <action type="Redirect" url="http://www.zainrizvi.io/{R:0}" />  
+          </rule>  
+        </rules>  
+    </rewrite>  
+  </system.webServer>  
+</configuration>  

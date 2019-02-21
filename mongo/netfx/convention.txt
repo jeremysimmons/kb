@@ -1,0 +1,6 @@
+var myConventions = new ConventionProfile();
+myConventions.SetIgnoreExtraElementsConvention(new AlwaysIgnoreExtraElementsConvention()));
+BsonClassMap.RegisterConventions(myConventions, (type) => true);
+
+var conventionPack = new ConventionPack { new IgnoreExtraElementsConvention(true) };
+ConventionRegistry.Register("IgnoreExtraElements", conventionPack, type => true);

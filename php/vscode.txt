@@ -1,0 +1,3 @@
+https://blogs.msdn.microsoft.com/nicktrog/2016/02/11/configuring-visual-studio-code-for-php-development/
+
+https://code.visualstudio.com/docs/languages/php

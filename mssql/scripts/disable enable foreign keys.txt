@@ -1,0 +1,18 @@
+https://stackoverflow.com/questions/19727865/how-to-turn-off-on-all-the-foreign-keys-and-triggers-in-microsoft-sql-server
+
+Disable all FKs:
+
+EXEC sp_MSforeachtable @command1="ALTER TABLE ? NOCHECK CONSTRAINT ALL"
+GO
+Enable all FKs:
+
+EXEC sp_MSforeachtable @command1="ALTER TABLE ? CHECK CONSTRAINT ALL"
+GO
+Disable all triggers:
+
+EXEC sp_MSforeachtable @command1="ALTER TABLE ? DISABLE TRIGGER ALL"
+GO
+Enable all triggers:
+
+EXEC sp_MSforeachtable @command1="ALTER TABLE ? ENABLE TRIGGER ALL"
+GO

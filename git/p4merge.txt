@@ -1,0 +1,4 @@
+[merge]
+    tool = p4merge
+[mergetool "p4merge"]
+    cmd = \"C:\\\\Program Files\\\\Perforce\\\\p4merge.exe\" $BASE $LOCAL $REMOTE $MERGED

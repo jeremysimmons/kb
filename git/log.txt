@@ -1,0 +1,9 @@
+include reflog
+git log -g
+
+short and sweet
+git log --oneline
+
+a pretty colored graph
+git log --graph --decorate --oneline 
+git log --graph --decorate 

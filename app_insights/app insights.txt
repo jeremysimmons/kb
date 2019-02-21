@@ -1,0 +1,3 @@
+https://docs.microsoft.com/en-us/azure/application-insights/app-insights-analytics-tour
+
+shift + enter = execute query

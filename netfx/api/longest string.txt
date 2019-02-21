@@ -1,0 +1,4 @@
+string longest = strings.OrderByDescending( s => s.Length ).First();
+
+more efficient
+strings.Aggregate(string.Empty, (seed, f) => f.Length > seed.Length ? f : seed);

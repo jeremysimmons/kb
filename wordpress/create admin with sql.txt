@@ -1,0 +1,10 @@
+INSERT INTO `pantheon`.`wp_0py4qdmkhz_users` (`ID`, `user_login`, `user_pass`, `user_nicename`, `user_email`, `user_url`, `user_registered`, `user_activation_key`, `user_status`, `display_name`) VALUES ('400', 'jeremy.simmons@davidccook.com', MD5('topsecret'), 'Jeremy Simmons', 'jeremy.simmons@davidccook.com', 'http://davidccook.com/', '2017-11-01 00:00:00', '', '0', 'Jeremy Simmons');
+INSERT INTO `pantheon`.`wp_0py4qdmkhz_usermeta` (`umeta_id`, `user_id`, `meta_key`, `meta_value`) VALUES (NULL, '400', 'wp_capabilities', 'a:1:{s:13:"administrator";s:1:"1";}');
+INSERT INTO `pantheon`.`wp_0py4qdmkhz_usermeta` (`umeta_id`, `user_id`, `meta_key`, `meta_value`) VALUES (NULL, '400', 'wp_user_level', '10');
+
+https://www.wpwhitesecurity.com/wordpress-tutorial/manually-add-wordpress-user-administrator-role-wordpress-database/
+
+INSERT INTO `pantheon`.`wp_0py4qdmkhz_users` (`ID`, `user_login`, `user_pass`, `user_nicename`, `user_email`, `user_status`, `display_name`) VALUES 
+('19821101', 'jeremy.simmons@davidccook.com', MD5('topsecret'), 'tempuser', 'jeremy.simmons@davidccook.com', '0', 'Jeremy Simmons');
+INSERT INTO `pantheon`.`wp_0py4qdmkhz_usermeta` (`umeta_id`, `user_id`, `meta_key`, `meta_value`) VALUES (NULL, '19821101', 'wp_0py4qdmkhz_capabilities', 'a:1:{s:13:"administrator";b:1;}');
+INSERT INTO `pantheon`.`wp_0py4qdmkhz_usermeta` (`umeta_id`, `user_id`, `meta_key`, `meta_value`) VALUES (NULL, '19821101', 'wp_0py4qdmkhz_user_level', '10');

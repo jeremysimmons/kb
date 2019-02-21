@@ -1,0 +1,11 @@
+https://github.com/aspnet/Mvc/issues/2872
+
+For the truly brave, there's now a configuration experience where you can start with a minimal MVC pipeline and add features to get a customized framework.
+
+ublic void ConfigureServices(IServiceCollection services)
+{
+    services
+        .AddMvcCore()
+        .AddAuthorization()
+        .AddJsonFormatters(j => j.Formatting = Formatting.Indented);
+}

@@ -1,0 +1,1 @@
+https://andrewlock.net/how-to-set-the-hosting-environment-in-asp-net-core/

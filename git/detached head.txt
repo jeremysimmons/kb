@@ -1,0 +1,56 @@
+First, let’s clarify what HEAD is and what it means when it is detached.
+
+HEAD is the symbolic name for the currently checked out commit. When HEAD is not detached (the “normal”1 situation: you have a branch checked out), HEAD actually points to a branch’s “ref” and the branch points to the commit. HEAD is thus “attached” to a branch. When you make a new commit, the branch that HEAD points to is updated to point to the new commit. HEAD follows automatically since it just points to the branch.
+
+git symbolic-ref HEAD yields refs/heads/master
+The branch named “master” is checked out.
+git rev-parse refs/heads/master yield 17a02998078923f2d62811326d130de991d1a95a
+That commit is the current tip or “head” of the master branch.
+git rev-parse HEAD also yields 17a02998078923f2d62811326d130de991d1a95a
+This is what it means to be a “symbolic ref”. It points to an object through some other reference.
+(Symbolic refs were originally implemented as symbolic links, but later changed to plain files with extra interpretation so that they could be used on platforms that do not have symlinks.)
+We have HEAD ? refs/heads/master ? 17a02998078923f2d62811326d130de991d1a95a
+
+When HEAD is detached, it points directly to a commit—instead of indirectly pointing to one through a branch. You can think of a detached HEAD as being on an unnamed branch.
+
+git symbolic-ref HEAD fails with fatal: ref HEAD is not a symbolic ref
+git rev-parse HEAD yields 17a02998078923f2d62811326d130de991d1a95a
+Since it is not a symbolic ref, it must point directly to the commit itself.
+We have HEAD ? 17a02998078923f2d62811326d130de991d1a95a
+
+The important thing to remember with a detached HEAD is that if the commit it points to is otherwise unreferenced (no other ref can reach it), then it will become “dangling” when you checkout some other commit. Eventually, such dangling commits will be pruned through the garbage collection process (by default, they are kept for at least 2 weeks and may be kept longer by being referenced by HEAD’s reflog).
+
+1 It is perfectly fine to do “normal” work with a detached HEAD, you just have to keep track of what you are doing to avoid having to fish dropped history out of the reflog.
+
+The intermediate steps of an interactive rebase are done with a detached HEAD (partially to avoid polluting the active branch’s reflog). If you finish the full rebase operation, it will update your original branch with the cumulative result of the rebase operation and reattach HEAD to the original branch. My guess is that you never fully completed the rebase process; this will leave you with a detached HEAD pointing to the commit that was most recently processed by the rebase operation.
+
+To recover from your situation, you should create a branch that points to the commit currently pointed to by your detached HEAD:
+
+git branch temp
+git checkout temp
+(these two commands can be abbreviated as git checkout -b temp)
+
+This will reattach your HEAD to the new temp branch.
+
+Next, you should compare the current commit (and its history) with the normal branch on which you expected to be working:
+
+git log --graph --decorate --pretty=oneline --abbrev-commit master origin/master temp
+git diff master temp
+git diff origin/master temp
+(You will probably want to experiment with the log options: add -p, leave off --pretty=… to see the whole log message, etc.)
+
+If your new temp branch looks good, you may want to update (e.g.) master to point to it:
+
+git branch -f master temp
+git checkout master
+(these two commands can be abbreviated as git checkout -B master temp)
+
+You can then delete the temporary branch:
+
+git branch -d temp
+Finally, you will probably want to push the reestablished history:
+
+git push origin master
+You may need to add --force to the end of this command to push if the remote branch can not be “fast-forwarded” to the new commit (i.e. you dropped, or rewrote some existing commit, or otherwise rewrote some bit of history).
+
+If you were in the middle of a rebase operation you should probably clean it up. You can check whether a rebase was in process by looking for the directory .git/rebase-merge/. You can manually clean up the in-progress rebase by just deleting that directory (e.g. if you no longer remember the purpose and context of the active rebase operation). Usually you would use git rebase --abort, but that does some extra resetting that you probably want to avoid (it moves HEAD back to the original branch and resets it back to the original commit, which will undo some of the work we did above).

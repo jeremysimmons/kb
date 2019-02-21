@@ -1,0 +1,3 @@
+https://github.com/projectkudu/kudu/wiki/Running-tests
+https://github.com/projectkudu/kudu/wiki/Post-Deployment-Action-Hooks
+https://github.com/projectkudu/kudu/wiki/Investigating-continuous-deployment

@@ -1,0 +1,8 @@
+httpcontext.current is dead
+
+use this if you have to.
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddMvc();
+    services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+}

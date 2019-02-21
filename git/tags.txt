@@ -1,0 +1,24 @@
+listing tags
+$ git tag
+This command lists the tags in alphabetical order
+
+You can also search for tags with a particular pattern.
+$ git tag -l "v1.8.5*"
+
+list all the tags along with annotations & 9 lines of message for every tag
+git tag -n9
+or
+git tag -l -n9
+
+only for items that start with "v3."
+git tag -l -n9 v3.*
+
+show the sha1 commit has for tags
+git show-ref --tags
+9ca295ddaf55719d7ee5bcd27b17559c94428a8b refs/tags/tag1
+d01d2b686ec735f36a8bbb4599112d729eecbaee refs/tags/tag2
+
+git rev-parse tag1
+
+git show tag1
+git show --summary --oneline --decorate tag1

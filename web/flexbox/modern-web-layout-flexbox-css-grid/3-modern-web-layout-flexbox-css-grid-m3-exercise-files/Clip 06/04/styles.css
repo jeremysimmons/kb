@@ -1,0 +1,29 @@
+html,
+body {
+	padding: 0;
+	margin: 0;
+	font-family: arial, sans-serif;
+}
+
+.grid-container {
+	border: solid 4px #000;
+    display: inline-grid;
+    grid: 10em 6em 6em 6em / 6em 6em;
+}
+
+.grid-item {
+    background-color: #A62E5C;
+	color: #fff;
+    box-sizing: border-box;
+	font-size: 1.2em;
+	padding: 1em;
+    overflow: hidden;
+	text-align: center;
+    grid-column: 2 / span 2;
+    grid-row: 2 / span 1;
+}
+
+.grid-item strong {
+	display: block;
+	font-size: 130%;  
+}	

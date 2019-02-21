@@ -1,0 +1,6 @@
+
+library on top of promises
+http://bluebirdjs.com/
+
+Make a promise, waiting for a specified amount of time, util something is done. Syntactic sugar for setTimeout and setInterval. Based on ES6 Promise.
+https://www.npmjs.com/package/wait-promise

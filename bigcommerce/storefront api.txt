@@ -1,0 +1,38 @@
+https://developer.bigcommerce.com/api/v3/storefront.html#current_customer_api
+
+http://dcclive.mybigcommerce.com/customer/current.jwt?app_client_id=90ac162cfcts2eupvtdumt2d6bsr1s4
+
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJjdXN0b21lciI6eyJpZCI6ODkyMywiZW1haWwiOiJqZXJlbXkuc2ltbW9uc0BkYXZpZGNjb29rLmNvbSIsImdyb3VwX2lkIjoiMCJ9LCJpc3MiOiJiYy9hcHBzIiwic3ViIjoiZnBpdmdkdmI5IiwiaWF0IjoxNTIwMDI3NjMyLCJleHAiOjE1MjAwMjg1MzIsInZlcnNpb24iOjEsImF1ZCI6IjkwYWMxNjJjZmN0czJldXB2dGR1bXQyZDZic3IxczQiLCJhcHBsaWNhdGlvbl9pZCI6IjkwYWMxNjJjZmN0czJldXB2dGR1bXQyZDZic3IxczQiLCJzdG9yZV9oYXNoIjoiZnBpdmdkdmI5Iiwib3BlcmF0aW9uIjoiY3VycmVudF9jdXN0b21lciJ9.2qnStXigCQ6rbyQBVTtSJr3ch6QF_0fZYdlgNhZWSN4sN3yT2QAPk7XUwCz464lA4EQ_b8v8jv2ztt8iNZ3INA
+
+{
+  "typ": "JWT",
+  "alg": "HS512"
+}.{
+  "customer": {
+    "id": 8923,
+    "email": "jeremy.simmons@davidccook.com",
+    "group_id": "0"
+  },
+  "iss": "bc/apps",
+  "sub": "fpivgdvb9",
+  "iat": 1520027632,
+  "exp": 1520028532,
+  "version": 1,
+  "aud": "90ac162cfcts2eupvtdumt2d6bsr1s4",
+  "application_id": "90ac162cfcts2eupvtdumt2d6bsr1s4",
+  "store_hash": "fpivgdvb9",
+  "operation": "current_customer"
+}.[Signature]
+
+Client ID
+1eikwztlmx4za8x39kugk5kyotnymu7
+Client Secret
+r4p4ussqblb8t5ay0rjov12n2097u4c
+Access Token
+smnxgucotm7sv1e43mi2lwks4vsm8l9
+
+http://dcclive.mybigcommerce.com/customer/current.jwt?app_client_id=1eikwztlmx4za8x39kugk5kyotnymu7
+{"errors":[{"detail":"JWT token generated was not valid"}]}
+
+ClientID: 90ac162cfcts2eupvtdumt2d6bsr1s4
+Client Secret: j4mrw3u8x553wl9xbsrpnnn6x8ixwxl

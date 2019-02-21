@@ -1,0 +1,8 @@
+git remote add origin <address>
+
+If you want to push all branches at once:
+
+git push <URL> --all
+To push all the tags:
+
+git push <URL> --tags

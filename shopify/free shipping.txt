@@ -1,0 +1,4 @@
+create a special shipping zone for free shipping
+use shopify scripts to always hide the shipping zone
+
+if the order is a reorder shipping thing

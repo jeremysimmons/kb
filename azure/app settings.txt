@@ -1,0 +1,11 @@
+if you select application settings, the prepended string is "APPSETTING_"
+
+If you select "Sql Databases", the prepended string is "SQLAZURECONNSTR_"
+
+If you select "SQL Server" the prepended string is "SQLCONNSTR_"
+
+If you select "MySQL" the prepended string is "MYSQLCONNSTR_"
+
+If you select "Custom" the prepended string is "CUSTOMCONNSTR_"
+
+https://azure.microsoft.com/en-us/blog/windows-azure-web-sites-how-application-strings-and-connection-strings-work/

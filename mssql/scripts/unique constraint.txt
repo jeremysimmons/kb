@@ -1,0 +1,15 @@
+https://docs.microsoft.com/en-us/sql/relational-databases/tables/create-unique-constraints#TsqlProcedure
+
+[To create a unique constraint when creating a table]
+
+CREATE TABLE Production.TransactionHistoryArchive4  
+ (  
+   TransactionID int NOT NULL,   
+   CONSTRAINT AK_TransactionID UNIQUE(TransactionID)   
+);   
+GO
+
+[To create a unique constraint on an existing table]
+ALTER TABLE Person.Password   
+ADD CONSTRAINT AK_Password UNIQUE (PasswordHash, PasswordSalt);   
+GO

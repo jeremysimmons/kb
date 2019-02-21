@@ -1,0 +1,8 @@
+good middleware example
+http://overengineer.net/creating-a-simple-proxy-server-middleware-in-asp-net-core
+
+the apsnet intern wrote a proxy middleware, and then enhanced the api
+https://github.com/aspnet/Proxy/pull/46
+
+more developed proxy, fork of abve
+https://github.com/ZoolWay/GlacierCrates.AspNetCore.ApiProxy

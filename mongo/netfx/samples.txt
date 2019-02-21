@@ -1,0 +1,9 @@
+https://blogs.msdn.microsoft.com/henrikn/2012/02/18/using-mongodb-with-asp-net-web-api/
+http://www.fourthbottle.com/2015/07/projection-in-mongodb-with-csharp-and-.Net.html
+http://mongodb.github.io/mongo-csharp-driver/2.4/examples/ (anemic)
+
+
+https://github.com/aliengoo/mongodb-csharp-stuff
+
+
+http://www.dotnetcurry.com/aspnet-mvc/1267/using-mongodb-nosql-database-with-aspnet-webapi-core

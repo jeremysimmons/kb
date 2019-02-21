@@ -1,0 +1,24 @@
+
+
+select * from wp_w8ha1n90pb_defender_lockout limit 100;
+select count(distinct(ip)) from wp_w8ha1n90pb_defender_lockout_log;
+select *, from_unixtime(date) from wp_w8ha1n90pb_defender_lockout_log 
+where date >= unix_timestamp('2017-12-07')
+order by date desc;
+
+select count(distinct(ip)) from wp_w8ha1n90pb_defender_lockout_log 
+where date >= unix_timestamp('2017-12-07')
+order by date desc;
+
+select distinct(ip) from wp_w8ha1n90pb_defender_lockout_log 
+where date >= unix_timestamp('2017-12-07')
+order by date desc;
+
+select * from wp_w8ha1n90pb_defender_lockout_log 
+where date >= unix_timestamp('2017-12-07')
+order by date desc;
+
+select ip, count(*) from wp_w8ha1n90pb_defender_lockout_log 
+where date >= unix_timestamp('2017-12-07')
+group by ip
+order by count(*) desc;

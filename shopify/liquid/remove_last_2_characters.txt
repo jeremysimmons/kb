@@ -1,0 +1,3 @@
+{% assign sku = '123456' %}
+{% assign size = sku | size | minus: 2 %}
+{{ sku | slice: 0, size }}

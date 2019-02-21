@@ -1,0 +1,149 @@
+https://blogs.msdn.microsoft.com/webdev/2013/10/17/attribute-routing-in-asp-net-mvc-5/
+
+Enabling Attribute Routing
+
+public class RouteConfig
+{
+    public static void RegisterRoutes(RouteCollection routes)
+    {
+        routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+ 
+        routes.MapMvcAttributeRoutes();
+
+ routes.MapRoute(
+        name: "Default",
+        url: "{controller}/{action}/{id}",
+        defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+    );
+    }
+}
+
+Optional URI Parameters and Default Values
+You can make a URI parameter optional by adding a question mark to the route parameter. You can also specify a default value by using the form parameter=value.
+
+[Route("books/{isbn?}")]
+public ActionResult View(string isbn)
+
+Route Prefixes
+Often, the routes in a controller all start with the same prefix.
+
+Longhand
+public class ReviewsController : Controller
+{
+    // eg: /reviews
+    [Route("reviews")]
+    public ActionResult Index() { … }
+    // eg: /reviews/5
+    [Route("reviews/{reviewId}")]
+    public ActionResult Show(int reviewId) { … }
+    // eg: /reviews/5/edit
+    [Route("reviews/{reviewId}/edit")]
+    public ActionResult Edit(int reviewId) { … }
+}
+
+Shorthand with common RoutePrefix on controller
+[RoutePrefix("reviews")]
+public class ReviewsController : Controller
+{
+    // eg.: /reviews
+    [Route]
+    public ActionResult Index() { … }
+    // eg.: /reviews/5
+    [Route("{reviewId}")]
+    public ActionResult Show(int reviewId) { … }
+    // eg.: /reviews/5/edit
+    [Route("{reviewId}/edit")]
+    public ActionResult Edit(int reviewId) { … }
+}
+
+Use a tilde (~) on the method attribute to override the route prefix if needed:
+
+[RoutePrefix("reviews")]
+public class ReviewsController : Controller
+{
+    // eg.: /spotlight-review
+    [Route("~/spotlight-review")]
+    public ActionResult ShowSpotlight() { … }
+}
+
+Route Names
+You can specify a name for a route, in order to easily allow URI generation for it. For example, for the following route:
+
+[Route(“menu”, Name = “mainmenu”)]
+public ActionResult MainMenu() { … }
+you could generate a link using Url.RouteUrl:
+
+<a href=”@Url.RouteUrl(“mainmenu”)“>Main menu</a>
+
+Default Route
+[RoutePrefix("promotions")]
+[Route("{action=index}")]
+public class ReviewsController : Controller
+{
+    // eg.: /promotions
+    public ActionResult Index() { … }
+ 
+    // eg.: /promotions/archive
+    public ActionResult Archive() { … }
+ 
+    // eg.: /promotions/new
+    public ActionResult New() { … }
+ 
+    // eg.: /promotions/edit/5
+    [Route("edit/{promoId:int}")]
+    public ActionResult Edit(int promoId) { … }
+}
+
+
+Route Constraints
+Route constraints let you restrict how the parameters in the route template are matched. The general syntax is {parameter:constraint}. For example:
+
+Here, the first route will only be selected if the “id” segment of the URI is an integer. Otherwise, the second route will be chosen.
+
+// eg: /users/5
+[Route(“users/{id:int}”]
+public ActionResult GetUserById(int id) { … }
+ 
+// eg: users/ken
+[Route(“users/{name}”]
+public ActionResult GetUserByName(string name) { … }
+
+You can apply multiple constraints to a parameter, separated by a colon, for example:
+
+// eg: /users/5
+// but not /users/10000000000 because it is larger than int.MaxValue,
+// and not /users/0 because of the min(1) constraint.
+[Route(“users/{id:int:min(1)}”)]
+public ActionResult GetUserById(int id) { … }
+
+Specifying that a parameter is Optional (via the ‘?’ modifier) should be done after inline constraints:
+
+// eg: /greetings/bye
+// and /greetings because of the Optional modifier,
+// but not /greetings/see-you-tomorrow because of the maxlength(3) constraint.
+[Route(“greetings/{message:maxlength(3)?}”)]
+public ActionResult Greet(string message) { … }
+
+Constraint	Description	Example
+alpha	Matches uppercase or lowercase Latin alphabet characters (a-z, A-Z)	{x:alpha}
+bool	Matches a Boolean value.	{x:bool}
+datetime	Matches a DateTime value.	{x:datetime}
+decimal	Matches a decimal value.	{x:decimal}
+double	Matches a 64-bit floating-point value.	{x:double}
+float	Matches a 32-bit floating-point value.	{x:float}
+guid	Matches a GUID value.	{x:guid}
+int	Matches a 32-bit integer value.	{x:int}
+length	Matches a string with the specified length or within a specified range of lengths.
+	{x:length(6)} 
+        {x:length(1,20)}
+long	Matches a 64-bit integer value.	{x:long}
+max	Matches an integer with a maximum value.	{x:max(10)}
+maxlength	Matches a string with a maximum length.	{x:maxlength(10)}
+min	Matches an integer with a minimum value.	{x:min(10)}
+minlength	Matches a string with a minimum length.	{x:minlength(10)}
+range	Matches an integer within a range of values.	{x:range(10,50)}
+regex	Matches a regular expression.	{x:regex(^\d{3}-\d{3}-\d{4}$)}
+
+
+Custom Route Constraints
+You can create custom route constraints by implementing the IRouteConstraint interface. For example, the following constraint restricts a parameter to set of valid values:

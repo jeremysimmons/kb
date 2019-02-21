@@ -1,0 +1,3 @@
+https://github.com/DanielHindi/aws-s3-zipper
+https://github.com/Teamwork/s3zipper
+https://github.com/orangewise/s3-zip

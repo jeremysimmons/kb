@@ -1,0 +1,9 @@
+The .NET Standard Library (netstandard) is a consistent library across app models. 
+.NET Core (netcoreapp) runs on top of .NET Standard Library and is a AppModel.
+http://stackoverflow.com/a/36964558
+
+Q: What is a .NET Standard application? A: A .NET Standard application is an application that can run on any .NET Core runtime: CoreCLR (current), .NETNative (future). It can run on one of many .NET core platforms (Windows, OSX, Linux). It relies on the host provided by the given runtime. It's a composable framework built from the packages on which the application depends. Its assembly loading policy permits newer versions of dependencies without any application configuration (eg: BindingRedirects are not required).
+
+Q: How is this different than .NETCore? A: The .NETCore target framework represents Windows 8, Windows 8.1, and Universal Windows Platform applications. For compatibility purposes this moniker cannot be reused for “.NET Core applications”. The branding overlap is unfortunate.
+
+Q: How is this different than .NETStandard? A: The NETStandard target framework is an abstract target framework that represents API surface of many frameworks and platforms. As such NETStandard assemblies can run on any platform that supports the NETStandard targeted by that assembly, for example: .NET Desktop, Windows Phone, Universal Windows Platform applications, .NET Standard applications, etc. NETStandardApplication is a concrete target framework that represents a single platform with both API surface and implementation. .NET standard applications are runnable on their own. .NETStandard libraries must be published-for or consumed-by a specific concrete target framework to be used in that type of application.

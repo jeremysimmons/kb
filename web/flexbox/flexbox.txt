@@ -1,0 +1,73 @@
+https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Using_CSS_flexible_boxes
+
+Flex Container
+children: Flex Items
+
+container
+display: flex;
+display: flex-inline; - only width children require
+
+items display will still be block
+
+flex flows from left to right on the Main Axis
+flex start on left, flex end on right
+
+flex-direction: row (default)
+row-reverse goes right to left.
+[3][2][1] - markup order didn't change, but rendering did
+
+vertical flow
+flex-direction: column (top to bottom)
+column-reverse (bottom to top)
+https://www.w3schools.com/cssref/playit.asp?filename=playcss_flex-direction&preval=row-reverse
+
+[Flex Line Wrapping]
+used-to use...
+text-wrap: nowrap (default behavior for flex)
+Single Line Formatting:
+Multi-Line Formatting:
+
+flex-wrap: nowrap;
+flex-wrap: wrap;
+
+flex-flow: row no-wrap;
+
+flex-wrap: specifies whether the flexible items should wrap or not
+nowrap	     Default value. Specifies that the flexible items will not wrap
+wrap	     Specifies that the flexible items will wrap if necessary
+wrap-reverse Specifies that the flexible items will wrap, if necessary, in reverse order
+initial	     Sets this property to its default value.
+
+flex-grow:   how much the item will grow relative to the rest of the flexible items inside the same container
+flex-shrink: how the item will shrink relative to the rest of the flexible items inside the same container
+flex-basis:  the initial length of a flexible item
+
+flex: flex-grow flex-shrink flex-basis;
+
+[Alignment]
+justify-content: aligns the flexible container's items when the items do not use all available space on the main-axis (horizontally).
+Tip: Use the align-items property to align the items on the cross-axis (vertically).
+flex-start	Default value. Items are positioned at the beginning of the container
+flex-end	Items are positioned at the end of the container
+center	        Items are positioned at the center of the container
+space-between	Items are positioned with space between the lines
+space-around	Items are positioned with space before, between, and after the lines
+
+align-items: specifies the default alignment for items inside the flexible container.
+https://www.w3schools.com/cssref/playit.asp?filename=playcss_align-items&preval=stretch
+Tip: Use the align-self property of each item to override the align-items property.
+stretch	Default. Items are stretched to fit the container
+center	Items are positioned at the center of the container
+flex-start	Items are positioned at the beginning of the container
+flex-end	Items are positioned at the end of the container
+baseline	Items are positioned at the baseline of the container
+
+align-content: modifies the behavior of the flex-wrap property. It is similar to align-items, but instead of aligning flex items, it aligns flex lines.
+https://www.w3schools.com/cssref/playit.asp?filename=playcss_align-content&preval=stretch
+stretch	Default value. Lines stretch to take up the remaining space	
+center	Lines are packed toward the center of the flex container	
+flex-start	Lines are packed toward the start of the flex container	
+flex-end	Lines are packed toward the end of the flex container	
+space-between	Lines are evenly distributed in the flex container	
+space-around	Lines are evenly distributed in the flex container, with half-size spaces on either end

@@ -1,0 +1,43 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:8080/",
+      "sslPort": 44300
+    }
+  },
+  "profiles": {
+    // Run the app using IIS Express. Use CTRL+F5 or Debug -> Start Without Debugging to edit code and refresh the browser 
+    // to see your changes while the app is running.
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "https://localhost:44300/",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    // Run the app in console mode using 'dotnet run'.
+    "dotnet run": {
+      "commandName": "Project",
+      "commandLineArgs": "--server.urls http://*:8080",
+      "launchBrowser": true,
+      "launchUrl": "http://localhost:8080/",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    // Use CTRL+F5 or Debug -> Start Without Debugging to use this launch profile. Launches the app using 'dotnet watch', 
+    // which allows you to edit code and refresh the browser to see your changes while the app is running.
+    "dotnet watch": {
+      "executablePath": "C:\\Program Files\\dotnet\\dotnet.exe",
+      "commandLineArgs": "watch run --server.urls http://*:8080",
+      "launchBrowser": true,
+      "launchUrl": "http://localhost:8080/",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

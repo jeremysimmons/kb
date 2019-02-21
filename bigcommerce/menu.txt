@@ -1,0 +1,133 @@
+View Store
+Dashboard
+ Store Performance
+ Store Statistics
+ Spotlight
+ Orders
+  Recent
+  Pending
+  Completed
+  Refunded
+Orders
+ View
+ Add
+ Search
+ Export
+ Draft Orders
+ Shipments
+ Tracking Numbers
+ Gift Certificates
+ Order Statuses
+Products
+ View
+ Add
+ Search
+ Import
+ Export
+ Product Categories
+ Product Options
+ Product Filtering
+ Product Reviews
+ Brands
+ Import Product SKUs
+ Export Product SKUs
+Customers
+ View
+ Add
+ Search
+ Import
+ Export
+ Customer Groups
+Storefront
+ My Themes
+ Theme Marketplace
+ Logo
+ Home Page Carousel
+ Social Media Links
+ Footer Scripts
+ Web Pages
+ Blog
+ Image Manager
+ Email Templates
+ Gift Certificate Templates
+Marketing
+ Banners
+ Coupon Codes
+ Cart-Level Discounts
+ Abandoned Cart Notifications
+ Google AdWords
+ Yahoo Search Marketing
+ Google Customer Reviews
+ Email Marketing
+ Gift Certificates
+ Sell on eBay
+ Google Shopping Feed
+ Shopping Comparison Sites
+Analytics
+ Overview
+ Real Time
+ Merchandising
+ Marketing
+ Orders
+ Customers
+ Purchase Funnel
+ Abandoned Carts
+ Abandoned Cart Recovery
+ In-Store Search
+ Sales Tax Report
+Channel Manager
+ All Channels
+ eBay
+ Facebook
+ Pinterest
+ Amazon
+ Instagram
+ Buy Buttons
+Apps
+ Marketplace
+ My Apps
+Store Setup
+ Store Profile
+ Store Settings
+ Payments
+ Shipping
+ Tax
+ Currencies
+ Point of Sale
+ Accounting
+Advanced Settings
+ Web Analytics
+ Checkout
+ Inventory
+ Order Notifications
+ Returns
+ Gift Wrapping
+ Comments
+ Live Chat
+ Account Signup Form
+ Affiliate Conversion Tracking
+ Export Templates
+ API Accounts
+ Legacy API Settings
+Server Settings
+ Server Settings
+ Domain Name 
+ 301 Redirects
+ Email & DNS Records
+ SSL Certificates
+ Store Logs
+ File Access (WebDAV)
+Account Settings
+ Account Settings
+ Users
+ Update Profile
+ Change Password
+Change Store
+Log Out
+Help
+ Search Help
+ Ask the Community
+ Visit BigCommerce University
+ Email SUpport
+ Live Chat Online
+ Phone Support

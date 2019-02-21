@@ -1,0 +1,1 @@
+https://stackoverflow.com/questions/45577620/change-azure-ad-b2c-user-password-with-graph-api

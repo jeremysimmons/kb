@@ -1,0 +1,15 @@
+https://visualstudiomagazine.com/articles/2011/04/26/wccsp_dlr-extensibility.aspx
+
+A ScriptRunTime manages the global script scope and one or many ScriptEngines. 
+A ScriptEngine encapsulates a dynamic programming language. 
+
+A SciptScope acts as a namespace for scripted members. 
+
+A ScriptSource is an abstraction of a piece of source code to execute or compile. 
+CompiledCode represents a compiled script or expression that may be executed. 
+CompiledCode objects are created from a ScriptSource and are optimized for fast execution.
+
+
+dynamic createdObj = m_engine.Operations.CreateInstance(dynType);
+
+            return createdObj;
