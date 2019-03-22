@@ -1,0 +1,6 @@
+C:\Windows\my.ini 
+C:\Windows\my.cnf 
+C:\my.ini 
+C:\my.cnf 
+C:\wamp\bin\mysql\mysql5.7.24\my.ini 
+C:\wamp\bin\mysql\mysql5.7.24\my.cnf

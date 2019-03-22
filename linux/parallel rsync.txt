@@ -1,0 +1,11 @@
+https://unix.stackexchange.com/a/195629/40714
+
+Following steps did the job for me:
+
+Run the rsync --dry-run first in order to get the list of files those would be affected.
+rsync -avzm --stats --safe-links --ignore-existing --dry-run --human-readable /data/projects REMOTE-HOST:/data/ > /tmp/transfer.log
+
+I fed the output of cat transfer.log to parallel in order to run 5 rsyncs in parallel, as follows:
+cat /tmp/transfer.log | parallel --will-cite -j 5 rsync -avzm --relative --stats --safe-links --ignore-existing --human-readable {} REMOTE-HOST:/data/ > result.log
+
+Here, --relative option (link) ensured that the directory structure for the affected files, at the source and destination, remains the same (inside /data/ directory), so the command must be run in the source folder (in example, /data/projects).

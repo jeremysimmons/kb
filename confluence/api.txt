@@ -1,0 +1,6 @@
+https://developer.atlassian.com/cloud/confluence/rest/
+QGiVQWU98OE6scveW5Sg64EB
+curl -s https://mysite.atlassian.net --user me@example.com:my-api-token
+export usr=jeremy.simmons@guidance.com:QGiVQWU98OE6scveW5Sg64EB
+curl -s https://guidevops.atlassian.net/wiki/rest/api/space --user $usr
+curl -s https://guidevops.atlassian.net/wiki/rest/api/space?limit=25&start=25 --user $usr

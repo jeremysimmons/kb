@@ -1,0 +1,4 @@
+https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_intro_get_dev_account.htm
+
+https://na70.lightning.force.com/lightning/setup/SetupOneHome/home
+

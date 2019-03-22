@@ -1,0 +1,12 @@
+https://codex.wordpress.org/Changing_The_Site_URL
+
+/wp-config.php
+define('WP_HOME','https://yourdomain.com');
+define('WP_SITEURL','https://yourdomain.com');
+
+/wp-config.php
+define( 'RELOCATE', true );
+access http://www.yourdomainname.com/wp-login.php and login
+
+in the database
+update wp_options set option_value = 'new_url' where option_value = 'old_url';

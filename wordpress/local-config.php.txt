@@ -1,0 +1,7 @@
+<?php
+define('DB_NAME', 'eer');
+define('DB_USER', 'eer');
+define('DB_PASSWORD', 'Grapes!');
+define('DB_HOST', 'localhost');
+define('WP_DEBUG', true);
+define('WP_DEBUG_LOG', true);

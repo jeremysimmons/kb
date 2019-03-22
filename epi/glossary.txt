@@ -1,0 +1,2 @@
+This repository is the starter site for the EPiServer Commerce reference implementation, aka "Quicksilver".
+

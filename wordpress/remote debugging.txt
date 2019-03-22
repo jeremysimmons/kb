@@ -1,0 +1,50 @@
+php.ini
+[Xdebug]
+xdebug.remote_autostart = 1
+
+possible other things
+xdebug.scream = 1
+xdebug.remote_enable = 1
+xdebug.show_local_vars = 1
+xdebug.remote_autostart = 1
+xdebug.remote_connect_back = 1
+
+install this plugin for vscode
+https://marketplace.visualstudio.com/items?itemName=felixfbecker.php-debug
+
+Debug View - Ctrl + SHIFT + D
+add config
+edit vscode/launch.json
+add "pathMappings": {"/app/public": "${workspaceRoot}"}
+
+
+https://deliciousbrains.com/vs-code-wordpress/
+javascript debugging
+https://github.com/Microsoft/vscode-chrome-debug
+example .vscode/launch.json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Listen for XDebug",
+            "type": "php",
+            "request": "launch",
+            "port": 9005
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Chrome against localhost",
+            "url": "http://mdb.dev/wp-admin/tools.php?page=wp-migrate-db-pro",
+            "webRoot": "${workspaceRoot}",
+            "sourceMapPathOverrides": {
+                "src/wp-migrate-db-pro/*": "${webRoot}/src/wp-migrate-db-pro/*",
+                "src/wp-migrate-db-pro-media-files/*": "${webRoot}/src/wp-migrate-db-pro-media-files/*",
+                "src/wp-migrate-db-pro-multisite-tools/*": "${webRoot}/src/wp-migrate-db-pro-multisite-tools/*"
+            }
+        }
+    ]
+}
+
+git blame annotations
+https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens

@@ -1,0 +1,11 @@
+Admin user
+U: epiadmin
+P: 3p!Pass
+News editor
+U: nancy
+P: 3p!Pass
+Notes: Limited access to News and Events area of site and Blocks/Media area, various top navigation menus removed, no ability to publish.
+Product editor
+U: peter
+P: 3p!Pass
+Notes: Limited access to Product areas of site and Blocks/Media area, various top navigation menus removed, no ability to publish.

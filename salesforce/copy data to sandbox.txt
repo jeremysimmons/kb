@@ -1,0 +1,12 @@
+1. Programatically: 
+https://knthornt.wordpress.com/2011/06/23/quickly-creating-sandbox-dummy-data/
+
+http://th3silverlining.com/2011/01/28/salesforce-programmatically-populating-sample-data-post-deployment/
+
+https://developer.salesforce.com/page/Generating_and_Loading_Representative_Test_Data_for_Salesforce_and_Force.com_Orgs
+
+
+2. Manually:
+Depending upon the data that you need to test with, create CSV files for the imports and generate data using Excel formulas. You can generate as many records as you want within a few seconds using Excel.
+
+I have done the above a lot of times and have uploaded close to 1000 records for Accounts, Opps, Contacts whenever needed.
