@@ -1,0 +1,2 @@
+wp-activate.php
+activate the key
