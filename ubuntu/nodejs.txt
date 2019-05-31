@@ -1,0 +1,7 @@
+sudo apt-get update
+
+wget -c https://deb.nodesource.com/setup | sudo bash -
+
+sudo apt-get install nodejs
+
+sudo apt-get install build-essential
