@@ -1,0 +1,6 @@
+https://stackoverflow.com/a/40203940
+
+var unixSocket = "/var/run/mysqld/mysqld.sock";
+var socket = new Socket(AddressFamily.Unix, SocketType.Stream, ProtocolType.IP);
+var unixEp = new UnixEndPoint(unixSocket);
+socket.Connect(unixEp);

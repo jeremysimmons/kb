@@ -1,0 +1,1 @@
+https://www.lloydkinsella.net/2018/03/12/using-net-core-kestrel-with-nginx-and-unix-sockets/
