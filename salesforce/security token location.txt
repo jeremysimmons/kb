@@ -1,0 +1,4 @@
+1. Go to you name click
+2. Select My Settings
+3. Select Personal
+4. Sixth option is "Reset My Security Token"

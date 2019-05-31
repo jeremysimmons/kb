@@ -1,0 +1,9 @@
+https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_callouts.htm
+
+https://www.jamesward.com/2014/06/30/create-webhooks-on-salesforce-com
+
+
+https://stackoverflow.com/a/13124387/26877
+
+Workflow rule that would fire on insert of Lead and send you an email (or if it's for system integration - outbound message).
+You can always write an "after insert" Apex trigger and have in it a callout to external system (SOAP and RESTful APIs are supported). Although you'll need an extra @future trick because the triggers by default aren't supposed to send callouts (the database commit/rollback shouldn't depend on whether the external system has accepted the message or not).
