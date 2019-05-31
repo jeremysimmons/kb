@@ -1,0 +1,2 @@
+Hook all Fetch Api AJAX requests
+https://stackoverflow.com/a/47326921/26877

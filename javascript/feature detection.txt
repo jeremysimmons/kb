@@ -1,0 +1,42 @@
+https://stackoverflow.com/a/30547357/26877
+
+
+What makes most sense in this case, is a feature check. Test for the existence of JS objects or JS methods to find out if a JS library has been loaded and test for the existence of certain CSS rules to find out if a CSS file has been loaded.
+
+See this Fiddle for a demo.
+
+See also below for the most relevant parts of the code.
+
+How to find out whether a certain CSS rule exists :
+
+window.CSSRuleExists = function(rule) {
+    var sSheetList = document.styleSheets;
+    for (var sSheet = 0; sSheet < sSheetList.length; sSheet++) {
+        var ruleList = sSheetList[sSheet].cssRules;
+        for (var item = 0; item < ruleList.length; item ++){
+            if(ruleList[item].selectorText === rule) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+How to find out whether a certain JS method exists :
+
+window.JSFunctionExists = function(method, parent) {
+    parent = (typeof parent === typeof undefined) ? window : parent;
+    return (typeof parent[method] === 'function');
+}
+How to find out whether a certain JS object exists :
+
+window.JSObjectExists = function(object, parent) {
+    parent = (typeof parent === typeof undefined) ? window : parent;
+    return (typeof parent[object] === 'object');
+}
+How to use these functions :
+
+function process() {
+    el1.innerHTML = CSSRuleExists('button.special');
+    el2.innerHTML = JSFunctionExists('CSSRuleList');
+    el3.innerHTML = JSObjectExists('location');
+}
