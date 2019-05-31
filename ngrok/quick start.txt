@@ -1,0 +1,9 @@
+
+get token from https://dashboard.ngrok.com/auth
+  > ngrok authtoken <token>
+
+start a tunnel
+  
+
+inspect tunnel
+ http://localhost:4040 
