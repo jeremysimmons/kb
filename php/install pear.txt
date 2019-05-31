@@ -1,0 +1,6 @@
+cd c:\php
+curl http://pear.php.net/go-pear.phar > go-pear.phar
+# as admin
+php -d phar.require_hash=0 go-pear.phar
+
+needed to change 13, path to php cli to c:\php\

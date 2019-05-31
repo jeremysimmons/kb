@@ -1,0 +1,10 @@
+https://stackoverflow.com/questions/2382490/how-does-true-false-work-in-php
+
+the boolean FALSE itself
+the integer 0 (zero)
+the float 0.0 (zero)
+the empty string, and the string '0'
+an array with zero elements
+an object with zero member variables (PHP 4 only)
+the special type NULL (including unset variables)
+SimpleXML objects created from empty tags

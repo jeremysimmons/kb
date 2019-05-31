@@ -1,3 +1,47 @@
 https://blogs.msdn.microsoft.com/nicktrog/2016/02/11/configuring-visual-studio-code-for-php-development/
 
+phpinfo();
+open the php.ini file
+
+add xdebug settings.
+xdebug.remote_enable = on
+xdebug.remote_autostart = on
+
+[xdebug]
+zend_extension="c:/wamp/bin/php/php7.2.14/zend_ext/php_xdebug-2.6.1-7.2-vc15-x86_64.dll"
+
+xdebug.remote_enable = on
+xdebug.remote_autostart = on
+
+xdebug.profiler_enable = off
+xdebug.profiler_enable_trigger = Off
+xdebug.profiler_output_name = cachegrind.out.%t.%p
+xdebug.profiler_output_dir ="c:/wamp/tmp"
+xdebug.show_local_vars=0
+
+create a php launch config
+
 https://code.visualstudio.com/docs/languages/php
+
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Listen for XDebug",
+            "type": "php",
+            "request": "launch",
+            "port": 9000
+        },
+        {
+            "name": "Launch currently open script",
+            "type": "php",
+            "request": "launch",
+            "program": "${file}",
+            "cwd": "${fileDirname}",
+            "port": 9000
+        }
+    ]
+}

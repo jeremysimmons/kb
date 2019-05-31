@@ -1,0 +1,9 @@
+https://stackoverflow.com/a/22389397/26877
+
+function array_value($array, $key, $default_value = null) {
+    return is_array($array) && array_key_exists($key, $array) ? $array[$key] : $default_value;
+}
+
+
+$bar = @$foo['bar'] ?: 'defaultvalue';
+

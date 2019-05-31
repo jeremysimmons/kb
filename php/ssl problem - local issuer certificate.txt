@@ -1,0 +1,13 @@
+SSL certificate problem: unable to get local issuer certificate
+
+Download the certificate bundle.
+
+Put it somewhere. In my case, that was c:\wamp\ directory (if you are using Wamp 64 bit then it's c:\wamp64\).
+
+Enable mod_ssl in Apache and php_openssl.dll in php.ini (uncomment them by removing ; at the beginning). But be careful, my problem was that I had two php.ini files and I need to do this in both of them. One is the one you get from your WAMP taskbar icon, and another one is, in my case, in C:\wamp\bin\php\php5.5.12\
+
+Add these lines to your cert in both php.ini files:
+
+curl.cainfo="C:/wamp/cacert.pem"
+openssl.cafile="C:/wamp/cacert.pem"
+Restart Wamp services.

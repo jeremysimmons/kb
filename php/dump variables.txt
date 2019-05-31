@@ -1,0 +1,96 @@
+https://stackoverflow.com/a/139553/26877
+
+$demo = array(
+    "bool" => false,
+    "int" => 1,
+    "float" => 3.14,
+    "string" => "hello world",
+    "array" => array(),
+    "object" => new stdClass(),
+    "resource" => tmpfile(),
+    "null" => null,
+);
+
+// var_export -- nice, one-liner
+$debug_export = var_export($demo, true);
+
+// var_dump
+ob_start();
+var_dump($demo);
+$debug_dump = ob_get_clean();
+
+// print_r -- included for completeness, though not recommended
+$debug_printr = print_r($demo, true);
+The difference in output:
+var_export ($debug_export in above example):
+ array (
+  'bool' => false,
+  'int' => 1,
+  'float' => 3.1400000000000001,
+  'string' => 'hello world',
+  'array' => 
+  array (
+  ),
+  'object' => 
+  stdClass::__set_state(array(
+  )),
+  'resource' => NULL, // Note that this resource pointer is now NULL
+  'null' => NULL,
+)
+var_dump ($debug_dump in above example):
+ array(8) {
+  ["bool"]=>
+  bool(false)
+  ["int"]=>
+  int(1)
+  ["float"]=>
+  float(3.14)
+  ["string"]=>
+  string(11) "hello world"
+  ["array"]=>
+  array(0) {
+  }
+  ["object"]=>
+  object(stdClass)#1 (0) {
+  }
+  ["resource"]=>
+  resource(4) of type (stream)
+  ["null"]=>
+  NULL
+}
+print_r ($debug_printr in above example):
+Array
+(
+    [bool] => 
+    [int] => 1
+    [float] => 3.14
+    [string] => hello world
+    [array] => Array
+        (
+        )
+
+    [object] => stdClass Object
+        (
+        )
+
+    [resource] => Resource id #4
+    [null] => 
+)
+Caveat: var_export does not handle circular references
+If you're trying to dump a variable with circular references, calling var_export will result in a PHP warning:
+
+ $circular = array();
+ $circular['self'] =& $circular;
+ var_export($circular);
+Results in:
+
+ Warning: var_export does not handle circular references in example.php on line 3
+ array (
+   'self' => 
+   array (
+     'self' => NULL,
+   ),
+ )
+Both var_dump and print_r, on the other hand, will output the string *RECURSION* when encountering circular references.
+
+shareeditflag
