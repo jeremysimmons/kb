@@ -1,0 +1,10 @@
+pg_restore -C -U postgres -d tesseract -t cases_case smilecheck/db_restores/qa6
+
+pg_restore -C -e -s smilecheck/db_restores/qa6
+
+
+pg_restore -C -e -s -t cases_case smilecheck/db_restores/qa6
+
+pg_restore -C -e -t cases_case smilecheck/db_restores/qa6
+
+smilecheck/db_restores/qa6

@@ -1,0 +1,45 @@
+CREATE ROLE role_name SUPERUSER;
+
+listing databases
+\l or \list
+
+change database
+\c or \connect
+\c sales
+
+listing tables
+\d
+\dS
+
+
+https://tableplus.io/blog/2018/04/postgresql-how-to-grant-access-to-users.html
+
+Grant connect to the database:
+
+GRANT CONNECT ON DATABASE database_name TO username;
+Grant usage schema:
+
+GRANT USAGE ON SCHEMA database_name TO username;
+Grant all table for DML statements: SELECT, INSERT, UPDATE, DELETE:
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA database_name TO username;
+Grant access to all tables in the database:
+
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA schema_name TO username;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA schema_name TO username;
+GRANT ALL PRIVILEGES ON DATABASE database_name TO username;
+Granting permission to create database:
+
+ALTER USER username CREATEDB;
+Make a user superuser:
+
+ALTER USER myuser WITH SUPERUSER;
+Remove superuser status:
+
+ALTER USER username WITH NOSUPERUSER;
+Those statements above only affect the current existing tables. To apply to newly created tables, you need to use alter default.
+
+ALTER DEFAULT PRIVILEGES
+FOR USER username
+IN SCHEMA schema_name
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO username;

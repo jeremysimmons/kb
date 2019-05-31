@@ -1,0 +1,1 @@
+/etc/postgresql/10/main/postgresql.conf

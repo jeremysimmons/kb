@@ -1,0 +1,21 @@
+https://medium.com/@tbeach/restoring-individual-tables-from-postgresql-pg-dump-using-pg-restore-options-ef3ce2b41ab6
+
+-- execute a pg_dump as root
+# pg_dump -U postgres -Fc source-db-name > /directory/path/db-dump-name.dump
+
+* pg_dump invokes the utility.
+* -U postgres switches the command to be run as the postgres user.
+* -Fc puts the resulting file into a format that can be restored from.
+* > outputs the command to the singular dump file.
+
+-- first switch to postgres user
+# su - postgres
+-- invoke psql interactive terminal
+$ psql
+-- then create a new blank db
+postgres-# CREATE DATABASE new_db;
+-- verify the db is there with:
+postgres-# \l
+
+-- run the schema-only restore as root
+# pg_restore -U postgres --schema-only -d new_db /directory/path/db-dump-name.dump
