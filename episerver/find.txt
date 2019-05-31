@@ -1,0 +1,26 @@
+default
+Index Type: Developer Service
+Status: NotCreated
+Created: 2019-03-14 23:47:33
+
+Settings
+Number of documents: 10000
+Languages: English
+Allow Attachments:  Included
+Allow SSL:  Included
+Index
+Index Name: jsimmonsguidance_default
+Public URL: https://es-eu-dev-api01.episerver.net/CPm5d4aZws2kPPcdlfGIIoDg6RyayfMd
+Private URL: https://es-eu-dev-api01.episerver.net/IVfaT1T51N1xGK73lXWpUbODby3oiNIT
+Configuration
+Web.config
+Copy the snippet below and paste it to your web.config to get your service up and running in your app in just minutes.
+<configuration>
+    <configSections>
+        <section
+            name="episerver.find" type="EPiServer.Find.Configuration, EPiServer.Find" requirePermission="false"/>
+    </configSections>
+    <episerver.find
+        serviceUrl="https://es-eu-dev-api01.episerver.net/IVfaT1T51N1xGK73lXWpUbODby3oiNIT/"
+        defaultIndex="jsimmonsguidance_default"/>
+</configuration> 
