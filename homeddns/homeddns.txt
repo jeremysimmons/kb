@@ -1,0 +1,31 @@
+arp -a|findstr "192.168.1.1\> +40-16-7e-ea-bc-c8"
+https://port1433.com/2017/02/20/updating-google-domains-dynamic-dns-with-powershell/
+
+install to ~\Documents\WindowsPowerShell\Modules\GoogleDynamicDNSTools
+
+unblock files
+
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned
+
+remove-module -name GoogleDynamicDNSTools
+import-module -name GoogleDynamicDNSTools
+
+
+$LogDate = Get-Date
+$LogFileName = "GoogleDNSUpdateLog_" + $LogDate.Month + $LogDate.Day + $LogDate.Year + "_" + $LogDate.Hour + $LogDate.Minute + $LogDate.Second + ".txt"
+
+$APIUserID = "Ang8NTr8V32QOXan"
+$APIPassword = "qLQDJ8TqVzPqjxaQ"
+ 
+$SecurePassword = ConvertTo-SecureString -String $APIPassword -AsPlainText -Force
+ 
+$Credential = New-Object System.Management.Automation.PSCredential $APIUserID, $SecurePassword
+
+Start-Transcript -Path ("C:\DNSLogs\" + $LogFileName)
+
+Update-GoogleDynamicDNS -credential $Credential -domainName "jeremysimmons.net" -subdomainName "home" -Verbose
+
+#Clean up old log files
+Get-ChildItem -Path "C:\DNSLogs" | Where-Object {$_.LastWriteTime -lt (Get-Date).AddDays(-30)} | Remove-Item -Verbose
+
+Stop-Transcript

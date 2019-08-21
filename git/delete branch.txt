@@ -1,7 +1,8 @@
 Usually you want this:
 $ git push <remote_name> :<branch_name>
+example
+$ git push origin :branch
 $ git branch -d <branch_name>
-
 
 Delete Local Branch
 git branch -d branch_name

@@ -1,0 +1,49 @@
+https://support.office.com/en-us/article/keyboard-shortcuts-for-navigating-mail-in-outlook-ca79fe45-80e5-47dd-b7a0-841d4711ed53
+
+Create a new message (from any Outlook view)
+
+Ctrl+Shift+M
+
+Create a new message (from Mail view), new appointment (from Calendar view), or new task (from Task view)
+
+Ctrl+N
+
+Check for new messages
+
+Ctrl+M or F9
+
+Switch to Inbox
+
+Ctrl+Shift+I
+
+Switch to Outbox
+
+Ctrl+Shift+O
+
+Go to a different folder (Sent Items)
+
+Ctrl+Y
+
+Move item to a folder
+
+Ctrl+Shift+V
+
+Go to the Search box
+
+F3 or Ctrl+E
+
+Expand or collapse a group in the email message list
+
+To expand: the Right Arrow key; to collapse: the Left Arrow key
+
+Open the File tab, where you can change account settings and options
+
+Alt+F
+
+Jump to Tell Me
+
+Alt+Q
+
+Display the To-Do bar (peek)
+
+Alt+V, B, and then: for Calendar, press C; for People, press P; for Tasks, press T; for Off, press O

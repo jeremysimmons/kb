@@ -1,0 +1,3 @@
+https://github.com/mdempsky/gocode
+go get -u -ldflags -H=windowsgui github.com/mdempsky/gocode
+

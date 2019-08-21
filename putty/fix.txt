@@ -1,0 +1,46 @@
+Category: Window > Colours
+ANSI Blue      Red:74  Green:74  Blue:255.
+ANSI Blue Bold Red:140 Green:140 Blue:255.
+
+Default Foreground: 85 85 85
+Default Bold Foreground: 0 0 0
+Default Background: 242 242 242
+Default Bold Background: 255 255 255
+Cursor Text: 85 85 85
+
+Putty settings summary.
+Category: Session
+Connection type: SSH
+Close window on exit: Never
+
+Category: Terminal > Bell
+Action to happen when a bell occurs: Visual bell (flash window)
+Taskbar/caption indication: Flashing
+
+Category: Window
+Lines of scrollback: 20000
+Reset scrollback on keypress: Checked
+Reset scrollback on display activity: Unchecked
+
+Category: Window > Appearance
+Font: Lucida Console, 9-point
+Font quality: ClearType
+Gap between text and window edge: 3
+
+Category: Window > Translation
+Character set: UTF-8
+Handling of line drawing characters: Unicode
+
+Category: Window > Selection
+Action of mouse buttons: xterm (Right extends, Middle pastes)
+Paste to clipboard in RTF as well as plain text: enabled
+
+Category: Window > Colours
+ANSI Blue: Red:74 Green:74 Blue:255
+ANSI Blue Bold: Red:140: Green:140 Blue:255
+
+Category: Connection
+Seconds between keepalives (0 to turn off): 25
+
+Category: Connection > SSH > X11
+Enable X11 forwarding: enabled

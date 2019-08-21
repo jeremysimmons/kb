@@ -1,0 +1,4 @@
+ps -eo pid,comm,euser,supgrp
+ ps -eo pid,comm,euser,supgrp | grep nginx
+
+ps aux|grep nginx|grep -v grep

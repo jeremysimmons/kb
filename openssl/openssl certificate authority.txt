@@ -1,0 +1,1 @@
+https://jamielinux.com/docs/openssl-certificate-authority/online-certificate-status-protocol.html
