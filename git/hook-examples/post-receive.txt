@@ -1,0 +1,2 @@
+# -f = force
+git --work-tree=/home/dh_zm6zac/dev.encoreeventsrentals.com --git-dir=/home/dh_zm6zac/dev repo/repo.git checkout master -f
