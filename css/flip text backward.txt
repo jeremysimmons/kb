@@ -1,0 +1,10 @@
+https://css-tricks.com/snippets/css/reversing-text/
+
+body {
+  unicode-bidi:bidi-override;
+  direction:rtl;
+}
+
+<body dir="rtl">
+  text in right-to-left language
+</body>
