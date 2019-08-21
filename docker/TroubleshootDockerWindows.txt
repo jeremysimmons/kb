@@ -1,0 +1,32 @@
+https://github.com/docker/for-win/issues/3171#issuecomment-459205576
+netsh interface ipv4 show excludedportrange protocol=tcp
+
+Disable hyper-v (which will required a couple of restarts)
+dism.exe /Online /Disable-Feature:Microsoft-Hyper-V
+
+When you finish all the required restarts, reserve the port you want so hyper-v doesn't reserve it back
+netsh int ipv4 add excludedportrange protocol=tcp startport=50051 numberofports=1
+
+Re-Enable hyper-V (which will require a couple of restart)
+dism.exe /Online /Enable-Feature:Microsoft-Hyper-V /All
+
+https://blogs.msdn.microsoft.com/whereismysolution/2018/05/11/how-to-use-reserved-port-in-nettcpbinding-and-basichttpbinding-in-a-wcf-application/
+netsh int ipv4 add excludedportrange protocol=tcp startport=57069 numberofports=20
+
+$listener = [system.net.sockets.tcplistener]57069
+$listener.Start()
+
+PS C:\Windows\system32> netsh http add iplisten 0.0.0.0
+
+netsh int ip show excludedportrange protocol=tcp
+
+netsh int ip add excludedportrange protocol=tcp startport=50005 numberofports=2
+
+Get-NetTCPConnection -LocalPort 50000 | Format-List
+
+https://github.com/docker/for-win/issues/1038
+Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\DisableAutomaticRestartSignOn 
+turn on
+REG ADD "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Power" /V HiberbootEnabled /T REG_dWORD /D 0 /F
+turn off
+REG ADD "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Power" /V HiberbootEnabled /T REG_dWORD /D 1 /F
