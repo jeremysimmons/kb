@@ -1,0 +1,2 @@
+grep user /opt/bitnami/nginx/conf/nginx.conf
+user daemon daemon

@@ -1,0 +1,13 @@
+https://docs.bitnami.com/general/apps/wordpress/administration/create-custom-application-php/
+
+opy the /opt/bitnami/docs/demo folder into the /opt/bitnami/apps directory.
+
+sudo cp -r /opt/bitnami/docs/demo /opt/bitnami/apps
+Add the following line to the end of the /opt/bitnami/apache2/conf/bitnami/bitnami-apps-prefix.conf file:
+
+Include "/opt/bitnami/apps/demo/conf/httpd-prefix.conf"
+Restart the Apache server using the command-line tool.
+
+sudo /opt/bitnami/ctlscript.sh restart apache
+
+sudo /opt/bitnami/ctlscript.sh restart nginx

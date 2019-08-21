@@ -1,0 +1,25 @@
+owner, group, world/all
+
+make a folder writable by the FTP user
+sudo chown bitnami TARGETFOLDER
+sudo chmod +w TARGETFOLDER
+
+restore ownership 
+sudo chown daemon:daemon TARGETFOLDER
+sudo chmod 0755 TARGETFOLDER
+
+To change folder or file permissions you can use the following command:
+
+sudo chmod -R 755 foldername
+
+To change the owner:
+
+sudo chown -R username folder
+
+example - 
+pushd ~/apps/
+sudo chown -R bitnami dev
+
+To change the group:
+
+sudo chown -R :groupname foldername

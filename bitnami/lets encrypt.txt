@@ -1,0 +1,4 @@
+sudo /opt/bitnami/letsencrypt/scripts/generate-certificate.sh -m YOURMAIL -d YOURDOMAIN -d www.YOURDOMAIN
+
+
+https://docs.bitnami.com/aws/how-to/generate-install-lets-encrypt-ssl/
