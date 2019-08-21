@@ -1,0 +1,2 @@
+https://devblogs.microsoft.com/cesardelatorre/domain-events-vs-integration-events-in-domain-driven-design-and-microservices-architectures/
+https://lostechies.com/jimmybogard/2014/05/13/a-better-domain-events-pattern/
