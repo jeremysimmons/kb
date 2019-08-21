@@ -1,0 +1,5 @@
+CTRL + SHIFT + M to switch between profiles
+
+"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --profile-directory="Profile 1"
+"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --profile-directory="Profile 2"
+"C:\Program Files (x86)\Google\Chrome\Application"
