@@ -1,0 +1,13 @@
+https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYPEER.html
+https://curl.haxx.se/libcurl/c/cacertinmem.html
+
+ CURLOPT_SSL_CTX_FUNCTION
+
+CURLOPT_CAINFO => /path/cacert.pem
+CURLOPT_SSLKEY => /path/private.pem
+CURLOPT_SSLCERT => /path/public.pem
+https://stackoverflow.com/questions/7958892/passing-pem-and-key-as-string-in-curl-using-php/11004911#11004911
+
+https://curl.haxx.se/docs/sslcerts.html
+openssl s_client -showcerts -servername server -connect server:443 > cacert.pem
+openssl s_client -showcerts -connect server.edu:443 </dev/null 2>/dev/null|openssl x509 -outform PEM >mycertfile.pem
