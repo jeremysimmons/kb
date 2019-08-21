@@ -1,0 +1,2 @@
+schema modeling tool for dynamodb
+https://dynamoosejs.com/
