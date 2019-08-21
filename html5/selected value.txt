@@ -1,0 +1,1 @@
+(function(el) { return el.options[el.selectedIndex].value })($('#FormField_41')[0])
