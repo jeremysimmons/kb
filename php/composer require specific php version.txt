@@ -1,0 +1,8 @@
+https://andy-carter.com/blog/composer-php-platform
+
+{
+    "name": ".../...",
+    "require": {
+        "php": "7.1.0"
+    }
+}

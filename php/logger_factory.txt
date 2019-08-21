@@ -1,0 +1,99 @@
+https://stackoverflow.com/questions/51173780/symfony-4-instanceof-in-bundles-services-yaml/54349954#54349954
+
+_instanceof:
+    Psr\Log\LoggerAwareInterface:
+        - method: setLogger
+          arguments:
+              - '@custom_logger'
+        tags:
+            - { name: monologer.log, channel: 'custom_channel' }
+
+https://stackoverflow.com/a/50581150/26877
+
+Symfony autowiring monolog channels
+
+I wrote (maybe more complicated) method. I don't want to tag my autowired services to tell symfony which channel to use. Using symfony 4 with php 7.1.
+
+I built LoggerFactory with all additional channels defined in monolog.channels.
+
+My factory is in bundle, so in Bundle.php add
+
+$container->addCompilerPass(
+    new LoggerFactoryPass(), 
+    PassConfig::TYPE_BEFORE_OPTIMIZATION, 
+    1
+); // -1 call before monolog
+This is important to call this compiler pass before monolog.bundle because monolog after pass removes parameters from container.
+
+Now, LoggerFactoryPass
+
+namespace Bundle\DependencyInjection\Compiler;
+
+
+use Bundle\Service\LoggerFactory;
+use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
+
+class LoggerFactoryPass implements CompilerPassInterface
+{
+
+    /**
+     * You can modify the container here before it is dumped to PHP code.
+     * @param ContainerBuilder $container
+     * @throws \Symfony\Component\DependencyInjection\Exception\InvalidArgumentException
+     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException
+     */
+    public function process(ContainerBuilder $container): void
+    {
+        if (!$container->has(LoggerFactory::class) || !$container->hasDefinition('monolog.logger')) {
+            return;
+        }
+
+        $definition = $container->findDefinition(LoggerFactory::class);
+        foreach ($container->getParameter('monolog.additional_channels') as $channel) {
+            $loggerId = sprintf('monolog.logger.%s', $channel);
+            $definition->addMethodCall('addChannel', [
+                $channel,
+                new Reference($loggerId)
+            ]);
+        }
+    }
+}
+and LoggerFactory
+
+namespace Bundle\Service;
+
+use Psr\Log\LoggerInterface;
+
+class LoggerFactory
+{
+    protected $channels = [];
+
+    public function addChannel($name, $loggerObject): void
+    {
+        $this->channels[$name] = $loggerObject;
+    }
+
+    /**
+     * @param string $channel
+     * @return LoggerInterface
+     * @throws \InvalidArgumentException
+     */
+    public function getLogger(string $channel): LoggerInterface
+    {
+        if (!array_key_exists($channel, $this->channels)) {
+            throw new \InvalidArgumentException('You are trying to reach not defined logger channel');
+        }
+
+        return $this->channels[$channel];
+    }
+}
+So, now you can inject LoggerFactory, and choose your channel
+
+public function acmeAction(LoggerFactory $factory)
+{
+    $logger = $factory->getLogger('my_channel');
+    $logger->log('this is awesome!');
+}
+shareeditflag

@@ -1,0 +1,33 @@
+https://stackoverflow.com/questions/54354193/change-the-host-and-port-generated-by-the-symfony-twig-url-helper
+
+public function onRequest(GetResponseEvent $event)
+{
+    if (!$event->isMasterRequest()) {
+        return;
+    }
+
+    $this->router->getContext()->setHost('192.168.99.100');
+    $this->router->getContext()->setHttpPort('8080');
+    $this->router->getContext()->setHttpsPort('8080');
+}
+
+# config/services.yaml
+parameters:
+    router.request_context.host: 'example.org'
+    router.request_context.scheme: 'https'
+    router.request_context.base_url: 'my/path'
+    asset.request_context.base_path: '%router.request_context.base_url%'
+    asset.request_context.secure: true
+
+{{ app.request.uri }}
+
+{{ app.request.pathinfo }}
+
+{{ app.request.schemeAndHttpHost ~ app.request.requestUri }}
+
+app.request_stack.currentrequest.attributes.get('_route')
+
+
+"APP_ENV,APP_SECRET,DB_USER,DB_PASSWORD,DB_HOST,DB_PORT,DB_NAME,DATABASE_URL,BC_AUTH_SERVICE,CLIENT_ID,CLIENT_SECRET,REDIRECT_URI,MAXMIND_ID,LICENSE_KEY,LIMIT,INSUFFICIENT_LICENSE_KEYS,MAILER_URL"
+
+"APP_ENV,APP_SECRET,DB_USER,DB_PASSWORD,DB_HOST,DB_PORT,DB_NAME,DATABASE_URL,BC_AUTH_SERVICE,CLIENT_ID,CLIENT_SECRET,REDIRECT_URI,MAXMIND_ID,LICENSE_KEY,LIMIT,INSUFFICIENT_LICENSE_KEYS,MAILER_URL"

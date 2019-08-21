@@ -1,0 +1,3 @@
+https://andy-carter.com/blog/composer-php-platform
+
+composer update phpunit/phpunit --ignore-platform-reqs
