@@ -1,4 +1,0 @@
-package manager console
-update-epidatabase
-
-https://world.episerver.com/documentation/Items/Installation-Instructions/Installing-Episerver-updates/updating-configuration-and-database-schemas/
