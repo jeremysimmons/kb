@@ -1,0 +1,3 @@
+https://resources.console.aws.amazon.com/r/tags
+
+https://github.com/dtylman/AWSRetriever/releases/
