@@ -1,0 +1,33 @@
+https://support.bigcommerce.com/s/question/0D51B00004bQ8W6SAK/listprice-and-saleprice-in-storefront-cart-api
+
+listPrice and salePrice in Storefront Cart API
+Response to "Get a Cart" Storefront Cart API contains fields related to item prices: listPrice and salePrice.
+
+According to docs: (https://developer.bigcommerce.com/api/v3/storefront.html#/reference/cart/get-a-cart):
+
+listPrice - Item's list price, as quoted by the manufacturer/distributor.
+
+salePrice - Item's price after all discounts are applied. (The final price before tax calculation.)
+
+We have made several empircal tests on our test store (https://store-ep9tlysh1r.mybigcommerce.com/) and conclusions are:
+
+1. listPrice is net item price before discounts and coupons. 
+It's based on product Default Price or Sale Price (if set) configured in BC admin.
+
+2. salePrice is item price after discounts but before coupons.
+
+  - it includes tax if "Show Prices in Shopping Carts" setting in Tax tab of BC admin is set to "Including tax"
+  - it excludes tax if "Show Prices in Shopping Carts" is set to "Excluding tax"
+  
+3. Unfortunately "Show Prices in Shopping Carts" field is not present in "Get a Cart" response.
+
+  - if isTaxIncluded is false, then baseAmount is sum of all items listPrices
+  - if isTaxIncluded is true, then baseAmount is sum of all items listPrices with tax included
+ 
+
+We would like to extract net price from data returned in Cart API with and without discounts and coupons. 
+Right now we can do this only partially and not in a way that documentation is suggesting.
+
+Our tests are showing that listPrice is net item price before discounts and coupons and salePrice is either with or without tax depending on display setting not visible in API response
+
+Could you please confirm that our findings are consistent with other BC stores and documentation is outdated/incorrect regarding those fields?

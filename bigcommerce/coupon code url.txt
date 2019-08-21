@@ -1,0 +1,25 @@
+https://support.bigcommerce.com/s/question/0D51B00003n9TheSAE/add-ability-for-auto-applying-coupon-code-based-on-url-parameter
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        function getQueryVariable(parameter) {
+            var searchString = window.location.search.substring(1);
+            var params = searchString.split('&');
+            for (var i = 0; i < params.length; i++) {
+                var pair = params[i].split('=');
+                if (decodeURIComponent(pair[0]) == parameter) {
+                    return decodeURIComponent(pair[1]);
+                }
+            }
+        }
+ 
+        var couponCode = getQueryVariable('coupon');
+ 
+        if(couponCode) {
+            $("#couponcode").val(couponCode);
+            $("#SideCouponCodeBox").trigger('click');
+        }
+    });
+</script>
+
+<div class="input-group"><div class="form-field input-group-item"><label class="form-label" for="couponcode"><span class="form-label-text sr-only">{{lang 'cart.coupon_codes.enter_code'}}</span><input class="form-input" id="couponcode" type="text" name="couponcode" value="" placeholder="{{lang 'cart.coupon_codes.enter_code'}}" data-coupon-code-input></label></div><div class="form-actions input-group-item"><input class="button button-tertiary" type="submit" value="{{lang 'cart.coupon_codes.submit'}}" id="SideCouponCodeBox"><input type="hidden" name="action" value="applycoupon"></div></div>

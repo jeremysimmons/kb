@@ -1,0 +1,27 @@
+stencilUtils.api.getPage('/books/', {"template": "category/featured-products"}, (err, res) => {
+console.log(res);
+});
+
+/theme/templates/components/category/featured-products.html
+
+{{> components/products/grid products=category.products
+    show_compare=category.show_compare
+    theme_settings=theme_settings
+    columns=theme_settings.categorypage_products_column_count
+    new=products.new
+    only_featured=true
+}}
+
+
+theme/templates/components/products/grid.html
+<ul class="productGrid productGrid--maxCol{{ columns }}">
+     {{#each products}}
+     <li class="product">
+        {{#all ../only_featured (occurrences (join (pluck this.custom_fields "name") ",") "featured") }}
+            <a href="{{url}}">{{name}}</a>^M
+        {{else}}
+            I refuse to show {{ name }}, it has no custom_field named 'featured'
+        {{/all}}
+     </li>
+     {{/each}}
+</ul>

@@ -1,0 +1,42 @@
+<script type="text/javascript">
+// Called sometime after postMessage is called
+function receiveMessage(event)
+{
+    console.log('receiveMessage');
+  // Do we trust the sender of this message?
+  //var url = new URL(event.origin);
+  //console.log(url.hostname); // "www.example.com"
+  //if (event.origin !== "www.heartmath.com")
+  //  return;
+
+  // event.source is window.opener
+  // event.data is "hello there!"
+
+  // Assuming you've verified the origin of the received message (which
+  // you must do in any case), a convenient idiom for replying to a
+  // message is to call postMessage on event.source and provide
+  // event.origin as the targetOrigin.
+  
+  // get the total quantity of items in the cart
+  fetch('/api/storefront/cart', { credentials: 'include' })
+  .then(function (r) { return r.json(); })
+  .then(function (cart) {
+    if(!cart || (cart && cart.length == 0)) {
+       event.source.postMessage({hasCart: false},event.origin);
+    } else {
+       var lines = cart[0].lineItems, count = 0;
+       if(lines.physicalItems) lines.physicalItems.forEach(function(el) { count += el.quantity });
+       if(lines.digitalItems) lines.digitalItems.forEach(function(el) { count += el.quantity });
+       event.source.postMessage({hasCart: true, items:count},event.origin);
+    }
+  });
+}
+if (window.addEventListener) {
+	// For standards-compliant web browsers
+	window.addEventListener("message", receiveMessage, false);
+}
+else {
+	window.attachEvent("onmessage", receiveMessage);
+}
+console.log('cart-receiver active')
+</script>

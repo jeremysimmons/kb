@@ -1,0 +1,277 @@
+https://developer.bigcommerce.com/api-docs/cart-and-checkout/working-sf-apis#working-sf-apis_storefront-cart
+
+getById Example
+https://developer.bigcommerce.com/stencil-docs/adding-event-hooks-to-your-theme/stencil-utils-api-reference#stencil-utils_product
+window.stencilUtils.api.product.getById(115, { template: 'products/quick-view' }, (err, response) => { console.log(response); })
+
+window.stencilUtils.api.cart.itemUpdate(
+'b720cc67-966a-4f62-97d0-4b82dabda44a', 5, (err, r) => { if(err) { console.log(err); } console.log(r); })
+
+// Get a cart
+fetch('/api/storefront/cart?include=lineItems.digitalItems.options,lineItems.physicalItems.options',{credentials: 'include'})
+.then(function(response) {return response.json();})
+.then(function(myJson) {console.log(JSON.stringify(myJson, null, 2));});
+
+
+// Get a checkout
+fetch('/api/storefront/cart', { credentials: 'include' })
+.then(function (r) { return r.json(); })
+.then(function (cart) {
+    if(!cart || (cart && cart.length == 0)) {
+       console.log('cart is empty');
+       return;
+    }
+    var cartId = cart[0].id;
+    fetch(`/api/storefront/checkouts/${cartId}?include=consignments.availableShippingOptions`, {credentials: 'include'})
+    .then(function (r) { return r.json(); })
+    .then(function (checkout) {
+        window.checkout = checkout;
+        // console.log(JSON.stringify(checkout, null, 2));
+        var addressId = checkout.billingAddress.id;
+        console.log(JSON.stringify({ cartId: cartId, addressId: addressId}, null, 2));
+        fetch(`/api/storefront/checkouts/${cartId}/billing-address/${addressId}`, {
+            credentials: 'include',
+            method: 'PUT',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "firstName": "john",
+                "lastName": "doe",
+                "email": "shmoeyguy@mailinator.com",
+                "company": "",
+                "address1": "7007 quiet pond pl",
+                "address2": "",
+                "city": "colorado springs",
+                "stateOrProvince": "Colorado",
+                "stateOrProvinceCode": "CO",
+                "country": "United States",
+                "countryCode": "US",
+                "postalCode": "80923",
+                "phone": "",
+                "customFields": [
+                    {
+                    "fieldId": "field_29",
+                    "fieldValue": "my purchase order is awesome"
+                    }
+                ]
+            })
+        })
+        .then(function (r) { return r.text(); })
+        .then(function (result) {
+            console.log(`result ${result}`)
+        });
+    });
+});
+
+
+// add items to cart based on cart being empty or not
+function addToCart(items) {
+    fetch('/api/storefront/cart', { credentials: 'include' })
+    .then(function (r) { return r.json(); })
+    .then(function (cart) {
+        var url = '';
+        if(!cart || (cart && cart.length == 0)) {
+            url = '/api/storefront/cart';
+        } else {
+            url = '/api/storefront/carts/'+cart[0].id+'/items';
+        }
+        fetch(url, {
+            credentials: 'include',
+            method: 'POST',
+            headers:{'Content-Type': 'application/json'},
+            body: JSON.stringify({ 'lineItems': items})
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+            console.log('after add items: ' + JSON.stringify(data, null, 2));
+        });
+    });
+}
+addToCart([{"quantity":1,"productId":250},{"quantity":1,"productId":171},{"quantity":5,"productId":160},{"quantity":15,"productId":161},{"quantity":1,"productId":138}]);
+
+// hmicp - BDHMIP2
+addToCart([{"quantity":1,"productId":252},{"quantity":1,"productId":156},{"quantity":1,"productId":140},{"quantity":1,"productId":175}]);
+
+// hmip - BD1365
+addToCart([{"quantity":1,"productId":253},{"quantity":1,"productId":156},{"quantity":1,"productId":175}]);
+
+window.location = "/cart.php";
+// add items
+
+
+        
+
+
+// remove single items in cart
+async function removeItem(cartid, lineid) {
+    var url = '/api/storefront/carts/' + cartid + '/items/' + lineid;
+    console.log('removeItem: ' + url);
+    await fetch(url, {
+        credentials: 'include',
+        method: 'DELETE',
+        headers:{'Content-Type': 'application/json'}
+    })
+    .then(function(response) { return response.status == 200 ? response.json() : response.text(); })
+    .then(function(myJson) { console.log(myJson ? JSON.stringify(myJson, null, 2) : "<empty>"); });
+    console.log('removeItem finished');
+}
+// remove all items in cart
+async function removeAllItems() {
+    fetch('/api/storefront/cart', { credentials: 'include' })
+    .then(function (r) { return r.json(); })
+    .then(async function (cartResponse) {
+        if(!cartResponse || (cartResponse && cartResponse.length == 0)) {
+            console.log('removeAllItems: empty cart');
+            return;
+        } else {
+            var cart = cartResponse[0];
+            var cartid = cart.id;
+            var lines = cart.lineItems;
+            // product pick list options add phantom line items with 0 quantity
+            if(lines.physicalItems) 
+            {
+                for(l of lines.physicalItems) 
+                {
+                    console.log('found ' + l.name);
+                    await removeItem(cartid, l.id);
+                    console.log('removed ' + l.name);
+                }
+            }
+            if(lines.digitalItems)
+            {
+                for(l of lines.digitalItems) 
+                {
+                    console.log('found ' + l.name);
+                    await removeItem(cartid, l.id);
+                    console.log('removed ' + l.name);
+                }
+            }
+        }
+    });
+}
+removeAllItems();
+window.location = "/cart.php";
+
+
+// get cart contents
+function printCart()
+{
+    fetch('/api/storefront/cart?include=lineItems.digitalItems.options,lineItems.physicalItems.options',{credentials: 'include'})
+    .then(function(response) {return response.json();})
+    .then(function(cart) {
+        if(!cart || (cart && cart.length == 0)) {
+            console.log('empty cart');
+        } else { 
+            console.log(JSON.stringify(cart, null, 2));
+        }
+    });
+}
+
+// get the total quantity of items in the cart
+fetch('/api/storefront/cart', { credentials: 'include' })
+.then(function (r) { return r.json(); })
+.then(function (cart) {
+    if(!cart || (cart && cart.length == 0)) {
+       return 0;
+    } else {
+       var lines = cart[0].lineItems, count = 0;
+       // product pick list options add phantom line items with 0 quantity
+       if(lines.physicalItems) lines.physicalItems.forEach(function(el) { if(el.quantity) count += 1 });
+       if(lines.digitalItems) lines.digitalItems.forEach(function(el) { if(el.quantity) count += 1 });
+       console.log(`you have ${count} total quantity items`)
+    }
+});
+
+// get the total quantity of items in the cart
+fetch('/api/storefront/cart', { credentials: 'include' })
+.then(function (r) { return r.json(); })
+.then(function (cart) {
+    if(!cart || (cart && cart.length == 0)) {
+       return 0;
+    } else {
+       var lines = cart[0].lineItems, count = 0;
+       if(lines.physicalItems) lines.physicalItems.forEach(function(el) { count += el.quantity });
+       if(lines.digitalItems) lines.digitalItems.forEach(function(el) { count += el.quantity });
+       console.log(`you have ${count} total quantity items`)
+    }
+});
+
+// get the total number of items in the cart
+fetch('/api/storefront/cart', { credentials: 'include' })
+.then(function (r) { return r.json(); })
+.then(function (cart) {
+    if(!cart || (cart && cart.length == 0)) {
+       return 0;
+    } else {
+       var lines = cart[0].lineItems, count = 0;
+       // product pick list options add phantom line items with 0 quantity
+       if(lines.physicalItems) lines.physicalItems.forEach(function(el) { if(el.quantity) count += 1 });
+       if(lines.digitalItems) lines.digitalItems.forEach(function(el) { if(el.quantity) count += 1 });
+       console.log(`you have ${count} total quantity items`)
+    }
+});
+
+
+// get a checkout
+fetch('/api/storefront/cart', { credentials: 'include' })
+.then(function (r) { return r.json(); })
+.then(function (cart) {
+    if(!cart || (cart && cart.length == 0)) {
+       console.log('cart is empty');
+       return;
+    }
+    fetch('/api/storefront/checkouts/'+ cart[0].id + '?include=consignments.availableShippingOptions', {credentials: 'include'})
+    .then(function (r) { return r.json(); })
+    .then(function (checkout) {
+        console.log(JSON.stringify(checkout, null, 2));
+    });
+});
+
+
+
+
+// get a checkout
+fetch('/api/storefront/cart', { credentials: 'include' })
+.then(function (r) { return r.json(); })
+.then(function (cart) {
+    if(!cart || (cart && cart.length == 0)) {
+       console.log('cart is empty');
+       return;
+    }
+    fetch('/api/storefront/checkouts/'+ cart[0].id, {credentials: 'include'})
+    .then(function (r) { return r.json(); })
+    .then(function (checkout) {
+        console.log(JSON.stringify(checkout, null, 2));
+    });
+});
+
+
+5c9502f408912
+
+postData(`/api/storefront/checkouts/`, `e8b7c677-f67a-4e39-a5ed-f405c9a06bcf`, {
+"firstName": "Jane",
+            "lastName": "Doe",
+            "email": "janedoe@email.com",
+            "company": "BigCommerce",
+            "address1": "123 Main Street",
+            "address2": "Apt 1",
+            "city": "Austin",
+            "stateOrProvinceCode": "TX",
+            "countryCode": "USA",
+            "postalCode": "78751"
+})
+  .then(data => console.log(JSON.stringify(data, null, 2))) 
+  .catch(error => console.error(error));
+
+function postData(url = ``, checkoutId = ``, data = {},) {
+    return fetch(url + checkoutId + `/billing-address`,  {
+        method: "POST", 
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => response.text()); 
+}

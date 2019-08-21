@@ -1,0 +1,5 @@
+window.stencilUtils.api.getPage('/kitchen/', { 
+"template": "category/product-listing"
+}, 
+(err, content) => { console.log('product listing', content);
+})

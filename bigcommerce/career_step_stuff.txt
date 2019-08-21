@@ -1,0 +1,143 @@
+<script>
+window.setTimeout(function () {
+    var cartId = null
+    var checkoutSteps = document.querySelector('.checkout-steps')
+    var cookieSid = getCookie('sid')   
+    
+    function replaceLoginError(node) {
+        if (node.hasChildNodes() && node.hasAttribute('data-test') && node.getAttribute('data-test') === 'customer-login-error-message') {
+            var nodes = node.childNodes
+            for (var i = 0, len = nodes.length; i < len; i++) {
+                if (nodes[i].className.indexOf('alertBox-message') > -1) {
+                    nodes[i].innerHTML = [
+                        '<strong>Having trouble logging in?</strong>',
+                        '<br><br>',
+                        'Please contact customer service at 1-877-458-9498.',
+                        '<br><br>',
+                        'If you have previously taken courses with Medic-CE, log in <a href="',
+                        lms + '/bigcommerce/redirect/checkout',
+                        '">',
+                        'here.</a>'
+                    ].join(' ')
+                    break
+                }
+            }
+        }
+    }
+    
+    function setCustomerMessageInput() {
+        var customerMessageInput = document.querySelector('#order-comments')
+        if (customerMessageInput) {
+            customerMessageInput.tabIndex = -1
+            customerMessageInput.style.display = 'none'
+            customerMessageInput.setAttribute('aria-hidden', 'true')
+            customerMessageInput.value = cookieSid
+            customerMessageInput.dispatchEvent(new Event('input'))
+        }
+    }
+    
+    function subscriber(mutations) {
+        console.log(mutations)
+        setCustomerMessageInput()
+        for (var i = 0, len = mutations.length; i < len; i++) {
+            if (mutations[i] && mutations[i].addedNodes) {
+                var nodes = mutations[i].addedNodes || []
+                for (var j = 0, len = nodes.length; j < len; j++) {
+                    replaceLoginError(nodes[j])
+                }
+            }
+        }
+//         var lastPane = document.querySelector('.checkout-view-content[ui-view="payment"]')
+//         if (lastPane.offsetHeight) {
+//             console.log('checkoutButton save sid:')
+//             setTimeout(setCustomerMessage, 1)
+//         }
+    }
+
+    function updateCartMessage(cartId, sid) {    
+        var xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+        xhr.addEventListener('readystatechange', function () {
+            if (this.readyState === this.DONE) {
+                //console.log(this.responseText);
+            }
+        });
+        xhr.open('PUT', '/api/storefront/checkouts/' + cartId);
+        xhr.setRequestHeader('content-type', 'application/json');
+        xhr.send(JSON.stringify({
+          'customerMessage': sid 
+        }));
+    }
+
+    function updateCustomer(customerId, sid) {    
+        if (!customerId || !sid) {return}
+        var data = JSON.stringify([{
+            'attribute_id': 1,
+            'value': sid,
+            'customer_id': customerId
+        }])
+        var xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+        xhr.addEventListener('readystatechange', function () {
+            if (this.readyState === this.DONE) {
+                //console.log(this.responseText);
+            }
+        });
+        xhr.open('POST', bus_endp + '/api/bigcommerce/handle-sid');
+        xhr.setRequestHeader('content-type', 'application/json');
+        xhr.setRequestHeader('x-token', 'en+cqyi/ouhwnq7&43cn8/q7t4q$7cn4');
+        xhr.send(data);
+    }
+
+    function getStorefront(callback, url) {
+        fetch(url, {
+            credentials: 'include'
+        }).then(function(response) {
+            return response.json();
+        }).then(function(myJson) {
+            callback(myJson)
+        });
+    }
+
+    function getCart(callback) {
+        getStorefront(callback, '/api/storefront/cart')
+    }
+
+    function getCheckout(callback, cartId) {
+        getStorefront(callback, '/api/storefront/checkout/' + cartId)
+    }
+
+    function setCartMessage(checkoutJson) {
+        setCustomerMessageInput()
+        if (cookieSid !== checkoutJson.customerMessage) {
+            updateCartMessage(checkoutJson.id, cookieSid)
+        }
+        updateCustomer(checkoutJson.cart.customerId, cookieSid);
+    }
+
+    function setCustomerMessage() {
+        if (cookieSid)  {
+            if (cartId) {
+                getCheckout(setCartMessage, cartId)
+            } else {
+                getCart(function(myJson) {
+                    cartId = myJson[0].id
+                    getCheckout(setCartMessage, cartId)
+                })
+            }
+        }
+    }
+
+    setCustomerMessage()
+    
+    if (checkoutSteps) {
+        var observer = new MutationObserver(subscriber);
+        observer.observe(checkoutSteps, {
+            childList: true, 
+            subtree: true
+        })
+    }
+    
+   document.getElementsByClassName('checkout-view-content')[0].innerHTML = '<iframe src="https://apps.dynamicdreamz.com/careerstep/" scrolling="no" height="350" width="600" overflow="hidden" frameBorder="0"></iframe>';
+
+</script>

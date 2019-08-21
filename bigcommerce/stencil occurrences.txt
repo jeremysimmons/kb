@@ -1,0 +1,11 @@
+templates\components\products\product-view.html
+
+                {{ json product.custom_fields }} <br/>
+                occurrences {{ isString (join (pluck product.custom_fields "name") ",") }}<br/>
+                occurrences {{ occurrences (join (pluck product.custom_fields "name") ",") "hide_options" }}<br/>
+
+                {{#if (occurrences (join (pluck product.custom_fields "name") ",") "hide_options") '>=' '1' }}
+                    pjs
+                {{/if}}
+
+                {{> components/products/sub hideOptions=(occurrences (join (pluck product.custom_fields "name") ",") "hide_options") }}

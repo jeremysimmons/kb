@@ -1,3 +1,6 @@
+unix on windows.
+sudo npm i -g @bigcommerce/stencil-cli --unsafe-perm=true --allow-root
+
 npm install -g @bigcommerce/stencil-cli
 stencil --version
 1.14.1 at 12:38 PM 3/9/2018

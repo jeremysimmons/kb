@@ -1,0 +1,50 @@
+// Get a checkout
+fetch('/api/storefront/cart', { credentials: 'include' })
+.then(function (r) { return r.json(); })
+.then(function (cart) {
+    if(!cart || (cart && cart.length == 0)) {
+       console.log('cart is empty');
+       return;
+    }
+    var cartId = cart[0].id;
+    fetch(`/api/storefront/checkouts/${cartId}?include=consignments.availableShippingOptions`, {credentials: 'include'})
+    .then(function (r) { return r.json(); })
+    .then(function (checkout) {
+        window.checkout = checkout;
+        // console.log(JSON.stringify(checkout, null, 2));
+        var addressId = checkout.billingAddress.id;
+        console.log(JSON.stringify({ cartId: cartId, addressId: addressId}, null, 2));
+        fetch(`/api/storefront/checkouts/${cartId}/billing-address/${addressId}`, {
+            credentials: 'include',
+            method: 'PUT',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "firstName": "john",
+                "lastName": "doe",
+                "email": "shmoeyguy@mailinator.com",
+                "company": "",
+                "address1": "7007 quiet pond pl",
+                "address2": "",
+                "city": "colorado springs",
+                "stateOrProvince": "Colorado",
+                "stateOrProvinceCode": "CO",
+                "country": "United States",
+                "countryCode": "US",
+                "postalCode": "80923",
+                "phone": "",
+                "customFields": [
+                    {
+                    "fieldId": "field_29",
+                    "fieldValue": "my purchase order is awesome"
+                    }
+                ]
+            })
+        })
+        .then(function (r) { return r.text(); })
+        .then(function (result) {
+            console.log(`result ${result}`)
+        });
+    });
+});

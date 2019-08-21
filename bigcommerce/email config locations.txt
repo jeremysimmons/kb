@@ -1,0 +1,12 @@
+/manage/settings/store-profile
+Email
+
+
+/manage/settings/order-notifications
+
+
+/manage/settings/store > Miscellaneous
+
+Forward Order Invoices
+Yes, forward order invoice emails to
+Type the email addresses, separated by commas.

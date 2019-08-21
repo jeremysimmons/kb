@@ -1,0 +1,8 @@
+array literals cannot be used
+{{join ['test','test'] ', ' }}
+
+instead, split a string to create an array value
+
+{{join (split 'test,test' ',') ' - ' }}
+
+{{isArray (split 'test,test' ',') }} -> true

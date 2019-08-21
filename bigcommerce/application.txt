@@ -1,0 +1,16 @@
+https://login.bigcommerce.com/app/<your-app's-client-id>/install
+
+https://login.bigcommerce.com/app/l5r5fvljpsjrky67jl5u256e01aje2q/install
+if it's still in draft, "This app is not available for installation."
+
+
+
+https://heartmathdev.mybigcommerce.com/manage/app/<application store id>
+
+https://login.bigcommerce.com/app/<application store id>/install
+Remove User Callback URL: https://app.domain.com/uninstall
+Auth Callback URL: https://app.domain.com/callback/auth
+Load Callback URL: https://app.domain.com/load
+Uninstall Callback URL: https://app.domain.com/uninstall
+
+https://bigcommerce.com/apps/

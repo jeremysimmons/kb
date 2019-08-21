@@ -1,0 +1,452 @@
+/api/storefront/checkout-settings
+
+{
+    "context": {
+        "flashMessages": [],
+        "payment": {
+            "token": null
+        },
+        "checkoutId": "48cd4745-d218-4b27-9c55-fd41347b7bdd",
+        "geoCountryCode": "US"
+    },
+    "customization": {
+        "languageData": []
+    },
+    "storeConfig": {
+        "cdnPath": "https:\/\/cdn11.bigcommerce.com\/r-15fa40a428f74e99f761582fee54fb51d56bcec1",
+        "checkoutSettings": {
+            "hasMultiShippingEnabled": false,
+            "enableOrderComments": true,
+            "enableTermsAndConditions": false,
+            "guestCheckoutEnabled": true,
+            "isCardVaultingEnabled": true,
+            "isCouponCodeCollapsed": true,
+            "isPaymentRequestEnabled": false,
+            "isPaymentRequestCanMakePaymentEnabled": false,
+            "isTrustedShippingAddressEnabled": true,
+            "orderTermsAndConditions": "",
+            "orderTermsAndConditionsLink": "",
+            "orderTermsAndConditionsType": "",
+            "shippingQuoteFailedMessage": "Unfortunately one or more items in your cart can't be shipped to your location. Please choose a different delivery address.",
+            "realtimeShippingProviders": [
+                "Fedex",
+                "UPS",
+                "USPS"
+            ],
+            "remoteCheckoutProviders": [],
+            "isAnalyticsEnabled": false,
+            "googleMapsApiKey": "",
+            "features": {
+                "CHECKOUT-3573.expose_correct_error_message": true,
+                "CHECKOUT-3671.do_not_render_payment_form_if_not_payment": true,
+                "PROJECT-2381.upgrade_checkout": false,
+                "CHECKOUT-3984.upgrade_checkout_billing_step": false,
+                "CHECKOUT-3790.upgrade_checkout_customer_step": true,
+                "CHECKOUT-3790.upgrade_checkout_payment_step": true,
+                "CHECKOUT-3983.upgrade_checkout_shipping_step": false,
+                "CHECKOUT-3790.upgrade_order_confirmation": true,
+                "CHECKOUT-3852.upgrade_cart_summary": true,
+                "CHECKOUT-1289.order_confirmation_continue_shopping": true,
+                "CHECKOUT-3788.strict_email_validation": true
+            }
+        },
+        "currency": {
+            "code": "USD",
+            "decimalPlaces": "2",
+            "decimalSeparator": ".",
+            "symbolLocation": "left",
+            "symbol": "$",
+            "thousandsSeparator": ","
+        },
+        "formFields": {
+            "billingAddressFields": [
+                {
+                    "id": "field_11",
+                    "name": "countryCode",
+                    "custom": false,
+                    "label": "Country",
+                    "required": true,
+                    "default": null,
+                    "maxLength": false
+                },
+                {
+                    "id": "field_4",
+                    "name": "firstName",
+                    "custom": false,
+                    "label": "First Name",
+                    "required": true,
+                    "default": "",
+                    "maxLength": ""
+                },
+                {
+                    "id": "field_5",
+                    "name": "lastName",
+                    "custom": false,
+                    "label": "Last Name",
+                    "required": true,
+                    "default": "",
+                    "maxLength": ""
+                },
+                {
+                    "id": "field_8",
+                    "name": "address1",
+                    "custom": false,
+                    "label": "Address Line 1",
+                    "required": true,
+                    "default": "",
+                    "maxLength": ""
+                },
+                {
+                    "id": "field_9",
+                    "name": "address2",
+                    "custom": false,
+                    "label": "Address Line 2",
+                    "required": false,
+                    "default": "",
+                    "maxLength": ""
+                },
+                {
+                    "id": "field_6",
+                    "name": "company",
+                    "custom": false,
+                    "label": "Company Name",
+                    "required": false,
+                    "default": "",
+                    "maxLength": ""
+                },
+                {
+                    "id": "field_10",
+                    "name": "city",
+                    "custom": false,
+                    "label": "Suburb\/City",
+                    "required": true,
+                    "default": "",
+                    "maxLength": ""
+                },
+                {
+                    "id": "field_12",
+                    "name": "stateOrProvince",
+                    "custom": false,
+                    "label": "State\/Province",
+                    "required": true,
+                    "default": null,
+                    "maxLength": ""
+                },
+                {
+                    "id": "field_13",
+                    "name": "postalCode",
+                    "custom": false,
+                    "label": "Zip\/Postcode",
+                    "required": true,
+                    "default": "",
+                    "maxLength": ""
+                },
+                {
+                    "id": "field_7",
+                    "name": "phone",
+                    "custom": false,
+                    "label": "Phone Number",
+                    "required": false,
+                    "default": "",
+                    "maxLength": ""
+                },
+                {
+                    "id": "field_29",
+                    "name": "field_29",
+                    "custom": true,
+                    "label": "Purchase Order Number",
+                    "required": false,
+                    "default": "",
+                    "type": "string",
+                    "fieldType": "text",
+                    "maxLength": ""
+                },
+                {
+                    "id": "field_32",
+                    "name": "field_32",
+                    "custom": true,
+                    "label": "Field 2",
+                    "required": false,
+                    "default": null,
+                    "type": "array",
+                    "fieldType": "checkbox",
+                    "itemtype": "string",
+                    "options": {
+                        "items": [
+                            {
+                                "value": "0",
+                                "label": "Yes"
+                            },
+                            {
+                                "value": "1",
+                                "label": "No"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": "field_34",
+                    "name": "field_34",
+                    "custom": true,
+                    "label": "Field 3",
+                    "required": false,
+                    "default": null,
+                    "type": "array",
+                    "fieldType": "checkbox",
+                    "itemtype": "string",
+                    "options": {
+                        "items": [
+                            {
+                                "value": "0",
+                                "label": "Yes"
+                            },
+                            {
+                                "value": "1",
+                                "label": "No"
+                            },
+                            {
+                                "value": "2",
+                                "label": "Maybe"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "shippingAddressFields": [
+                {
+                    "id": "field_21",
+                    "name": "countryCode",
+                    "custom": false,
+                    "label": "Country",
+                    "required": true,
+                    "default": null,
+                    "maxLength": false
+                },
+                {
+                    "id": "field_14",
+                    "name": "firstName",
+                    "custom": false,
+                    "label": "First Name",
+                    "required": true,
+                    "default": "",
+                    "maxLength": ""
+                },
+                {
+                    "id": "field_15",
+                    "name": "lastName",
+                    "custom": false,
+                    "label": "Last Name",
+                    "required": true,
+                    "default": "",
+                    "maxLength": ""
+                },
+                {
+                    "id": "field_18",
+                    "name": "address1",
+                    "custom": false,
+                    "label": "Address Line 1",
+                    "required": true,
+                    "default": "",
+                    "maxLength": ""
+                },
+                {
+                    "id": "field_19",
+                    "name": "address2",
+                    "custom": false,
+                    "label": "Address Line 2",
+                    "required": false,
+                    "default": "",
+                    "maxLength": ""
+                },
+                {
+                    "id": "field_16",
+                    "name": "company",
+                    "custom": false,
+                    "label": "Company Name",
+                    "required": false,
+                    "default": "",
+                    "maxLength": ""
+                },
+                {
+                    "id": "field_20",
+                    "name": "city",
+                    "custom": false,
+                    "label": "Suburb\/City",
+                    "required": true,
+                    "default": "",
+                    "maxLength": ""
+                },
+                {
+                    "id": "field_22",
+                    "name": "stateOrProvince",
+                    "custom": false,
+                    "label": "State\/Province",
+                    "required": true,
+                    "default": null,
+                    "maxLength": ""
+                },
+                {
+                    "id": "field_23",
+                    "name": "postalCode",
+                    "custom": false,
+                    "label": "Zip\/Postcode",
+                    "required": true,
+                    "default": "",
+                    "maxLength": ""
+                },
+                {
+                    "id": "field_17",
+                    "name": "phone",
+                    "custom": false,
+                    "label": "Phone Number",
+                    "required": false,
+                    "default": "",
+                    "maxLength": ""
+                },
+                {
+                    "id": "field_29",
+                    "name": "field_29",
+                    "custom": true,
+                    "label": "Purchase Order Number",
+                    "required": false,
+                    "default": "",
+                    "type": "string",
+                    "fieldType": "text",
+                    "maxLength": ""
+                },
+                {
+                    "id": "field_32",
+                    "name": "field_32",
+                    "custom": true,
+                    "label": "Field 2",
+                    "required": false,
+                    "default": null,
+                    "type": "array",
+                    "fieldType": "checkbox",
+                    "itemtype": "string",
+                    "options": {
+                        "items": [
+                            {
+                                "value": "0",
+                                "label": "Yes"
+                            },
+                            {
+                                "value": "1",
+                                "label": "No"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": "field_34",
+                    "name": "field_34",
+                    "custom": true,
+                    "label": "Field 3",
+                    "required": false,
+                    "default": null,
+                    "type": "array",
+                    "fieldType": "checkbox",
+                    "itemtype": "string",
+                    "options": {
+                        "items": [
+                            {
+                                "value": "0",
+                                "label": "Yes"
+                            },
+                            {
+                                "value": "1",
+                                "label": "No"
+                            },
+                            {
+                                "value": "2",
+                                "label": "Maybe"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "links": {
+            "cartLink": "https:\/\/store-h79347hr0f.mybigcommerce.com\/cart.php",
+            "checkoutLink": "https:\/\/store-h79347hr0f.mybigcommerce.com\/checkout",
+            "createAccountLink": "https:\/\/store-h79347hr0f.mybigcommerce.com\/login.php?action=create_account",
+            "forgotPasswordLink": "https:\/\/store-h79347hr0f.mybigcommerce.com\/login.php?action=reset_password",
+            "loginLink": "https:\/\/store-h79347hr0f.mybigcommerce.com\/login.php",
+            "orderConfirmationLink": "https:\/\/store-h79347hr0f.mybigcommerce.com\/checkout\/order-confirmation",
+            "siteLink": "https:\/\/store-h79347hr0f.mybigcommerce.com"
+        },
+        "paymentSettings": {
+            "bigpayBaseUrl": "https:\/\/payments.bigcommerce.com",
+            "clientSidePaymentProviders": [
+                "affirm",
+                "afterpay",
+                "authorizenet",
+                "bluesnap",
+                "braintree",
+                "braintreepaypal",
+                "braintreepaypalcredit",
+                "braintreevisacheckout",
+                "cardconnect",
+                "ccavenuemars",
+                "clover",
+                "chasepay",
+                "cybersource",
+                "converge",
+                "elavon",
+                "eway",
+                "ewayrapid",
+                "firstdatae4v14",
+                "googlepaybraintree",
+                "googlepaystripe",
+                "hps",
+                "migs",
+                "nmi",
+                "orbital",
+                "paymetric",
+                "paypal",
+                "quickbooks",
+                "sagepay",
+                "securenet",
+                "shopkeep",
+                "squarev2",
+                "stripe",
+                "usaepay",
+                "vantiv",
+                "vantivcore",
+                "wepay",
+                "zip"
+            ]
+        },
+        "shopperConfig": {
+            "defaultNewsletterSignup": false,
+            "passwordRequirements": {
+                "alpha": "[A-Za-z]",
+                "numeric": "[0-9]",
+                "minlength": 7,
+                "error": "Passwords must be at least 7 characters and contain both alphabetic and numeric characters."
+            },
+            "showNewsletterSignup": true
+        },
+        "storeProfile": {
+            "orderEmail": "jsimmons@jeremysimmons.net",
+            "shopPath": "https:\/\/store-h79347hr0f.mybigcommerce.com",
+            "storeCountry": "United States",
+            "storeHash": "h79347hr0f",
+            "storeId": 999828317,
+            "storeName": "Simmons Woodshop",
+            "storePhoneNumber": "719-330-1765",
+            "storeLanguage": "en_US"
+        },
+        "imageDirectory": "product_images",
+        "isAngularDebuggingEnabled": false,
+        "shopperCurrency": {
+            "code": "USD",
+            "symbolLocation": "left",
+            "symbol": "$",
+            "decimalPlaces": "2",
+            "decimalSeparator": ".",
+            "thousandsSeparator": ",",
+            "exchangeRate": 1
+        }
+    }
+}

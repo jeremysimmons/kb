@@ -1,0 +1,3 @@
+    {{JSONstringify this}}
+    Brand: {{#if brand}}{{brand.name}}{{else}}No BRAND!{{/if}}
+    Brand Url: {{#filter ../shop_by_brand brand.name property="name" }}{{url}}{{/filter}}

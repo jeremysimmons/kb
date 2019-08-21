@@ -1,0 +1,7 @@
+How to separate featured products by category on home page
+https://support.bigcommerce.com/s/question/0D513000034CBNY/featured-products-per-catergory
+http://www.theancientsage.com/rss.php?action=searchproducts&type=rss&category[]=261&searchsubs=ON&featured=1&search_query=candle+cast
+
+How to make Products in category sort by SORT ORDER
+https://support.bigcommerce.com/s/question/0D5130000355oAsCAI/how-to-make-products-in-category-sort-by-sort-order
+Your sort order will only work when the default sort for a category is "Featured Products" (I just discovered this with another client). Therefore, if your sort isn't displaying, my guess is that you changed the default sort for your store. To change it to Featured, go to Store Setup > Store Settings and click the Display tab. Scroll down and you will see the option to change the default category sort.

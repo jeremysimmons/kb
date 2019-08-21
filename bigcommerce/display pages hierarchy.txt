@@ -1,0 +1,26 @@
+templates\pages\page.html
+
+    <h1>Pages</h1>
+    absolute_path: {{ settings.request.absolute_path }}<br/>
+    {{#forEach pages }}
+
+        <code>'{{ concat ../settings.base_url this.url }}' == '{{ ../settings.request.absolute_path}}' </code>
+        {{#if this.url '==' (concat ../settings.base_url ../settings.request.absolute_path) }}
+            <div>
+                {{> components/pagenav this.children }}
+            </div>
+        {{/if}}<br/>
+        
+    {{/forEach}}
+
+templates\components\pagenav.html
+
+<ul>
+    {{#forEach this }}
+    <li><a href="{{this.url}}">{{this.name}}</a>
+    {{#if this.children}}
+        {{> components/pagenav this.children}}
+    {{/if}}
+    </li>
+    {{/forEach}}
+</ul>

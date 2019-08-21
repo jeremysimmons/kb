@@ -1,0 +1,12 @@
+var baseUrl = 'https://shop.jjsbc.com'
+var i = document.createElement('iframe');
+i.src = `${baseUrl}/content/cart-receiver.html`;
+i.id = 'icart'
+document.body.appendChild(i)
+function receiveMessage(event)
+{
+  console.log('receive message');
+  console.log(event.data);
+}
+window.addEventListener("message", receiveMessage, false);
+i.contentWindow.postMessage('getcart', baseUrl);

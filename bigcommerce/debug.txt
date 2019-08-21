@@ -1,0 +1,4 @@
+https://github.com/bigcommerce/stencil-cli/blob/e5c3e96e3a3d10e4423afec418c2c8f3686d2d02/server/plugins/renderer/responses/pencil-response.js
+
+?debug=bar
+?debug=context
