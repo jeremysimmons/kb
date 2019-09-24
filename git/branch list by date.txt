@@ -1,0 +1,19 @@
+git for-each-ref --sort=-committerdate refs/heads/
+
+git for-each-ref --sort='-committerdate' --format='%(committerdate)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'
+
+List of git branch names, ordered by most recent commit…
+git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format='%(refname:short)'
+
+
+https://stackoverflow.com/a/5188364/26877
+git for-each-ref --sort=-committerdate refs/heads/
+# Or using git branch (since version 2.7.0)
+git branch --sort=-committerdate  # DESC
+git branch --sort=committerdate  # ASC
+
+git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
+
+
+https://gist.github.com/jasonrudolph/1810768
+for branch in `git branch -r | grep -v HEAD`;do echo -e `git show --format="%ci %cr" $branch | head -n 1` \\t$branch; done | sort -r

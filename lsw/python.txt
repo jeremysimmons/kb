@@ -1,0 +1,90 @@
+
+http://timmyreilly.azurewebsites.net/python-with-ubuntu-on-windows/
+basic
+sudo apt-get update
+sudo apt install wget
+
+-- 
+wget https://www.python.org/ftp/python/3.5.4/Python-3.5.4.tgz
+tar xf Python-3.5.4.tgz
+cd Python-3.5.4/
+./configure
+make
+make test
+sudo make install
+
+pip3 --version
+pip3 install scrapy
+
+./configure
+make
+make test
+sudo make install
+
+
+smile direct
+https://smiledirectclub.atlassian.net/wiki/spaces/EN/pages/62881827/Getting+Started+on+OSX
+https://virtualenvwrapper.readthedocs.io/en/latest/install.html
+ “workon” or “lsvirtualenv”
+
+postgres
+deb http://apt.postgresql.org/pub/repos/apt/ YOUR_UBUNTU_VERSION_HERE-pgdg main
+
+
+sudo apt-get install python3
+sudo apt install python3-pip
+pip3 install --user virtualenv virtualenvwrapper
+mkdir ~/.virtualenvs
+
+echo ~/.bash_profile
+export WORKON_HOME=~/.virtualenvs
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+export VIRTUALENVWRAPPER_SCRIPT=~/.local/bin/virtualenvwrapper.sh
+
+# set PATH so it includes user's private ~/.local/bin if it exists
+if [ -d "$HOME/.local/bin" ] ; then
+        PATH="$HOME/.local/bin:$PATH"
+fi
+
+source ~/.local/bin/virtualenvwrapper.sh
+
+mkvirtualenv -p python3.6 smilecheck
+
+workon smilecheck
+
+# assuming git clone of scc-api
+cd /dev/scc-api
+
+sudo apt-get install build-essential libssl-dev libffi-dev python3-dev
+sudo apt install libjpeg8-dev zlib1g-dev
+
+pip3 install -r requirements.txt
+
+cd smilecheck
+npm install
+
+sudo apt-get remove postgresql
+sudo apt-get install postgresql
+https://www.postgresql.org/download/linux/ubuntu/
+https://medium.com/@harshityadav95/postgresql-in-windows-subsystem-for-linux-wsl-6dc751ac1ff3
+https://askubuntu.com/questions/682869/how-do-i-install-a-different-python-version-using-apt-get
+https://medium.com/@stephanedmonson/solution-for-connecting-postgresql-via-wsl-windows-subsystem-for-linux-ubuntu18-c79940fa5742
+
+locate postgresql.conf
+
+vi /etc/postgresql/10/main/postgresql.conf
+
+
+sudo passwd postgres
+sudo service postgresql start
+sudo service postgresql restart
+sudo -u postgres psql
+su - postgres
+psql
+sudo -u postgres createuser <username>
+sudo -u postgres createdb <dbname>
+sudo -u postgres psql
+alter user <username> with encrypted password '<password>';
+
+
+python manage.py restore_data -d qa6_local -t qa6 --local

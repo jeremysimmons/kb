@@ -1,0 +1,9 @@
+git revert <sha-of-bad-commit> --no-commit
+git reset   // This gets them out of the staging area
+
+<edit bad file to look like it should, if necessary>
+git add -p
+
+git add <bad-file>
+git checkout . // This wipes all the undesired reverts still hanging around in the working copy
+git commit

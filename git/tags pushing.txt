@@ -1,5 +1,8 @@
 git push --follow-tags
 
+git config --global push.followTags true
+
+
 It pushes both commits and only tags that are both:
 + annotated
 + reachable (an ancestor) from the pushed commits

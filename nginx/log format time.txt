@@ -1,0 +1,29 @@
+https://lincolnloop.com/blog/tracking-application-response-time-nginx/
+
+I added this block to /etc/nginx/nginx.conf to define a new log format timed_combined
+
+log_format timed_combined '$remote_addr - $remote_user [$time_local] '
+    '"$request" $status $body_bytes_sent '
+    '"$http_referer" "$http_user_agent" '
+    '$request_time $upstream_response_time $pipe';
+
+Next we modify our access_log directives to use the new format:
+
+access_log /var/log/nginx/yourdomain.com.access.log timed_combined;
+
+
+https://www.nginx.com/blog/using-nginx-logging-for-application-performance-monitoring/
+
+log_format apm '"$time_local" client=$remote_addr '
+               'method=$request_method request="$request" '
+               'request_length=$request_length '
+               'status=$status bytes_sent=$bytes_sent '
+               'body_bytes_sent=$body_bytes_sent '
+               'referer=$http_referer '
+               'user_agent="$http_user_agent" '
+               'upstream_addr=$upstream_addr '
+               'upstream_status=$upstream_status '
+               'request_time=$request_time '
+               'upstream_response_time=$upstream_response_time '
+               'upstream_connect_time=$upstream_connect_time '
+               'upstream_header_time=$upstream_header_time';

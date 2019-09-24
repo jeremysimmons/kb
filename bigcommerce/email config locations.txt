@@ -1,12 +1,15 @@
-/manage/settings/store-profile
-Email
+Advanced Settings > Order Notifications > Email Message
+To receive an email notification when an order is placed from your store, simply enter your email address into the form below.
 
+Store Setup > Store Profile > Email
+orders@heartmath.comorders@heartmath.com
+The email address that all emails to customers will be sent from, such as 'sales@yoursite.com' or 'orders@yoursite.com'.
 
-/manage/settings/order-notifications
+Store Setup > Store Settings > Misc > Forward Order Invoices
+To forward copies of order confirmation messages sent to your customers after they place an order to one or more additional addresses of your own, check this box and enter a comma separated list of email addresses below.
 
+Store Setup > Store Settings > Misc > Administrator's Email
+The email address where all system notifications should be sent to.
 
-/manage/settings/store > Miscellaneous
-
-Forward Order Invoices
-Yes, forward order invoice emails to
-Type the email addresses, separated by commas.
+Store Setup > Store Settings > Misc > Send Emails To
+Who should these abandoned and converted emails be sent to? Enter a single email address here.

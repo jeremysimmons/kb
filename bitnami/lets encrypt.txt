@@ -1,4 +1,19 @@
-sudo /opt/bitnami/letsencrypt/scripts/generate-certificate.sh -m YOURMAIL -d YOURDOMAIN -d www.YOURDOMAIN
+sudo /opt/bitnami/letsencrypt/scripts/generate-certificate.sh -m YOURMAIL -d YOURjjsaws.com -d www.YOURjjsaws.com
 
 
 https://docs.bitnami.com/aws/how-to/generate-install-lets-encrypt-ssl/
+
+cd /tmp
+curl -Ls https://api.github.com/repos/xenolf/lego/releases/latest | grep browser_download_url | grep linux_amd64 | cut -d """ -f 4 | wget -i -
+tar xf lego_vX.Y.Z_linux_amd64.tar.gz
+sudo mkdir -p /opt/bitnami/letsencrypt
+sudo mv lego /opt/bitnami/letsencrypt/lego
+
+sudo /opt/bitnami/ctlscript.sh stop
+
+sudo /opt/bitnami/letsencrypt/lego --exclude="http-01" --email="jsimmons@jeremysimmons.net" --domains="www.jjsaws.com" --path="/opt/bitnami/letsencrypt" renew
+
+sudo /opt/bitnami/ctlscript.sh start
+
+
+
