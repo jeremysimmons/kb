@@ -1,0 +1,45 @@
+The first day of the current month in php using date_modify as DateTime object
+
+https://stackoverflow.com/a/9414764/26877
+Here is what I use.
+
+date — Format a local time/date
+First day of the month:
+date('Y-m-01');
+
+Last day of the month:
+date('Y-m-t');
+
+$monthStart = date('Y-m-01 00:00:00'); 
+$monthEnd = date('Y-m-t 23:59:59');
+
+https://stackoverflow.com/a/2094993/26877
+
+<?php
+    // First day of this month
+    $d = new DateTime('first day of this month');
+    echo $d->format('jS, F Y');
+
+    // First day of a specific month
+    $d = new DateTime('2010-01-19');
+    $d->modify('first day of this month');
+    echo $d->format('jS, F Y');
+
+    // alternatively...
+    echo date_create('2010-01-19')
+      ->modify('first day of this month')
+      ->format('jS, F Y');
+In PHP 5.4+ you can do this:
+
+<?php
+    // First day of this month
+    echo (new DateTime('first day of this month'))->format('jS, F Y');
+
+    echo (new DateTime('2010-01-19'))
+      ->modify('first day of this month')
+      ->format('jS, F Y');
+If you prefer a concise way to do this, and already have the year and month in numerical values, you can use date():
+
+<?php
+    echo date('Y-m-01'); // first day of this month
+    echo date("$year-$month-01"); // first day of a month chosen by you

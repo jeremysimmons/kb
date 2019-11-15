@@ -1,0 +1,17 @@
+public function updateLog($id, $message)
+{
+    // Update Webhook w set w.log = CONCAT(w.log, $message) where w.id = $id
+
+    return $this->createQueryBuilder('w')
+        ->update('Webhook', 'w')
+        ->set('w.log',
+            $qb->expr()->concat(
+                $qb->expr()->literal('w.log'),
+                $message
+            )
+        )
+        ->where('s1.id = ?par1')
+        ->setParameter('par1', $id)
+        ->getQuery()
+        ->getSingleScalarResult();
+}

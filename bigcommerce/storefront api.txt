@@ -1,3 +1,12 @@
+
+
+// Get a cart
+/customer/current.jwt?app_client_id=" + appClientId
+
+fetch('/customer/current.jwt?app_client_id=tq7fgzygy8bw7tbjjg6ufbhzum44yr6',{credentials: 'include'})
+.then(function(response) {return response.json();})
+.then(function(myJson) {console.log(JSON.stringify(myJson, null, 2));});
+
 https://developer.bigcommerce.com/api/v3/storefront.html#current_customer_api
 
 http://dcclive.mybigcommerce.com/customer/current.jwt?app_client_id=90ac162cfcts2eupvtdumt2d6bsr1s4

@@ -1,0 +1,23 @@
+https://support.workato.com/support/solutions/articles/1000236426-salesforce-object-query-language-soql-basic-syntax-and-common-search-terms
+
+SELECT Id
+FROM Account
+WHERE DAY_ONLY(CreatedDate) > 2019-10-29
+
+https://stackoverflow.com/questions/5238952/soql-query-where-date-30-days-ago
+
+Select o.CreatedDate, o.Id, o.LastModifiedDate 
+from Opportunity o 
+where   o.CreatedDate > 2019-09-30T12:00:00-07:00
+
+
+Select o.CreatedDate, o.Id, o.LastModifiedDate 
+from Opportunity o 
+where   o.CreatedDate > now.beginning_of_month.to_date
+
+
+YYYY-MM-DDThh:mm:ss+hh:mm
+
+YYYY-MM-DDThh:mm:ss-hh:mm
+
+YYYY-MM-DDThh:mm:ssZ

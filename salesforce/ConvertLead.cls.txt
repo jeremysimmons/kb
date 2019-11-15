@@ -1,6 +1,22 @@
 // https://stackoverflow.com/questions/19663119/is-there-any-rest-service-available-in-salesforce-to-convert-leads-into-accounts
+
+<Your Instance URL>/services/apexrest/Lead/<LeadId>
+
+https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/intro_curl.htm
+
+curl https://instance_name.salesforce.com/services/data/v47.0/
+-H "Authorization: Bearer 00D50000000IehZ\!AQcAQH0dMHZfz972Szmpkb58urFRkgeBGsxL_QJWwYMfAbUeeG7c1E63LYUfiDUkWe6H34r1AAwOR8B8fLEz6n04NPGRrq0FM"
+
+
+https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/intro_understanding_username_password_oauth_flow.htm
+
+00D4B0000000ijG!ARgAQO9u89.3.BYCvQ9ztpDTyRIfQcX9Wv0wU0U7ZhhP.xknXlY8w5.LQkc2OTQ3KUHgw2yQwBmskST2AyFB4Y1CiTbnmNq7
+
+https://cs51.salesforce.com
+
+
 @RestResource(urlMapping='/Lead/*')
-global with sharing class RestLeadConvert {            
+global with sharing class LeadConversionRest {            
 
     @HttpGet
     global static String doGet() {

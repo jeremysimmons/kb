@@ -1,0 +1,21 @@
+
+    /**
+     * Update the log with a new message atomically.
+     *
+     * @param [type] $id
+     * @param [type] $message
+     * @return void
+     */
+    public function updateLog($id, $message)
+    {
+        // basically executes this
+        // UPDATE Webhook SET log = CONCAT(log, $message) WHERE w.id = $id
+        $qb = $this->createQueryBuilder('w');
+        $qb->update('App\Entity\Webhook', 'w')
+           ->set('w.log', $qb->expr()->concat('w.log', '?1'))
+           ->where('w.id = ?2')
+           ->setParameter('1', $message)
+           ->setParameter('2', $id);
+        $q = $qb->getQuery();
+        return $q->getResult();
+    }

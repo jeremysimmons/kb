@@ -1,0 +1,5 @@
+The ! prefix tells Monolog to log all channels except event. You can exclude more channels (e.g. channels: [!event, !doctrine]) and you can leave it empty to start logging event messages again.
+
+In addition, this change can be applied to all your existing Symfony applications, regardless of the Symfony version they use. Just add channels: [!event] to your Monolog configuration in config_dev.yml and say goodbye to those annoying log messages.
+
+https://symfony.com/doc/current/logging/channels_handlers.html#cookbook-monolog-channels-config

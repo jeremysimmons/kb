@@ -1,0 +1,27 @@
+https://salesforce.stackexchange.com/questions/203070/uncommitted-work-pending-in-unit-test-with-trigger-and-queueable-callout
+
+You'll need to test the method directly, and test the Queueable separately. The easiest way to do so is a static flag.
+
+public class MyQueueable implements Queueable
+    @TestVisible static Boolean makeCallout = true;
+    public void execute(QueueableContext context)
+    {
+        if (makeCallout) performCallout();
+    }
+    public static void performCallout()
+    {
+        // make callout here
+    }
+}
+Testing the job:
+
+Test.startTest();
+    MyQueueable.makeCallout = false;
+    // enqueue job
+Test.stopTest();
+Then test your method which actually makes the callout separately:
+
+Test.startTest();
+    MyQueueable.performCallout();
+Test.stopTest();
+The reason you get this error is that when you enqueue the job, that counts as a DML Operation. Then when you call Test.stopTest(), it runs synchronously, making a callout within the same transaction.

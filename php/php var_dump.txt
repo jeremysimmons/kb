@@ -1,0 +1,14 @@
+composer require symfony/var-dumper --dev
+dump($someVar);
+
+https://symfony.com/doc/current/components/var_dumper.html
+
+https://github.com/google-code-export/prado3/blob/master/framework/Util/TVarDumper.php
+
+https://github.com/doctrine/common/blob/master/lib/Doctrine/Common/Util/Debug.php
+<?php echo "<pre>"; \Doctrine\Common\Util\Debug::dump($result, 4); echo "</pre>";?>
+
+https://git.drupalcode.org/project/features/blob/HEAD/features.export.inc
+https://git.drupalcode.org/project/features/blob/HEAD/features.export.inc#L573
+echo features_var_export($object);
+

@@ -1,0 +1,2 @@
+WooCommerce Actions and Filters to Manipulate the Cart — SitePoint
+https://www.sitepoint.com/woocommerce-actions-and-filters-manipulate-cart/

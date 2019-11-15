@@ -1,0 +1,4 @@
+https://stackoverflow.com/a/3745250
+Push git commits & tags simultaneously
+
+git config --global push.followTags true

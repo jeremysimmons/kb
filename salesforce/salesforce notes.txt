@@ -1,0 +1,10 @@
+https://www.linkedin.com/pulse/slack-salesforce-notify-closedwon-deals-tuan-abdeen-/
+
+Queueable Interface
+Enables the asynchronous execution of Apex jobs that can be monitored.
+
+https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_class_System_Queueable.htm
+
+
+Performing DML Operations and Mock Callouts
+https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_classes_restful_http_testing_dml.htm

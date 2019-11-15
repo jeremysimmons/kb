@@ -8,6 +8,8 @@ The email address that all emails to customers will be sent from, such as 'sales
 Store Setup > Store Settings > Misc > Forward Order Invoices
 To forward copies of order confirmation messages sent to your customers after they place an order to one or more additional addresses of your own, check this box and enter a comma separated list of email addresses below.
 
+orders@heartmath.com,ordermgt@hearmath.org
+
 Store Setup > Store Settings > Misc > Administrator's Email
 The email address where all system notifications should be sent to.
 

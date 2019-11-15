@@ -1,0 +1,25 @@
+Apex Testing
+Write robust code by executing Apex unit tests.
+https://trailhead.salesforce.com/en/content/learn/modules/apex_testing
+
+
+Using Limits, startTest, and stopTest
+https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_testing_tools_start_stop_test.htm
+
+succinct answer from stack exchange
+https://salesforce.stackexchange.com/a/80950
+startTest()
+
+Marks the point in your test code when your test actually begins. Use this method when you are testing governor limits.
+
+Usage
+
+You can also use this method with stopTest to ensure that all asynchronous calls that come after the startTest method are run before doing any assertions or testing. Each test method is allowed to call this method only once. All of the code before this method should be used to initialize variables, populate data structures, and so on, allowing you to set up everything you need to run your test. Any code that executes after the call to startTest and before stopTest is assigned a new set of governor limits.
+
+stopTest()
+
+Marks the point in your test code when your test ends. Use this method in conjunction with the startTest method.
+
+Usage
+
+Each test method is allowed to call this method only once. Any code that executes after the stopTest method is assigned the original limits that were in effect before startTest was called. All asynchronous calls made after the startTest method are collected by the system. When stopTest is executed, all asynchronous processes are run synchronously.

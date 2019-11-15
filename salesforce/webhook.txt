@@ -2,6 +2,9 @@ https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_ca
 
 https://www.jamesward.com/2014/06/30/create-webhooks-on-salesforce-com
 
+System.UnsupportedOperationException: ConnectApi methods are not supported in data siloed tests. Please use @IsTest(SeeAllData=true)
+
+https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_testing_seealldata_using.htm.
 
 https://stackoverflow.com/a/13124387/26877
 

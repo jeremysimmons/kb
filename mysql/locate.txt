@@ -1,0 +1,19 @@
+https://toao.net/48-replacing-smart-quotes-and-em-dashes-in-mysql
+
+
+# FIRST, LOCATE UTF-8 characters.
+UPDATE `t` SET `c` = LOCATE(`c`, 0xE28098, "'");
+UPDATE `t` SET `c` = LOCATE(`c`, 0xE28099, "'");
+UPDATE `t` SET `c` = LOCATE(`c`, 0xE2809C, '"');
+UPDATE `t` SET `c` = LOCATE(`c`, 0xE2809D, '"');
+UPDATE `t` SET `c` = LOCATE(`c`, 0xE28093, '-');
+UPDATE `t` SET `c` = LOCATE(`c`, 0xE28094, '--');
+UPDATE `t` SET `c` = LOCATE(`c`, 0xE280A6, '...');
+# NEXT, LOCATE their Windows-1252 equivalents.
+UPDATE `t` SET `c` = LOCATE(`c`, CHAR(145), "'");
+UPDATE `t` SET `c` = LOCATE(`c`, CHAR(146), "'");
+UPDATE `t` SET `c` = LOCATE(`c`, CHAR(147), '"');
+UPDATE `t` SET `c` = LOCATE(`c`, CHAR(148), '"');
+UPDATE `t` SET `c` = LOCATE(`c`, CHAR(150), '-');
+UPDATE `t` SET `c` = LOCATE(`c`, CHAR(151), '--');
+UPDATE `t` SET `c` = LOCATE(`c`, CHAR(133), '...');

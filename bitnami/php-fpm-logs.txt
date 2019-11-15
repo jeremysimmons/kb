@@ -1,0 +1,1 @@
+https://community.bitnami.com/t/how-to-enable-php-logs-on-nginx-stack-powered-by-bitnami-hvm/41709/5

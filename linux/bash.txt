@@ -1,0 +1,1 @@
+for i in access*; do echo cp "${i}" "/tmp/access/${i}"; done

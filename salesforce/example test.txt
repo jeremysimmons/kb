@@ -1,0 +1,48 @@
+RestClassesTest
+testRestLeadConvert
+
+@isTest
+global class LeadConvertActionTest {
+
+    private static testMethod void doTest() {
+
+        Test.startTest();
+
+        Lead l = new Lead(FirstName = 'TestFirst',
+            LastName = 'TestLast',
+            Street = 'Somewhere',
+            City = 'Around',
+            State = 'CA',
+            PostalCode = '90002',
+            Phone = '3103081233',
+            Email = 'testing@this.com',
+            Existing_PV_System__c = 'Yes',
+            Utility__c = 'Other');
+
+        insert l;
+
+        //String jsonInput = '{"leadId": "' + l.Id + '", "convertedStatus": "Closed - Converted"}';
+    //String jsonInput = '{"inputs":[{"leadId": "' + l.Id + '", "convertedStatus": "Closed - Converted"}]}';
+    //Map<String, Object> leadObj = (Map<String, Object>)JSON.deserializeUntyped(jsonInput);
+    //Map<String, Object> leadObj = (Map<String, Object>)JSON.deserializeStrict(jsonInput, String.class);
+    //Map<String, String> MyStrings = new Map<String, String>{'leadId' => l.Id, 'convertedStatus' => 'Closed - Converted'};
+    //new Object { 'leadId' => l.Id, 'convertedStatus' => 'Closed - Converted' }
+
+    List<LeadConvertAction.ConvertLeadActionRequest> leadC = New List<LeadConvertAction.ConvertLeadActionRequest>();
+
+    //leadC.leadId = new ID l.Id;
+
+    leadC.leadId = l.Id;
+    leadC.convertedStatus = 'Closed - Converted';
+    List<LeadConvertAction.ConvertLeadActionResult> converted = LeadConvertAction.convertLeads(leadC);
+    Test.stopTest();
+
+    Account a = [Select FirstName, LastName, Id From Account where ID = :converted.accountId];
+    Contact c = [Select FirstName, LastName, Id From Contact where ID = :converted.contactId];
+    Opportunity o = [Select Account.FirstName, Account.LastName, Id From Opportunity where ID = :converted.opportunityId];
+
+    system.assertEquals(a.FirstName, l.FirstName);
+    system.assertEquals(c.LastName, l.LastName);
+    system.assertEquals(o.Account.LastName, l.LastName);
+  }
+}
