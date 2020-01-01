@@ -1,0 +1,5 @@
+
+AuthType Basic
+AuthName "Encore"
+AuthUserFile /home/dh_zm6zac/dev.encoreeventsrentals.com/.htpasswd
+Require valid-user

@@ -1,0 +1,10 @@
+https://help.dreamhost.com/hc/en-us/articles/217214317-Apache-HTTP-Server
+
+$ curl -Is http://websitehelp.support | grep Server
+
+$ dpkg -l ndn-apache22
+
+ii  ndn-apache22   2.2.31-5     amd64        Dreamhost Apache 2.2 package
+
+/dh/apache2/httpd-INSTANCE/etc/httpd.conf
+

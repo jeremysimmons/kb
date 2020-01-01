@@ -1,0 +1,2 @@
+redirect stderr output stream, which is used to report all errors, including "Access denied"
+find . -name "filetofind" 2>/dev/null
