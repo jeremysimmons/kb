@@ -1,0 +1,13 @@
+sudo apt install mysql-server
+sudo mysql_secure_installation utility
+
+sudo systemctl start mysql
+
+sudo systemctl enable mysql
+
+sudo systemctl restart mysql
+
+
+/usr/bin/mysql -u root -p
+
+https://support.rackspace.com/how-to/installing-mysql-server-on-ubuntu/

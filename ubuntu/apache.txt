@@ -1,0 +1,44 @@
+https://tutorials.ubuntu.com/tutorial/install-and-configure-apache#1
+
+sudo apt update
+sudo apt install apache2
+
+/var/www/html/index.html
+/etc/apache2/sites-enabled/000-default.conf
+
+sudo mkdir /var/www/gci/
+
+cd /etc/apache2/sites-available/
+
+sudo cp 000-default.conf encore.jjsaws.com.conf
+sudo nano gci.conf
+ServerAdmin yourname@example.com
+DocumentRoot /var/www/encore.jjsaws.com
+
+sudo a2ensite encore.jjsaws.com.conf
+
+sudo service apache2 reload
+
+sudo apt install software-properties-common
+
+sudo add-apt-repository ppa:ondrej/php
+
+
+sudo apt install php7.0
+sudo apt-get update
+
+
+/etc/php/7.0/cli/php.ini
+/etc/php/7.0/apache2/php.ini
+
+sudo apt install php7.0-mysql
+
+sudo usermod -a -G www-data ubuntu
+
+sudo chgrp -R www-data /var/www/html
+sudo chgrp -R www-data /var/www/encore.jjsaws.com
+
+sudo chmod -R g+w /var/www/html
+sudo chmod -R g+w /var/www/encore.jjsaws.com
+
+

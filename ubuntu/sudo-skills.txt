@@ -1,0 +1,22 @@
+Root user Tutorial
+https://www.cyberciti.biz/faq/linux-login-as-super-user/
+
+{jerry@nixcraft}$ sudo -i -u tom
+
+
+change root password in Ubuntu
+sudo -i
+passwd
+or
+sudo passwd root
+
+disable your root account
+sudo passwd -dl root
+or
+sudo passwd --delete --lock root
+
+add user named tom
+sudo adduser tom sudo
+
+login as another user
+sudo -i -u tom
