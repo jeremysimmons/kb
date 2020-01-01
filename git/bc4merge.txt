@@ -5,8 +5,8 @@
     trustExitCode = true
 [merge]
     tool = bc4
-
-BCompare.exe C:\Left.ext C:\Right.ext C:\Center.ext C:\Output.ext
 [mergetool "bc4"]
     cmd = \"C:\\Program Files\\Beyond Compare 4\\BComp.exe\" -automerge -ignoreunimportant -reviewconflicts \"$REMOTE\" \"$LOCAL\" \"$BASE\" \"$MERGED\"
     trustExitCode = true
+
+BCompare.exe C:\Left.ext C:\Right.ext C:\Center.ext C:\Output.ext
