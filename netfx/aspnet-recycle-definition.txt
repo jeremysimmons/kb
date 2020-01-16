@@ -1,0 +1,27 @@
+https://stackoverflow.com/a/5651141/26877
+
+An Application Pool is, in short, a region of memory that is maintained up and running by a process called W3WP.exe, aka Worker Process. Recycling an Application Pool means bringing that process down, eliminating it from memory and then originating a brand new Worker Process, with a newly assigned process ID.
+
+Regarding Application Domains, I see it as subsets of memory regions, within the aforementioned region that plays the role of a container. In other words, the process in memory, W3WP.exe in this case, is a macro memory region for applications that stores subset regions, called Application Domains. Having said that, one process in memory may store different Application Domains, one for each application that is assigned to run within a given Application Pool.
+
+When it comes to recycling, as I initially told, it's something that I myself reserve only for Application Pools. For AppDomains, I prefer using the term 'restart', in order to avoid misconception. Based on this, restarting a AppDomain means starting over a given application with the newly added settings, such as refreshing the existing configuration. That happens within the boundaries of that sub-region of memory, called AppDomain, that ultimately lies within the process associated with a respective Application Pool. Those new settings may come from files such as
+
+web.config, machine.config, global.asax, Bin directory, App_Code,
+
+and there may be others.
+
+AppDomain are isolated from each other, that makes total sense. If not so, if changes to a web.config, let's say, of application 1, requited recycle of the pool, all other applications assigned to that pool would get restarted, what was definitely not desired by Microsoft and by anyone else.
+
+Summarizing my point,
+
+Process (W3WP.exe)
+AppDomain 1
+AppDomain 2
+AppDomain 3
+AppDomain n
+n = the number of assigned applications to the Application Pool managed by the given W3WP.exe
+
+Processes are memory regions isolated from one another
+AppDomains are sub-memory regions isolated from one another, within the same process
+Global IIS settings changes may require Application Pool recycle (killing and starting a new Worker Process, W3WP.exe)
+Application-wide settings changes AppDomains concerns, and they may get restarted after changes in some specific files such as the ones outline above

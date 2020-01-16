@@ -1,0 +1,12 @@
+This problem occurs because ASP.NET 2.0 sets up a file change notification for each directory. As the number of subdirectories increases, the numbers of file change notifications grows.
+
+ASP.NET 2.0-connected applications on a Web site may appear to stop responding
+
+
+https://support.microsoft.com/en-us/help/911272/fix-asp-net-2-0-connected-applications-on-a-web-site-may-appear-to-sto
+<httpRuntime fcnMode="Disabled"/>
+
+HKLM\Software\Microsoft\ASP.NET\FCNMode
+
+If you are running a 32-bit process on an x64-based system, add the following DWORD value at the following registry key:
+HKLM\SOFTWARE\Wow6432Node\Microsoft\ASP.NET\FCNMode
