@@ -1,0 +1,3 @@
+https://wordpress.org/plugins/wp-crontrol/
+https://wordpress.org/plugins/sql-executioner/
+https://wordpress.org/plugins/wp-file-manager/

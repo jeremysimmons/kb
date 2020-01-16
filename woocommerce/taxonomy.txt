@@ -1,0 +1,56 @@
+SELECT
+    posts.ID,
+    posts.post_title,
+    posts.post_author,
+    posts.post_date,
+    posts.post_date_gmt,
+    posts.post_content,
+    posts.post_excerpt,
+    posts.post_status,
+    posts.comment_status,
+    posts.ping_status,
+    posts.post_password,
+    posts.post_name,
+    posts.to_ping,
+    posts.pinged,
+    posts.post_modified,
+    posts.post_modified_gmt,
+    posts.post_content_filtered,
+    posts.post_parent,
+    posts.guid,
+    posts.menu_order,
+    posts.post_type,
+    posts.post_mime_type,
+    posts.comment_count
+FROM
+    wp_posts AS posts
+INNER JOIN wp_term_relationships AS term_relationships ON posts.ID = term_relationships.object_id
+INNER JOIN wp_term_taxonomy AS term_taxonomy ON term_relationships.term_taxonomy_id = term_taxonomy.term_taxonomy_id
+INNER JOIN wp_terms AS terms ON term_taxonomy.term_id = terms.term_id
+WHERE
+    term_taxonomy.taxonomy = 'product_type'
+AND terms.slug = 'simple'
+AND posts.post_type = 'product';
+
+AND posts.post_type = 'product'
+and terms.slug IS NULL OR terms.slug NOT IN ( 'simple', 'variable')
+
+
+SELECT
+    posts.ID,
+    posts.post_title,
+    posts.post_author,
+    posts.post_status,
+    posts.ping_status,
+    posts.post_parent,
+    posts.post_type,
+    terms.slug
+FROM
+    wp_posts AS posts
+LEFT  JOIN wp_term_relationships AS term_relationships ON posts.ID = term_relationships.object_id
+LEFT JOIN wp_term_taxonomy AS term_taxonomy ON term_relationships.term_taxonomy_id = term_taxonomy.term_taxonomy_id
+LEFT JOIN wp_terms AS terms ON term_taxonomy.term_id = terms.term_id
+WHERE
+    term_taxonomy.taxonomy = 'product_type'
+AND posts.post_type in ( 'product', 'product_variation' )
+and terms.slug NOT IN ( 'simple')

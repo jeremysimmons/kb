@@ -1,0 +1,5 @@
+https://wordpress.stackexchange.com/a/230086/178755
+
+define('TEMPLATEPATH', get_template_directory());
+...
+define('STYLESHEETPATH', get_stylesheet_directory());

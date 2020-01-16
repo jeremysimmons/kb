@@ -1,0 +1,64 @@
+$variations = $p->get_available_variations();
+        foreach ( $variations as $key => $value ) {
+          echo "\t $key \n";
+          foreach ( $value as $key2 => $value2 ) {
+            echo $key2.PHP_EOL;
+          }
+          $total++;
+        }
+
+    [attributes] => Array
+        (
+            [attribute_pa_select] => cake-stand-white-footed-12-25
+        )
+
+    [availability_html] => 
+    [backorders_allowed] => 
+    [dimensions] => Array
+        (
+            [length] => 
+            [width] => 
+            [height] => 
+        )
+
+    [dimensions_html] => N/A
+    [display_price] => 17
+    [display_regular_price] => 17
+    [image] => Array
+        (
+            [title] => Cake Stand White Footed 12.25 inch
+            [caption] => 
+            [url] => http://lcl.encore.com/wp-content/uploads/Cake-Stand-White-Footed-12.25-inch.jpg
+            [alt] => 
+            [src] => http://lcl.encore.com/wp-content/uploads/Cake-Stand-White-Footed-12.25-inch-450x450.jpg
+            [srcset] => http://lcl.encore.com/wp-content/uploads/Cake-Stand-White-Footed-12.25-inch-450x450.jpg 450w, http://lcl.encore.com/wp-content/uploads/Cake-Stand-White-Footed-12.25-inch-80x80.jpg 80w, http://lcl.encore.com/wp-content/uploads/Cake-Stand-White-Footed-12.25-inch-300x300.jpg 300w, http://lcl.encore.com/wp-content/uploads/Cake-Stand-White-Footed-12.25-inch-768x768.jpg 768w, http://lcl.encore.com/wp-content/uploads/Cake-Stand-White-Footed-12.25-inch-1030x1030.jpg 1030w, http://lcl.encore.com/wp-content/uploads/Cake-Stand-White-Footed-12.25-inch-1230x1230.jpg 1230w, http://lcl.encore.com/wp-content/uploads/Cake-Stand-White-Footed-12.25-inch-840x840.jpg 840w, http://lcl.encore.com/wp-content/uploads/Cake-Stand-White-Footed-12.25-inch-454x454.jpg 454w, http://lcl.encore.com/wp-content/uploads/Cake-Stand-White-Footed-12.25-inch-265x265.jpg 265w, http://lcl.encore.com/wp-content/uploads/Cake-Stand-White-Footed-12.25-inch-600x600.jpg 600w, http://lcl.encore.com/wp-content/uploads/Cake-Stand-White-Footed-12.25-inch-166x166.jpg 166w, http://lcl.encore.com/wp-content/uploads/Cake-Stand-White-Footed-12.25-inch-400x400.jpg 400w, http://lcl.encore.com/wp-content/uploads/Cake-Stand-White-Footed-12.25-inch-100x100.jpg 100w
+            [sizes] => (max-width: 450px) 100vw, 450px
+            [full_src] => http://lcl.encore.com/wp-content/uploads/Cake-Stand-White-Footed-12.25-inch.jpg
+            [full_src_w] => 3331
+            [full_src_h] => 3331
+            [gallery_thumbnail_src] => http://lcl.encore.com/wp-content/uploads/Cake-Stand-White-Footed-12.25-inch-100x100.jpg
+            [gallery_thumbnail_src_w] => 100
+            [gallery_thumbnail_src_h] => 100
+            [thumb_src] => http://lcl.encore.com/wp-content/uploads/Cake-Stand-White-Footed-12.25-inch-400x400.jpg
+            [thumb_src_w] => 400
+            [thumb_src_h] => 400
+            [src_w] => 450
+            [src_h] => 450
+        )
+
+    [image_id] => 86948
+    [is_downloadable] => 1
+    [is_in_stock] => 1
+    [is_purchasable] => 1
+    [is_sold_individually] => no
+    [is_virtual] => 
+    [max_qty] => 
+    [min_qty] => 1
+    [price_html] => <span class="price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>17.00</span></span>
+    [sku] => 1378
+    [variation_description] => 
+    [variation_id] => 89520
+    [variation_is_active] => 1
+    [variation_is_visible] => 1
+    [weight] => 
+    [weight_html] => N/A

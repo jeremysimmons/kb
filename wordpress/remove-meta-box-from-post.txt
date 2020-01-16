@@ -1,0 +1,23 @@
+https://gist.github.com/aliciaduffy/3362670
+<?php 
+add_action( 'add_meta_boxes', 'NAME_remove_meta_boxes', 100);
+function NAME_remove_meta_boxes() {
+	remove_meta_box( 'trackbacksdiv', 'post', 'normal' ); // Trackbacks meta box
+	remove_meta_box( 'postcustom', 'post', 'normal' ); // Custom fields meta box
+	remove_meta_box( 'commentsdiv', 'post', 'normal' ); // Comments meta box
+	remove_meta_box( 'slugdiv', 'post', 'normal' );	// Slug meta box
+	remove_meta_box( 'authordiv', 'post', 'normal' ); // Author meta box
+	remove_meta_box( 'revisionsdiv', 'post', 'normal' ); // Revisions meta box
+	remove_meta_box( 'formatdiv', 'post', 'normal' ); // Post format meta box
+	remove_meta_box( 'commentstatusdiv', 'post', 'normal' ); // Comment status meta box
+	remove_meta_box( 'categorydiv', 'post', 'side' ); // Category meta box
+	remove_meta_box( 'tagsdiv-post_tag', 'post', 'side' ); // Post tags meta box
+	remove_meta_box( 'pageparentdiv', 'post', 'side' ); // Page attributes meta box
+	
+	remove_meta_box( 'file_gallery', 'post', 'normal'); // File Gallery Plugin
+	remove_meta_box( 'wpseo_meta', 'post', 'normal'); // YOAST Seo
+	remove_meta_box( 'gdsr-meta-box-mur', 'post', 'advanced');  // GD Star Rating
+	remove_meta_box( 'gdsr-meta-box', 'post', 'side' ); // GD Star Rating
+	remove_meta_box( 'yourlsdiv', 'post', 'side'); // YOURLS
+}
+// Replace 'post' with whatever post type you are trying to hide meta boxes for.
