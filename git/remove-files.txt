@@ -1,0 +1,2 @@
+git ls-files -z | xargs -0 rm
+git checkout -- .

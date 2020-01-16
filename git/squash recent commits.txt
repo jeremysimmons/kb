@@ -7,5 +7,7 @@ https://stackoverflow.com/a/5189600/26877
 git rebase -i <after-this-commit>
 replace "pick" on the second and subsequent commits with "squash" or "fixup"
 
-<after-this-commit> is either the SHA1 hash or the relative location from the HEAD of the current branch from which commits are analyzed for the rebase command
+<after-this-commit> is either the SHA1 hash or the relative location from 
+the HEAD of the current branch from which commits are analyzed for the rebase command
+
 For example, if the user wishes to view 5 commits from the current HEAD in the past the command is git rebase -i HEAD~5
