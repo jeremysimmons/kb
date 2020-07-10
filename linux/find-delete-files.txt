@@ -1,0 +1,5 @@
+sometimes `del foo*` has too many entries to process
+
+use find w/ -delete to kill-em-all
+
+find . -type f -name "alertlib_cache*.tmp" -delete

@@ -1,0 +1,13 @@
+https://7php.com/php-5-3-how-to-completely-destroy-session-variables-in-php/
+
+Steps:
+1- Remove Session data from the server’s disk
+2- Remove data from globals
+3- Clear any traces of PHPSESSID from your browser’s session cookie
+
+if ( isset( $_COOKIE[session_name()] ) )
+setcookie( session_name(), "", time()-3600, "/" );
+//clear session from globals
+$_SESSION = array();
+//clear session from disk
+session_destroy();

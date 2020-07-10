@@ -1,0 +1,36 @@
+https://stackoverflow.com/questions/19670748/how-to-block-out-dates-in-the-fullcalendar-beyond-a-certain-date
+$('#calendar').fullCalendar({
+    ...
+    dayRender: function(date, cell){
+        if (date > maxDate){
+            $(cell).addClass('disabled');
+        }
+    }
+    ...
+});
+$('#calendar').fullCalendar({
+    ...
+    viewRender: function(view){
+        if (view.start > maxDate){
+            $('#calendar').fullCalendar('gotoDate', maxDate);
+        }
+    }
+    ...
+});
+
+dayClick: function(date, allDay, jsEvent, view) {
+   var myDate = new Date();
+
+   //How many days to add from today?
+   var daysToAdd = 15;
+
+   myDate.setDate(myDate.getDate() + daysToAdd);
+
+   if (date < myDate) {
+       //TRUE Clicked date smaller than today + daysToadd
+       alert("You cannot book on this day!");
+   } else {
+       //FLASE Clicked date larger than today + daysToadd
+       alert("Excellent choice! We can book today..");
+   }
+}

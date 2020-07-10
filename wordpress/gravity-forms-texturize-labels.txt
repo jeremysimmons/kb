@@ -1,0 +1,12 @@
+wp-content\plugins\gravityforms\includes\fields\class-gf-field.php
+esc_html( $field_label )
+276
+
+
+return apply_filters( 'esc_html', $safe_text, $text );
+
+$field_content = gf_apply_filters( array( 'gform_field_content', $form_id, $field->id ), $field_content, $field, $value, 0, $form_id );
+
+add_filter('run_wptexturize', false);
+
+add_filter( 'gform_field_content_123_6', 'my_custom_function', 10, 5 );

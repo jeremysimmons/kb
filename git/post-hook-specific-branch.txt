@@ -1,0 +1,11 @@
+Writing a git post-receive hook to deal with a specific branch
+https://stackoverflow.com/questions/7351551/writing-a-git-post-receive-hook-to-deal-with-a-specific-branch
+
+#!/bin/bash
+while read oldrev newrev refname
+do
+    branch=$(git rev-parse --symbolic --abbrev-ref $refname)
+    if [ "master" = "$branch" ]; then
+        # Do something
+    fi
+done

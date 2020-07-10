@@ -1,0 +1,11 @@
+~/.php/7.4/phprc
+
+log_errors = 1 
+error_log = /home/dh_zm6zac/php.log
+
+killall -9 php74.cgi -u dh_zm6zac
+
+
+https://help.dreamhost.com/hc/en-us/articles/214199378-How-do-I-enable-PHP-error-logging-
+https://help.dreamhost.com/hc/en-us/articles/214200668-How-do-I-create-a-phprc-file-via-SSH-
+https://help.dreamhost.com/hc/en-us/articles/214200748-My-phprc-file-isn-t-updating

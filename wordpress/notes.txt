@@ -1,0 +1,5 @@
+UPDATE `wp_users` SET `user_pass`= MD5('yourpassword') WHERE `user_login`='yourusername';
+https://wordpress.org/support/article/changing-the-site-url/
+http://linuxwebservers.net/apache/php/wordpress/install-wordpress-on-apache.html
+http://linuxwebservers.net/apache/php/wordpress/setting-up-pretty-links-in-wordpress.html
+https://wanderingjon.com/wordpress-local-development-tips/

@@ -1,0 +1,23 @@
+https://wordpress.stackexchange.com/questions/27856/is-there-a-way-to-send-html-formatted-emails-with-wordpress-wp-mail-function
+Is there a way to send HTML formatted emails with WordPress' wp_mail() function?
+
+$to = 'sendto@example.com';
+$subject = 'The subject';
+$body = 'The email body content';
+$headers = array('Content-Type: text/html; charset=UTF-8');
+
+wp_mail( $to, $subject, $body, $headers );
+
+alternate syntax 
+
+$email_to = 'someaddress@gmail.com';
+$email_subject = 'Email subject';
+
+// <<<EOD it is PHP heredoc syntax
+$email_body = <<<EOD
+This is your new <b style="color: red; font-style: italic;">password</b> : {$password}
+EOD;
+
+$headers = ['Content-Type: text/html; charset=UTF-8'];
+
+$send_mail = wp_mail( $email_to, $email_subject, $email_body, $headers );

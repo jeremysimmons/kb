@@ -1,0 +1,7 @@
+can I use get_template_part in a plugin?
+
+get_template_part is a theme function. You can't load plugin files with that function. Take a look at the source and you will notice the work is done by locate_template. Look at that source and you will see that it always loads from theme directories.
+https://wordpress.stackexchange.com/questions/124789/how-to-include-a-file-using-get-template-part-in-a-plugin
+
+you can't use get_template_part in plugins, but there's a handy class on Github (created by Gary Jones) that mimics the get_template_part functionality in plugins, adding the plugin to the fallback (child theme > parent theme > plugin).
+https://github.com/GaryJones/Gamajo-Template-Loader

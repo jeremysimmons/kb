@@ -1,0 +1,40 @@
+https://brightbrightgreat.com/2016/03/24/how-to-log-mysql-errors-in-wordpress/
+
+function db_debug_log(){
+
+	//WP already stores query errors in this obscure
+	//global variable, so we can see what we've ended
+	//up with just before shutdown
+	global $EZSQL_ERROR;
+
+	try {
+		//proceed if there were MySQL errors during runtime
+		if(is_array($EZSQL_ERROR) && count($EZSQL_ERROR)) {
+			//build a log entry
+			$xout = array();
+
+			//let's start with some environmental information
+			$xout[] = "DATE: " . current_time('r');
+			$xout[] = "SITE: " . site_url();
+			$xout[] = "IP: " . $_SERVER['REMOTE_ADDR'];
+			$xout[] = "UA: " . $_SERVER['HTTP_USER_AGENT'];
+			$xout[] = "SCRIPT: " . $_SERVER['SCRIPT_NAME'];
+			$xout[] = "REQUEST: " . $_SERVER['REQUEST_URI'];
+			$xout[] = "\n\n\n\n";
+
+			//and lastly, add the error messages with some line separations for readability
+			foreach($EZSQL_ERROR AS $e) {
+				$xout[] = str_repeat('-', 50) . "\n" . implode("\n", $e) . "\n" . str_repeat('-', 50);
+				$xout[] = "\n\n\n\n";
+			}
+
+			//email it!
+			//if a plugin overrides the content-type header for outbound emails, change the message body
+			//below to nl2br(esc_html(implode("\n", $xout)))
+			wp_mail(get_bloginfo('admin_email'), '[' . get_bloginfo('name') . '] DB Error', implode(“\n”, $xout));
+		}
+	} catch(Exception $e){ }
+
+	return;
+}
+add_action('shutdown', 'db_debug_log');

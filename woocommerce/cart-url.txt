@@ -1,0 +1,3 @@
+$cart_url  = get_permalink(wc_get_page_id('cart'));
+
+wc_get_cart_url

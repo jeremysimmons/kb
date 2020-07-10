@@ -1,0 +1,18 @@
+$webRequest = new SimpleXMLElement( "<WebRequest></WebRequest>" );
+$ticket = $webRequest->addChild( 'Ticket' );
+
+$item1 = $ticket->addChild('Item');
+$item1->addChild('Rent_Or_Sales', 'R');
+$item1->addChild('Item_Number', '1234');
+$item2 = $ticket->addChild('Item');
+$item2->addChild('Rent_Or_Sales', 'S');
+$item2->addChild('Item_Number', '5678');
+
+$customXML = $webRequest->asXML();
+$customXML = substr($customXML, strpos($customXML, '?'.'>') + 2);
+
+$doc = new DOMDocument();
+$doc->loadxml($webRequest->asXML());
+$doc->formatOutput = true;
+echo $doc->saveXML($doc->documentElement);
+

@@ -1,0 +1,130 @@
+https://www.wpbeginner.com/wp-tutorials/how-wordpress-actually-works-behind-the-scenes-infographic/
+
+How WordPress Actually Works Behind the Scenes
+
+1. Load wp-config.php File
+The wp-config.php is the WordPress configuration file. It sets global variables for a WordPress site and contains your WordPress database information. This is the first file WordPress loads for obvious reasons. Learn more about wp-config.php file and how to edit it.
+
+2. Setup Default Constants
+After loading wp-config.php file, WordPress will move on to set default constants. This includes information like default WordPress upload location, maximum file sizes, and other default constants set in wp-config.php file.
+
+3. Load advanced-cache.php File
+If advanced-cache.php file exists on your site, then WordPress will load it next. This file acts as a drop-in file and is used by several popular plugins particularly WordPress caching plugins. If your site is using this file, then you will see a new item on the plugins screen called Drop-ins.
+
+advanced-cache.php file appearing as drop-in
+
+4. Load wp-content/db.php File
+WordPress allows developers to create their own database abstraction layers and load them in a db.php file placed inside the wp-content folder. It is commonly used by WordPress caching plugins to improve database performance. If your website has this file present, then WordPress will load it.
+
+5. Connect MySQL and Select Database
+WordPress now have enough information to proceed further. It will move on to connect to the MySQL server and select the database.
+
+If WordPress is unable to connect to the database, then you will see the “Error establishing database connection” error and WordPress will quit right here.
+
+If everything works fine, then it will move on to next steps.
+
+6. Load object-cache.php or wp-includes/cache.php File
+WordPress will now look for object-cache.php file. If it doesn’t exist, then WordPress will move on to load wp-includes/cache.php file.
+
+7. Load wp-content/sunrise.php File
+If it is a multisite network, then WordPress will now look for sunrise.php file if it exists in the wp-content folder.
+
+8. Load Localization Library
+WordPress will now load l10n.php library in the wp-includes folder. This file loads WordPress localization system, loads translations, sets locales, etc. See our guide on how to use WordPress in other languages.
+
+9. Load Multisite Plugins
+If it is a multisite network, then WordPress will now load the multisite plugins. Learn more about how plugins work on WordPress multisite network.
+
+Network activated plugins
+
+10. Do Action ‘muplugins_loaded’
+The action muplugins_loaded is now run by WordPress. This action is available only to network activated plugins on a WordPress multisite.
+
+11. Load Active Plugins
+WordPress will now load all active plugins on the site. It does that by looking in the active_plugins entry in the options table of your WordPress database. This allows WordPress to ignore plugins that are installed on your site but not activated.
+
+12. Load pluggable.php File
+The pluggable.php file contains functions that can be redefined by WordPress plugins. WordPress will now see if the functions inside this file are already defined by another plugin. Otherwise, it will define those functions itself.
+
+13. Do Action ‘plugins_loaded’
+WordPress will now run the action ‘plugins_loaded’. It allows developers to hook their functions to run after all active plugins have been loaded.
+
+14. Load Rewrite Rules
+WordPress will now load the rewrite rules. These rewrite rules help WordPress use SEO friendly URLs.
+
+15. Instantiate $wp_query, $wp_rewrite, $wp
+At this point WordPress loads the following objects:
+
+$wp_query: The global instance that holds WP_Query class. It tells WordPress what content is requested in a typical WordPress query format.
+
+$wp_rewrite: The global instance that holds your WP_Rewrite class. It contains your rewrite rules and functions which tell WordPress which URL to use to display the requested content.
+
+$wp: The global instance of the WP class which contains functions that will parse your request and perform the main query.
+
+16. Do Action ‘setup_theme’
+WordPress will now move on to run ‘setup_theme’ action. This action runs before your WordPress theme is loaded.
+
+17. Load Child Theme’s functions.php File
+The functions.php file acts as plugin and is used in WordPress themes to add theme specific features to your website. If you are using a child theme, then WordPress will now load your child theme’s functions.php file.
+
+Otherwise, it will go on and load your current active theme’s functions.php file.
+
+18. Load Parent Theme’s functions.php File
+If you are using a child theme, then WordPress will now load your parent theme’s functions.php file.
+
+19. Do Action ‘after_setup_theme’
+This action runs after WordPress has setup the theme and loaded theme functions. It is the first action available to themes.
+
+20. Setup Current User Object
+At this point, WordPress loads the current user object. It allows WordPress to manage the request in accordance with the user’s role and capabilities.
+
+21. Do Action ‘init’
+WordPress has so far loaded all the crucial information it needs. Now it fires the ‘init’ action.
+
+This action allows developers to add code that needs to be executed after WordPress has loaded all previously mentioned information.
+
+22. Do Action ‘widget_init’
+The widget_init action allows developers to register widgets and run code they needed to run at this time.
+
+23. Run wp()
+WordPress now calls wp() function which is located in wp-includes/functions.php file. It sets up the WordPress query globals $wp, $wp_query, $wp_the_query and then calls $wp->main.
+
+24. Parse Request
+Now WordPress has all the information it needs to parse the user request. It starts by checking the rewrite rules to match the user’s request.
+
+And then runs query variable filters, request action hook, and sends header request.
+
+25. Run Query
+If no content matches the query, then WordPress will set is_404 variable.
+
+Otherwise, WordPress will go on to load query variables.
+
+It will then run WP_Query->get_posts().
+
+Next, it fires DO_ACTION_REF_ARRAY ‘pre_get_posts’ action with WP_Query object.
+
+WordPress will now run apply_filters to clean up query and run some final checks.
+
+Now it fetches posts from the database and applies posts_results and the_posts filters.
+
+The query part ends with WordPress returning the posts.
+
+26. Do Action ‘template_redirect’
+WordPress will now run the template_redirect action. This hook runs just before WordPress determines which template page to load.
+
+27. Load Feed Template
+If the requested content is a RSS feed, then WordPress loads the feed template.
+
+28. Load Template
+WordPress will now look for the template file based on WordPress template hierarchy. It then loads the template which usually contains a WordPress loop.
+
+29. Do Action ‘shutdown’
+Just before ending all PHP execution, WordPress fires the last action called shutdown.
+
+WordPress stops working here. It has run the code and generated user’s requested web page.
+
+Now, your web hosting server replies to user’s request by sending them the web page generated by WordPress. This page contains HTML, CSS, and Javascript code, which tells user’s browser how to display it on screen.
+
+Amazing isn’t it? All these things happen within milliseconds. If you are using one of these best WordPress hosting services, then ideally your page will load in a couple of seconds.
+
+We hope this article helped you learn how WordPress works behind the scenes. You may also want to see our step by step guide on how to boost WordPress speed and performance for beginners.

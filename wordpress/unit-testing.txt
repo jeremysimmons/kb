@@ -1,0 +1,2 @@
+https://www.smashingmagazine.com/2017/12/automated-testing-wordpress-plugins-phpunit/
+https://make.wordpress.org/cli/handbook/plugin-unit-tests/

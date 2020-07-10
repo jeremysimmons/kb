@@ -1,0 +1,149 @@
+https://www.smashingmagazine.com/2013/12/modifying-admin-post-lists-in-wordpress/
+How To Modify Admin Post Lists In WordPress
+
+Adding Custom Table Headers
+
+add_filter('manage_event_posts_columns', 'bs_event_table_head');
+function bs_event_table_head( $defaults ) {
+    $defaults['event_date']  = 'Event Date';
+    $defaults['ticket_status']    = 'Ticket Status';
+    $defaults['venue']   = 'Venue';
+    $defaults['author'] = 'Added By';
+    return $defaults;
+}
+
+Adding data for each column
+
+add_action( 'manage_event_posts_custom_column', 'bs_event_table_content', 10, 2 );
+
+function bs_event_table_content( $column_name, $post_id ) {
+    if ($column_name == 'event_date') {
+    $event_date = get_post_meta( $post_id, '_bs_meta_event_date', true );
+      echo  date( _x( 'F d, Y', 'Event date format', 'textdomain' ), strtotime( $event_date ) );
+    }
+    if ($column_name == 'ticket_status') {
+    $status = get_post_meta( $post_id, '_bs_meta_event_ticket_status', true );
+    echo $status;
+    }
+
+    if ($column_name == 'venue') {
+    echo get_post_meta( $post_id, '_bs_meta_event_venue', true );
+    }
+
+}
+
+Ordering Columns
+
+add_filter( 'manage_edit-event_sortable_columns', 'bs_event_table_sorting' );
+function bs_event_table_sorting( $columns ) {
+  $columns['event_date'] = 'event_date';
+  $columns['ticket_status'] = 'ticket_status';
+  $columns['venue'] = 'venue';
+  return $columns;
+}
+
+add_filter( 'request', 'bs_event_date_column_orderby' );
+function bs_event_date_column_orderby( $vars ) {
+    if ( isset( $vars['orderby'] ) && 'event_date' == $vars['orderby'] ) {
+        $vars = array_merge( $vars, array(
+            'meta_key' => '_bs_meta_event_date',
+            'orderby' => 'meta_value'
+        ) );
+    }
+
+    return $vars;
+}
+
+add_filter( 'request', 'bs_ticket_status_column_orderby' );
+function bs_ticket_status_column_orderby( $vars ) {
+    if ( isset( $vars['orderby'] ) && 'ticket_status' == $vars['orderby'] ) {
+        $vars = array_merge( $vars, array(
+            'meta_key' => '_bs_meta_event_ticket_status',
+            'orderby' => 'meta_value'
+        ) );
+    }
+
+    return $vars;
+}
+
+add_filter( 'request', 'bs_venue_column_orderby' );
+function bs_venue_column_orderby( $vars ) {
+    if ( isset( $vars['orderby'] ) && 'venue' == $vars['orderby'] ) {
+        $vars = array_merge( $vars, array(
+            'meta_key' => '_bs_meta_event_venue',
+            'orderby' => 'meta_value'
+        ) );
+    }
+
+    return $vars;
+}
+
+Data Filtering
+
+add_action( 'restrict_manage_posts', 'bs_event_table_filtering' );
+function bs_event_table_filtering() {
+  global $wpdb;
+  if ( $screen->post_type == 'event' ) {
+
+    $dates = $wpdb->get_results( "SELECT EXTRACT(YEAR FROM meta_value) as year,  EXTRACT( MONTH FROM meta_value ) as month FROM $wpdb->postmeta WHERE meta_key = '_bs_meta_event_date' AND post_id IN ( SELECT ID FROM $wpdb->posts WHERE post_type = 'event' AND post_status != 'trash' ) GROUP BY year, month " ) ;
+
+    echo ’;
+      echo ’ . __( 'Show all event dates', 'textdomain' ) . ’;
+    foreach( $dates as $date ) {
+      $month = ( strlen( $date->month ) == 1 ) ? 0 . $date->month : $date->month;
+      $value = $date->year . '-' . $month . '-' . '01 00:00:00';
+      $name = date( 'F Y', strtotime( $value ) );
+
+      $selected = ( !empty( $_GET['event_date'] ) AND $_GET['event_date'] == $value ) ? 'selected="select"' : ’;
+      echo ’ . $name . ’;
+    }
+    echo ’;
+
+    $ticket_statuses = get_ticket_statuses();
+    echo ’;
+      echo ’ . __( 'Show all ticket statuses', 'textdomain' ) . ’;
+    foreach( $ticket_statuses as $value => $name ) {
+      $selected = ( !empty( $_GET['ticket_status'] ) AND $_GET['ticket_status'] == $value ) ? 'selected="selected"' : ’;
+      echo ’ . $name . ’;
+    }
+    echo ’;
+
+  }
+}
+
+add_filter( 'parse_query','bs_event_table_filter' );
+function bs_event_table_filter( $query ) {
+  if( is_admin() AND $query->query['post_type'] == 'event' ) {
+    $qv = &$query->query_vars;
+    $qv['meta_query'] = array();
+
+    if( !empty( $_GET['event_date'] ) ) {
+      $start_time = strtotime( $_GET['event_date'] );
+      $end_time = mktime( 0, 0, 0, date( 'n', $start_time ) + 1, date( 'j', $start_time ), date( 'Y', $start_time ) );
+      $end_date = date( 'Y-m-d H:i:s', $end_time );
+      $qv['meta_query'][] = array(
+        'field' => '_bs_meta_event_date',
+        'value' => array( $_GET['event_date'], $end_date ),
+        'compare' => 'BETWEEN',
+        'type' => 'DATETIME'
+      );
+
+    }
+
+    if( !empty( $_GET['ticket_status'] ) ) {
+      $qv['meta_query'][] = array(
+        'field' => '_bs_meta_event_ticket_status',
+        'value' => $_GET['ticket_status'],
+        'compare' => '=',
+        'type' => 'CHAR'
+      );
+    }
+
+    if( !empty( $_GET['orderby'] ) AND $_GET['orderby'] == 'event_date' ) {
+      $qv['orderby'] = 'meta_value';
+      $qv['meta_key'] = '_bs_meta_event_date';
+      $qv['order'] = strtoupper( $_GET['order'] );
+    }
+
+  }
+}

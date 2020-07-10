@@ -1,0 +1,125 @@
+<?php
+/*
+Plugin Name: Raw Shortcode
+Description: Disables the_content formatting filters for content in shortcode [raw].
+Author: Benjamin J. Balter 
+Version: 1.0
+*/
+
+/**
+ * Raw Shortcode
+ *
+ * Passing anything in between [raw] and [/raw] shortcode tags to the browser without running it 
+ * through texturize, wpautop, and other `the_content` filters
+ * 
+ * The Process:
+ *
+ * (1) Manually run the `do_shortcode` action on the post early, but only look for raw shortcodes.
+ *     From this run, we build an array of all the contents of the shortcodes, before they get filtered
+ * 
+ * (2) WordPress runs the standard `the_content` filters on priority ten as it would normally
+ * 
+ * (3) Manually re-run `do_shortcode` with only the raw shortcode, replacing the texturized shortcode 
+ *     content with the content we indexed pre-filtering.
+ *
+ */
+class Raw_Shortcode {
+
+	public $raws;
+	public $state = 'pre';
+
+	/**
+	 * Hook into API
+	 */
+	function __construct() {
+
+		add_filter( 'the_content', array( &$this, 'reset' ), 5 ); //reset the raw array each time the_content is run
+		add_filter( 'the_content', array( &$this, 'filter' ), 9 ); //texturize run on 10, normal shortcodes on 11
+		add_filter( 'the_content', array( &$this, 'bump_state' ), 10 ); //bump from pre to post so we know what callback to use
+		add_filter( 'the_content', array( &$this, 'filter' ), 15 ); //run post-texturize filter
+				
+	}
+	
+	/**
+	 * Each time `the_content` is run, reset the `$raws` array (assume it's a new post)
+	 * @param $content string the post content
+	 * @return the content untouched
+	 */
+	function reset( $content ) {
+		
+		$this->raws = array();
+		$this->state = 'pre';
+		return $content;
+		
+	}
+	
+	/**
+	 * Move class state from pre to post so we know what callback to call
+	 * @todo is there a better way to do this? 
+	 * @param $content string the post content
+	 * @return the content untouched
+	 */
+	function bump_state( $content ) {
+		
+		$this->state = 'post';
+		return $content;
+		
+	}
+
+	/**
+	 * Filter on `the_content` that runs before and after the texturize engine
+	 */
+	function filter( $content  ) {
+
+		global $shortcode_tags;
+		
+		//run only our shortcode tag, then replace the original shortcode array
+		$real_tags = $shortcode_tags;
+		remove_all_shortcodes();
+		
+		add_shortcode( 'raw', array( &$this, $this->state ) );
+
+		//strip <p>'s and run our shortcode
+		$content = shortcode_unautop( $content );		
+		$content = do_shortcode( $content );
+
+		//reset global array
+		$shortcode_tags = $real_tags;
+		
+		return $content;
+		
+	}
+	
+	/**
+	 * Before texturize engine runs, loop through and index all
+	 * raw shortcode tag contents into the $raws array
+	 */
+	function pre( $atts, $content ) {
+		
+		//index
+		$this->raws[] = $content;
+		
+		//replace raw tags so we can re-shortcode after	
+		return '[raw]' . $content . '[/raw]';
+	
+	}
+	
+	/**
+	 * Re-run the shortcode and pull the raw contents from the raw array
+	 */
+	function post( $atts, $content ) {
+		
+		//no raw shortcodes
+		if ( empty( $this->raws ) )
+			return $content;
+		
+		//pull from top of stack and replace		
+		return array_shift( $this->raws );
+	
+	}
+	
+}
+
+new Raw_Shortcode();
+
+shortcode_unautop( 'foo' );

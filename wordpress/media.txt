@@ -1,0 +1,2 @@
+Register to media library from files that have been uploaded by FTP.
+https://wordpress.org/plugins/media-from-ftp/

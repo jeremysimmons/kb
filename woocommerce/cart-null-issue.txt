@@ -1,0 +1,11 @@
+	add_filter( 'woocommerce_is_rest_api_request', function ( $is_rest_api_request ) {
+		if ( empty( $_SERVER['REQUEST_URI'] ) ) {
+			return false;
+		}
+
+		$rest_prefix = 'your/endpoint/namespace';
+
+		return ( false !== strpos( $_SERVER['REQUEST_URI'], $rest_prefix ) );
+	} );
+	add_action( 'admin_post_twl_account_reservation', 'twl_account_reservation_process' );
+

@@ -1,0 +1,35 @@
+
+
+https://github.com/defuse/php-encryption/blob/master/docs/Tutorial.md
+
+$ composer require defuse/php-encryption
+$ vendor/bin/generate-defuse-key
+
+def000003e5e4ea86ba17dc253e38fc8be68c50bc72fd0cfd1a8757c209125a814a8aa598e8d8be01d89817c01c25e7f3ce33c6bad5b669459fe24f51fb7aec765ae20e2
+
+function loadEncryptionKeyFromConfig()
+{
+    $keyAscii = // ... load the contents of /etc/daveapp-secret-key.txt
+    return Key::loadFromAsciiSafeString($keyAscii);
+}
+
+
+// ...
+$key = loadEncryptionKeyFromConfig();
+// ...
+$ciphertext = Crypto::encrypt($secret_data, $key);
+// ... save $ciphertext into the database ...
+
+// ...
+$key = loadEncryptionKeyFromConfig();
+// ...
+$ciphertext = // ... load $ciphertext from the database
+try {
+    $secret_data = Crypto::decrypt($ciphertext, $key);
+} catch (\Defuse\Crypto\Exception\WrongKeyOrModifiedCiphertextException $ex) {
+    // An attack! Either the wrong key was loaded, or the ciphertext has
+    // changed since it was created -- either corrupted in the database or
+    // intentionally modified by Eve trying to carry out an attack.
+
+    // ... handle this case in a way that's suitable to your application ...
+}

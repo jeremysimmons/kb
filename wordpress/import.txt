@@ -1,0 +1,1 @@
+wp import --authors=skip ~/encore-venues-prod-input.xml

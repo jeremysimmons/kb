@@ -1,0 +1,74 @@
+https://medium.com/@dendeffe/wordpress-loading-sequence-a-guided-tour-e077c7dbd119
+
+WordPress loading sequence: A guided tour
+True enough, WordPress can be a bit of a jungle. It has grown organically from a blogging platform to a CMS platform. At the moment, I’m hacking my way through the API’s, loading process,… And I plan on documenting it in a series of articles.
+FIRST FILES
+As it is a PHP program, the first thing to load is index.php in the root folder.
+This file doesn’t do much on it’s own. It defines a constant and loads the file wp-blog-header.php in the same folder.
+If you load an admin page, you start at wp-admin/index.php instead. The admin loading process then also uses the ‘normal’ process (with some extra’s).
+WP-BLOG-HEADER.PHP
+wp-blog-header.php does three things. It loads wp-load.php which sets up the entire WordPress environment. Then, it executes the wp() function in wp-includes/functions.phpwhich loads the query. template-loader.php decides which template should be loaded.
+WP-LOAD.PHP
+This file checks for wp-config.php if it finds one, it continues the environment setup process. If there is no wp-config.php, Wordpress assumes it’s a new installation. It then loads the installation screen.
+At the end of every wp-config.php file, there is a require for wp-settings.php. This is where the setup process starts for real.
+WP-SETTINGS.PHP
+At the top of this file, three other files are loaded:
+load.php (in wp-includes) — This provides the first functions that WordPress needs. Most of them deal with normalizing the server, checking if maintenance mode is active, checking if debug mode is active, etc…
+default-constants.php (also in wp-includes) — Sets up a lot of constants. If they are not defined in wp-config.php
+version.php (again, wp-includes) — Really simple file that defines versions/required versions
+FUNCTIONS.PHP, WP CLASSES AND THE PLUGIN API
+Wordpress then runs functions from load.php. These first functions are mostly used to ‘nomalize’ the server.
+From the comment Load early WordPress files, the first functions are loaded that do more than setting things up.
+compat.php adds some extra functions missing from older PHP-versions. WordPress is really dedicated to support really old PHP-versions.
+functions.php is where the most basic functions to run your site. They include functions for serializing data (post_meta for instance), date functions, dealing with get queries, nonces and more…
+class-wp.php actually builds the query, processes query vars and sets up. It is an object that is instantiated near the end of wp-settings.php
+class-wp-error.php is a class that can be used in your own plugins to keep track of errors. It was introduced as a replacement for try/catch and returns specific WP_Error objects.
+Now plugin.php is loaded. That is another important file. It provides the functions that are needed for the action and filter hooks. These allow to alter behaviour of the core files and plugins without touching the original code.
+Lastly in this series of requires, WordPress loads mo.php to work with translation files.
+SETTING UP THE DATABASE CLASS AND CACHE
+Then, require_wp_db() and wp_start_object_cache() are called (from load.php). They provide connections to the database and caching. They also allow you to use drop-ins. This means that you can substitute the default classes and functionality here.
+DEFAULT-FILTERS.PHP
+This is a file which sets up a lot of filters and actions. This is really interesting. You can check this list for the priorities to remove them.
+MULTISITE STARTUP
+If you set multisite in wp-config, WordPress now loads the necessary functions (ms-blogs.php) and starts up everything necessary for multisite (ms-settings.php, which is similar in concept to wp-settings). Also note that ms-settings can load a sunrise.php dropin that can change how multisite works.
+END OF BASIC LOADING
+WordPress is now done loading it’s main functions. It adds a hook (shutdown_action_hook) that is run after PHP shuts down (through register_shutdown_function).
+The hook is defined here, because right after it, there is a check for the SHORTINITconstant. You can define this constant in your plugins or themes if you only need to load the very basics of WordPress. For instance if you want to speed up Ajax calls or are building some sort of API on top of WordPress.
+Note that a lot of expected WordPress functionality is not yet available at this point, including using plugins.
+LOADING MOST OF WORDPRESS
+The translation API is loaded and WordPress does a final check to see if the site needs to be installed.
+The long list of requires that follow loads all functions and classes that give you the full WordPress core functionality. It is an eclectic mix of functions and classes, providing functionality like building menu’s, right and user management and much more. Each of these files warrants a blog post to cover the way they work.
+LOADING MUST USE PLUGINS
+Before loading must use plugins, extra default constants are set which need more of the API loaded than the ones set with wp_initial_constants at the beginning of the wp-settings.
+Must use plugins are plugins that you won’t manage through the normal plugin admin screens. They are useful if you are building an application in which it makes no sense that end users would enable/disable parts of the application.
+Another use for must use plugins is a plugin that loads before all other plugins, because the normal plugins are only loaded further on in wp-settings.
+After loading the must use plugins, you get the earliest hook you can call:muplugins_loaded — Note that there still are no ‘normal’ plugins loaded at this point.
+DEFAULT TAXONOMIES AND POST TYPES
+WordPress now sets up a bunch of extra constants and variables (which include the User Agent, if the site is using SSL and more).
+It then goes on to set up the default post types and taxonomies (Post, Page, Attachment, Category, Tag,…)
+LOADING THE NORMAL PLUGINS
+After setting the theme directory, WordPress loads the ‘normal’ plugins, as defined in the option active_plugins. It also loads pluggable, which includes funtions you can easily overwrite from your themes or plugins.
+With all the plugins loaded, you get another early hook: plugins_loaded. At this point, all plugins are loaded and their functions and hooks are available to you.
+CREATING THE GLOBAL OBJECTS
+WordPress now creates objects (wp, wp_query,…) which become globally available. These hold things like the current query.
+CHOOSING THE THEME
+WordPress now checks which theme is active and loads the functions.php file for the theme. Also note that there are two extra hooks here, one before the theme is selected andone that is run afterwards.
+INIT HOOK
+The WP object now runs it’s init action, which populates the current user. After that is done, you get the famous init hook. Loads of plugins and themes use this hook. The entire core of WordPress functions is loaded and the current user is populated.
+WP_LOADED HOOK
+If your site is a multisite, WordPress will check if the current site is a fully active.
+So if you have a multi site (or want to fire a function after most plugins have loaded) thewp_loaded hook is a good one to use.
+You might have thought it may never end, but this actually concludes wp-settings.php
+WP()
+At this stage, all core functions are available and WordPress is loaded. Nothing has yet been written to the browser, however.
+Remember wp-blog-header.php ? It requires wp-load.php (which requires wp-config.php, which in turn requires wp-settings.php, which loads the entire WordPress API and brought us to this point).
+Now the wp() function (in wp-includes/functions.php) is run. It uses the WP object and runs it’s main action. This checks the URL and builds the needed query to get the data needed for this page.
+TEMPLATE-LOADER.PHP
+Now for the final part of our booting process. All functions are available (wp-settings.php) and the required data is loaded (wp() in functions.php).
+template-loader.php is then called (from wp-load.php). This file decides which template is loaded.
+The first thing it does, is to give you a hook: template_redirect. If you know (based on the data that is loaded) that you will require an alternative template than what would normally be loaded, this is your hook. An example could be a restricted page that loads a login form if the current user is not logged in.
+Next, WordPress checks if the current request is a http head request. These are used to just get the http header (for instance, to check if a certain page exists, has changed,…). If such a request is detected, the rest of the page is not rendered. If you get a lot of these requests, this can save you a bit of server bandwidth.
+template-loader.php then checks for 3 special cases: robots (Googlebot indexing your page), a page being read as an RSS-feed or a trackback. If any of these are found, a normal template file doesn’t need to be loaded.
+If it is not a special case, WordPress goes through a list of possible templates. Every line first checks if a condition is met (is_404(), is_search(),…). If the condition is met, it checks if the corresponding template exists in the current theme. If it finds a match, that value is saved in the $template variable.
+If none of the special templates need to be loaded (or are available), the default index template is saved into the variable.
+You get a last filter (template_include) before it is finally included and you finally see a result in the browser.

@@ -1,0 +1,45 @@
+Where to find menus in wordpress database
+
+https://digitalzoomstudio.net/2017/07/31/where-to-find-menus-in-wordpress-database/
+
+Menu by itself is a taxonomy in WP. It means that you can find all menus in wp_terms table, by running following query:
+
+SELECT *
+FROM wp_terms AS t
+LEFT JOIN wp_term_taxonomy AS tt ON tt.term_id = t.term_id
+WHERE tt.taxonomy = 'nav_menu';
+Menu item is custom post type in WP. They are stored in wp_posts table. You can find all of them by using this query:
+
+SELECT *
+FROM wp_posts
+WHERE post_type = 'nav_menu_item';
+Relations between menus and menu items are stored in wp_term_relationships table. To find all items of specific menu you can use this query:
+
+SELECT p.*
+FROM wp_posts AS p
+LEFT JOIN wp_term_relationships AS tr ON tr.object_id = p.ID
+LEFT JOIN wp_term_taxonomy AS tt ON tt.term_taxonomy_id = tr.term_taxonomy_id
+WHERE p.post_type = 'nav_menu_item'
+AND tt.term_id = /*your menu ID*/;
+Information about currently select menu is located in wp_options table as serialized PHP array. For example if we use TwentyEleven theme, then we will have a record in wp_options table with option_name column equals to theme_mod_twentyeleven and option_value column equals to ...;s:18:"nav_menu_locations";a:1:{s:7:"primary";i:103;}}. 
+
+Here you can see that menu with term_id equals to 103 is currently selected as "primary" menu.
+
+The key principle here is that we always have separate options record for each WP theme. Such options have the same name structure: theme_mods_{your-theme-name}.
+
+P.S.: To change current menu in the admin panel, just go to Appearance » Menus page and select menu you need in Theme Locations meta box:
+
+When trying to create a menu from php, this info is not enough because we need to link each post ( nav_menu_item type ) to page’s link.
+
+This info is found in wp_postmeta table, containing info of each menu item – like nav_menu_item type ( custom / page ) or custom link etc. :
+
+meta_id, post_id, option_name
+
+1233	208	_menu_item_url	
+1232	208	_menu_item_xfn	
+1231	208	_menu_item_classes	a:1:{i:0;s:0:””;}
+1230	208	_menu_item_target	
+1229	208	_menu_item_object	page
+1228	208	_menu_item_object_id	179
+1227	208	_menu_item_menu_item_parent	0
+1226	208	_menu_item_type	post_type

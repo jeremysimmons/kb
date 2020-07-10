@@ -1,0 +1,45 @@
+https://rudrastyh.com/woocommerce/woocommerce_form_field.html
+
+Depending on return parameter prints or returns a field HTML markup.
+
+woocommerce_form_field( $key, $args, $value = null )
+
+$key 			   (string) Field name and ID, unless you pass an ID parameter separately in the $args array
+$args 			   (array) Array of field parameters, it includes the following:
+  type 			   Using the woocommerce_form_field you can create fields of different types. 
+				     text
+				     select
+				     radio
+				     password
+				     datetime
+				     datetime-local
+				     date
+				     month
+				     time
+				     week
+				     number
+				     email
+				     url
+				     tel
+				     country – a dropdown list of countries supported by your store, which are set in WooCommerce settings > General tab. The interesting thing that depending on the field $key parameter it will display different list of countries. So, if you pass the value of the field equal to shipping_country it will display the countries you ship to (another WooCommerce setting).
+				     state – a dropdown list of states.
+  
+  country           (string) Only for state field types. Name of a country which states you would like to display. If not passed, this field will try to get states of a billing or shipping country.
+  label             (string) Field label.
+  description       (string) Any custom text (HTML tags are supported too) which will be displayed just under а field.
+  placeholder       (string) You can use it to add a placeholder to any supported fields like text and textarea.
+  maxlength         (int) Adds maxlength HTML attribute to the field. Defaults to false (no attribute added).
+  required          (bool) Do you think it adds a required attribute? Example: <input type="text" required="required" /> No, it does not! All this parameter does is adding an asterisk near a field label: <abbr class="required" title="required">*</abbr> By default – false.
+  autocomplete      (string) Allows to add autocomplete HTML attribute to the field. Defaults to false. Possible correct values are on or off.
+  id                (string) If you want a field ID to be different than a name attribute, pass it here.
+  class 			(array) Pass any custom HTML classes here in an array, examples: array( 'mishaclass' ), array( 'misha', 'wp-misha' ). Will be added to a field container.
+  label_class       (array) Any additional classes which will be added to a field <label> tag
+  input_class       (array) Classes to be added directly to your input field.
+  return            (bool) By default function echoes the result, if you set this parameter to true it will return the result.
+  options           (array) Only for select and radio field types! You can pass options in this format: array( '' => 'Select...', 'val1' => 'Title 1')
+  custom_attributes (array) You can pass any custom attributes here as an associative array, example: array( 'data-length' => 500 ).
+  validate          (array) It just adds additional classes validate-SOMETHING to a field wrapper, which will be used in JS validation, for example validate-email will validate email addresses which is the only pre-defined validation class by the way 😁
+  default           (mixed) Default field value. 
+  autofocus         (bool) If you want your field to be focused automatically. Default – false. But what if you have a couple fields with autofocus true on the same page? Correct – the first one will be focused.
+
+$value            (string) Field value by default

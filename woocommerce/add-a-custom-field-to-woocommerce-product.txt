@@ -1,0 +1,134 @@
+https://www.kathyisawesome.com/add-a-custom-field-to-woocommerce-product/
+
+/**
+ * Display input on single product page
+ */
+function kia_custom_option(){
+    $value = isset( $_POST['_custom_option' ] ) ? sanitize_text_field( $_POST['_custom_option'] ) : '';
+    printf( '<p><label>%s<input name="_custom_option" value="%s" /></label></p>', __( 'Enter your custom text', 'kia-plugin-textdomain' ), esc_attr( $value ) );
+}
+add_action( 'woocommerce_before_add_to_cart_button', 'kia_custom_option', 9 );
+
+/**
+ * Validate when adding to cart
+ * 
+ * @param bool $passed
+ * @param int $product_id
+ * @param int $quantity
+ * @return bool
+ */
+function kia_add_to_cart_validation( $passed, $product_id, $qty ){
+
+    if( isset( $_POST['_custom_option'] ) && sanitize_text_field( $_POST['_custom_option'] ) == '' ){
+        $product = wc_get_product( $product_id );
+        wc_add_notice( sprintf( __( '%s cannot be added to the cart until you enter some custom text.', 'kia-plugin-textdomain' ), $product->get_title() ), 'error' );
+        return false;
+    }
+
+    return $passed;
+
+}
+add_filter( 'woocommerce_add_to_cart_validation', 'kia_add_to_cart_validation', 10, 3 );
+
+/**
+ * Add custom data to the cart item
+ * 
+ * @param array $cart_item
+ * @param int $product_id
+ * @return array
+ */
+function kia_add_cart_item_data( $cart_item, $product_id ){
+
+    if( isset( $_POST['_custom_option'] ) ) {
+        $cart_item['custom_option'] = sanitize_text_field( $_POST[ '_custom_option' ] );
+    }
+
+    return $cart_item;
+
+}
+add_filter( 'woocommerce_add_cart_item_data', 'kia_add_cart_item_data', 10, 2 );
+
+
+/**
+ * Add custom data to the cart item
+ * 
+ * @param array $cart_item
+ * @param int $product_id
+ * @return array
+ */
+function kia_add_cart_item_data( $cart_item, $product_id ){
+
+    if( isset( $_POST['_custom_option'] ) ) {
+        $cart_item['custom_option'] = sanitize_text_field( $_POST[ '_custom_option' ] );
+    }
+
+    return $cart_item;
+
+}
+add_filter( 'woocommerce_add_cart_item_data', 'kia_add_cart_item_data', 10, 2 );
+
+/**
+ * Add custom data to the cart item
+ * 
+ * @param array $cart_item
+ * @param int $product_id
+ * @return array
+ */
+function kia_add_cart_item_data( $cart_item, $product_id ){
+
+    if( isset( $_POST['_custom_option'] ) ) {
+        $cart_item['custom_option'] = sanitize_text_field( $_POST[ '_custom_option' ] );
+    }
+
+    return $cart_item;
+
+}
+add_filter( 'woocommerce_add_cart_item_data', 'kia_add_cart_item_data', 10, 2 );
+
+
+
+/**
+ * Display entered value in cart
+ * 
+ * @param array $other_data
+ * @param array $cart_item
+ * @return array
+ */
+function kia_get_item_data( $other_data, $cart_item ) {
+
+    if ( isset( $cart_item['custom_option'] ) ){
+
+        $other_data[] = array(
+            'key' => __( 'Your custom text', 'kia-plugin-textdomain' ),
+            'display' => sanitize_text_field( $cart_item['custom_option'] )
+        );
+
+    }
+
+    return $other_data;
+
+}
+add_filter( 'woocommerce_get_item_data', 'kia_get_item_data', 10, 2 );
+
+/**
+ * Display entered value in cart
+ * 
+ * @param array $other_data
+ * @param array $cart_item
+ * @return array
+ */
+function kia_get_item_data( $other_data, $cart_item ) {
+
+    if ( isset( $cart_item['custom_option'] ) ){
+
+        $other_data[] = array(
+            'key' => __( 'Your custom text', 'kia-plugin-textdomain' ),
+            'display' => sanitize_text_field( $cart_item['custom_option'] )
+        );
+
+    }
+
+    return $other_data;
+
+}
+add_filter( 'woocommerce_get_item_data', 'kia_get_item_data', 10, 2 );

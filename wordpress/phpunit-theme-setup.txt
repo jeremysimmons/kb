@@ -1,0 +1,20 @@
+https://modularwp.com/plugin-unit-testing-setup/
+
+wp scaffold theme-tests your-theme
+
+
+https://github.com/wp-cli/wp-cli/issues/2177
+Warning: require_once(/tmp/wordpress//wp-includes/class-phpmailer.php): failed to open stream: No such file or directory in /tmp/wordpress-tests-lib/includes/mock-mailer.php on line 2
+Fatal error: require_once(): Failed opening required '/tmp/wordpress//wp-includes/class-phpmailer.php' (include_path='.:/opt/lampp/lib/php') in /tmp/wordpress-tests-lib/includes/mock-mailer.php on line 2
+
+
+define( 'ABSPATH', 'C:\Users{User}\AppData\Local\Temp/wordpress/' );
+
+
+https://core.trac.wordpress.org/ticket/39734
+
+C:\laragon\www\woo\wp-content\themes\twentytwenty\phpunit.xml.dist
+
+<php>
+	<const name="WP_TESTS_CONFIG_FILE_PATH" value="/path/to/wp-tests-config.php" />
+</php>

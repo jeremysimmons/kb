@@ -1,0 +1,7 @@
+https://www.advancedcustomfields.com/resources/the_repeater_field/
+
+<?php if( get_field('gallery_images') ): ?>
+    <?php while( the_repeater_field('gallery_images') ): ?>
+        <img src="<?php the_sub_field('image'); ?>" alt="<?php the_sub_field('alt'); ?>" />
+    <?php endwhile; ?>
+ <?php endif;

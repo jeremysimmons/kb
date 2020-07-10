@@ -1,0 +1,8 @@
+// Start the 'foo' timer:
+do_action( 'qm/start', 'foo' );
+
+// Run some code
+my_potentially_slow_function();
+
+// Stop the 'foo' timer:
+do_action( 'qm/stop', 'foo' );

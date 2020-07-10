@@ -1,0 +1,3 @@
+To list all indexes of a specific table:
+
+SHOW INDEX FROM table_name FROM db_name;

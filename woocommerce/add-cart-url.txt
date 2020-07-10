@@ -1,0 +1,15 @@
+https://www.businessbloomer.com/woocommerce-custom-add-cart-urls-ultimate-guide/
+
+URL: Add One Simple Product to Cart
+href=”https://yourdomain.com/?add-to-cart=25″
+
+URL: Add One Simple Product to Cart with Quantity = 3
+href=”https://yourdomain.com/?add-to-cart=25&quantity=3″
+
+URL: Add One Simple Product to Cart & Redirect to Cart Afterwards
+href=”https://yourdomain.com/cart/?add-to-cart=25″
+
+Remember, if you’ve changed the URL for the cart, make sure to change “/cart/” into “/basket/” for example. For this to work you must also tick the “Enable AJAX add to cart buttons on archives” option under WooCommerce –> Settings –> Products -> General.
+
+URL: Add One Simple Product to Cart & Redirect to Checkout Afterwards
+href=”https://yourdomain.com/checkout/?add-to-cart=25″

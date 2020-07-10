@@ -1,0 +1,35 @@
+Adding multiple items to WooCommerce cart at once
+
+
+http://example.com?add-more-to-cart=1000,10001,10002
+
+http://example.com?add-to-cart=1000&add-more-to-cart=10001,10002
+
+class add_more_to_cart {
+
+    private $prevent_redirect = false; //used to prevent WC from redirecting if we have more to process
+
+    function __construct() {
+        if ( ! isset( $_REQUEST[ 'add-more-to-cart' ] ) ) return; //don't load if we don't have to
+        $this->prevent_redirect = 'no'; //prevent WC from redirecting so we can process additional items
+        add_action( 'wp_loaded', [ $this, 'add_more_to_cart' ], 21 ); //fire after WC does, so we just process extra ones
+        add_action( 'pre_option_woocommerce_cart_redirect_after_add', [ $this, 'intercept_option' ], 9000 ); //intercept the WC option to force no redirect
+    }
+
+    function intercept_option() {
+        return $this->prevent_redirect;
+    }
+
+    function add_more_to_cart() {
+        $product_ids = explode( ',', $_REQUEST['add-more-to-cart'] );
+        $count       = count( $product_ids );
+        $number      = 0;
+
+        foreach ( $product_ids as $product_id ) {
+            if ( ++$number === $count ) $this->prevent_redirect = false; //this is the last one, so let WC redirect if it wants to.
+            $_REQUEST['add-to-cart'] = $product_id; //set the next product id
+            WC_Form_Handler::add_to_cart_action(); //let WC run its own code
+        }
+    }
+}
+new add_more_to_cart;

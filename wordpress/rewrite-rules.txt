@@ -1,0 +1,1 @@
+select * from wp_options where option_name = 'rewrite_rules'

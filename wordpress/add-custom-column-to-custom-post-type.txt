@@ -1,0 +1,33 @@
+The hooks to create custom columns and their associated data for a custom post type are manage_{$post_type}_posts_columns and manage_{$post_type}_posts_custom_column respectively, where {$post_type} is the name of the custom post type.
+Adding custom columns to custom post types
+https://wordpress.stackexchange.com/questions/253640/adding-custom-columns-to-custom-post-types
+
+// Add the custom columns to the book post type:
+add_filter( 'manage_book_posts_columns', 'set_custom_edit_book_columns' );
+function set_custom_edit_book_columns($columns) {
+    unset( $columns['author'] );
+    $columns['book_author'] = __( 'Author', 'your_text_domain' );
+    $columns['publisher'] = __( 'Publisher', 'your_text_domain' );
+
+    return $columns;
+}
+
+// Add the data to the custom columns for the book post type:
+add_action( 'manage_book_posts_custom_column' , 'custom_book_column', 10, 2 );
+function custom_book_column( $column, $post_id ) {
+    switch ( $column ) {
+
+        case 'book_author' :
+            $terms = get_the_term_list( $post_id , 'book_author' , '' , ',' , '' );
+            if ( is_string( $terms ) )
+                echo $terms;
+            else
+                _e( 'Unable to get author(s)', 'your_text_domain' );
+            break;
+
+        case 'publisher' :
+            echo get_post_meta( $post_id , 'publisher' , true ); 
+            break;
+
+    }
+}

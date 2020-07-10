@@ -1,0 +1,5 @@
+SELECT user_id,
+MAX(CASE WHEN meta_key='first_name' THEN meta_value END) as first,
+MAX(CASE WHEN meta_key='last_name' THEN meta_value END) as last
+FROM `wp_usermeta`
+GROUP BY user_id

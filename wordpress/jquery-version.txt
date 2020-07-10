@@ -1,0 +1,4 @@
+Update jquery version
+
+https://wordpress.stackexchange.com/questions/257317/update-jquery-version
+https://wordpress.org/plugins/jquery-manager/

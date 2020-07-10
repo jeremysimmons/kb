@@ -1,0 +1,8 @@
+https://developer.wordpress.org/reference/functions/wp_mail/
+Valid Address Formats #Valid Address Formats
+All email addresses supplied to wp_mail() as the $to parameter must comply with RFC 2822. Some valid examples:
+
+user@example.com
+user@example.com, anotheruser@example.com
+User <user@example.com>
+User <user@example.com>, Another User <anotheruser@example.com>

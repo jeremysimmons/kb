@@ -1,0 +1,10 @@
+delete files older than 2 days
+
+https://stackoverflow.com/a/42945163/26877
+
+$fileSystemIterator = new FilesystemIterator('logs');
+$now = time();
+foreach ($fileSystemIterator as $file) {
+    if ($now - $file->getCTime() >= 60 * 60 * 24 * 2) // 2 days 
+        unlink('logs/'.$file->getFilename());
+}

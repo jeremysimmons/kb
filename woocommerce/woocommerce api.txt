@@ -1,0 +1,7 @@
+https://github.com/woocommerce/wc-api-php
+https://docs.woocommerce.com/document/woocommerce-rest-api/
+
+https://github.com/XiaoFaye/WooCommerce.NET
+
+current & legacy docs
+https://woocommerce.github.io/woocommerce-rest-api-docs/#introduction

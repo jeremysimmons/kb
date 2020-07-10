@@ -1,0 +1,7 @@
+https://rudrastyh.com/woocommerce/my-account-menu.html
+WooCommerce My Account Menu
+Remove tabs with appropriate pages
+Rename My Account tabs
+Add tabs with custom URLs
+Add tabs with My Account subpages
+Before and after menu action hooks

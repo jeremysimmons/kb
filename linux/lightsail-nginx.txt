@@ -1,0 +1,37 @@
+bitnami
+0c1RBM9mAii0
+NGINX is 8080 and for MySQL is 3306.
+
+./ctlscript.sh (start|stop|restart)
+       ./ctlscript.sh (start|stop|restart) mysql
+       ./ctlscript.sh (start|stop|restart) nginx
+       ./ctlscript.sh (start|stop|restart) php-fpm
+
+./use_nginxstack
+
+/opt/bitnami/nginx/html
+
+copy ~/stack/docs/demo/ to /opt/bitnami/apps 
+
+deploy as an application 
+1. add 
+include "/opt/bitnami/apps/demo/conf/nginx-prefix.conf" 
+to /opt/bitnami/nginx/conf/bitnami/bitnami-apps-prefix.conf
+2. restart nginx
+/opt/bitnami/ctlscript.sh restart nginx
+http://http://54.202.180.130/demo/
+
+deploy as a vhost
+1. disable previous nginx-prefix.conf in bitnami-apps-prefix.conf
+2. enable vhost in 
+/opt/bitnami/nginx/conf/bitnami/bitnami-apps-vhosts.conf
+by adding
+include "/opt/bitnami/apps/demo/conf/nginx-vhosts.conf"
+3. restart nginx
+
+ns-889.awsdns-47.net
+ns-419.awsdns-52.com
+ns-1560.awsdns-03.co.uk
+ns-1315.awsdns-36.org
+
+54.202.180.130

@@ -1,0 +1,2 @@
+df -h --total
+free -m

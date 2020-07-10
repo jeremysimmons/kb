@@ -1,0 +1,317 @@
+https://wordpress.stackexchange.com/questions/4325/reproducing-hierarchical-list-output-from-wp-list-categories-using-get-catego
+https://codex.wordpress.org/Class_Reference/Walker
+http://scribu.net/wordpress/extending-the-category-walker.html
+
+<?php
+$args = array(
+'taxonomy'     => 'ufaq-category',
+'hierarchical' => true,
+'title_li'     => '',
+'hide_empty'   => false,
+    'show_count' => true
+);
+?>
+
+<ul>
+    <?php wp_list_categories( $args ); ?>
+</ul>
+
+
+
+// more control
+function custom_taxonomy_walker($taxonomy, $parent = 0)
+{
+    $terms = get_terms($taxonomy, array('parent' => $parent, 'hide_empty' => false, 'update_term_meta_cache' => false));
+    //If there are terms, start displaying
+    if (count($terms) > 0) {
+        $out = "<ul>";
+        foreach ($terms as $term) {
+            $parent_id = $term->parent;
+            $child = $term->term_id;
+            $next_level = custom_taxonomy_walker($taxonomy, $child);
+            $out .= "<li>[{$parent_id}:{$child}] {$term->name} {$next_level}</li>";
+        }
+        $out .= "</ul>";
+        return $out;
+    }
+}
+
+//Example
+echo custom_taxonomy_walker('ufaq-category', 0);
+?>
+
+//$terms    = get_terms(
+//    array(
+//        'taxonomy'               => $taxonomy,
+//        'get'                    => 'all',
+//        'orderby'                => 'id',
+//        'fields'                 => 'id=>parent',
+//        'update_term_meta_cache' => false,
+//    )
+//);
+//var_dump($terms);
+////?>
+<!--hello<br/>-->
+<?php
+//function sort_hierarchical(array &$cats, array &$into, $parent_id = 0)
+//{
+//    foreach ($cats as $i => $cat) {
+//        if ($cat->parent == $parent_id) {
+//            $into[$cat->term_id] = $cat;
+//            unset($cats[$i]);
+//        }
+//    }
+//    foreach ($into as $top_cat) {
+//        $top_cat->children = array();
+//        sort_hierarchical($cats, $top_cat->children, $top_cat->term_id);
+//    }
+//}
+//
+//$terms = get_terms(array('taxonomy' => 'ufaq-category', 'hide_empty' => false));
+//$taxonomy = array();
+//sort_hierarchical($terms, $taxonomy);
+//var_dump($taxonomy);
+//
+////function custom_taxonomy_walker($taxonomy, $parent = 0)
+////{
+////    $out = "";
+////    $terms = get_terms($taxonomy, array('parent' => $parent, 'hide_empty' => false));
+////    if(count($terms) > 0)
+////    {
+////        $out .= "<ul>";
+////        foreach ($terms as $term)
+////        {
+////            $out .="<li>" . $term->name . custom_taxonomy_walker($taxonomy, $term->term_id) . "</li>";
+////        }
+////        $out .= "</ul>";
+////    }
+////    return $out;
+////}
+////echo custom_taxonomy_walker('ufaq-category');
+
+class My_Taxonomy_Walker extends Walker_Category
+{
+
+    private $type = '';
+    private $defaults = array();
+    private $multidepth = 0; //manually calculate depth on multiselects
+    private $multilastid = 0; //manually calculate depth on multiselects
+    private $multilastdepthchange = 0; //manually calculate depth on multiselects
+
+    function __construct($type = 'checkbox', $defaults = array())
+    {
+    }
+
+    function display_element($element, &$children_elements, $max_depth, $depth = 0, $args, &$output)
+    {
+        parent::display_element($element, $children_elements, $max_depth, $depth, $args, $output);
+    }
+
+    function start_el(&$output, $category, $depth = 0, $args = array(), $id = 0)
+    {
+        /** This filter is documented in wp-includes/category-template.php */
+        $cat_name = apply_filters('list_cats', esc_attr($category->name), $category);
+
+        // Don't generate an element if the category name is empty.
+        if ('' === $cat_name) {
+            return;
+        }
+
+        $atts = array();
+        $atts['href'] = get_term_link($category);
+
+        if ($args['use_desc_for_title'] && !empty($category->description)) {
+            /**
+             * Filters the category description for display.
+             *
+             * @param string $description Category description.
+             * @param object $category Category object.
+             * @since 1.2.0
+             *
+             */
+            $atts['title'] = strip_tags(apply_filters('category_description', $category->description, $category));
+        }
+
+        /**
+         * Filters the HTML attributes applied to a category list item's anchor element.
+         *
+         * @param array $atts {
+         *     The HTML attributes applied to the list item's `<a>` element, empty strings are ignored.
+         *
+         * @type string $href The href attribute.
+         * @type string $title The title attribute.
+         * }
+         * @param WP_Term $category Term data object.
+         * @param int $depth Depth of category, used for padding.
+         * @param array $args An array of arguments.
+         * @param int $id ID of the current category.
+         * @since 5.2.0
+         *
+         */
+        $atts = apply_filters('category_list_link_attributes', $atts, $category, $depth, $args, $id);
+
+        $attributes = '';
+        foreach ($atts as $attr => $value) {
+            if (is_scalar($value) && '' !== $value && false !== $value) {
+                $value = ('href' === $attr) ? esc_url($value) : esc_attr($value);
+                $attributes .= ' ' . $attr . '="' . $value . '"';
+            }
+        }
+
+        $link = sprintf(
+            '<a%s>%s</a>',
+            $attributes,
+            $cat_name
+        );
+
+        if (!empty($args['feed_image']) || !empty($args['feed'])) {
+            $link .= ' ';
+
+            if (empty($args['feed_image'])) {
+                $link .= '(';
+            }
+
+            $link .= '<a href="' . esc_url(get_term_feed_link($category->term_id, $category->taxonomy, $args['feed_type'])) . '"';
+
+            if (empty($args['feed'])) {
+                /* translators: %s: Category name. */
+                $alt = ' alt="' . sprintf(__('Feed for all posts filed under %s'), $cat_name) . '"';
+            } else {
+                $alt = ' alt="' . $args['feed'] . '"';
+                $name = $args['feed'];
+                $link .= empty($args['title']) ? '' : $args['title'];
+            }
+
+            $link .= '>';
+
+            if (empty($args['feed_image'])) {
+                $link .= $name;
+            } else {
+                $link .= "<img src='" . esc_url($args['feed_image']) . "'$alt" . ' />';
+            }
+            $link .= '</a>';
+
+            if (empty($args['feed_image'])) {
+                $link .= ')';
+            }
+        }
+
+        if (!empty($args['show_count'])) {
+            $link .= ' (' . number_format_i18n($category->count) . ')';
+        }
+        if ('list' == $args['style']) {
+            $output .= "\t<li";
+            $css_classes = array(
+                'cat-item',
+                'cat-item-' . $category->term_id,
+            );
+
+            if (!empty($args['current_category'])) {
+                // 'current_category' can be an array, so we use `get_terms()`.
+                $_current_terms = get_terms(
+                    array(
+                        'taxonomy' => $category->taxonomy,
+                        'include' => $args['current_category'],
+                        'hide_empty' => false,
+                    )
+                );
+
+                foreach ($_current_terms as $_current_term) {
+                    if ($category->term_id == $_current_term->term_id) {
+                        $css_classes[] = 'current-cat';
+                        $link = str_replace('<a', '<a aria-current="page"', $link);
+                    } elseif ($category->term_id == $_current_term->parent) {
+                        $css_classes[] = 'current-cat-parent';
+                    }
+                    while ($_current_term->parent) {
+                        if ($category->term_id == $_current_term->parent) {
+                            $css_classes[] = 'current-cat-ancestor';
+                            break;
+                        }
+                        $_current_term = get_term($_current_term->parent, $category->taxonomy);
+                    }
+                }
+            }
+
+            /**
+             * Filters the list of CSS classes to include with each category in the list.
+             *
+             * @param array $css_classes An array of CSS classes to be applied to each list item.
+             * @param object $category Category data object.
+             * @param int $depth Depth of page, used for padding.
+             * @param array $args An array of wp_list_categories() arguments.
+             * @since 4.2.0
+             *
+             * @see wp_list_categories()
+             *
+             */
+            $css_classes = implode(' ', apply_filters('category_css_class', $css_classes, $category, $depth, $args));
+            $css_classes = $css_classes ? ' class="' . esc_attr($css_classes) . '"' : '';
+
+            $output .= $css_classes;
+            $output .= ">$link\n";
+        } elseif (isset($args['separator'])) {
+            $output .= "\t$link" . $args['separator'] . "\n";
+        } else {
+            $output .= "\t$link<br />\n";
+        }
+    }
+
+    function end_el(&$output, $page, $depth = 0, $args = array())
+    {
+        if ( 'list' != $args['style'] ) {
+            return;
+        }
+
+        $output .= "</li>\n";
+    }
+
+}
+
+function my_walk_taxonomy($taxonomy, $type = "checkbox", $args = array())
+{
+    $args['title_li'] = '';
+    $args['taxonomy'] = $taxonomy;
+    $args['hierarchical'] = true;
+    $args['hide_empty'] = false;
+
+    $args['walker'] = new My_Taxonomy_Walker($type);
+    $output = wp_list_categories($args);
+    if ($output)
+        return $output;
+}
+
+
+https://wordpress.stackexchange.com/questions/4325/reproducing-hierarchical-list-output-from-wp-list-categories-using-get-catego
+$categories = get_categories();
+
+// First index all categories by parent id, for easy lookup later
+$cats_by_parent = array();
+foreach ($categories as $cat)
+{
+  $parent_id = $cat->category_parent;
+  if (!array_key_exists($parent_id, $cats_by_parent)) 
+  {
+    $cats_by_parent[$parent_id] = array();
+  }
+  $cats_by_parent[$parent_id][] = $cat;
+}
+
+// Then build a hierarchical tree
+$cat_tree = array();
+function add_cats_to_bag(&$child_bag, &$children)
+{
+   global $cats_by_parent;
+   foreach ($children as $child_cat) 
+   {
+     $child_id = $child_cat->cat_ID;
+     if (array_key_exists($child_id, $cats_by_parent)) 
+     {
+        $child_cat->children = array();
+        add_cats_to_bag($child_cat->children, $cats_by_parent[$child_id]);
+     }
+     $child_bag[$child_id] = $child_cat;
+   }
+}
+add_cats_to_bag($cat_tree, $cats_by_parent[0]);
+

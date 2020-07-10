@@ -1,0 +1,10 @@
+https://stackoverflow.com/q/20954448/26877
+
+add_action( 'init', 'woocommerce_clear_cart_url' );
+function woocommerce_clear_cart_url() {
+  global $woocommerce;
+
+    if ( isset( $_GET['empty-cart'] ) ) {
+        $woocommerce->cart->empty_cart(); 
+    }
+}

@@ -1,0 +1,43 @@
+integrator documenting extension points in checkout
+https://apppresser.com/woocommerce-checkout-customization-guide/
+
+custom settings
+https://docs.woocommerce.com/document/implementing-wc-integration/
+
+usefull core functions
+https://docs.woocommerce.com/document/useful-functions/
+
+class reference
+https://docs.woocommerce.com/document/class-reference/
+
+WooCommerce Plugin Developer Handbook
+https://docs.woocommerce.com/document/create-a-plugin/
+
+How to Customize the WooCommerce Checkout Page
+https://hollerwp.com/customize-woocommerce-checkout-page/
+
+++++ WooCommerce Visual Hook Guide: My Account Pages
+https://businessbloomer.com/woocommerce-visual-hook-guide-account-pages/
+
+Category: Visual Hook Series
+https://businessbloomer.com/category/woocommerce-tips/visual-hook-series/
+
+WooCommerce Hooks: Actions and filters
+https://docs.woocommerce.com/document/introduction-to-hooks-actions-and-filters/
+
+WooCommerce developer wiki
+https://github.com/woocommerce/woocommerce/wiki
+	
+Payment Gateway API
+https://docs.woocommerce.com/document/payment-gateway-api/
+
+Custom Payment Gateways for WooCommerce (free)
+https://wordpress.org/plugins/custom-payment-gateways-woocommerce/
+
+WooCommerce Custom Payment Gateway Pro $59
+https://wpruby.com/plugin/woocommerce-custom-payment-gateway-pro/
+
+Action and Filter Hook Reference
+https://docs.woocommerce.com/wc-apidocs/hook-docs.html
+- template
+- shortcode

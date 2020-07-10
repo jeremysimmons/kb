@@ -1,0 +1,23 @@
+
+
+https://stackoverflow.com/questions/17897044/wordpress-how-to-disable-plugin-update
+
+DISABLE ALL PLUGINS
+add_filter('site_transient_update_plugins', '__return_false');
+
+
+REMOVE FROM THE PLUGIN FEED
+add_filter( 'http_request_args', 'widget_disable_update', 10, 2 );
+
+function widget_disable_update( $r, $url ) {
+    if ( 0 === strpos( $url, 'https://api.wordpress.org/plugins/update-check/' ) ) {
+        $my_plugin = plugin_basename( __FILE__ );
+        $plugins = json_decode( $r['body']['plugins'], true );
+        unset( $plugins['plugins'][$my_plugin] );
+        unset( $plugins['active'][array_search( $my_plugin, $plugins['active'] )] );
+        $r['body']['plugins'] = json_encode( $plugins );
+    }
+    return $r;
+}
+
+define('DISALLOW_FILE_MODS',true);

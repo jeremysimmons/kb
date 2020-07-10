@@ -1,0 +1,27 @@
+https://rudrastyh.com/woocommerce/add-product-to-cart-programmatically.html
+
+Add Product to Cart Programmatically
+
+Add Product to the Cart#
+
+global $woocommerce;
+$woocommerce->cart->add_to_cart( $product_id ); // you can pass a number here
+or
+WC()->cart->add_to_cart( $product_id );
+
+WC()->cart->add_to_cart( $product_id, $quantity );
+
+WC()->cart->add_to_cart( $product_id, $quantity, $variation_id );
+
+if( WC()->cart->find_product_in_cart( $product_cart_id ) ){
+ 
+}
+
+$product_cart_id = WC()->cart->generate_cart_id( $product_id );
+if( ! WC()->cart->find_product_in_cart( $product_cart_id ) ){
+// Yep, the product with ID 55 is NOT in the cart, let's add it then!
+WC()->cart->add_to_cart( $product_id );
+}
+generate_cart_id( $product_id, $variation_id, $variation, $cart_item_data )
+
+WC()->cart->empty_cart();

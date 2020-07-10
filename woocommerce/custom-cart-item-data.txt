@@ -1,0 +1,4 @@
+https://iconicwp.com/blog/add-custom-cart-item-data-woocommerce/
+https://pluginrepublic.com/add-custom-cart-item-data-in-woocommerce/
+https://stackoverflow.com/questions/47865226/add-custom-fields-as-cart-item-meta-and-order-item-meta-in-woocommerce
+https://stackoverflow.com/questions/41971376/add-custom-product-data-dynamically-as-item-meta-data-on-the-order

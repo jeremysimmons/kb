@@ -1,0 +1,28 @@
+https://stackoverflow.com/questions/10253240/how-to-determine-if-phpunit-tests-are-running
+How to Determine if PHPUnit Tests are Running?
+
+
+set a constant in the PHP section of your phpunit.xml.*:
+if (defined('PHPUNIT_YOURAPPLICATION_TESTSUITE') && PHPUNIT_YOURAPPLICATION_TESTSUITE)
+{ 
+    echo 'TestSuite running!';
+}
+
+
+<php>
+   <const name="PHPUNIT_YOURAPPLICATION_TESTSUITE" value="true"/>
+</php>
+
+
+if(PHP_SAPI == 'cli') {
+
+    if(strpos($_SERVER['argv'][0], 'phpunit') !== FALSE) { ... }
+    // or
+    if($_SERVER['argv'][0] == '/usr/bin/phpunit') { ... }
+
+}
+
+if (! defined('PHPUNIT_COMPOSER_INSTALL') && ! defined('__PHPUNIT_PHAR__')) {
+    // is not PHPUnit run
+    return;
+}

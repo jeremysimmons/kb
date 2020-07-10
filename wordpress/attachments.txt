@@ -1,0 +1,57 @@
+https://wordpress.stackexchange.com/questions/194090/what-is-the-different-between-an-attachment-in-wp-posts-and-an-attachment-in-wp
+
+An attachment is a Post
+The posts table contains information on the attachment post.
+
+In WordPress every uploaded media has it's own post entry, where post_type is 'attachment' and post_status is 'inherit'.
+
+In fact, you can get attachment post types using functions used to get other post types, like post, page or any CPT.
+
+That includes WP_Query, get_posts() and get_post().
+
+What's in posts table
+For every attachment post
+
+post_title column is used for attachment title
+post_excerpt is used for attachment caption
+post_content is used for attachment description
+Note that attachment post type may have a post_parent that points to the ID of the post where the attachment was uploaded from.
+
+For example:
+
+get_posts( 'post_type=attachment&post_parent=10' );
+Retrieve all the post objects for attachments loaded from the edit page of the post with ID 10;
+
+An attachment is not only a Post
+However, there is information for media (especially images) that simply doesn't fit the posts table.
+
+All this information is stored in the postmeta table, where the post_id column refers to the attachment row in the posts table.
+
+What's in postmeta table
+For example, the "alt" attribute is stored in a meta field that has the key '_wp_attachment_image_alt'.
+
+The meta field with key '_wp_attached_file' contains the relative path (to content folder) of the uploaded file.
+
+That is used to build the attachment URL and path, in functions like wp_get_attachment_url(), wp_get_attachment_image_src(), get_attached_file() and so on.
+
+Finally, the field '_wp_attachment_metadata' contains different information (in a serialized array in the database):
+
+The image size (under keys 'width' and 'height')
+Information about intermediate sizes
+Intermediate sizes
+In fact, every time an image is uploaded, WordPress creates different copies of the image in different sizes.
+
+Please read this answer for more details.
+
+The key "sizes" in the '_wp_attachment_metadata' field contain an array with information on all generated images: the file created, the size (width and height) and so on.
+
+Note that the preferred way to get information from '_wp_attachment_metadata' is not using the common get_post_meta() but the specific wp_get_attachment_metadata(), as it triggers a filter.
+
+If you are interested in the information about a specific generated image, the function image_get_intermediate_size() will be handy.
+
+Use specific functions
+Generally speaking, if you need information on an attachment, use the specific functions and avoid pulling data from the database; it is harder and does not triggers hooks, possibly breaking core, theme and plugins compatibility.
+
+There are a lot of functions in WordPress to work with attachments, this should give you an idea...
+
+However, main functions are all listed in this answer.

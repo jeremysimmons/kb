@@ -1,0 +1,27 @@
+$xw = new XmlWriter();
+	$xw->openMemory();
+//	$xw->setIndent( true );
+//	$xw->setIndentString( ' ' );
+	$xw->startElement( 'WebRequest' );
+	$xw->startElement( 'Ticket' );
+	$xw->startElement( 'Item' );
+	$xw->startElement( 'Rent_Or_Sales' );
+	$xw->text( 'R' );
+	$xw->endElement();
+	$xw->startElement( 'Item_Number' );
+	$xw->text( '1234' );
+	$xw->endElement();
+	$xw->endElement(); // Item
+
+	$xw->startElement( 'Item' );
+	$xw->startElement( 'Rent_Or_Sales' );
+	$xw->text( 'S' );
+	$xw->endElement();
+	$xw->startElement( 'Item_Number' );
+	$xw->text( '5678' );
+	$xw->endElement();
+	$xw->endElement(); // Item
+
+	$xw->endElement(); // Ticket
+	$xw->endElement(); // WebRequest
+	echo $xw->outputMemory();

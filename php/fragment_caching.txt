@@ -1,0 +1,25 @@
+https://css-tricks.com/wordpress-fragment-caching-revisited/
+
+<?php
+// After
+fragment_cache('my_footer', DAY_IN_SECONDS, function() { ?>
+
+<p>Here's some HTML.</p>
+
+<?php
+// Here's some PHP
+$args = array(
+  'post_type' => 'my_data',
+  'posts_per_page' => -1
+);
+$posts = get_posts($args);
+foreach ( $posts as $p ) {
+  echo '<pre>';
+  echo get_post_meta($p,'some_meta',true);
+  echo '</pre>';
+}
+?>
+
+<p>And everything this block outputs will be fragment cached. :)</p>
+
+<?php }); ?>

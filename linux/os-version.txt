@@ -1,0 +1,8 @@
+Open the terminal application (bash shell)
+For remote server login using the ssh: ssh user@server-name
+Type any one of the following command to find os name and version in Linux:
+cat /etc/os-release
+lsb_release -a
+hostnamectl
+Type the following command to find Linux kernel version:
+uname -r

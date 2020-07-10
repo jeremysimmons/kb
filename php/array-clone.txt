@@ -1,0 +1,39 @@
+https://stackoverflow.com/a/17729234/26877
+function array_clone($array) {
+    return array_map(function($element) {
+        return ((is_array($element))
+            ? array_clone($element)
+            : ((is_object($element))
+                ? clone $element
+                : $element
+            )
+        );
+    }, $array);
+}
+
+Is there a function to make a copy of a PHP array to another?
+
+
+In PHP arrays are assigned by copy, while objects are assigned by reference. This means that:
+https://stackoverflow.com/a/1533214/26877
+$a = array();
+$b = $a;
+$b['foo'] = 42;
+var_dump($a);
+Will yield:
+
+array(0) {
+}
+Whereas:
+
+$a = new StdClass();
+$b = $a;
+$b->foo = 42;
+var_dump($a);
+Yields:
+
+object(stdClass)#1 (1) {
+  ["foo"]=>
+  int(42)
+}
+You could get confused by intricacies such as ArrayObject, which is an object that acts exactly like an array. Being an object however, it has reference semantics.

@@ -1,0 +1,33 @@
+https://rudrastyh.com/woocommerce/change-product-prices-in-cart.html
+woocommerce_before_calculate_totals
+add_action( 'woocommerce_before_calculate_totals', 'misha_recalc_price' );
+ 
+function misha_recalc_price( $cart_object ) {
+	foreach ( $cart_object->get_cart() as $hash => $value ) {
+		$value['data']->set_price( 10 );
+	}
+}
+
+https://stackoverflow.com/questions/43324605/change-cart-item-prices-in-woocommerce-3
+Change cart item prices in Woocommerce 3
+
+
+add_action( 'woocommerce_before_calculate_totals', 'add_custom_price', 20, 1);
+function add_custom_price( $cart ) {
+
+    // This is necessary for WC 3.0+
+    if ( is_admin() && ! defined( 'DOING_AJAX' ) )
+        return;
+
+    // Avoiding hook repetition (when using price calculations for example)
+    if ( did_action( 'woocommerce_before_calculate_totals' ) >= 2 )
+        return;
+
+    // Loop through cart items
+    foreach ( $cart->get_cart() as $item ) {
+        $item['data']->set_price( 40 );
+    }
+}
+
+https://stackoverflow.com/questions/50574699/set-a-specific-product-price-conditionally-on-woocommerce-single-product-page/50575469#50575469
+

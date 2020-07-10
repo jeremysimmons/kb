@@ -1,0 +1,18 @@
+https://remicorson.com/mastering-woocommerce-products-custom-fields/
+Mastering WooCommerce Products Custom Fields
+
+Adding New Fields
+woocommerce_product_options_general_product_data.
+woocommerce_process_product_meta
+
+woocommerce_wp_text_input()
+woocommerce_wp_textarea_input()
+woocommerce_wp_select()
+woocommerce_wp_checkbox()
+woocommerce_wp_hidden_input()
+
+Text Field Type
+Number Field Type
+Textarea Field Type
+Dropdown Select Field Type
+Checkbox Field Type

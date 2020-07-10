@@ -1,0 +1,102 @@
+https://wordpress.stackexchange.com/questions/57079/how-to-remove-a-filter-that-is-an-anonymous-object/57088#57088
+How to remove a filter that is an anonymous object?
+
+
+<?php # -*- coding: utf-8 -*-
+/* Plugin Name: Anonymous OOP Action */
+
+if ( ! class_exists( 'Anonymous_Object' ) )
+{
+    /**
+     * Add some actions with randomized global identifiers.
+     */
+    class Anonymous_Object
+    {
+        public function __construct()
+        {
+            add_action( 'wp_footer', array ( $this, 'print_message_1' ), 5 );
+            add_action( 'wp_footer', array ( $this, 'print_message_2' ), 5 );
+            add_action( 'wp_footer', array ( $this, 'print_message_3' ), 12 );
+        }
+
+        public function print_message_1()
+        {
+            print '<p>Kill me!</p>';
+        }
+
+        public function print_message_2()
+        {
+            print '<p>Me too!</p>';
+        }
+
+        public function print_message_3()
+        {
+            print '<p>Aaaand me!</p>';
+        }
+    }
+
+    // Good luck finding me!
+    new Anonymous_Object;
+}
+
+WordPress needs a name for the filter. We didn’t provide one, so WordPress calls _wp_filter_build_unique_id() and creates one. This name is not predictable because it uses spl_object_hash().
+
+If we run a var_export() on $GLOBALS['wp_filter'][ 'wp_footer' ] we get something like this now:
+
+array (
+  5 => 
+  array (
+    '000000002296220e0000000013735e2bprint_message_1' => 
+    array (
+      'function' => 
+      array (
+        0 => 
+        Anonymous_Object::__set_state(array(
+        )),
+        1 => 'print_message_1',
+      ),
+      'accepted_args' => 1,
+    ),
+    '000000002296220e0000000013735e2bprint_message_2' => 
+    array (
+      'function' => 
+      array (
+        0 => 
+        Anonymous_Object::__set_state(array(
+        )),
+        1 => 'print_message_2',
+      ),
+      'accepted_args' => 1,
+    ),
+  ),
+  12 => 
+  array (
+    '000000002296220e0000000013735e2bprint_message_3' => 
+    array (
+      'function' => 
+      array (
+        0 => 
+        Anonymous_Object::__set_state(array(
+        )),
+        1 => 'print_message_3',
+      ),
+      'accepted_args' => 1,
+    ),
+  ),
+  20 => 
+  array (
+    'wp_print_footer_scripts' => 
+    array (
+      'function' => 'wp_print_footer_scripts',
+      'accepted_args' => 1,
+    ),
+  ),
+  1000 => 
+  array (
+    'wp_admin_bar_render' => 
+    array (
+      'function' => 'wp_admin_bar_render',
+      'accepted_args' => 1,
+    ),
+  ),
+)

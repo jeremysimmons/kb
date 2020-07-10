@@ -1,0 +1,11 @@
+<?php // Do not include this if already open!
+
+/**
+ * Code goes in theme functions.php.
+ */
+add_filter( 'woocommerce_product_subcategories_args', 'custom_woocommerce_product_subcategories_args' );
+
+function custom_woocommerce_product_subcategories_args( $args ) {
+  $args['exclude'] = get_option( 'default_product_cat' );
+  return $args;
+}

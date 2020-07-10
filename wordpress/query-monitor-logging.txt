@@ -1,0 +1,15 @@
+https://querymonitor.com/blog/2018/07/profiling-and-logging/
+do_action( 'qm/debug', 'This happened!' );
+or
+QM::error( 'Everything is broken' );
+
+qm/emergency
+qm/alert
+qm/critical
+qm/error
+qm/warning
+qm/notice
+qm/info
+qm/debug
+A log level of warning or higher will trigger a notification in Query Monitor’s admin toolbar.
+

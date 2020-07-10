@@ -1,1 +1,56 @@
+https://asphaltthemes.com/alternative-to-p3-plugin-performance-profiler/
+
 https://codex.wordpress.org/Debugging_in_WordPress
+
+RECOVERY_MODE_EMAIL
+
+add_filter( 'recovery_mode_email_rate_limit', function ($seconds) { 
+   return 60; // how often
+} );
+
+	define( 'MINUTE_IN_SECONDS', 60 );
+	define( 'HOUR_IN_SECONDS', 60 * MINUTE_IN_SECONDS );
+	define( 'DAY_IN_SECONDS', 24 * HOUR_IN_SECONDS );
+	define( 'WEEK_IN_SECONDS', 7 * DAY_IN_SECONDS );
+	define( 'MONTH_IN_SECONDS', 30 * DAY_IN_SECONDS );
+	define( 'YEAR_IN_SECONDS', 365 * DAY_IN_SECONDS );
+
+
+add_filter( 'recovery_mode_email', function( $email ) {
+    $email['to'] = 'admin@example.com';
+    return $email;
+} );
+
+Developer
+- must have -
+https://wordpress.org/plugins/query-monitor/ 
+https://wordpress.org/plugins/user-switching/
+
+https://wordpress.org/plugins/developer/
+https://wordpress.org/plugins/debug-this/
+https://wordpress.org/plugins/log-deprecated-notices/
+https://wordpress.org/plugins/debug-bar/
+https://wordpress.org/plugins/helpful-information/
+https://wordpress.org/plugins/my-wp-health-check/
+https://wordpress.org/plugins/plugins-garbage-collector/
+
+Profiler
+https://github.com/Rarst/laps
+https://github.com/joehoyle/Time-Stack
+https://github.com/itsgoingd/clockwork
+
+backup
+https://wordpress.org/plugins/backwpup/
+
+Admin
+https://wordpress.org/plugins/health-check/
+https://wordpress.org/plugins/simple-history/
+https://wordpress.org/plugins/wp-login-security-2/
+https://wordpress.org/plugins/all-in-one-wp-security-and-firewall/
+
+https://wordpress.org/plugins/bruteprotect/
+https://wordpress.org/plugins/wordfence/
+
+https://wordpress.org/support/article/debugging-in-wordpress/
+define( 'SAVEQUERIES', true );
+$wpdb->queries.

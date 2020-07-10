@@ -1,0 +1,42 @@
+https://wordpress.stackexchange.com/questions/39125/custom-taxonomy-tree-view
+<?php
+//Walker function
+function custom_taxonomy_walker($taxonomy, $parent = 0)
+{
+    $terms = get_terms($taxonomy, array('parent' => $parent, 'hide_empty' => false));
+    //If there are terms, start displaying
+    if(count($terms) > 0)
+    {
+        //Displaying as a list
+        $out = "<ul>";
+        //Cycle though the terms
+        foreach ($terms as $term)
+        {
+            //Secret sauce.  Function calls itself to display child elements, if any
+            $out .="<li>" . $term->name . custom_taxonomy_walker($taxonomy, $term->term_id) . "</li>"; 
+        }
+        $out .= "</ul>";    
+        return $out;
+    }
+    return;
+}
+
+//Example
+echo custom_taxonomy_walker('category');
+?>
+
+
+or
+
+<?php
+$args = array(
+  'taxonomy'     => 'product-type',
+  'hierarchical' => true,
+  'title_li'     => '',
+  'hide_empty'   => false
+);
+?>
+
+<ul>
+<?php wp_list_categories( $args ); ?>
+</ul>

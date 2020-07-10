@@ -1,0 +1,41 @@
+https://rudrastyh.com/woocommerce/create-product-tab.html
+Create a Custom Product Tab
+
+
+add_filter( 'woocommerce_product_tabs', 'misha_custom_tab' );
+ 
+function misha_custom_tab( $tabs ) {
+ 
+	$tabs['misha_custom_tab'] = array(
+		'title'    => 'About Misha',
+		'callback' => 'misha_custom_tab_content', // the function name, which is on line 15
+		'priority' => 50,
+	);
+ 
+	return $tabs;
+ 
+}
+ 
+function misha_custom_tab_content( $slug, $tab ) {
+ 
+	echo '<h2>' . $tab['title'] . '</h2><p>Tab Content. You can display something in PHP here as well.</p>';
+ 
+}
+
+Show the Tab for Certain Product Types or Specific Products Only
+
+function misha_custom_tab( $tabs ) {
+ 
+	global $product;
+ 
+	if( $product->get_id() == 5 ) {
+		$tabs['misha_custom_tab'] = array(
+
+Or for specific product types only:
+
+function misha_custom_tab( $tabs ) {
+ 
+	global $product;
+ 
+	if( $product->is_type( 'variable' ) ) {
+		$tabs['misha_custom_tab'] = array(

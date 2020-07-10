@@ -1,0 +1,14 @@
+https://hub.docker.com/_/wordpress
+
+switch to linux containers
+docker swarm init
+docker stack deploy -c stack.yml wordpress
+http://localhost:8080
+docker stack ls
+docker stack ps wordpress
+docker stack services wordpress
+docker stack rm wordpress
+
+http://localhost:8080/wp-admin
+admin
+admin123!

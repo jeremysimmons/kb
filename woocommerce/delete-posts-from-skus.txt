@@ -1,0 +1,17 @@
+drop table if exists remove_ids;
+create table if not exists remove_ids(id int);
+insert into remove_ids
+select p.id
+from wp_posts p
+join wp_postmeta pm on p.ID = pm.post_id
+where pm.meta_key = '_sku'
+and post_type = 'product'
+and pm.meta_value in ('ANG', 'BEL', 'BLOOM', 'BOD', 'BOL', 'BOO', 'CAL', 'CAM', 'CAZ', 'CHALK', 'CLO', 'COR', 'COT', 'DIL', 'DUN', 'FAI', 'FOR', 'FREE', 'FUL', 'GEY', 'GLE', 'GRA', 'GRE', 'GUE', 'HEALD', 'HEA', 'HEA+5', 'HOP', 'INV', 'JEN', 'KEL', 'KENT', 'KEN', 'MARSH', 'MARS', 'MILL', 'MIL', 'MONTE', 'MON', 'NAP', 'NIC', 'NOV', 'OAKM', 'OAK', 'OCC', 'OLE', 'PEN', 'PWC', 'PET', 'POI', 'RED', 'ROH', 'ROS', 'RUT', 'SANAN', 'SAN F', 'SANR', 'SAN', 'SAU', 'SEB', 'SON', 'STH', 'STI', 'TER', 'TIB', 'TOM', 'UKI', 'VAL..', 'YOR', 'YOU');
+
+DELETE a,b,c
+FROM wp_posts a
+join remove_ids r on a.id = r.id
+LEFT JOIN wp_term_relationships b ON a.ID = b.object_id
+LEFT JOIN wp_postmeta c ON a.ID = c.post_id
+
+drop table if exists remove_ids;

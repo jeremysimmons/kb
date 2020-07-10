@@ -1,0 +1,28 @@
+https://stackoverflow.com/questions/2715465/converting-a-php-array-to-class-variables
+
+Best solution is to have trait with static function fromArray that can be used for data loading:
+
+trait FromArray {
+ public static function fromArray(array $data = []) {
+   foreach (get_object_vars($obj = new self) as $property => $default) {
+     if (!array_key_exists($property, $data)) continue;
+     $obj->{$property} = $data[$property]; // assign value to object
+   }
+   return $obj;
+  }
+}
+
+Then you can use this trait like that:
+
+class Example {
+  use FromArray;
+  public $data;
+  public $prop;
+}
+
+Then you can call static fromArray function to get new instance of Example class:
+
+$obj = Example::fromArray(['data' => 123, 'prop' => false]);
+var_dump($obj);
+
+I also have much more sophisticated version with nesting and value filtering https://github.com/OzzyCzech/fromArray

@@ -1,0 +1,13 @@
+
+class WP_Fatal_Error_Handler
+
+wp_php_error_message
+wp_php_error_args
+
+wp_die_handler
+
+send_recovery_mode_email
+
+fatal-errors.log
+
+C:\dev\encoredev/wp-content/uploads/wc-logs/fatal-errors-2020-05-07-71bb42602e589d2e3162e4be2c68faad.log

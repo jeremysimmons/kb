@@ -1,2 +1,5 @@
 WordPress Hooks Database
 https://adambrown.info/p/wp_hooks
+
+The WordPress Hooks Firing Sequence!
+http://rachievee.com/the-wordpress-hooks-firing-sequence/

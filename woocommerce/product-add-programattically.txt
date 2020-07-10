@@ -1,0 +1,4 @@
+How to Add a WooCommerce Product Using Custom Php Code Programmatically
+Add a WooCommerce Simple or Variable Product.
+
+https://www.sbloggers.com/add-a-woocommerce-product-using-custom-php-code-programmatically

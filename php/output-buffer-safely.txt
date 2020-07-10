@@ -1,0 +1,22 @@
+<?php
+$buffer_level = ob_get_level();
+try {
+	// buffer output block
+?>
+	<div>happy little html tags</div>
+<?php
+} catch ( \Error $e ) {
+	$level = ob_get_level();
+	while ( $level > $buffer_level ) {
+		ob_end_clean();
+		$level = ob_get_level();
+	}
+	// Output will only be an error message
+	// TODO: add a function to use TWL_DEBUG (don't require WP_DEBUG) or WP_DEBUG
+	$output = 'Failed to display page. Please contact support';
+	if ( defined( 'WP_DEBUG' ) && WP_DEBUG == true ) {
+		$output .= '<hr/> Details for support. (Displays only in test-environment)<br/>';
+		$output .= nl2br( $e->getMessage() . '\n' . $e->getTraceAsString() );
+	}
+}
+?>

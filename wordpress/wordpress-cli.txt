@@ -1,1 +1,13 @@
 https://kinsta.com/blog/wp-cli/
+
+https://robotninja.com/blog/wp-cli-woocommerce-development/
+
+The official WordPress developer handbook entry. https://make.wordpress.org/cli/
+
+https://developer.wordpress.org/cli/commands/ WP-CLI Commands – Full list of WP-CLI commands.
+https://github.com/woocommerce/woocommerce/wiki/WC-CLI-Commands WC-CLI Commands – Full list of WC-CLI commands.
+
+https://nicola.blog/2016/03/10/managing-products-woocommerce-cli/ Managing Products with WooCommerce CLI – WooCommerce Happiness Engineer Nicola Mustone has published some handy commands for WooCommerce development via command line.
+
+https://www.remicorson.com/bulk-import-woocommerce-products-with-wp-cli-the-and-alfred/
+Bulk Import WooCommerce Products with WP-CLI & Alfred From a Text File – A straightforward guide also put together by Rémi Corson. His blog is a good one to bookmark for other WooCommerce development tutorials.

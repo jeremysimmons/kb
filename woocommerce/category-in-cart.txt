@@ -1,0 +1,1 @@
+echo wc_get_product_category_list( $cart_item['product_id'] );

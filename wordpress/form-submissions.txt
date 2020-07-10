@@ -1,0 +1,4 @@
+https://premium.wpmudev.org/blog/handling-form-submissions/
+
+Handling Form Submissions in WordPress with Admin-Post and Admin-Ajax
+

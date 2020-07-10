@@ -1,0 +1,72 @@
+UPDATED CODE
+https://stackoverflow.com/questions/53172288/add-a-custom-multi-select-field-to-admin-product-options-settings-in-woocommerce
+// Display a custom select field in "Linked Products" section
+add_action( 'woocommerce_product_options_related', 'display_linked_products_data_custom_field' );
+
+function display_linked_products_data_custom_field() {
+    global $product_object, $post;
+    ?>
+    <p class="form-field">
+        <label for="subscription_toggle_products"><?php _e( 'Subscription Toggle Products', 'woocommerce' ); ?></label>
+        <select class="wc-product-search" multiple="multiple" style="width: 50%;" id="subscription_toggle_ids" name="_subscription_toggle_ids[]" data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'woocommerce' ); ?>" data-action="woocommerce_json_search_products_and_variations" data-exclude="<?php echo intval( $post->ID ); ?>">
+            <?php
+                $product_ids = $product_object->get_meta( '_subscription_toggle_ids' );
+
+                foreach ( $product_ids as $product_id ) {
+                    $product = wc_get_product( $product_id );
+                    if ( is_object( $product ) ) {
+                        echo '<option value="' . esc_attr( $product_id ) . '"' . selected( true, true, false ) . '>' . wp_kses_post( $product->get_formatted_name() ) . '</option>';
+                    }
+                }
+            ?>
+        </select>
+    </p>
+    <?php
+}
+
+// Save the values to the product
+add_action( 'woocommerce_admin_process_product_object', 'save_linked_products_data_custom_field_value', 10, 1 );
+function save_linked_products_data_custom_field_value( $product ){
+    $data = isset( $_POST['_subscription_toggle_ids'] ) ? array_map( 'intval', (array) $_POST['_subscription_toggle_ids'] ) : array();
+    $product->update_meta_data( '_subscription_toggle_ids', $data );
+}
+
+
+ORIGINAL CODE
+https://stackoverflow.com/questions/45199599/how-to-add-more-custom-field-in-linked-product-of-woocommerce
+
+// Display the custom fields in the "Linked Products" section
+add_action( 'woocommerce_product_options_related', 'woocom_linked_products_data_custom_field' );
+
+// Save to custom fields
+add_action( 'woocommerce_process_product_meta', 'woocom_linked_products_data_custom_field_save' );
+
+
+// Function to generate the custom fields
+function woocom_linked_products_data_custom_field() {
+    global $woocommerce, $post;
+?>
+<p class="form-field">
+    <label for="upsizing_products"><?php _e( 'Upsizing Product', 'woocommerce' ); ?></label>
+    <select class="wc-product-search" multiple="multiple" style="width: 50%;" id="upsizing_products" name="upsizing_products[]" data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'woocommerce' ); ?>" data-action="woocommerce_json_search_products_and_variations" data-exclude="<?php echo intval( $post->ID ); ?>">
+        <?php
+            $product_ids = get_post_meta( $post->ID, '_upsizing_products_ids', true );
+
+            foreach ( $product_ids as $product_id ) {
+                $product = wc_get_product( $product_id );
+                if ( is_object( $product ) ) {
+                    echo '<option value="' . esc_attr( $product_id ) . '"' . selected( true, true, false ) . '>' . wp_kses_post( $product->get_formatted_name() ) . '</option>';
+                }
+            }
+        ?>
+    </select> <?php echo wc_help_tip( __( 'Select Products Here.', 'woocommerce' ) ); ?>
+</p>
+
+<?php
+}
+
+// Function the save the custom fields
+function woocom_linked_products_data_custom_field_save( $post_id ){
+    $product_field_type =  $_POST['upsizing_products'];
+    update_post_meta( $post_id, '_upsizing_products_ids', $product_field_type );
+}

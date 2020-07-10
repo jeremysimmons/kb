@@ -1,0 +1,15 @@
+https://www.eletemplator.com/ele-conditions/
+
+/*adding custom values to conditions*/
+
+add_filter( "eleconditions_vars",function($custom_vars){
+	global $product;
+	if ( isset( $product ) ) {
+		if ( ! $product->managing_stock() && ! $product->is_in_stock() ) $custom_vars['instock']=false;
+	else
+		$custom_vars['instock']=true;
+	}
+	return $custom_vars;
+});
+and in condition to the add to cart element you enter:
+$instock == true

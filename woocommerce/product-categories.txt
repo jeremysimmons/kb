@@ -1,0 +1,32 @@
+https://wordpress.stackexchange.com/questions/73748/get-the-category-from-an-id-of-a-product
+
+Option #1
+
+Get all product_cat's using this function
+
+global $product;
+
+$terms = get_the_terms( $product->get_id(), 'product_cat' );
+
+Offical docs
+
+Option #2 If you only need their ids, you can get all product_category_ids associated with a specific product, using this function:
+
+global $product;
+
+$product_cats_ids = wc_get_product_term_ids( $product->get_id(), 'product_cat' );
+
+Official docs
+
+Extra
+
+If you would like to print out - for instance - the categories names, you need the category term-object. This can be retrieved using get_term_by().
+
+An example:
+
+foreach( $product_cats_ids as $cat_id ) {
+    $term = get_term_by( 'id', $cat_id, 'product_cat' );
+
+    echo $term->name;
+}
+

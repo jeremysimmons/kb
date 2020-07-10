@@ -1,0 +1,5 @@
+https://codex.wordpress.org/Conditional_Tags
+is_home() 
+is_front_page() 
+is_admin()
+etc

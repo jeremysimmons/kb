@@ -1,0 +1,10 @@
+https://wordpress.stackexchange.com/questions/13/updates-for-a-private-plugin
+https://w-shadow.com/blog/2010/09/02/automatic-updates-for-any-plugin/
+https://github.com/YahnisElsts/wp-update-server
+github/automatic updates
+
+software license
+https://www.tipsandtricks-hq.com/software-license-manager-plugin-for-wordpress  
+https://github.com/Arsenal21/software-license-manager 
+ 
+https://code.tutsplus.com/tutorials/distributing-your-plugins-in-github-with-automatic-updates--wp-34817

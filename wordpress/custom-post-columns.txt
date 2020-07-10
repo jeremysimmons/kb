@@ -1,0 +1,30 @@
+https://codex.wordpress.org/Plugin_API/Action_Reference/manage_%24post_type_posts_custom_column#Examples
+
+add_filter( 'manage_book_posts_columns', 'set_custom_edit_book_columns' );
+add_action( 'manage_book_posts_custom_column' , 'custom_book_column', 10, 2 );
+
+function set_custom_edit_book_columns($columns) {
+    unset( $columns['author'] );
+    $columns['book_author'] = __( 'Author', 'your_text_domain' );
+    $columns['publisher'] = __( 'Publisher', 'your_text_domain' );
+
+    return $columns;
+}
+
+function custom_book_column( $column, $post_id ) {
+    switch ( $column ) {
+
+        case 'book_author' :
+            $terms = get_the_term_list( $post_id , 'book_author' , '' , ',' , '' );
+            if ( is_string( $terms ) )
+                echo $terms;
+            else
+                _e( 'Unable to get author(s)', 'your_text_domain' );
+            break;
+
+        case 'publisher' :
+            echo get_post_meta( $post_id , 'publisher' , true ); 
+            break;
+
+    }
+}

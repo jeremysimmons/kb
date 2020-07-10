@@ -1,0 +1,1 @@
+https://wordpress.stackexchange.com/questions/32885/how-to-get-the-categories-for-a-single-post-in-a-hierarchical-way

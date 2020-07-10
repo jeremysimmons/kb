@@ -1,0 +1,7 @@
+How can I install a package without root access?
+
+https://askubuntu.com/a/350
+
+apt-get download package
+dpkg -x package.deb $HOME
+

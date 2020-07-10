@@ -1,0 +1,17 @@
+https://stackoverflow.com/questions/21009516/get-woocommerce-product-categories-from-wordpress
+
+
+// Get Woocommerce product categories WP_Term objects
+$categories = get_terms( ['taxonomy' => 'product_cat'] );
+or
+$categories = get_terms( ['taxonomy' => 'product_cat', 'hide_empty' => false] );
+
+
+// Getting a visual raw output
+echo '<pre>'; print_r( $categories ); echo '</pre>';
+
+https://developer.wordpress.org/reference/functions/get_category_by_path/
+get_category_by_path
+
+https://www.freewebmentor.com/2019/12/wordpress-category-tag-and-taxonomy-functions.html
+WordPress Category Functions
