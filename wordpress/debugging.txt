@@ -53,4 +53,4 @@ https://wordpress.org/plugins/wordfence/
 
 https://wordpress.org/support/article/debugging-in-wordpress/
 define( 'SAVEQUERIES', true );
-$wpdb->queries.
+$wpdb->queries

@@ -1,0 +1,5 @@
+\\wsl$\<distro>
+example
+\\wsl$\Ubuntu-18.04
+
+https://www.youtube.com/watch?time_continue=12&v=63wVlI9B3Ac&feature=emb_logo
