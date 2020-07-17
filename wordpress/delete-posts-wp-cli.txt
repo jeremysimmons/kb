@@ -1,0 +1,3 @@
+wp post delete $(wp post list --post_type='shop-order' --format=ids) --force
+
+wp post list --field=ID --post_type=shop_order --posts_per_page=2000 | xargs wp post delete --force
