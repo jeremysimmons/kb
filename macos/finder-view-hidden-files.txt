@@ -1,0 +1,12 @@
+How to view hidden files in Mac OS X
+https://www.jochenhebbrecht.be/site/index.php/2013-05-14/mac/how-view-hidden-files-in-mac-os-x
+
+Open a terminal and execute the following commands:
+
+$ defaults write com.apple.Finder AppleShowAllFiles YES
+$ killall -HUP Finder
+
+Reversing this process can be done by:
+
+$ defaults write com.apple.Finder AppleShowAllFiles NO
+$ killall -HUP Finder

@@ -1,0 +1,7 @@
+zsh compinit: insecure directories, run compaudit for list.
+Ignore insecure directories and continue [y] or abort compinit [n]?
+
+https://unix.stackexchange.com/a/412817
+
+There's a one line solution to fix that:
+compaudit | xargs chmod g-w
