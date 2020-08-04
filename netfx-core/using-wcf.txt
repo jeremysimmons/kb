@@ -1,0 +1,12 @@
+https://www.seeleycoder.com/blog/using-wcf-with-dotnetcore/
+https://stackoverflow.com/questions/44462093/inject-service-reference-into-net-with-appsettings-json-and-startup-cs
+USING WCF WITH .NET CORE
+
+https://github.com/dotnet/wcf/blob/master/release-notes/SupportedFeatures-v2.1.0.md
+
+using (var serviceClient = ServiceConsumerFactory.Create<PowerOnService>("PowerOnServicePort"))
+        {
+          var executePowerOnResponse = await serviceClient.Operations.executePowerOnAsync(powerOnExecutionRequest);
+
+}
+}
