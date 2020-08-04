@@ -1,11 +1,39 @@
 git checkout -b squashed_feature
 This way, if you screw up, you can go back to your original branch, make another branch for squashing and try again.
 
-To squash all commits since you branched away from master, do
+https://stackoverflow.com/questions/5189560/squash-my-last-x-commits-together-using-git
+
+# <after-this-commit> parent of the oldest commit you want to squash
+# rebase -i allows me to retain the commit author, while reset --soft allows me to recommit as the new author
+git rebase -i <after-this-commit> 
+git rebase -i HEAD~5
+
+
+https://stackoverflow.com/a/5190323/26877
+# Reset the current branch to the commit just before the last 12:
+git reset --hard HEAD~12
+
+# HEAD@{1} is where the branch was just before the previous command.
+# This command sets the state of the index to be as it would just
+# after a merge from that commit:
+git merge --squash HEAD@{1}
+
+# Commit those squashed changes.  The commit message will be helpfully
+# prepopulated with the commit messages of all the squashed commits:
+git commit
+
+
+
+https://stackoverflow.com/a/5201642/26877
+git reset --soft HEAD~3 && 
+git commit --edit -m"$(git log --format=%B --reverse HEAD..HEAD@{1})"
+
+
 
 COPY
 git rebase -i master
-Note that rebasing to the master does not work if you merged the master into your feature branch while you were working on the new feature. If you did this you will need to find the original branch point and call git rebase with a SHA1 revision.
+Note that rebasing to the master does not work if you merged the master into your feature branch while you were working on the new feature. 
+If you did this you will need to find the original branch point and call git rebase with a SHA1 revision.
 
 Your editor will open with a file like
 
