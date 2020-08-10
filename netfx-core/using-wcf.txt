@@ -10,3 +10,43 @@ using (var serviceClient = ServiceConsumerFactory.Create<PowerOnService>("PowerO
 
 }
 }
+https://github.com/dotnet/wcf/issues/2161
+don't create a new ChannelFactory each time.
+BasicHttpBinding myBinding = new BasicHttpBinding();
+        EndpointAddress myEndpoint = new EndpointAddress("webServiceURL");
+        using (ChannelFactory<IService1> myChannelFactory = new ChannelFactory<IService1>(myBinding, myEndpoint))
+        
+
+https://stackoverflow.com/questions/48625444/calling-a-soap-service-in-net-core
+https://long2know.com/2016/07/consuming-a-soap-service-using-httpclient/
+
+
+POST /Service.asmx HTTP/1.1
+Host: localhost
+Content-Type: text/xml; charset=utf-8
+SOAPAction: "http://www.ent.com/services/GetRatesXml"
+Content-Length: length
+
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <GetRatesXml xmlns="http://www.ent.com/services/">
+      <request />
+    </GetRatesXml>
+  </soap:Body>
+</soap:Envelope>
+
+HTTP/1.1 200 OK
+Content-Type: text/xml; charset=utf-8
+Content-Length: length
+
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <GetRatesXmlResponse xmlns="http://www.ent.com/services/">
+      <GetRatesXmlResult>
+        <Rates>xml</Rates>
+      </GetRatesXmlResult>
+    </GetRatesXmlResponse>
+  </soap:Body>
+</soap:Envelope>
