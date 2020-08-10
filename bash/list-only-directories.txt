@@ -1,0 +1,11 @@
+onlyd dirs
+ls -d */
+
+only files
+ls -l | egrep -v '^d'
+
+alias lf="ls -l | egrep -v '^d'"
+alias ldir='ls -d */'
+
+find . -maxdepth 1 -type d
+find . -maxdepth 1 -type d -ls
