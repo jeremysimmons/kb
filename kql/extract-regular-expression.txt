@@ -1,0 +1,6 @@
+requests
+| extend userAgent =  tostring(customDimensions.['Request Headers User-Agent'])
+| where not(ipv4_is_match(tostring(customDimensions.['Request Headers True-Client-IP']), '63.128.163.0/31'))
+| extend EntMobileVersion = extract(@"EntMobile (\w+) ([0-9.]+)$", 1, userAgent)
+| extend EntMobilePlatform = extract(@"EntMobile (\w+) ([0-9.]+)$", 2, userAgent)
+| summarize count() by EntMobileVersion, EntMobilePlatform
