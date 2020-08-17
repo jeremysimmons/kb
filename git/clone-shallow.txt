@@ -1,0 +1,20 @@
+https://stackoverflow.com/a/43136160/26877
+
+How to shallow clone a specific commit with depth 1?
+
+git init
+git remote add origin <url>
+git fetch --depth 1 origin <sha1>
+git checkout FETCH_HEAD
+
+
+
+you can set uploadpack.allowReachableSHA1InWant=true on the server side to enable fetching of specific SHA1s:
+
+uploadpack.allowTipSHA1InWant, uploadpack.allowReachableSHA1InWant, uploadpack.allowAnySHA1InWant
+
+git clone --depth 1 git@github.com:VENDOR/REPO.git --branch 1.23.0 --single-branch
+
+
+
+system-wide $(prefix)/etc/gitconfig

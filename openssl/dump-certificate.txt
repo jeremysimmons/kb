@@ -1,0 +1,5 @@
+openssl x509 -in certfile -noout -text
+
+openssl x509 -in MYCERT.der -inform der -text
+
+openssl x509 -in certfile -noout -enddate
