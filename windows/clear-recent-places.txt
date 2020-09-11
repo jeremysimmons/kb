@@ -1,0 +1,13 @@
+https://www.tenforums.com/tutorials/3476-reset-clear-recent-items-frequent-places-windows-10-a.html
+
+How to Reset and Clear Recent Items and Frequent Places in Windows 10
+
+
+Recent items is a list of the files that you have used or opened recently. These items are displayed as "Recent files" in Quick access, and under "Recent" in jump lists on the Start menu and taskbar.
+
+Frequent places is a list of folders, websites, etc... that you have opened recently. These items are displayed as "Frequent folders" in Quick access, "Frequent places" under File in File Explorer, and under "Frequent" in jump lists on the Start menu and taskbar.
+
+
+%APPDATA%\Microsoft\Windows\Recent Items
+%APPDATA%\Microsoft\Windows\Recent\AutomaticDestinations
+%APPDATA%\Microsoft\Windows\Recent\CustomDestinations

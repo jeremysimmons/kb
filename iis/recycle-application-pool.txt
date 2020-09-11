@@ -1,0 +1,12 @@
+1. Use appcmd.exe to recycle the application pool from the command prompt. 
+
+2. appcmd.exe is the command line tool for IIS7, you will find this tool at following location : 
+
+%systemroot%\system32\inetsrv\appcmd 
+
+3. To recycle your application pool use the following command: 
+
+appcmd recycle apppool /apppool.name:<application pool name>
+
+Ex.
+appcmd recycle apppool /apppool.name:"Sharepoint - 80"

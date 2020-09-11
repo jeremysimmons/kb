@@ -1,0 +1,11 @@
+Symitar:Account -> Creatio:Financial Account (Property:UsrPrimaryContact(Guid)) -> either Creatio:Contact(ID) or Creatio:Account(ID)
+
+Symitar:Account[Personal] -> Symitar:Name[Primary] -> Creatio:Contact(Person)
+Symitar:Account[Business] -> Symitar:Name[Primary] -> Creatio:Account(Organization)
+
+For a business account, for the primary name, when SSN/EIN type is Individual SSN, do we model primary contact as Contact or Organization?
+
+EIN is an Account, for ITIN and Foreign Invididual SSN, do we model as Account?
+
+alternate types - Authorized Signer
+Business Prinicipal

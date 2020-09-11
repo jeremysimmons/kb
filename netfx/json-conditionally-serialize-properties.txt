@@ -1,0 +1,26 @@
+https://stackoverflow.com/a/35234883/26877
+
+sometimes [JsonIgnore] isn't what you want. You only want to prevent serialization of a property, not the deserialization of it.
+
+public class JsonIgnoreSerializationAttribute : Attribute { }
+
+class JsonPropertiesResolver : DefaultContractResolver
+{
+    protected override List<MemberInfo> GetSerializableMembers(Type objectType)
+    {
+        //Return properties that do NOT have the JsonIgnoreSerializationAttribute
+        return objectType.GetProperties()
+                         .Where(pi => !Attribute.IsDefined(pi, typeof(JsonIgnoreSerializationAttribute)))
+                         .ToList<MemberInfo>();
+    }
+}
+
+[JsonIgnoreSerialization]
+public string Prop1 { get; set; } //Will be skipped when serialized
+
+[JsonIgnoreSerialization]
+public string Prop2 { get; set; } //Also will be skipped when serialized
+
+public string Prop3 { get; set; } //Will not be skipped when serialized
+
+var sweet = JsonConvert.SerializeObject(myObj, new JsonSerializerSettings { ContractResolver = new JsonPropertiesResolver() });

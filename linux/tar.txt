@@ -1,0 +1,5 @@
+https://www.cyberciti.biz/faq/linux-list-just-directories-or-directory-names/
+https://unix.stackexchange.com/questions/48492/list-only-regular-files-but-not-directories-in-current-directory
+https://stackoverflow.com/questions/45838744/how-to-tar-all-files-in-current-directory-using-tar-but-without-inputing-names-o
+https://stackoverflow.com/questions/939982/how-do-i-tar-a-directory-of-files-and-folders-without-including-the-directory-it/944847#944847
+https://stackoverflow.com/questions/20841727/exclude-directory-while-using-tar

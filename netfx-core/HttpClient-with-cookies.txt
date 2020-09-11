@@ -1,0 +1,14 @@
+var baseAddress = new Uri("http://example.com");
+var cookieContainer = new CookieContainer();
+using (var handler = new HttpClientHandler() { CookieContainer = cookieContainer })
+using (var client = new HttpClient(handler) { BaseAddress = baseAddress })
+{
+    var content = new FormUrlEncodedContent(new[]
+    {
+        new KeyValuePair<string, string>("foo", "bar"),
+        new KeyValuePair<string, string>("baz", "bazinga"),
+    });
+    cookieContainer.Add(baseAddress, new Cookie("CookieName", "cookie_value"));
+    var result = await client.PostAsync("/test", content);
+    result.EnsureSuccessStatusCode();
+}

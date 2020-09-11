@@ -1,0 +1,13 @@
+The .git/info/exclude file has the same format as any .gitignore file. Another option is to set core.excludesFile to the name of a file containing global patterns.
+
+Note, if you already have unstaged changes you must run the following after editing your ignore-patterns:
+
+git update-index --assume-unchanged <file-list>
+Note on $GIT_DIR: This is a notation used all over the git manual simply to indicate the path to the git repository. If the environment variable is set, then it will override the location of whichever repo you're in, which probably isn't what you want.
+
+Edit: Another way is to use:
+
+git update-index --skip-worktree <file-list>
+Reverse it by:
+
+git update-index --no-skip-worktree <file-list>

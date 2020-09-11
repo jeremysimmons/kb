@@ -19,3 +19,5 @@ https://cpratt.co/async-tips-tricks/
 				.GetAwaiter()
 				.GetResult();
 	}
+
+https://sonyks2007.blogspot.com/2020/02/c-async-trics.html
