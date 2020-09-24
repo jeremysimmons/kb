@@ -1,0 +1,50 @@
+https://medium.com/rubrikkgroup/understanding-async-avoiding-deadlocks-e41f8f2c6f5d
+
+https://docs.microsoft.com/en-us/archive/msdn-magazine/2015/july/async-programming-brownfield-async-development#vertical-partitions
+
+https://www.nuget.org/packages/Nito.AsyncEx/
+
+https://codewala.net/2012/04/30/asynchronous-httphandlers-with-asp-net-4-5/
+
+// In .NET 4.5, you would use HttpTaskAsyncHandler instead.
+
+// First, a base class that takes care of the Task -> IAsyncResult mapping.
+public abstract class HttpAsyncHandlerBase : IHttpAsyncHandler
+{
+    public abstract Task ProcessRequestAsync(HttpContext context);
+
+    IAsyncResult IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, object extraData)
+    {
+        var task = ProcessRequestAsync(context);
+        return Nito.AsyncEx.AsyncFactory.ToBegin(task, cb, extraData);
+    }
+
+    void EndProcessRequest(IAsyncResult result)
+    {
+        Nito.AsyncEx.AsyncFactory.ToEnd(result);
+    }
+
+    void ProcessRequest(HttpContext context)
+    {
+        EndProcessRequest(BeginProcessRequest(context, null, null));
+    }
+
+    public virtual bool IsReusable
+    {
+        get { return true; }
+    }
+}
+
+// Now, our (async) Task implementation
+public class MyAsyncHandler : HttpAsyncHandlerBase
+{
+    public override async Task ProcessRequestAsync(HttpContext context)
+    {
+        using (var webClient = new WebClient())
+        {
+            var data = await webClient.DownloadDataTaskAsync("http://my resource");
+            context.Response.ContentType = "text/xml";
+            context.Response.OutputStream.Write(data, 0, data.Length);
+        }
+    }
+}

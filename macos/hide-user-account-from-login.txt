@@ -1,0 +1,17 @@
+Hide a user account from the login screen of macOS Catalina
+
+https://apple.stackexchange.com/questions/379080/hide-a-user-account-from-the-login-screen-of-macos-catalina
+
+Log out as admin (below "admin" is meant as name of the admin user account - adapt accordingly) and login as foo.
+Open the Terminal and enter:
+
+su admin
+sudo dscl . create /Users/admin IsHidden 1
+If you want to remove the login screen's "Others..." option, which appears after disabling the admin account, enter:
+
+sudo defaults write /Library/Preferences/com.apple.loginwindow SHOWOTHERUSERS_MANAGED -bool FALSE
+To reverse the hidden admin user and enable "Others..." again enter:
+
+su admin
+sudo dscl . create /Users/admin IsHidden 0
+sudo defaults delete /Library/Preferences/com.apple.loginwindow SHOWOTHERUSERS_MANAGED
