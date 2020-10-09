@@ -1,0 +1,26 @@
+https://www.cyberciti.biz/faq/howto-macosx-starting-stopping-apache-web-server/
+
+Stop
+sudo apachectl stop
+OR
+sudo apachectl -k stop
+
+Start
+sudo apachectl start
+OR
+sudo apachectl -k start
+
+Restart
+sudo apachectl restart
+OR
+sudo apachectl -k restart
+
+Configuration file syntax test
+sudo apachectl configtest
+
+Reload
+$ sudo vi /etc/apache2/httpd.conf
+sudo apachectl graceful
+OR
+sudo apachectl -k graceful
+
