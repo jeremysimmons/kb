@@ -1,0 +1,110 @@
+https://customerfx.com/article/embedding-a-webpage-on-a-tab-in-bpmonline/
+
+Sometimes the easiest way to integrate some other website in bpm’online is to just embed it on a tab. That’s a pretty easy task. Additionally, you can easily include values from the record in bpm’online in the URL so the webpage is specific to the record you’re currently viewing.
+
+For an example of this, I recently created a section in bpm’online to store information about airports. Each airport has a code (such as LAX) and this code can be used on various websites to view information about that specific airport. One of these websites is called Airnav. To make the data from Airnav quickly accessible about the airport the user is viewing, I embedded it on a tab, including the current airport’s code. Here’s what it ended up looking like:
+
+
+
+Let’s take a look at the code to make that happen. For our example in this article, rather than use the Airnav website from my screenshot above, we’ll see what is happening with an account on their website so you know what’s going on with a company before you meet with them. This tab will have the website for the company embedded in it, we’ll name the tab “Website”.
+
+First, we need to create a tab on our page. If you want you can just open the section wizard for the Account section and add the tab there, or you can just add it directly into the diff on AccountPageV2, like this (note, this code below just adds a new blank tab, it ins’t necessary if you’ve added the tab in the section wizard, however , you will need to know what the section wizard named the tab):
+
+{
+    "operation": "insert",
+    "name": "WebsiteTab",
+    "values": {
+        "caption": "Website",
+        "items": [],
+        "order": 2
+    },
+    "parentName": "Tabs",
+    "propertyName": "tabs",
+    "index": 1
+}
+Now that we have our tab, we’ll place a container on it, we’ll put some HTML with an IFRAME in this container. I mentioned using containers to place HTML on a page in an article I wrote about labels in bpm’online. The container will look like this:
+
+{
+    "operation": "insert",
+    "name": "WebsiteFrame",
+    "values": {
+        "id": "websiteframe",
+        "itemType": Terrasoft.ViewItemType.CONTAINER,
+        "selectors": {
+            "wrapEl": "#website-frame"
+        },
+        "layout": {
+            "colSpan": 24,
+            "rowSpan": 1,
+            "column": 0,
+            "row": 0
+        },
+        "html": "<iframe id='website-frame' width='100%' height='100%'style='border:0;'></iframe>",
+        "afterrerender": {
+            "bindTo": "loadWebsiteFrame"
+        }
+    },
+    "parentName": "WebsiteTab", // <- place it in our new tab
+    "propertyName": "items",
+    "index": 0
+}
+A few things to point out from that container. Obviously, we’re adding an iframe in the html of the container and putting it in our new tab. We’re also binding the afterRender to a method that we’ll define in a bit. The afterRender event occurrs once the container and corresponding elements are created on the page, but can sometimes (often) happen before the data exists for the bound record. Because of this, we’ll wire up the afterRender and also use the onEntityInitialized event to make sure our frame is loaded. Lastly, since our tab won’t be the active one when the record is loaded, we’ll also wire on the activeTabChange event so we know when the user has switched to our tab.
+
+Now we need to define the code that loads the frame. As I mentioned before, we have wired up a method named loadWebsiteFrame to the afterrender, and we’ll also use that in the onEntityInitialized and when our tab is selected. In the loadWebsiteFrame method we’ll get the account web address, make sure it’s valid, then set that URL as the src of our iframe. It will look like this:
+
+loadWebsiteFrame: function() {
+    // locate our iframe and make sure it exists 
+    var frame = Ext.get("website-frame");
+    if (Ext.isEmpty(frame)) {
+        return;
+    }
+     
+    // get the account's web address and make sure it's a valid address
+    // if the company doesn't have a web address, we'll form a data uri 
+    // with a message instead
+     
+    var url = this.get("Web");
+    if (!Ext.isEmpty(url)) {
+        if (!Ext.String.startsWith(url, "http", true)) {
+            url = "https://" + url;
+        }
+    }
+    else {
+        // no web address
+        var message = "No web address available for this account.";
+        url = "data:text/html;charset=utf-8,%3Chtml%3E%3Cbody%3E" + message + "%3C/body%3E%3C/html%3E";
+    }
+     
+    // set as frame src
+    frame.dom.src = url;
+}
+To wire this up correctly, we’ll add the following:
+
+onEntityInitialized: function() {
+    this.callParent(arguments);
+    this.loadWebsiteFrame();
+},
+ 
+activeTabChange: function(activeTab) {
+    this.callParent(arguments);
+     
+    if (Ext.isEmpty(activeTab)) {
+        return;
+    }
+     
+    // check if the user switched to our tab and load frame
+    var tab = activeTab.get("Caption");
+    if (tab === "Website") {
+        this.loadWebsiteFrame();
+    }
+}
+The last thing we’ll want to do is make sure the height of our tab is at 100% so the frame will be able to fill the entire tab. To do this, we’ll add a CSS file to to our page with the following. Note, see this article for how to add a CSS file to your page.
+
+#WebsiteTab {
+    height: 100%;
+}
+Now we’ll end up with the following:
+
+
+
+Of course, embedding the account’s website in a tab isn’t exactly useful, but the point of this article is to demonstrate the “how”. Now, you can use it for creating something that will be useful.

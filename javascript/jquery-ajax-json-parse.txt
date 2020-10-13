@@ -1,0 +1,31 @@
+$('#someButton').on('click', function(){
+   $.ajax({
+        url: uploadURI,
+        type: 'POST',
+        data: formData,
+        dataType: 'json', //When you using this, that mean you want the php to return JSON format too
+        success: function() { //If the result from PHP can't be parsed, the success function will not be triggered
+            listFilesOnServer();
+        }, 
+        error: function() { //The request completed.. but..
+            alert('Returned data has an error!');
+            listFilesOnServer(); //Do the second function here..
+        }
+    })
+});
+// Make sure you have add this line before echo the json data in PHP script
+header('Content-type: application/json');
+
+//remove -> dataType: 'json'
+success: function(data) {
+    //alert(data);
+    try {
+        JSON.parse(data);
+    } catch(e){
+        alert('Data is not a raw JSON');
+        return;
+    }
+
+    //The data was a json, continuing to second function
+    listFilesOnServer();
+}

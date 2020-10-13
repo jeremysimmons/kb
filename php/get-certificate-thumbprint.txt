@@ -1,0 +1,143 @@
+Scenario 1
+https://stackoverflow.com/q/16298282/26877
+https://www.php.net/manual/en/context.ssl.php
+should be able to 
+$contextOptions = array(
+    'ssl' => array(
+        'peer_fingerprint' => ....When a string is used, the length will determine which hashing algorithm is applied, either "md5" (32) or "sha1" (40).
+        'cafile' => 'C:\xampp\cacerts.pem',
+        'CN_match' => '*.google.com',  // CN_match will only be checked if 'verify_peer' is set to TRUE.  See https://bugs.php.net/bug.php?id=47030.
+        'verify_peer' => TRUE,
+    )
+);
+
+$socketUrl = 'ssl://google.com:443';
+$streamContext = stream_context_create($contextOptions);
+$socket = stream_socket_client($socketUrl, $errno, $errstr, 30, STREAM_CLIENT_CONNECT, $streamContext);
+
+if (!$socket || $errno !== 0) {
+    var_dump($socket, $errstr);
+    exit;
+}
+
+var_dump($socket);
+exit('Socket created.');
+
+Scenario 2
+https://stackoverflow.com/a/29779341/26877
+
+$url = "http://www.google.com";
+$orignal_parse = parse_url($url, PHP_URL_HOST);
+$get = stream_context_create(array("ssl" => array("capture_peer_cert" => TRUE)));
+$read = stream_socket_client("ssl://".$orignal_parse.":443", $errno, $errstr, 30, STREAM_CLIENT_CONNECT, $get);
+$cert = stream_context_get_params($read);
+$certinfo = openssl_x509_parse($cert['options']['ssl']['peer_certificate']);
+print_r($certinfo);
+
+
+Example result
+
+Array
+(
+    [name] => /C=US/ST=California/L=Mountain View/O=Google Inc/CN=www.google.com
+    [subject] => Array
+        (
+            [C] => US
+            [ST] => California
+            [L] => Mountain View
+            [O] => Google Inc
+            [CN] => www.google.com
+        )
+
+    [hash] => dcdd9741
+    [issuer] => Array
+        (
+            [C] => US
+            [O] => Google Inc
+            [CN] => Google Internet Authority G2
+        )
+
+    [version] => 2
+    [serialNumber] => 3007864570594926146
+    [validFrom] => 150408141631Z
+    [validTo] => 150707000000Z
+    [validFrom_time_t] => 1428498991
+    [validTo_time_t] => 1436223600
+    [purposes] => Array
+        (
+            [1] => Array
+                (
+                    [0] => 1
+                    [1] => 
+                    [2] => sslclient
+                )
+
+            [2] => Array
+                (
+                    [0] => 1
+                    [1] => 
+                    [2] => sslserver
+                )
+
+            [3] => Array
+                (
+                    [0] => 1
+                    [1] => 
+                    [2] => nssslserver
+                )
+
+            [4] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => smimesign
+                )
+
+            [5] => Array
+                (
+                    [0] => 
+                    [1] => 
+                    [2] => smimeencrypt
+                )
+
+            [6] => Array
+                (
+                    [0] => 1
+                    [1] => 
+                    [2] => crlsign
+                )
+
+            [7] => Array
+                (
+                    [0] => 1
+                    [1] => 1
+                    [2] => any
+                )
+
+            [8] => Array
+                (
+                    [0] => 1
+                    [1] => 
+                    [2] => ocsphelper
+                )
+
+        )
+
+    [extensions] => Array
+        (
+            [extendedKeyUsage] => TLS Web Server Authentication, TLS Web Client Authentication
+            [subjectAltName] => DNS:www.google.com
+            [authorityInfoAccess] => CA Issuers - URI:http://pki.google.com/GIAG2.crt
+OCSP - URI:http://clients1.google.com/ocsp
+
+            [subjectKeyIdentifier] => FD:1B:28:50:FD:58:F2:8C:12:26:D7:80:E4:94:E7:CD:BA:A2:6A:45
+            [basicConstraints] => CA:FALSE
+            [authorityKeyIdentifier] => keyid:4A:DD:06:16:1B:BC:F6:68:B5:76:F5:81:B6:BB:62:1A:BA:5A:81:2F
+
+            [certificatePolicies] => Policy: 1.3.6.1.4.1.11129.2.5.1
+
+            [crlDistributionPoints] => URI:http://pki.google.com/GIAG2.crl
+
+        )
+
+)

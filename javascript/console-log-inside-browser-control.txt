@@ -1,0 +1,8 @@
+		 var logWindow = window.open();
+        logWindow.document.write('<html><head><title>Child Log Window</title></head>\x3Cscript>window.opener.console = console;\x3C/script><body><h1>Child Log Window</h1></body></html>');
+        window.onunload = function () {
+            if (logWindow && !logWindow.closed) {
+                logWindow.close();
+            }
+
+https://stackoverflow.com/questions/1917314/is-there-a-way-to-enable-the-ie8-developer-tools-from-inside-webbrowser-control/5291367

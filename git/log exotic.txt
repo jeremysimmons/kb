@@ -1,6 +1,5 @@
 only the commits that are unique to you branch plus any commits that you branched off of or merge into your current branch
 
-git log --decorate --oneline --graph --boundary HEAD \
-   --not --exclude=$(git rev-parse --symbolic-full-name HEAD) --glob=refs/*
+git log --decorate --oneline --graph --boundary HEAD --not --exclude=$(git rev-parse --symbolic-full-name HEAD) --glob=refs/*
 
 https://stackoverflow.com/a/30604125/26877

@@ -1,0 +1,3 @@
+HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings
+
+ReceiveTimeout DWORD entry that has a value of (<number of seconds>)*1000. For example, if you want the time-out duration to be 8 minutes, set the value of the ReceiveTimeout entry to 480000 (<480>*1000).
