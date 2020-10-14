@@ -1,0 +1,8 @@
+ls -Slhr
+
+-l long
+-S size
+-h human readable
+-r reverse
+
+https://alvinalexander.com/photos/linux-ls-command-how-sort-by-filesize-reversed/#:~:text=The%20%2DS%20option%20is%20the,the%20end%20of%20the%20output.

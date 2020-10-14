@@ -1,0 +1,23 @@
+With SNI
+If the remote server is using SNI (that is, sharing multiple SSL hosts on a single IP address) you will need to send the correct hostname in order to get the right certificate.
+openssl s_client -showcerts -servername www.example.com -connect www.example.com:443
+
+Without SNI
+If the remote server is not using SNI, then you can skip -servername parameter:
+
+openssl s_client -showcerts -connect www.example.com:443 </dev/null
+
+$ echo | \
+    openssl s_client -servername www.example.com -connect www.example.com:443 2>/dev/null | \
+    openssl x509 -text
+
+
+echo "" | openssl s_client -connect server:port -prexit 2>/dev/null | sed -n -e '/BEGIN\ CERTIFICATE/,/END\ CERTIFICATE/ p'
+
+echo "" | openssl s_client -connect server:port 2>&1 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > cert.pem
+
+echo | openssl s_client -connect google.com:443  2>/dev/null | openssl x509
+
+
+openssl s_client -connect host:port -key our_private_key.pem -showcerts \
+                 -cert our_server-signed_cert.pem

@@ -1,0 +1,10 @@
+$ find . -mtime +180 -print
+
+this is older than 180 days
+
+want to delete em. sure...
+
+$ find . -mtime +180 -delete;
+$ find . -mtime +180 -exec rm -f {} \;
+
+https://ma.ttias.be/delete-files-older-x-days-linux/#:~:text=As%20before%2C%20the%20%2Dmtime%20parameter,exec%20)%20on%20the%20found%20files.
