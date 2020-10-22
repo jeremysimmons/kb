@@ -1,0 +1,10 @@
+/*  Count and sort all HTTP status codes */
+
+SELECT TOP 100
+*
+    FROM '[LOGFILEPATH]'  
+where (cs-uri-stem = '/Portal/AccountManagementAjaxProviderWithSession.aspx' or
+cs-uri-stem = '/Portal/AccountManagementAjaxProvider.aspx')
+and cs-username = 'MURRAY\JMagas'
+and sc-status = 200
+order by date, time desc
