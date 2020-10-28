@@ -9,3 +9,7 @@ alias ldir='ls -d */'
 
 find . -maxdepth 1 -type d
 find . -maxdepth 1 -type d -ls
+
+excluding current path
+
+find . -maxdepth 1 ! -path . -type d -ls

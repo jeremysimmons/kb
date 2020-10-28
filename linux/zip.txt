@@ -1,1 +1,7 @@
 zip OPTIONS ARCHIVE_NAME FILES
+
+zip the contents of a folder
+zip -r output_file.zip folder_1
+
+zip folders in the current working directory
+find . -maxdepth 1 -type d -exec zip archive.zip {} +
