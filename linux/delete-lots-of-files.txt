@@ -1,0 +1,7 @@
+listing them -
+ls normally sorts, turn it off with -U
+ls may format whitespace in file names, -1 use 1 line per file.
+ls -U -1 | wc -l
+
+perl -e 'unlink for (<*>)'
+perl -e 'for(<*>){((stat)[9]<(unlink))}'

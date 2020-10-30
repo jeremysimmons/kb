@@ -1,0 +1,8 @@
+$ FILES=`ls -1U dirname | wc -l`
+$ rm -rv dirname | pv -l -s 1000 > logfile
+562  0:00:07 [79,8 /s] [====================>                 ] 56% ETA 0:00:05
+
+
+pv -l makes pv to count by newlines instead of bytes
+pv -s number tells pv what the total is so that it can give you an estimation.
+The redirect to logfile at the end is for clean output. Otherwise the status line from pv gets mixed up with the output from rm -v. Bonus: you will have a logfile of what was deleted. But beware the file will get huge. You can also redirect to /dev/null if you don't need a log.
