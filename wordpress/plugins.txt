@@ -13,3 +13,11 @@ https://wordpress.org/plugins/addfunc-head-footer-code/
 12:42 PM 2/28/2018
 https://wordpress.org/plugins/wp-mail-logging/
 https://de.wordpress.org/plugins/redux-framework/
+
+[Security]
+WordFence Security https://wordpress.org/plugins/wordfence/
+Sucuri Security https://wordpress.org/plugins/sucuri-scanner/
+Limit Login Attempts Reloaded https://wordpress.org/plugins/limit-login-attempts-reloaded/
+
+[Backups]
+UpdraftPlus https://wordpress.org/plugins/updraftplus/

@@ -1,0 +1,9 @@
+https://danielbachhuber.com/tip/run-wp-cli-command-wordpress-multisite/
+
+If you have a site with slug blog on a WordPress multisite instance using subdomains, you can use the full URL to run a command against the site:
+
+wp --url=blog.example.com
+
+Here’s an example where wp option update is run against all sites:
+
+wp site list --field=url | xargs -n1 -I % wp --url=% option update my_option my_value

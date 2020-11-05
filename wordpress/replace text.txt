@@ -1,0 +1,4 @@
+wordpress cli
+https://developer.wordpress.org/cli/commands/search-replace/
+
+wp search-replace http://www.encoreeventsrentals.com/ http://encoredev.local/
