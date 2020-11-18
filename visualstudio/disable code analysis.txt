@@ -1,0 +1,15 @@
+https://www.gavinjl.me/3-ways-to-switch-off-code-analysis/
+
+Legacy Code analysis
+
+Environment Variables
+set DevDivCodeAnalysisRunType=Disabled
+
+MSBild Property
+msbuild /p:RunCodeAnalysis=False
+
+
+.NET Core and .NET Standard projects
+<RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+<RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
+<RunAnalyzers>false</RunAnalyzers>

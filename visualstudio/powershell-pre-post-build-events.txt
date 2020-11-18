@@ -1,0 +1,8 @@
+https://stackoverflow.com/a/51642511/26877
+
+powershell -NoProfile -ExecutionPolicy Unrestricted -file $(ProjectDir)Deploy.ps1 -ProjectDir $(ProjectDir) -TargetPath $(TargetPath)
+
+param([string]$SolutionDir,
+     [string]$ProjectPath);
+#Write-Host ($SolutionDir +" Call this script with following aruments");
+#Write-Host ($ProjectPath +" Call this script with following aruments");

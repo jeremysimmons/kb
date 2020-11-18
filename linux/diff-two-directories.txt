@@ -1,0 +1,9 @@
+diff -qr ~/encore/wp-content/themes/eer/ /var/www/encore/wp-content/themes/eer/
+
+export OLD=~/encore/wp-content/themes/eer/
+export NEW=/var/www/encore/wp-content/themes/eer/
+pushd $NEW
+(rsync -rcn --out-format="%n" $OLD $NEW && rsync -rcn --out-format="%n" $NEW $OLD) | sort | uniq > list.txt
+
+tar -cvf allfiles.tar -T list.txt
+

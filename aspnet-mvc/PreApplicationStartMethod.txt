@@ -1,0 +1,10 @@
+PreApplicationStartMethod
+
+https://haacked.com/archive/2010/05/16/three-hidden-extensibility-gems-in-asp-net-4.aspx/
+
+[assembly: PreApplicationStartMethod(
+  typeof(SomeClassLib.Initializer), "Initialize")]
+
+The primary use of this feature is to enable tasks that can’t be done within Application_Start because it’s too late. For example, registering build providers and adding assembly references.
+
+

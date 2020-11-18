@@ -1,0 +1,18 @@
+the answers here are correct, but more information might prove helpful, so here it is...
+
+When you get these Event ID's in Event Viewer Application Log:
+6000: The winlogon notification subscriber <GPClient> was unavailable to handle a notification event.
+6001: The winlogon notification subscriber <GPClient> failed a notification event.
+6005: The winlogon notification subscriber <GPClient> is taking long time to handle the notification event (CreateSession).
+6005: The winlogon notification subscriber <Profiles> is taking long time to handle the notification event (Logoff).
+6006: The winlogon notification subscriber <GPClient> took xxxx second(s) to handle the notification event (CreateSession).
+6006: The winlogon notification subscriber <Profiles> took xxxx second(s) to handle the notification event (Logoff).
+
+Open Group Policy Editor
+Start\Run\gpedit.msc
+
+Computer Configuration\Administrative Templates\System\Scripts
+Set the following:Specify maximum wait time for Group Policy scripts: Enabled (Options: Seconds, 60)
+Run logon scripts synchronously: Disabled
+
+Note: Max wait time set to 60 seconds or whatever you are comfortable

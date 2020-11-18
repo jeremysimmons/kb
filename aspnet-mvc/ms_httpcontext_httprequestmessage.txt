@@ -1,0 +1,22 @@
+https://github.com/aspnet/AspNetWebStack/blob/master/src/System.Web.Http.WebHost/HttpRequestMessageExtensions.cs#L11-L44
+
+Where is the dictionary key “MS_HttpContext” defined for HttpRequestMessage.Properties?
+
+https://stackoverflow.com/questions/57607314/where-is-the-dictionary-key-ms-httpcontext-defined-for-httprequestmessage-prop
+
+webapi 2.2
+
+public class YourApiController : ApiController {
+    public HttpResponseMessage YourActionName() {
+        var request = new HttpContextWrapper(CurrentContext).Request;
+        ...
+    }
+}
+
+
+public class YourAuditHandler : DelegatingHandler {
+    protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken) {
+        string ipAddress = HttpContext.Current != null ? HttpContext.Current.Request.UserHostAddress : "0.0.0.0";
+        ...
+    }
+}

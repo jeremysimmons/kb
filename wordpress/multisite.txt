@@ -1,0 +1,18 @@
+WordPress multisite for local and remote development
+2017-09-14
+https://www.hallaminternet.com/wordpress-multisite-local-remote-development/
+
+Running a Development Copy of WordPress Multisite
+2014-01-4
+https://www.johnrussell.dev/blog/2014/01/running-a-development-copy-of-wordpress-multisite/
+
+A Complete Guide To WordPress Multisite
+https://www.smashingmagazine.com/2020/01/complete-guide-wordpress-multisite/
+january 23, 2020
+
+WordPress Multisite: The Everything-You-Need-To-Know Guide to WordPress Network
+https://kinsta.com/blog/wordpress-multisite/
+Rachel McCollin, October 26, 2020
+
+WORDPRESS MULTISITE DATABASE TABLES EXPLAINED
+https://multilingualpress.org/docs/wordpress-multisite-database-tables/

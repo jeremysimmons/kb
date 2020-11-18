@@ -1,0 +1,5 @@
+Access Personal Computer from Company VPN
+
+route ADD 199.239.136.200 MASK 255.255.255.255 <OWN_IP> METRIC 1
+
+route ADD 10.0.0.114 MASK 255.255.255.255 10.0.0.23 METRIC 1 IF 11

@@ -1,0 +1,3 @@
+https://stackoverflow.com/questions/15984414/bash-script-count-unique-lines-in-file
+
+sort ips.txt | uniq -c | sort -bgr

@@ -1,0 +1,228 @@
+https://adsecurity.org/?page_id=4031
+
+Attack Defense & Detection
+This page is meant to be a resource for Detecting & Defending against attacks.
+I provide references for the attacks and a number of defense & detection techniques.
+
+Active Directory & Windows Security
+
+ATTACK
+
+AD Recon
+
+Active Directory Recon Without Admin Rights
+SPN Scanning – Service Discovery without Network Port Scanning
+Beyond Domain Admins – Domain Controller & AD Administration
+Scanning for Active Directory Privileges & Privileged Accounts
+Active Directory Recon with PowerUpSQL
+PowerView Usage Reference Posts by Harmj0y
+PowerView one-liners (GitHub)
+Enumeration using the Meterpreter ADSI Extended API Commands
+ 
+
+DCSync
+
+DCSync: Attack & Detection
+ 
+
+DCShadow
+
+DCShadow.com
+DCShadow explained: A technical deep dive into the latest AD attack technique
+ 
+
+DPAPI
+
+Operational Guidance for Offensive User DPAPI Abuse 
+ 
+
+Attacking Active Directory
+
+A Guide to Attacking Domain Trusts
+Sneaky Active Directory Persistence #17: Group Policy
+MS15-011 & MS15-014: Microsoft Active Directory Group Policy (GPO) Vulnerabilities
+How Attackers Pull the Active Directory Database (NTDS.dit) from a Domain Controller
+Practical Guide to NTLM Relaying
+Microsoft ATA Guide to Suspicious Activity
+Beyond LLMNR/NBNS Spoofing – Exploiting Active Directory-Integrated DNS
+ 
+
+Active Directory Privilege Escalation:
+
+Attack Methods for Gaining Domain Admin Rights in Active Directory
+Finding Passwords in SYSVOL & Exploiting Group Policy Preferences
+How Attackers Dump Active Directory Database Credentials
+The Most Common Active Directory Security Issues and What You Can Do to Fix Them
+Attacking Read-Only Domain Controllers (RODCs) to Own Active Directory
+From DNSAdmins to Domain Admin, When DNSAdmins is More than Just DNS Administration
+Domain Controller running Print Server + Unconstrained Delegation = AD Domain Compromise [PoC]
+Top Five Ways I Got Domain Admin on Your Internal Network before Lunch (2018 edition)
+Windows Privilege Escalation Part 2: Domain Admin Privileges
+ 
+
+Kerberos (AD) Attacks
+
+Kerberos Unconstrained Delegation (or How Compromise of a Single Server Can Compromise the Domain)
+Kerberos Vulnerability in MS14-068 (KB3011780) Explained
+Kerberoast/Kerberoasting: Attack & Detection
+Targeted Kerberoasting 
+Kerberoasting without Mimikatz 
+Roasting AS-REPs (Harmj0y)
+S4U2Pwnage 
+Oracle AD attribute contains hashed version of AD account (user/computer) password
+ 
+
+Forged Kerberos Tickets
+
+Computer Accounts & Domain Controller Silver Tickets
+How Attackers Use Kerberos Silver Tickets to Exploit Systems
+Kerberos Golden Tickets are Now More Golden
+ 
+
+ 
+
+DEFENSE
+
+Windows Security
+
+Securing Domain Controllers to Improve Active Directory Security
+Securing Windows Workstations: Developing a Secure Baseline
+Microsoft KB2871997: Back-Porting Windows 8.1/Win2012R2 Enhanced Security & Pass The Hash Mitigation to Windows 7, Windows 8, & Windows 2008R2
+Demystifying the Windows Firewall – Learn how to irritate attackers without crippling your network (Jessica Payne’s speaks at Ignite)
+Endpoint Isolation with the Windows Firewall
+ 
+
+Windows 10 Security
+
+Security baseline (DRAFT) for Windows 10 v1809 and Windows Server 2019
+Security baseline for Windows 10 “April 2018 Update” (v1803) – FINAL 
+Security baseline for Windows 10 “Creators Update” (v1703) – FINAL
+Windows 10 ExploitGuard Attack Surface Reduction Rules
+Microsoft Policy Analyzer (for comparing GPO settings)
+ 
+
+Windows Event Auditing
+
+Microsoft Docs: Advanced security audit policy settings (great event log resource)
+Microsoft Windows IT Pro Docs on Github: windows-itpro-docs/windows/security/threat-protection/auditing/
+Monitoring what matters – Windows Event Forwarding for everyone (even if you already have a SIEM.)
+ 
+
+Effective Defenses & Hunting
+
+Manage Local Administrator Account Passwords: Microsoft Local Administrator Password Solution (LAPS)
+Active Directory Threat Hunting – Effective AD Event Auditing: Video & Slides
+Build a fast, free, and effective Threat Hunting/Incident Response Console with Windows Event Forwarding and PowerBI (aka “Weffles”)
+Hunting With Active Directory Replication Metadata 
+Basics of Tracking WMI Activity
+Presentation of SLAM and Lateral Movement (Channel9 video with Jessica Payne)
+Tracking Lateral Movement Part One – Special Groups and Specific Service Accounts
+ 
+
+Application Whitelisting Resources
+
+“AaronLocker” update (v0.91) — and see “AaronLocker” in action on Channel 9!
+ 
+
+Building Robust Detection
+
+Lessons Learned in Detection Engineering
+Alerting and Detection Strategy Framework
+A SOCless Detection Team at Netflix
+Detecting Windows Endpoint Compromise with SACLs
+Automated Collection and Enrichment
+The HELK 
+ 
+
+ADFS
+
+Securing Microsoft Active Directory Federation Server (ADFS)
+ 
+
+POWERSHELL
+
+PowerShell Attack & Detection
+Malicious PowerShell Detection with Machine Learning (FireEye)
+Defending Against PowerShell Attacks (Microsoft)
+Revoke-Obfuscation: PowerShell Obfuscation Detection Using Science (Black Hat whitepaper by Daniel Bohannon & Lee Holmes)
+ 
+
+TOOLS
+
+Mimikatz: Info
+Kekeo
+ADRecon: PowerShell recon tool for AD
+Bloodhound: Map out AD permissions & rights via graphs
+CrackMapExec: Pentesting toolkit
+DeathStar: A Python script to auto-pwn Active Directory
+Impacket: Collection of pentesting python tools
+Inveigh: PowerShell tool to get network creds
+MicroBurst: Tool for assessing Azure security
+PingCastle: Tool for evaluating Active Directory security
+PowerView: PowerShell AD recon
+PSAttack: PowerShell attack tools in an EXE
+Responder: The easy button for getting network creds
+Rubeus: the C# port of Kekeo Info & Updates
+Seatbelt: Host survey tool
+SharpSploit: a partial C# port of PowerSploit
+ 
+
+TWITTER ACCOUNTS TO FOLLOW
+
+Aaron Margosis @AaronMargosis – co-author with Mark Russinovich on SysInternal books (and topics), publishes the Microsoft Windows security baselines (Windows 10, Windows Server 2016, etc), and AaronLocker (simpler method of deploying AppLocker).
+Andy Robbins @_wald0 & Rohan Vazarkar @cptjesus – wrote Bloodhound
+Benjamin Delpy @gentilkiwi – wrote Mimikatz & Kekeo
+Carlos Perez @Carlos_Perez – Red/Blue/Purple teamer focused on Windows & AD security and more (& Microsoft MVP)
+Dane @cryps1s – has published real-world Windows firewall, Windows Event Forwarding (WEF) references, and other Windows security topics.
+DirectoryRanger @DirectoryRanger – tweets out useful info relating to AD security
+Jason Fossen @JasonFossen – SANS Instructor on Windows security topics
+Jess Dodson @girlgerms – blogger & speaker on Active Directory security topics (& Microsoft MVP)
+Jessica Payne @jepayneMSFT – has promoted the use of the Windows Firewall and created WEFFLES.
+Lee Christensen @tifkin_ – wrote many cool tools like unmanaged PowerShell used in most attack tools & discovered the DC Print Service/Unconstrained delegation privilege escalation.
+Marcello @byt3bl33d3r – publishes offensive Windows & AD tools like CrackMapExec, DeathStar, Password Spraying Toolkit, etc.
+Matt Graeber @mattifestation – founded PowerSploit, documented Device Guard, and numerous PowerShell and Device Guard bypasses (& Microsoft MVP)
+Matt Nelson @enigma0x3 – discovered numerous Windows vulnerabilities and privilege escalations (top 100 Microsoft security researchers)
+Oddvar Moe @Oddvarmoe – Windows security researcher (& Microsoft MVP)
+Sean Metcalf @PyroTek3 – maintainer of ADSecurity.org and AD enthusiast.
+SwiftOnSecurity @SwiftonSecurity – the parody account that’s worth following. Tons of Windows advice and recommendations not found elsewhere based on real world experience (& Microsoft MVP)
+Vincent LeToux @mysmartlogon – wrote the DCSync & DCShadow components in Mimikatz
+Will @Harmj0y – wrote PowerView, the original Bloodhound ingest PowerShell script, Rubeus and more!  (& Microsoft MVP)
+Microsoft Azure AD @AzureAD – Microsoft’s Azure Active Directory account tweets info about… Azure AD topics.
+Don’t follow @NerdPyle since he doesn’t talk AD anymore. 😉
+
+(I’m sure there are a bunch I forgot)
+
+ 
+
+MITRE ATT&CK ACTIVE DIRECTORY RELATED ELEMENTS
+
+Account Discovery
+Account Manipulation
+Credential Dumping
+DCShadow
+Exploitation for Credential Access
+Exploitation of Remote Services
+Kerberoasting
+LLMNR/NBT-NS Poisoning
+Logon Scripts
+LSASS Driver
+Network Service Scanning
+Network Sniffing
+Network Share Discovery
+Pass the Hash (PTH)
+Pass the Ticket (PTT)
+Password Filter DLL
+Password Policy Discovery
+Permission Group Discovery
+Privilege Escalation
+Remote System Discovery
+Security Support Provider
+SID History Injection
+System Network Configuration Discovery
+Two-Factor Authentication Interception
+Windows Admin Shares
+Windows Management Instrumentation (WMI)
+Windows Remote Management (WinRM)
+ 
+
+(Visited 66,455 times, 104 visits today)

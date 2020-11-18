@@ -1,0 +1,104 @@
+https://multilingualpress.org/docs/wordpress-multisite-database-tables/
+
+WORDPRESS MULTISITE DATABASE TABLES EXPLAINED
+Working with a WordPress Multisite requires a little bit more knowledge about WordPress and experience as WordPress admin than working with a single site. When you try to fix problems with your WordPress Multisite network, it is sometimes helpful to know how the database of a multisite is structured and what the differences between a Single Site database and a WordPress Multisite database are.
+
+So let’s take a look to which database tables do we have in a single site and which we have in a multisite. We will briefly explain each of the multisite specific tables. If you need an explanation of single site tables, please read the post Database Description in the WordPress Codex.
+
+Hint: Starting from a single site WordPress installation it is possible to switch to a WordPress Multisite through a procedure as described in the WordPress codex.
+
+Table of Contents	
+WordPress single site database tables
+WordPress Multisite database tables
+New tables
+Updated tables
+Site Specific Tables
+1. WordPress single site database tables
+In a single site WordPress installation the database tables used are:
+
+wp_commentmeta
+wp_comments
+wp_links
+wp_options
+wp_postmeta
+wp_posts
+wp_terms
+wp_termmeta
+wp_term_relationships
+wp_term_taxonomy
+wp_usermeta
+wp_users
+
+After we proceed with the Multisite install procedure, some of these tables are updated and other new tables are added. The remaining ones are not changed but they start to refer to the main site, while for other sites (not the main) specific ones are created.
+
+2. WordPress Multisite database tables
+So here the new situation after a Multisite install:
+
+wp_blogs → NEW
+wp_blogs_versions → NEW
+wp_commentmeta → refers to main site
+wp_comments → refers to main site
+wp_links → refers to main site
+wp_options → refers to main site
+wp_postmeta → refers to main site
+wp_posts → refers to main site
+wp_registration_log → NEW
+wp_signups → NEW
+wp_site → NEW
+wp_sitemeta → NEW
+wp_terms → refers to main site
+wp_termmeta → refers to main site
+wp_term_relationships → refers to main site
+wp_term_taxonomy → refers to main site
+wp_usermeta  → UPDATED
+wp_users  → UPDATED
+SITE SPECIFIC TABLES → NEW, refers to other site(s) except the main one
+
+2.1. New tables
+wp_blogs: each site created is stored in that table
+wp_blogs_versions: this table keeps track of the datadase version status for each site
+wp_registration_log: in this table is stored the admin user created when a new site is created
+wp_signups: in this table are stored the users that have registered for a site via the login registration process.
+wp_site: in this table is stored the sites address
+wp_sitemeta: here are tracked various site informations
+
+2.2. Updated tables
+wp_users: the list of all users of all the sites is maintained in this table
+wp_usermeta: here are stored the meta data of users for all the sites
+
+2.3. Site Specific Tables
+The data of the main site is stored in existing unnumbered tables, while the data of additional sites is stored in new numbered tables.
+
+So for the main site we have these dedicated tables:
+
+wp_commentmeta
+wp_comments
+wp_links
+wp_options
+wp_postmeta
+wp_posts
+wp_terms
+wp_termmeta
+wp_term_relationships
+wp_term_taxonomy
+
+While, for example, when a new site is created, the site-specific tables, similar to the single site install, are created. Each set of tables for a site is created with the site ID (blog_id) as part of the table name. These are the tables that would be created for site with ID 2 :
+
+wp_2_commentmeta
+wp_2_comments
+wp_2_links
+wp_2_options
+wp_2_postmeta
+wp_2_posts
+wp_2_terms
+wp_2_termmeta
+wp_2_term_relationships
+wp_2_term_taxonomy
+
+References:
+
+wp_sitemeta
+meta_key=site_admins
+meta_value='a:17:{i:0;s:8:"cvpatten";i:1;s:8:"ChelseaA";i:2;s:15:"ChristelLeBlanc";i:3;s:15:"Heather Hurlock";i:4;s:19:"Jessica von Handorf";i:5;s:12:"LeslieChilds";i:6;s:10:"mindfuldev";i:7;s:20:"Nicole Bayes-Fleming";i:8;s:13:"sarahcreelman";i:9;s:12:"simplesquare";i:10;s:6:"ambert";i:11;s:9:"kyleeross";i:12;s:12:"janicefuller";i:13;s:11:"ambertucker";i:14;s:8:"jhamstad";i:15;s:7:"ralitsa";i:16;s:6:"jeremy";}'
+
+siteurl:https://www.mindful.org/wp/

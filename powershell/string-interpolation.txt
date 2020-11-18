@@ -1,0 +1,21 @@
+PowerShell string interpolation syntax
+
+$foo = 'bar'  # example variable
+
+# INCORRECT: PowerShell assumes that the variable name is 'foobarian', not 'foo'
+PS> "A $foobarian."
+A .  # Variable $foobarian doesn't exist -> reference expanded to empty string.
+
+# CORRECT: Use {...} to delineate the variable name:
+PS> "A ${foo}barian."
+A barbarian.
+
+# INCORRECT: PowerShell assumes that 'foo:' is a *namespace* (drive) reference
+#            (such as 'env:' in $env:PATH) and FAILS:
+PS> "$foo: bar"
+Variable reference is not valid. ':' was not followed by a valid variable name character. 
+Consider using ${} to delimit the name.
+
+# CORRECT: Use {...} to delineate the variable name:
+PS> "${foo}: bar"
+bar: bar

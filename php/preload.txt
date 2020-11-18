@@ -1,0 +1,27 @@
+https://github.com/composer/composer/issues/7777#issuecomment-440268416
+get hot files
+<?php
+
+header('Content-Type: text/plain');
+
+echo '<?php', PHP_EOL;
+
+$status = opcache_get_status(true);
+
+foreach ($status['scripts'] as $script) {
+        $path = $script['full_path'];
+        echo 'opcache_compile_file(', var_export($path, true), ');', PHP_EOL;
+}
+
+
+
+Preloading all the classes ( the whole composer classmap)
+
+
+<?php
+
+$files = require 'vendor/composer/autoload_classmap.php';
+
+foreach (array_unique($files) as $file) {
+    opcache_compile_file($file);
+}

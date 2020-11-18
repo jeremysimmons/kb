@@ -1,0 +1,102 @@
+<configSections>
+    <section name="medGroupConfigs" type="MyConfig.MedGroupConfigsSection"/>
+</configSections>
+<!--section-->
+<medGroupConfigs>
+    <!--collection-->
+    <medGroups>
+      <!--elements-->
+      <add name="Med Group 1" queryString="medical-group-one" username="MGO-001" />
+      <add name="Med Group 1" queryString="medical-group-1" username="MGO-001" password="abcdef"/>
+      <add name="Med Group 2" queryString="medical-group-two" username="MGO-002" />
+    </medGroups>
+</medGroupConfigs>
+
+using System.Configuration;
+namespace MyConfig
+{
+    //This class reads the defined config section (if available) and stores it locally in the static _Config variable.
+    //This config data is available by calling MedGroups.GetMedGroups().
+    public class MedGroups
+    {
+        public static MedGroupConfigsSection _Config = ConfigurationManager.GetSection("medGroupConfigs") as MedGroupConfigsSection;
+        public static MedGroupElementCollection GetMedGroups()
+        {
+            return _Config.MedGroups;
+        }
+    }
+    //Extend the ConfigurationSection class.  Your class name should match your section name and be postfixed with "Section".
+    public class MedGroupConfigsSection : ConfigurationSection
+    {
+        //Decorate the property with the tag for your collection.
+        [ConfigurationProperty("medGroups")]
+        public MedGroupElementCollection MedGroups
+        {
+            get { return (MedGroupElementCollection)this["medGroups"]; }
+        }
+    }
+    //Extend the ConfigurationElementCollection class.
+    //Decorate the class with the class that represents a single element in the collection.
+    [ConfigurationCollection(typeof(MedGroupElement))]
+    public class MedGroupElementCollection : ConfigurationElementCollection
+    {
+        public MedGroupElement this[int index]
+        {
+            get { return (MedGroupElement)BaseGet(index); }
+            set
+            {
+                if (BaseGet(index) != null)
+                    BaseRemoveAt(index);
+                BaseAdd(index, value);
+            }
+        }
+        protected override ConfigurationElement CreateNewElement()
+        {
+            return new MedGroupElement();
+        }
+        protected override object GetElementKey(ConfigurationElement element)
+        {
+            return ((MedGroupElement)element).Name;
+        }
+    }
+    //Extend the ConfigurationElement class.  This class represents a single element in the collection.
+    //Create a property for each xml attribute in your element.
+    //Decorate each property with the ConfigurationProperty decorator.  See MSDN for all available options.
+    public class MedGroupElement : ConfigurationElement
+    {
+        [ConfigurationProperty("name", IsRequired = true)]
+        public string Name
+        {
+            get { return (string)this["name"]; }
+            set { this["name"] = value; }
+        }
+        [ConfigurationProperty("queryString", IsRequired = true)]
+        public string QueryString
+        {
+            get { return (string)this["queryString"]; }
+            set { this["queryString"] = value; }
+        }
+        [ConfigurationProperty("username", IsRequired = true)]
+        public string Username
+        {
+            get { return (string)this["username"]; }
+            set { this["username"] = value; }
+        }
+        [ConfigurationProperty("password", IsRequired = false, DefaultValue="12345")]
+        public string Password
+        {
+            get { return (string)this["password"]; }
+            set { this["password"] = value; }
+        }
+    }
+}
+
+
+//Look through the web.config/medGroupConfigs to find a matching queryString attribute
+foreach (MedGroupElement mg in MedGroups.GetMedGroups())
+{
+	if (string.Compare(medGroup, mg.QueryString) == 0)
+	{
+		uname = mg.username;
+	}
+}

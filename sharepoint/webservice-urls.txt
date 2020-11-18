@@ -1,0 +1,23 @@
+http://Site/_vti_bin/Webs.asmx
+http://Server_Name/[sites/][Site_Name/]_vti_bin/Sites.asmx
+http://<site>/_vti_bin/Lists.asmx
+
+ADO.NET Data Services 
+http://server/site_path/_vti_bin/listdata.svc
+
+http://sharepoint2010m/MySite/MySubSite/_vti_bin/listdata.svc/MyList
+https://web.archive.org/web/20160207130839/https://msdn.microsoft.com/en-us/library/ff798339.aspx
+HTTP verb
+
+Data operation
+GET Retrieve
+POST Create
+PUT Update (update all fields and use default values for any undefined fields)
+DELETE Delete
+MERGE Update (update only the fields that are specified and changed from current version)
+
+http://localhost/_vti_bin/listdata.svc/Parts
+http://localhost/_vti_bin/listdata.svc/Parts(3)
+http://localhost/_vti_bin/listdata.svc/Parts?$orderby=Name
+
+
