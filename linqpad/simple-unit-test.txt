@@ -1,0 +1,27 @@
+public interface IRunner { void Execute(); }
+
+// Add any unit tests by implementing IRunner and Linqpad will run it
+public class UserTest_1 : IRunner
+{
+	public void Execute()
+	{
+		Debug.WriteLine("Beginning test");
+		
+		var x = 4 + 5;
+		
+		Debug.Assert(x == 9, "Test failed!");
+	}
+}
+
+// Linqpad main method
+void Main()
+{
+	var tests = typeof(UserQuery)
+		.GetNestedTypes()
+		.Where(type => typeof(IRunner)
+		.IsAssignableFrom(type) && !type.IsInterface);
+		
+	foreach(var t in tests){
+		(Activator.CreateInstance(t) as IRunner).Execute();
+	}
+}
