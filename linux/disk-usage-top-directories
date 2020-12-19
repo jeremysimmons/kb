@@ -1,0 +1,5 @@
+Disk usage for just the top level dirs
+
+du -h -d1 ./
+
+tips: https://til.hashrocket.com/posts/3bddbf0d9f-disk-usage-for-just-the-top-level-dirs

@@ -1,0 +1,3 @@
+for every link file, print the file path and the link target
+
+find . -type l -printf '%p -> %l\n'

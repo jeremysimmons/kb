@@ -1,0 +1,6 @@
+https://wordpress.stackexchange.com/questions/259839/cookies-in-multisite-where-network-sites-have-their-own-domain-name
+
+define('ADMIN_COOKIE_PATH', '/');
+define('COOKIE_DOMAIN', '');
+define('COOKIEPATH', '');
+define('SITECOOKIEPATH', ''); 

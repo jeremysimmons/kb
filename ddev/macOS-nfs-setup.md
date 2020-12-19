@@ -1,0 +1,6 @@
+macOS NFS Setup
+https://ddev.readthedocs.io/en/v1.5.9/users/performance/
+
+**macOS Mojave (and later) warning:** You'll need to give your terminal "Full disk access" before you (or the script provided) can edit /etc/exports. If you're using iterm2, here are [full instructions for iterm2](https://gitlab.com/gnachman/iterm2/wikis/fulldiskaccess). The basic idea is that in the Mac preferences -> Security and Privacy -> Privacy you need to give "Full Aisk Access" permissions to your terminal app.
+
+Download, inspect, and run the macos\_ddev\_nfs\_setup.sh script from [macos\_ddev\_nfs\_setup.sh](https://raw.githubusercontent.com/drud/ddev/master/scripts/macos_ddev_nfs_setup.sh)). This stops running ddev projects, adds the /Users directory to the /etc/exports config file that nfsd uses, and enabled nfsd to run on your computer. This is one-time setup. Note that this shares the /Users directory via NFS to any client, so it's critical to consider security issues and verify that your firewall is enabled and configured. If your DDEV-Local projects are set up outside /Users, you'll need to edit /etc/exports for the correct values.

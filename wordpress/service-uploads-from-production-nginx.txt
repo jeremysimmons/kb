@@ -1,0 +1,7 @@
+https://gist.github.com/zanematthew/0ba700c2b0e344fc94276d7b247bd1ed
+
+location ~ ^/wp-content/uploads/(.*) {
+    if (!-f $request_filename) {
+        rewrite ^/wp-content/uploads/(.*)$ https://SOME-OTHER-URL-HERE.com/$1 redirect;
+    }
+}

@@ -1,0 +1,2 @@
+update wp_posts set menu_order=0 where post_type='product'
+update wp_posts set menu_order=0 where post_type='ufaq'

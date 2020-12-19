@@ -1,0 +1,10 @@
+$ split -b 100M big_file.mp4 ls.
+$ ls
+'big_file.mp4' ls.ab ls.ad ls.af ls.ah ls.aj
+ ls.aa ls.ac ls.ae ls.ag ls.ai ls.ak
+$ cat ls.?? > big_file2.mp4
+
+https://ostechnix.com/split-combine-files-command-line-linux/
+
+FYI if you’re on Mac, it like lower case units for the size of the split (ie. m instead of M or gb instead of GB). Otherwise, you get a nice “illegal byte count error“
+
