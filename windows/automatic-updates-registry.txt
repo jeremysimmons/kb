@@ -1,0 +1,3 @@
+HKEY_LOCAL_MACHINE > SOFTWARE > Policies > Microsoft > Windows > WindowsUpdate > AU.
+
+https://smallbusiness.chron.com/enable-windows-update-windows-registry-56440.html

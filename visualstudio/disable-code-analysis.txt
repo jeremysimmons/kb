@@ -5,9 +5,8 @@ Legacy Code analysis
 Environment Variables
 set DevDivCodeAnalysisRunType=Disabled
 
-MSBild Property
+MSBuild Property
 msbuild /p:RunCodeAnalysis=False
-
 
 .NET Core and .NET Standard projects
 <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>

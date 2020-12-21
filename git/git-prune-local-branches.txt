@@ -1,0 +1,3 @@
+advanced command to remove a local branch that has not been merged, but the tracking branch on origin is no longer available.
+
+git branch --merged develop --no-color | grep -v '^* develop$' | xargs -n1 -r git branch -d

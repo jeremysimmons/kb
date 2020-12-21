@@ -1,0 +1,10 @@
+wdox://?D019823 custom protocol did not work in elementor
+
+https://developers.elementor.com/uri-protocols-handling-update/
+
+function allow_additional_protocol( $protocols ){
+     $protocols[] = 'my-protocol';
+     return $protocols;
+}
+add_filter( 'kses_allowed_protocols' , 'allow_additional_protocol' );
+
