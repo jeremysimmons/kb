@@ -1,0 +1,11 @@
+How to use git merge --squash?
+
+git checkout main
+git merge --squash feature
+is the equivalent of doing:
+
+git checkout feature
+git diff main > feature.patch
+git checkout main
+patch -p1 < feature.patch
+git add .

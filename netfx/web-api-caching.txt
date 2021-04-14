@@ -1,0 +1,1 @@
+https://www.strathweb.com/2012/05/output-caching-in-asp-net-web-api/

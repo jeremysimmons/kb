@@ -1,0 +1,3 @@
+[ApiExplorerSettings(IgnoreApi = true)]
+How to omit methods from Swagger documentation on WebAPI using Swashbuckle
+

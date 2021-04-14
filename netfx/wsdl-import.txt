@@ -1,0 +1,164 @@
+
+https://weblog.west-wind.com/posts/2009/Feb/12/WSDL-Imports-without-WSDLexe
+
+```
+ /// <summary>
+   /// WSDL Parser class that is responsible for:   
+   /// Creating a .cs code file
+   /// Compiling the .cs code file into an Assembly
+   /// Parsing the WSDL generated class into a class structure consumable by FoxPro
+   /// (since Reflection objects are not COM friendly)
+   /// </summary>
+    [ClassInterface(ClassInterfaceType.AutoDual)]    
+    public class WsdlClassParser : MarshalByRefObject
+    {
+        public string Assembly = null;
+        public AppDomain LocalAppDomain = null;
+        public string ErrorMessage = "";
+
+        /// <summary>
+        /// This function basically reproduces the functionality that WSDL.exe provides and generates
+        /// a CSharp class that is a proxy to the Web service specified at the provided WSDL URL.
+        /// </summary>
+        /// <param name="wsdlUrl"></param>
+        /// <param name="generatedSourceFilename"></param>
+        /// <param name="generatedNamespace"></param>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public bool GenerateWsdlProxyClass(string wsdlUrl, string generatedSourceFilename, string generatedNamespace, string username, string password)
+        {
+            // erase the source file
+            if (File.Exists(generatedSourceFilename))
+                File.Delete(generatedSourceFilename);            
+            
+            // download the WSDL content into a service description
+            WebClient http = new WebClient();
+            ServiceDescription sd = null;
+                        
+            if (!string.IsNullOrEmpty(username))
+                http.Credentials = new NetworkCredential(username, password);
+
+            try
+            {                                                
+                sd = ServiceDescription.Read( http.OpenRead(wsdlUrl));                
+            }
+            catch (Exception ex)
+            {
+                this.ErrorMessage = "Wsdl Download failed: " + ex.Message;
+                return false;
+            }
+            
+            // create an importer and associate with the ServiceDescription
+            ServiceDescriptionImporter importer = new ServiceDescriptionImporter();
+            importer.ProtocolName = "SOAP";            
+            importer.CodeGenerationOptions = CodeGenerationOptions.None;            
+            importer.AddServiceDescription(sd, null, null);
+            
+            // Download and inject any imported schemas (ie. WCF generated WSDL)            
+            foreach (XmlSchema wsdlSchema in sd.Types.Schemas)
+            {
+                // Loop through all detected imports in the main schema
+                foreach (XmlSchemaObject externalSchema in wsdlSchema.Includes)
+                {
+                    // Read each external schema into a schema object and add to importer
+                    if (externalSchema is XmlSchemaImport)
+                    {
+                        Uri baseUri = new Uri(wsdlUrl);
+                        Uri schemaUri = new Uri(baseUri, ((XmlSchemaExternal)externalSchema).SchemaLocation);
+                        
+                        Stream schemaStream = http.OpenRead(schemaUri);
+                        System.Xml.Schema.XmlSchema schema = XmlSchema.Read(schemaStream, null);
+                        importer.Schemas.Add(schema);
+                    }
+                }
+            }
+
+            // set up for code generation by creating a namespace and adding to importer
+            CodeNamespace ns = new CodeNamespace(generatedNamespace);
+            CodeCompileUnit ccu = new CodeCompileUnit();
+            ccu.Namespaces.Add(ns);
+            importer.Import(ns, ccu);
+
+            // final code generation in specified language
+            CSharpCodeProvider provider = new CSharpCodeProvider();
+            IndentedTextWriter tw = new IndentedTextWriter(new StreamWriter(generatedSourceFilename));
+            provider.GenerateCodeFromCompileUnit(ccu, tw, new CodeGeneratorOptions());
+
+            tw.Close();
+
+            return File.Exists(generatedSourceFilename);
+        }
+
+  
+        /// <summary>
+        /// Compiles the 
+        /// </summary>
+        /// <param name="sourceFile"></param>
+        /// <param name="targetAssembly"></param>
+        /// <returns></returns>
+        public bool CompileSource(string sourceFile, string targetAssembly)
+        {
+            // delete existing assembly first 
+            if (File.Exists(targetAssembly))
+            {
+                try
+                {
+                    // this might fail if assembly is in use 
+                    File.Delete(targetAssembly);
+                }
+                catch (Exception ex)
+                {                   
+                    this.ErrorMessage = ex.Message;
+                    return false;
+                }            
+            }
+
+            // read the C# source file
+            StreamReader sr = new StreamReader(sourceFile);
+            string fileContent = sr.ReadToEnd();
+            sr.Close();
+
+            // Embed COM visibility into code so Intellisense works on client
+            fileContent = StringUtils.ReplaceString(fileContent, "namespace ",
+@"
+    // West Wind DotNetWsdlGenerator inserted to allow for COM registration
+    using System.Runtime.InteropServices;
+    [assembly: ComVisible(true)]
+    [assembly: ClassInterface(ClassInterfaceType.AutoDual)]
+
+    namespace ",false);
+
+            // Write the modified file back to disk
+            StreamWriter sw = new StreamWriter(sourceFile);
+            sw.Write(fileContent);
+            sw.Close();
+
+            // set up compiler and add required references
+            ICodeCompiler compiler = new CSharpCodeProvider().CreateCompiler();
+            CompilerParameters parameter = new CompilerParameters();
+            parameter.OutputAssembly = targetAssembly;
+            parameter.ReferencedAssemblies.Add("System.dll");
+            parameter.ReferencedAssemblies.Add("System.Web.Services.dll");
+            parameter.ReferencedAssemblies.Add("System.Xml.dll");
+
+            // *** support DataSet/DataTable results
+            parameter.ReferencedAssemblies.Add("System.Data.dll");
+            
+            // Do it: Final compilation to disk
+            CompilerResults results = compiler.CompileAssemblyFromFile(parameter,sourceFile);
+
+            if (File.Exists(targetAssembly))
+                return true;
+            
+            // flatten the compiler error messages into a single string
+            foreach (CompilerError err in results.Errors)
+            {
+                this.ErrorMessage += err.ToString() + "\r\n";
+            }
+            
+            return false;
+        }
+        … additional methods for assembly type information omitted
+}
+```

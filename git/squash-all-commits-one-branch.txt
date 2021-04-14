@@ -1,0 +1,12 @@
+https://stackoverflow.com/questions/25356810/git-how-to-squash-all-commits-on-branch
+
+assuming baseline is master, not develop
+
+git reset --soft $(git merge-base master YOUR_BRANCH) && git commit -am "YOUR COMMIT MESSAGE" && git rebase -i master
+
+git rebase -i master
+
+$ git checkout master
+$ git merge --squash yourBranch
+$ git commit # all commit messages of yourBranch in one, really useful
+ > [status 5007e77] Squashed commit of the following: ...

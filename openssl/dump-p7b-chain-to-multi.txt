@@ -1,0 +1,1 @@
+openssl pkcs7 -inform DER -outform PEM -in certificate.p7b -print_certs > certificate_bundle.cer

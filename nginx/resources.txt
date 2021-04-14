@@ -1,0 +1,12 @@
+nginx Security: How To Harden Your Server Configuration
+
+https://www.acunetix.com/blog/web-security-zone/hardening-nginx/
+
+visual nginx config
+https://www.digitalocean.com/community/tools/nginx
+
+config checker
+https://github.com/yandex/gixy
+
+A curated list of awesome links related to application security related to the environments with NGINX
+https://github.com/wallarm/awesome-nginx-security

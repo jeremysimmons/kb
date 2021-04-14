@@ -1,0 +1,9 @@
+git log --stat will show the amount each file was changed.
+
+git whatchanged gives some detail into the files that were modified.
+
+--shortstat will just print out the totals
+
+git diff --stat <sha1> <sha2> gives the files and the amount of changes between two commits.
+this doesn't includes insertions and deletions in <sha1>, so you would have to put the sha of commit just before <sha1> to includes <sha1>
+

@@ -1,0 +1,123 @@
+'=================================================================
+'Description: Outlook macro to create a new appointment with
+'             specific details of the currently selected
+'             appointment and show it in a new window.
+' version: 1.0
+' author : Robert Sparnaaij
+' website: https://www.howto-outlook.com/howto/openapptcopy.htm
+'
+' version: 1.1
+' author : Jeremy Simmons
+' Description: Added the copying of attendees
+'=================================================================
+Sub OpenAppointmentCopy()
+
+
+    Dim objOL As Outlook.Application
+    Dim objSelection As Outlook.Selection
+    Dim objItem As Object
+    Set objOL = Outlook.Application
+    
+    'Get the selected item
+    Select Case TypeName(objOL.ActiveWindow)
+        Case "Explorer"
+            Set objSelection = objOL.ActiveExplorer.Selection
+            If objSelection.Count > 0 Then
+                Set objItem = objSelection.Item(1)
+            Else
+                Result = MsgBox("No item selected. " & _
+                            "Please make a selection first.", _
+                            vbCritical, "OpenAppointmentCopy")
+                Exit Sub
+            End If
+        
+        Case "Inspector"
+            Set objItem = objOL.ActiveInspector.CurrentItem
+            
+        Case Else
+            Result = MsgBox("Unsupported Window type." & _
+                        vbNewLine & "Please make a selection" & _
+                        "in the Calendar or open an item first.", _
+                        vbCritical, "OpenAppointmentCopy")
+            Exit Sub
+    End Select
+
+    Dim olAppt As Outlook.AppointmentItem
+    Dim olApptCopy As Outlook.AppointmentItem
+    Set olApptCopy = Outlook.CreateItem(olAppointmentItem)
+        
+    'Copy the desired details to a new appointment item
+    If objItem.Class = olAppointment Then
+        Set olAppt = objItem
+        
+        With olApptCopy
+            .Subject = olAppt.Subject
+            .Location = olAppt.Location
+            .Body = olAppt.Body
+            .Categories = olAppt.Categories
+            .AllDayEvent = olAppt.AllDayEvent
+        End With
+    
+        'Added jeremy simmons    
+        Call CopyRecipients(olAppt, olApptCopy)
+        
+        'Display the copy
+        olApptCopy.Display
+    
+    'Selected item isn't an appointment item
+    Else
+        Result = MsgBox("No appointment item selected. " & _
+                    "Please make a selection first.", _
+                    vbCritical, "OpenAppointmentCopy")
+        Exit Sub
+    End If
+    
+    'Clean up
+    Set objOL = Nothing
+    Set objItem = Nothing
+    Set olAppt = Nothing
+    Set olApptCopy = Nothing
+    
+End Sub
+
+' Added by jeremy simmons
+Sub CopyRecipients(source As AppointmentItem, dest As AppointmentItem)
+    
+    Dim r As Recipient
+    Dim copy As Recipient
+    Dim d As New Scripting.Dictionary
+    For Each r In source.Recipients
+        
+        Dim name As String
+        If r.AddressEntry.Type = "EX" Then
+           If r.AddressEntry.DisplayType = olUser Or r.AddressEntry.DisplayType = olRemoteUser Then
+            Dim exchUser As Outlook.ExchangeUser
+            Set exchUser = r.AddressEntry.GetExchangeUser()
+            If Not exchUser Is Nothing Then
+               name = exchUser.PrimarySmtpAddress
+               If r.AddressEntry.AddressEntryUserType = olExchangeRemoteUserAddressEntry Then
+                  name = exchUser.Alias
+                  'Debug.Print "before " + name
+                  name = Replace(name, "#EXT#", "")
+                  name = Replace(name, "_", "@")
+                  'Debug.Print "after " + name
+                  'name = r.name
+               End If
+            End If
+           End If
+        End If
+        
+        If d.Exists(name) Then
+            Debug.Print "Duplicate " + name
+            GoTo NextIteration
+        End If
+        
+        d.Add name, True
+        Set copy = dest.Recipients.Add(name)
+        copy.Type = r.Type
+
+NextIteration:
+        'VBA doesn't have a continue keyword
+        
+    Next
+End Sub

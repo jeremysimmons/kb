@@ -1,0 +1,9 @@
+[Fact]
+public void InsertTestNameHere()
+{  
+var input = "a string";  
+var exception = Record.Exception(() => int.Parse(input));    
+Assert.NotNull(exception);    Assert.IsType<FormatException>(exception);
+}
+or
+var except1 = Assert.Throws<ArgumentOutOfRangeException>(() => array[999, 999] = 123);

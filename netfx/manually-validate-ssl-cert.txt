@@ -1,0 +1,22 @@
+ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) =>
+            {
+                if (sslPolicyErrors == SslPolicyErrors.None)
+                {
+                    return true;
+                }
+ 
+                var certStore = new X509Store(StoreName.My, StoreLocation.CurrentUser);
+                certStore.Open(OpenFlags.ReadOnly);
+                var certCollection = certStore.Certificates.Find(X509FindType.FindByThumbprint, "THUMBPRINT", false);
+ 
+                if (certCollection.Count > 0)
+                {
+                    var validCertificate = certCollection[0];
+                    var passedCert = new X509Certificate2(certificate);
+                    certStore.Close();
+ 
+                    return validCertificate.Equals(passedCert);
+                }
+                certStore.Close();
+                return false;
+            };

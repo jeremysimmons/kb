@@ -1,5 +1,9 @@
 $filter=ModifiedOn eq datetime'2020-10-07T05:13:09.632'
 
+$filter=CreatedOn gt datetime'2021-01-27'
+
+{{BaseURI}}/0/ServiceModel/EntityDataService.svc/UsrComplaintCollection/?$select=UsrContactId,UsrFinancialAccountId,CreatedOn&$filter=CreatedOn ge datetime'2021-01-26'
+
 https://services.odata.org/OData/OData.svc/Products?$filter=Name eq 'Milk' (Requests all products with a Name equal to 'Milk').
 
 https://services.odata.org/OData/OData.svc/Products?$filter=Name ne 'Milk' (Requests all products with a Name not equal to 'Milk').

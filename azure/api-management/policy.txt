@@ -1,0 +1,48 @@
+context.Request.Url.Query[]
+<inbound>
+        <set-variable name="isMobile" value="@(context.Request.Headers.GetValueOrDefault("User-Agent","").Contains("iPad") || context.Request.Headers.GetValueOrDefault("User-Agent","").Contains("iPhone"))" />
+        <base />
+        <choose>
+            <when condition="@(context.Variables.GetValueOrDefault<bool>("isMobile"))">
+                <set-query-parameter name="mobile" exists-action="override">
+                    <value>true</value>
+                </set-query-parameter>
+            </when>
+            <otherwise>
+                <set-query-parameter name="mobile" exists-action="override">
+                    <value>false</value>
+                </set-query-parameter>
+            </otherwise>
+        </choose>
+    </inbound>
+
+
+<choose>
+            <when condition="@(context.Variables.GetValueOrDefault<int>("account") == 404)">
+                <return-response response-variable-name="existing response variable">
+                    <set-status code="404" reason="Not Found" />
+                </return-response>
+            </when>
+            <otherwise>
+                <mock-response status-code="200" content-type="application/json" />
+            </otherwise>
+        </choose>
+
+
+<inbound>
+        <set-variable name="account" value="@(context.Request.MatchedParameters["account"])" />
+        <choose>
+            <when condition="@(context.Variables.GetValueOrDefault<string>("account") == "404")">
+                <return-response>
+                    <set-status code="200" reason="OK" />
+                    <set-body>Amazing 404</set-body>
+                </return-response>
+            </when>
+            <otherwise>
+                <return-response>
+                    <set-status code="200" reason="OK" />
+                    <set-body>@(context.Variables.GetValueOrDefault<string>("account"))</set-body>
+                </return-response>
+            </otherwise>
+        </choose>
+    </inbound>

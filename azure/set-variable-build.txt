@@ -1,0 +1,4 @@
+$json = 'one,two'.Split("{,}")
+$items = $json | ForEach-Object { "<origin>" + $_ + "</origin>" };
+$var = [String]::Join("", $items);
+write-host "##vso[task.setvariable variable=one]$var"

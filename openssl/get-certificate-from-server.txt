@@ -1,3 +1,5 @@
+openssl s_client -connect mutualcertservicesgateway.visa.com:443 -cert nwiy42698cVisa.cer -key nwiy42698cVisa.key -state -quiet
+
 With SNI
 If the remote server is using SNI (that is, sharing multiple SSL hosts on a single IP address) you will need to send the correct hostname in order to get the right certificate.
 openssl s_client -showcerts -servername www.example.com -connect www.example.com:443

@@ -1,0 +1,22 @@
+SELECT * FROM sys.sysusers
+AzureSiDevelopers
+
+--  lists all permissions explicitly granted or denied to principals in the database you're connected to from sys.database_permissions
+SELECT DISTINCT pr.principal_id, pr.name, pr.type_desc, 
+    pr.authentication_type_desc, pe.state_desc, pe.permission_name
+FROM sys.database_principals AS pr
+JOIN sys.database_permissions AS pe
+    ON pe.grantee_principal_id = pr.principal_id;
+
+-- To view database roles assigned to users, you can use sys.database_role_members
+SELECT DP1.name AS DatabaseRoleName,   
+    isnull (DP2.name, 'No members') AS DatanbaseUserName   
+FROM sys.database_role_members AS DRM  
+RIGHT OUTER JOIN sys.database_principals AS DP1  
+    ON DRM.role_principal_id = DP1.principal_id  
+LEFT OUTER JOIN sys.database_principals AS DP2  
+    ON DRM.member_principal_id = DP2.principal_id  
+WHERE DP1.type = 'R'
+ORDER BY DP1.name;  
+
+--loginmanager and dbmanager roles are the two server-level security roles available in Azure SQL Database. The loginmanager role has permission to create logins, and the dbmanager role has permission to create databases. You can view which users belong to these roles by using the query you have above against the master database.

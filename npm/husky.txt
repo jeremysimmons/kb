@@ -1,0 +1,16 @@
+Husky is a npm pre-commit hook system for running unit tests. 
+
+How would you skip the hook?
+https://github.com/typicode/husky/issues/124
+
+git commit --no-verify and git push --no-verify should work?
+
+As of v2.4.0 you can now do HUSKY_SKIP_HOOKS=1 git <command> ...
+
+HUSKY_SKIP_HOOKS=1
+
+git -c core.hooksPath=/dev/null checkout master
+git -c core.hooksPath=/dev/null pull
+git -c core.hooksPath=/dev/null commit ...
+git -c core.hooksPath=/dev/null push
+...

@@ -1,0 +1,535 @@
+https://www.stevejgordon.co.uk/httpclientfactory-asp-net-core-logging
+
+# HttpClientFactory in ASP.NET Core 2.1 (Part 5): Logging Exploring the default request and response logging and how to replace the logging implementation
+
+[9th July 20189th July 2018](https://www.stevejgordon.co.uk/httpclientfactory-asp-net-core-logging) [Steve Gordon](https://www.stevejgordon.co.uk/author/stevejgordon) [ASP.NET Core](https://www.stevejgordon.co.uk/category/asp-net-core), [ASP.NET Core 2.1](https://www.stevejgordon.co.uk/category/asp-net-core/asp-net-core-2-1)
+
+In the 2.1 release of IHttpClientFactory, the ASP.NET team included some built-in logging of the HTTP calls made via HttpClients created by the factory. This can be useful for the diagnosis of failures, as well as to understand the time taken to complete HTTP calls to external services. 
+
+In this post, I want to explore what is available in the default logging, how we can control what gets logged, how the logging is implemented and finally, how we can replace the logging with our implementation.
+
+There’s quite a bit of technical detail in this post. I hope it proves useful and interesting for those working with the IHttpClientFactory. [Click here](https://www.stevejgordon.co.uk/httpclientfactory-asp-net-core-logging#customising), if you want to jump to the section on customising the logging by replacing the default implementation.
+
+## What’s in the logs?
+
+IHttpClientFactory includes two levels of logging. At information level, the time taken to process and send the request is included. This can be useful for monitoring slow responding external services for example. Here’s an example of the console output when information level logging is enabled:
+
+info: System.Net.Http.HttpClient.MyClient.LogicalHandler\[100\]
+  Start processing HTTP request GET [https://api.github.com/repos/aspnet/docs/branches](https://api.github.com/repos/aspnet/docs/branches)
+
+info: System.Net.Http.HttpClient.MyClient.ClientHandler\[100\]
+  Sending HTTP request GET [https://api.github.com/repos/aspnet/docs/branches](https://api.github.com/repos/aspnet/docs/branches)
+
+info: System.Net.Http.HttpClient.MyClient.ClientHandler\[101\]
+  Received HTTP response after 682.9818ms - OK
+
+info: System.Net.Http.HttpClient.MyClient.LogicalHandler\[101\]
+  End processing HTTP request after 693.1094ms - OK
+
+If you require a deeper level of detail regarding the requests, this is available at trace level. With trace level logging enabled, details about the request and response headers will also be included in the log messages. Here’s an example from a request with trace logging enabled:
+
+info: System.Net.Http.HttpClient.MyClient.LogicalHandler\[100\]
+ Start processing HTTP request GET [https://api.github.com/repos/aspnet/docs/branches](https://api.github.com/repos/aspnet/docs/branches)
+
+trce: System.Net.Http.HttpClient.MyClient.LogicalHandler\[102\]
+  Request Headers:
+  Accept: application/vnd.github.v3+json
+  User-Agent: HttpClientFactory-Sample
+
+info: System.Net.Http.HttpClient.MyClient.ClientHandler\[100\]
+  Sending HTTP request GET [https://api.github.com/repos/aspnet/docs/branches](https://api.github.com/repos/aspnet/docs/branches)
+
+trce: System.Net.Http.HttpClient.MyClient.ClientHandler\[102\]
+  Request Headers:
+  Accept: application/vnd.github.v3+json
+  User-Agent: HttpClientFactory-Sample
+
+info: System.Net.Http.HttpClient.MyClient.ClientHandler\[101\]
+  Received HTTP response after 795.6954ms - OK
+
+trce: System.Net.Http.HttpClient.MyClient.ClientHandler\[103\]
+  Response Headers:
+  Server: [GitHub.com](http://github.com/)
+  Date: Sun, 08 Jul 2018 09:44:09 GMT
+  Status: 200 OK
+  X-RateLimit-Limit: 60
+  X-RateLimit-Remaining: 58
+  X-RateLimit-Reset: 1531046594
+  Cache-Control: public, max-age=60, s-maxage=60
+  Vary: Accept
+  ETag: "f0452653b55e5fef139a58372e3a7bf3"
+  X-GitHub-Media-Type: github.v3; format=json
+  Access-Control-Expose-Headers: ETag, Link, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+  Access-Control-Allow-Origin: \*
+  Strict-Transport-Security: max-age=31536000; includeSubdomains; preload
+  X-Frame-Options: deny
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: origin-when-cross-origin, strict-origin-when-cross-origin
+  Content-Security-Policy: default-src 'none'
+  X-Runtime-rack: 0.029792
+  X-GitHub-Request-Id: DCD6:3C9D:688D222:D064A9D:5B41DCE9
+  Content-Type: application/json; charset=utf-8
+  Content-Length: 2642
+
+info: System.Net.Http.HttpClient.MyClient.LogicalHandler\[101\]
+  End processing HTTP request after 818.4525ms - OK
+
+trce: System.Net.Http.HttpClient.MyClient.LogicalHandler\[103\]
+  Response Headers:
+  Server: [GitHub.com](http://github.com/)
+  Date: Sun, 08 Jul 2018 09:44:09 GMT
+  Status: 200 OK
+  X-RateLimit-Limit: 60
+  X-RateLimit-Remaining: 58
+  X-RateLimit-Reset: 1531046594
+  Cache-Control: public, max-age=60, s-maxage=60
+  Vary: Accept
+  ETag: "f0452653b55e5fef139a58372e3a7bf3"
+  X-GitHub-Media-Type: github.v3; format=json
+  Access-Control-Expose-Headers: ETag, Link, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+  Access-Control-Allow-Origin: \*
+  Strict-Transport-Security: max-age=31536000; includeSubdomains; preload
+  X-Frame-Options: deny
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: origin-when-cross-origin, strict-origin-when-cross-origin
+  Content-Security-Policy: default-src 'none'
+  X-Runtime-rack: 0.029792
+  X-GitHub-Request-Id: DCD6:3C9D:688D222:D064A9D:5B41DCE9
+  Content-Type: application/json; charset=utf-8
+  Content-Length: 2642
+
+As you can see and hopefully would expect, at trace level, the details are quite verbose. This can be useful to gain a more complete understanding of the headers during development. It is not recommended that you enable this in production since it will not only quickly fill logs, but it may expose secure data such as authorisation tokens for example.
+
+Each log message includes an event ID so that you can quickly filter out the events you are interested in. There are two loggers in use by default. There is an outer “LogicalHandler” logger which wraps the entire handler pipeline. This will allow for the timing of the entire pipeline to be included in the logs. Additionally, as this will run first in the pipeline, it will log the request headers as they appear before the request passes through any other handlers. The other handlers in the pipeline may modify those headers. Using the trace level logging it’s possible to capture that information to your logs which can be useful if you need to diagnose failures.
+
+The inner logger has the suffix, “ClientHandler” in the category name. This will be the innermost handler and therefore be the last custom handler to run before the request is sent over the network. As a result, this will be able to record the final request headers as they appear before the request is sent over the wire.
+
+For reference, the event IDs included by these loggers are as follows:
+
+**Outer “LogicalHandler”**
+
+100
+
+RequestPipelineStart
+
+101
+
+RequestPipelineEnd
+
+102
+
+RequestPipelineRequestHeader
+
+103
+
+RequestPipelineResponseHeader
+
+**Inner “ClientHandler”**
+
+100
+
+RequestStart
+
+101
+
+RequestEnd
+
+102
+
+RequestHeader
+
+103
+
+ResponseHeader
+
+## How does IHttpClientFactory logging work?
+
+The logging in IHttpClientFactory is applied to the pipeline just before HttpMessageHandlerBuilder.Build() method is called to return the final HttpMessageHandler pipeline.
+
+This is achieved with the help of HttpMessageHandlerBuilder filters which are applied by the DefaultHttpClientFactory implementation. An interface named **IHttpMessageHandlerBuilderFilter** exists which can be implemented in order to define filters. By default, there is one implementation of this interface called LoggingHttpMessageHandlerBuilderFilter which is registered within DI. It’s possible to record more than one implementation against the interface. As long as the implementations are registered in DI, each one will be executed when building the pipeline.
+
+The code in the LoggingHttpMessageHandlerBuilderFilter implementation of the Configure method is responsible for creating the two loggers and passing them to logging handlers, which themselves are implementations of the **DelegatingHandler** abstract base class. The code for LoggingHttpMessageHandlerBuilderFilter.Configure method is as follows:
+
+public Action<HttpMessageHandlerBuilder\> Configure(Action<HttpMessageHandlerBuilder\> next)
+
+{
+
+if (next \== null)
+
+{
+
+throw new ArgumentNullException(nameof(next));
+
+}
+
+return (builder) \=>
+
+{
+
+// Run other configuration first, we want to decorate.
+
+next(builder);
+
+// We want all of our logging message to show up as-if they are coming from HttpClient,
+
+// but also to include the name of the client for more fine-grained control.
+
+var outerLogger \= \_loggerFactory.CreateLogger($"System.Net.Http.HttpClient.{builder.Name}.LogicalHandler");
+
+var innerLogger \= \_loggerFactory.CreateLogger($"System.Net.Http.HttpClient.{builder.Name}.ClientHandler");
+
+// The 'scope' handler goes first so it can surround everything.
+
+builder.AdditionalHandlers.Insert(0, new LoggingScopeHttpMessageHandler(outerLogger));
+
+// We want this handler to be last so we can log details about the request after
+
+// service discovery and security happen.
+
+builder.AdditionalHandlers.Add(new LoggingHttpMessageHandler(innerLogger));
+
+};
+
+}
+
+[view raw](https://gist.github.com/stevejgordon/b5e53f0d3fa9a56646cd82a469b45483/raw/0953390803e8c519eba62be21e61654370e82669/LoggingHttpMessageHandlerBuilderFilter.cs) [LoggingHttpMessageHandlerBuilderFilter.cs](https://gist.github.com/stevejgordon/b5e53f0d3fa9a56646cd82a469b45483#file-logginghttpmessagehandlerbuilderfilter-cs) hosted with ![❤](https://s.w.org/images/core/emoji/13.0.1/svg/2764.svg) by [GitHub](https://github.com/)
+
+When the delegate chain is called, the **next(builder)** call (line 11) will execute the next delegate (an Action<HttpMessageHandlerBuilder>) to ensure the entire handler pipeline is configured.
+
+Then, the two loggers are created, using the name from the builder. This will be the name given to the named client or the type of the typed client.
+
+The outer handler is added at index 0 to the AdditionalHandlers list so that it surrounds all other handlers and is the first to execute. The inner handler is added to the end of the AdditionalHandlers list, so it will be the last to execute before the internal handlers responsible for making the HTTP request.
+
+Each of these logging handlers is responsible for logging their messages before and after the SendAsync calls to the other handlers. Using this approach a timer can be started before the SendAsync call and used afterwards to record the total HTTP request time as well as the overall handler pipeline execution time. I won’t copy the code for those handlers here as they are quite long. Instead, if you are interested you can view them on GitHub.
+
+The outer “LogicalHandler” source can be viewed at [here](https://github.com/aspnet/HttpClientFactory/blob/master/src/Microsoft.Extensions.Http/Logging/LoggingScopeHttpMessageHandler.cs).
+
+This class creates a logging scope as well as recording the log messages. Optionally, if Trace logging is enabled, it will iterate over the request and response headers, recording those to the logger also. The pattern used in this class is an example of the LoggerMessage approach to provide caching of the logging delegates for better performance. You can read more about this approach in the [official documentation at docs.microsoft.com](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/loggermessage?view=aspnetcore-2.1). It’s a little outside the scope of this post to go any deeper here.
+
+The inner “ClientHandler” logger uses a very similar approach to record its log messages and the source for that can be viewed [here](https://github.com/aspnet/HttpClientFactory/blob/master/src/Microsoft.Extensions.Http/Logging/LoggingHttpMessageHandler.cs).
+
+## Configuring the logging output
+
+As with all logging which uses the Microsoft.Extensions.Logging library, you can control the log messages that are generated using configuration.
+
+In the appsettings.json file, you can control and filter the logging which is recorded. The default production JSON file looks like this:
+
+{
+
+"Logging": {
+
+"LogLevel": {
+
+"Default": "Warning"
+
+}
+
+}
+
+}
+
+[view raw](https://gist.github.com/stevejgordon/adee4cb282d88a8cb31724725a5ff214/raw/241a7ff7384f6294ddec8bdb9dbd0d1e4140790e/appsettings.json) [appsettings.json](https://gist.github.com/stevejgordon/adee4cb282d88a8cb31724725a5ff214#file-appsettings-json) hosted with ![❤](https://s.w.org/images/core/emoji/13.0.1/svg/2764.svg) by [GitHub](https://github.com/)
+
+In this configuration, only warning messages and higher will be logged and as a result, no logging from the IHttpClientFactory handlers will be included. To enable logging we can add an extra log level configuration setting. If you read the “How does it work” section above you’ll recall that the loggers which are used to log the HTTP request log messages are defined with the category name beginning with “System.Net.Http”.
+
+An option, therefore, is to enable the Information or Trace log levels for the System namespace:
+
+{
+
+"Logging": {
+
+"LogLevel": {
+
+"Default": "Debug",
+
+"System": "Information"
+
+}
+
+}
+
+}
+
+[view raw](https://gist.github.com/stevejgordon/25cf9e31f1a6ef1207ae88ea1f528071/raw/7126040f2a33b387e327564c7a8055b4163c7f4d/appsettings.json) [appsettings.json](https://gist.github.com/stevejgordon/25cf9e31f1a6ef1207ae88ea1f528071#file-appsettings-json) hosted with ![❤](https://s.w.org/images/core/emoji/13.0.1/svg/2764.svg) by [GitHub](https://github.com/)
+
+However, this will also enable informational messages from all other components in the System root namespace. Therefore it may be better to configure the logging by limiting the configuration to “System.Net.Http.HttpClient” so that you only add in the messages from the HTTP requests through clients created via the HttpClientFactory:
+
+{
+
+"Logging": {
+
+"LogLevel": {
+
+"Default": "Warning",
+
+"System.Net.Http.HttpClient": "Information"
+
+}
+
+}
+
+}
+
+[view raw](https://gist.github.com/stevejgordon/fa71d716803ed77f14f32cdc9ecc76db/raw/b8cb682d2e86e5600017260ab2902bbbf66eec1a/appsettings.json) [appsettings.json](https://gist.github.com/stevejgordon/fa71d716803ed77f14f32cdc9ecc76db#file-appsettings-json) hosted with ![❤](https://s.w.org/images/core/emoji/13.0.1/svg/2764.svg) by [GitHub](https://github.com/)
+
+We can take this filtering a step further and filter down to a specific named or typed client. For a typed client, the name will make the name of the registered type.
+
+Let’s imagine we are only interested in logging the requests via a typed client named MyClient. Also, perhaps we only want the raw timing of the HTTP request itself. In this example we can enable logging just for the ClientHandler of our MyClient:
+
+{
+
+"Logging": {
+
+"LogLevel": {
+
+"Default": "Warning",
+
+"System.Net.Http.HttpClient.MyClient.ClientHandler": "Information"
+
+}
+
+}
+
+}
+
+[view raw](https://gist.github.com/stevejgordon/1e342f1f78ae6df0ee1abfd8ed99307c/raw/fc3b2822c10bad4fe42528cac3c41f4a4a63b401/appsettings.json) [appsettings.json](https://gist.github.com/stevejgordon/1e342f1f78ae6df0ee1abfd8ed99307c#file-appsettings-json) hosted with ![❤](https://s.w.org/images/core/emoji/13.0.1/svg/2764.svg) by [GitHub](https://github.com/)
+
+## Customising the log messages
+
+There may be cases where you want to add additional logging around HTTP requests through the clients managed by IHttpClientFactory. An option, in this case, is to introduce an extra handler into the pipeline. In [part 3 of this series](https://www.stevejgordon.co.uk/httpclientfactory-aspnetcore-outgoing-request-middleware-pipeline-delegatinghandlers), I explored adding additional outgoing middleware handlers to your client configuration. Using that handler you can inspect the requests and responses, logging any data as necessary.
+
+If you want to replace the default logging entirely to fully customise the message output, the recommended approach from the team is to replace the default implementation of the **IHttpMessageHandlerBuilderFilter** interface. In fact, this section of the post was inspired by [an issue](https://github.com/aspnet/HttpClientFactory/issues/141) on the IHttpClientFactory GitHub repository. Let’s take a look at how we replace the logging so that we can record a correlation ID into the console messages. We want to replace the default implementation here since we don’t want additional log messages.
+
+First, we’ll need to create a new implementation of IHttpMessageHandlerBuilderFilter:
+
+public class CustomLoggingFilter : IHttpMessageHandlerBuilderFilter
+
+{
+
+private readonly ILoggerFactory \_loggerFactory;
+
+public CustomLoggingFilter(ILoggerFactory loggerFactory)
+
+{
+
+\_loggerFactory \= loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
+
+}
+
+public Action<HttpMessageHandlerBuilder\> Configure(Action<HttpMessageHandlerBuilder\> next)
+
+{
+
+if (next \== null)
+
+{
+
+throw new ArgumentNullException(nameof(next));
+
+}
+
+return (builder) \=>
+
+{
+
+// Run other configuration first, we want to decorate.
+
+next(builder);
+
+var outerLogger \=
+
+\_loggerFactory.CreateLogger($"System.Net.Http.HttpClient.{builder.Name}.LogicalHandler");
+
+builder.AdditionalHandlers.Insert(0, new CustomLoggingScopeHttpMessageHandler(outerLogger));
+
+};
+
+}
+
+}
+
+[view raw](https://gist.github.com/stevejgordon/72c52ff15288343751a9557da84d2ef0/raw/ca7c68ce3d699305b420d6cc63343582997e5b70/CustomLoggingFilter.cs) [CustomLoggingFilter.cs](https://gist.github.com/stevejgordon/72c52ff15288343751a9557da84d2ef0#file-customloggingfilter-cs) hosted with ![❤](https://s.w.org/images/core/emoji/13.0.1/svg/2764.svg) by [GitHub](https://github.com/)
+
+I’ve pretty much copied the [default implementation](https://github.com/aspnet/HttpClientFactory/blob/master/src/Microsoft.Extensions.Http/Logging/LoggingHttpMessageHandlerBuilderFilter.cs) for this filter. The main difference is that for simplicity I’m only using one outer logger for this example. We create a logger and then add in a new CustomLoggingScopeHttpMessageHandler to the handler pipeline.
+
+The CustomLoggingScopeHttpMessageHandler class is as follows:
+
+public class CustomLoggingScopeHttpMessageHandler : DelegatingHandler
+
+{
+
+private readonly ILogger \_logger;
+
+public CustomLoggingScopeHttpMessageHandler(ILogger logger)
+
+{
+
+\_logger \= logger ?? throw new ArgumentNullException(nameof(logger));
+
+}
+
+protected override async Task<HttpResponseMessage\> SendAsync(HttpRequestMessage request,
+
+CancellationToken cancellationToken)
+
+{
+
+if (request \== null)
+
+{
+
+throw new ArgumentNullException(nameof(request));
+
+}
+
+using (Log.BeginRequestPipelineScope(\_logger, request))
+
+{
+
+Log.RequestPipelineStart(\_logger, request);
+
+var response \= await base.SendAsync(request, cancellationToken);
+
+Log.RequestPipelineEnd(\_logger, response);
+
+return response;
+
+}
+
+}
+
+private static class Log
+
+{
+
+private static class EventIds
+
+{
+
+public static readonly EventId PipelineStart \= new EventId(100, "RequestPipelineStart");
+
+public static readonly EventId PipelineEnd \= new EventId(101, "RequestPipelineEnd");
+
+}
+
+private static readonly Func<ILogger, HttpMethod, Uri, string, IDisposable\> \_beginRequestPipelineScope \=
+
+LoggerMessage.DefineScope<HttpMethod, Uri, string\>(
+
+"HTTP {HttpMethod} {Uri} {CorrelationId}");
+
+private static readonly Action<ILogger, HttpMethod, Uri, string, Exception\> \_requestPipelineStart \=
+
+LoggerMessage.Define<HttpMethod, Uri, string\>(
+
+LogLevel.Information,
+
+EventIds.PipelineStart,
+
+"Start processing HTTP request {HttpMethod} {Uri} \[Correlation: {CorrelationId}\]");
+
+private static readonly Action<ILogger, HttpStatusCode, Exception\> \_requestPipelineEnd \=
+
+LoggerMessage.Define<HttpStatusCode\>(
+
+LogLevel.Information,
+
+EventIds.PipelineEnd,
+
+"End processing HTTP request - {StatusCode}");
+
+public static IDisposable BeginRequestPipelineScope(ILogger logger, HttpRequestMessage request)
+
+{
+
+var correlationId \= GetCorrelationIdFromRequest(request);
+
+return \_beginRequestPipelineScope(logger, request.Method, request.RequestUri, correlationId);
+
+}
+
+public static void RequestPipelineStart(ILogger logger, HttpRequestMessage request)
+
+{
+
+var correlationId \= GetCorrelationIdFromRequest(request);
+
+\_requestPipelineStart(logger, request.Method, request.RequestUri, correlationId, null);
+
+}
+
+public static void RequestPipelineEnd(ILogger logger, HttpResponseMessage response)
+
+{
+
+\_requestPipelineEnd(logger, response.StatusCode, null);
+
+}
+
+private static string GetCorrelationIdFromRequest(HttpRequestMessage request)
+
+{
+
+var correlationId \= "Not set";
+
+if (request.Headers.TryGetValues("X-Correlation-ID", out var values))
+
+{
+
+correlationId \= values.First();
+
+}
+
+return correlationId;
+
+}
+
+}
+
+}
+
+[view raw](https://gist.github.com/stevejgordon/93055411e73d7b1826fdd13edd70aa31/raw/9ad1ef8ccc3a3b9c31752dea14ebc34ba000bf90/CustomLoggingScopeHttpMessageHandler.cs) [CustomLoggingScopeHttpMessageHandler.cs](https://gist.github.com/stevejgordon/93055411e73d7b1826fdd13edd70aa31#file-customloggingscopehttpmessagehandler-cs) hosted with ![❤](https://s.w.org/images/core/emoji/13.0.1/svg/2764.svg) by [GitHub](https://github.com/)
+
+There’s quite a lot to this class, but most of that is the static Log class and its methods. I won’t go into those too deeply here since they following the LoggerMessage advice for more performant logging that you can [read in the docs](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/loggermessage?view=aspnetcore-2.1). For the most part, I took the exiting LoggingScopeHttpMessageHandler method and tweaked it for my needs.
+
+The first point to focus on here is that whole operation is wrapped in a logging scope. Before and after the SendAsync method is called on the base, we use the static Log methods to record the log events (lines 20 and 22)
+
+Within the Log class, a few private delegates are defined to format the expected log messages.
+
+Both \_beginRequestPipelineScope and \_requestPipelineStart accept a string which will be the correlation ID. They use the value to record the correlation ID into the scope properties as well as on the request started message.
+
+A simple helper method has been added which parses a HTTP request for the expected correlation ID header and if present, returns it. The BeginRequestPipelineScope and RequestPipelineStart both use this method to extract the correlation ID.
+
+The final step now that we have our filter implementation is to register it in DI, replacing the existing default filter applied by the HttpClientFactory library.
+
+Inside the Startup class, ConfigureServices method we can call the replace extension on the ServiceCollection to swap out the default implementation with our one:
+
+services.Replace(ServiceDescriptor.Singleton<IHttpMessageHandlerBuilderFilter, CustomLoggingFilter\>());
+
+[view raw](https://gist.github.com/stevejgordon/574c169dc3c0e13341d95c464a1f5311/raw/71282d78f1549a9ed95c075870abdeba7f9b71b8/Startup.cs) [Startup.cs](https://gist.github.com/stevejgordon/574c169dc3c0e13341d95c464a1f5311#file-startup-cs) hosted with ![❤](https://s.w.org/images/core/emoji/13.0.1/svg/2764.svg) by [GitHub](https://github.com/)
+
+The replace method will find the first registered service of IHttpMessageHandlerBuilderFilter and replace that registration with this new one, where our CustomLoggingFilter is the implementation.
+
+Now, when we run the application, the console logs include our correlation ID:
+
+info: System.Net.Http.HttpClient.MyClient.LogicalHandler\[100\]
+      Start processing HTTP request GET [https://api.github.com/repos/aspnet/docs/branches](https://api.github.com/repos/aspnet/docs/branches) \[Correlation: 447c8d6b-e280-4538-bd31-56d508266b5b\]
+
+info: System.Net.Http.HttpClient.MyClient.LogicalHandler\[101\]
+      End processing HTTP request - OK
+
+As a side note, this filter approach is a great way to add common cross-cutting concerns for your whole application. It’s possible to register additional filters, each of which could add their own common handlers onto all clients created via HttpClientFactory.
+
+## Summary
+
+In this post, we looked at the type of information available to us from the built-in logging, included as part of the HttpClientFactory library. We looked at how we can use log configuration to control which log messages we see and also looked at how logging has been implemented within the library. Finally, we explored using the IHttpMessageHandlerBuilderFilter interface to replace the default logging filter. I hope this has been helpful. I’ll be keeping an eye on the progress for the 2.2 release where we may see more logging, including some Polly integration making its way into the product.
+
+## Other Posts in this Series
+
+Part 1 – [An introduction to HttpClientFactory](https://www.stevejgordon.co.uk/introduction-to-httpclientfactory-aspnetcore)  
+Part 2 – [Defining Named and Typed Clients](https://www.stevejgordon.co.uk/httpclientfactory-named-typed-clients-aspnetcore)  
+Part 3 – [Outgoing request middleware with handlers](https://www.stevejgordon.co.uk/httpclientfactory-aspnetcore-outgoing-request-middleware-pipeline-delegatinghandlers)  
+Part 4 – [Integrating with Polly for transient fault handling](https://www.stevejgordon.co.uk/httpclientfactory-using-polly-for-transient-fault-handling)  
+Part 5 – This post

@@ -22,13 +22,9 @@ git merge --squash HEAD@{1}
 # prepopulated with the commit messages of all the squashed commits:
 git commit
 
-
-
 https://stackoverflow.com/a/5201642/26877
 git reset --soft HEAD~3 && 
 git commit --edit -m"$(git log --format=%B --reverse HEAD..HEAD@{1})"
-
-
 
 COPY
 git rebase -i master

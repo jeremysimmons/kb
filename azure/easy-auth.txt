@@ -1,0 +1,26 @@
+https://markheath.net/post/secure-azure-functions-app-easy-auth-adb2c
+X-MS-CLIENT-PRINCIPAL-NAME:Test User 1
+X-MS-CLIENT-PRINCIPAL-ID:7e9be1af-6943-21d6-9ae1-5c78c11ff756
+X-MS-CLIENT-PRINCIPAL-IDP:aad
+X-MS-TOKEN-AAD-ID-TOKEN:eyJ0eXAiOiJKV1QiLCJhbGciOiJSUz...
+
+https://cgillum.tech/2016/05/27/app-service-auth-and-azure-ad-b2c/
+
+https://cgillum.tech/2016/08/10/app-service-auth-and-azure-ad-b2c-part-2/
+
+[http://jsandersblog.azurewebsites.net/2020/01/17/easy-auth-using-x-ms-token-aad-access-token-as-a-bearer-token/]
+Then go to API permissions and select ‘+ Add a permission’:
+
+Azure Active Directory Graph > User.Read
+
+additionalLoginParams is not necessary
+
+https://app-service/.auth/me
+
+https://techcommunity.microsoft.com/t5/apps-on-azure/azure-app-service-easyauth-and-azure-active-directory-flows/ba-p/1099890
+
+[https://github.com/MaximRouiller/MaximeRouiller.Azure.AppService.EasyAuth]
+library to use easyauth from .net core
+
+[https://techcommunity.microsoft.com/t5/apps-on-azure/azure-app-service-easyauth-and-azure-active-directory-flows/ba-p/1099890]
+easy-auth flows

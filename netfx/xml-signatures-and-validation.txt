@@ -1,0 +1,169 @@
+
+https://weblog.west-wind.com/posts/2008/Feb/23/Digitally-Signing-an-XML-Document-and-Verifying-the-Signature
+code for signing and validating signatures on xml files
+
+Input Document Sample
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP:Envelope xmlns:r1="http://www.routeone.com/namespace.messaging.diag#"
+               xmlns:star="http://www.starstandards.org/STAR"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns:SOAP="http://schemas.xmlsoap.org/soap/envelope/"
+               xmlns:oa="http://www.openapplications.org/oagis">
+  <SOAP:Body>
+    <!-- data to be signed here -->
+  </SOAP:Body>
+</SOAP:Envelope>
+```
+
+
+Signed Document example
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP:Envelope xmlns:r1="http://www.routeone.com/namespace.messaging.diag#" xmlns:star="http://www.starstandards.org/STAR" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP="http://schemas.xmlsoap.org/soap/envelope/" xmlns:oa="http://www.openapplications.org/oagis">
+  <SOAP:Header>
+    <SOAP-SEC:Signature MustUnderstand="1" xmlns:SOAP-SEC="http://schemas.xmlsoap.org/soap/security/2000-12">
+      <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+        <SignedInfo>
+          <CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+          <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
+          <Reference URI="#Body">
+            <Transforms>
+              <Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+            </Transforms>
+            <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+            <DigestValue>6hpmccmjxQmAI143OhQfIWpkryw=</DigestValue>
+          </Reference>
+        </SignedInfo>
+        <SignatureValue>sv8n4h0rV4Xmbl+M+w+MLl7lVA8KFsoWRx5DqSKkwSie32jOFoJt0WvH6UWRQInW5XpAL3OtNZcw8pbCdTtl8KSo7UIkl182zLFkdLh3o3EbiFqMw0iD0NM6L7UslaQ0uf8twnMFWlCA612icy76UfHtO6j4GcPeiBEwj5Y0YUg=</SignatureValue>
+        <KeyInfo>
+          <X509Data>
+            <X509IssuerSerial>
+              <X509IssuerName>CN=TestSignCert</X509IssuerName>
+              <X509SerialNumber>75496503122422458150193540449068096025</X509SerialNumber>
+            </X509IssuerSerial>
+          </X509Data>
+        </KeyInfo>
+      </Signature>
+    </SOAP-SEC:Signature>
+  </SOAP:Header>
+  <SOAP:Body id="Body">
+    <!-- data to be signed here -->
+  </SOAP:Body>
+</SOAP:Envelope>
+```
+
+Signing the Code example
+```csharp
+/// <summary>
+/// Signs the SOAP document and adds a digital signature to it.
+/// 
+/// Note a lot of optional settings are applied against
+/// key and certificate info to match the required XML document
+/// structure the server requests.
+/// </summary>
+/// <param name="xmlDoc"></param>
+/// <param name="certFriendlyName">Friendly Name of Cert installed in the Certificate Store under CurrentUser | Personal</param>
+/// <returns></returns>
+public XmlDocument SignSoapBody(XmlDocument xmlDoc, X509Certificate2 cert)
+{
+    // *** Add search Namespaces references to ensure we can reliably work 
+    // *** against any SOAP docs regardless of tag naming
+    XmlNamespaceManager ns = new XmlNamespaceManager(xmlDoc.NameTable);
+    ns.AddNamespace("SOAP", STR_SOAP_NS);
+    ns.AddNamespace("SOAP-SEC", STR_SOAPSEC_NS);
+ 
+    // *** Grab the body element - this is what we create the signature from
+    XmlElement body = xmlDoc.DocumentElement.SelectSingleNode(@"//SOAP:Body", ns) as XmlElement;
+    if (body == null)
+        throw new ApplicationException("No body tag found");
+ 
+    // *** We'll only encode the <SOAP:Body> - add id: Reference as #Body
+    body.SetAttribute("id", "Body");
+ 
+    // *** Signed XML will create Xml Signature - Xml fragment
+    SignedXml signedXml = new SignedXml(xmlDoc);
+ 
+    // *** Create a KeyInfo structure
+    KeyInfo keyInfo = new KeyInfo();
+ 
+    // *** The actual key for signing - MAKE SURE THIS ISN'T NULL!
+    signedXml.SigningKey = cert.PrivateKey;
+ 
+    // *** Specifically use the issuer and serial number for the data rather than the default
+    KeyInfoX509Data keyInfoData = new KeyInfoX509Data();
+    keyInfoData.AddIssuerSerial(cert.Issuer, cert.GetSerialNumberString());
+    keyInfo.AddClause(keyInfoData);
+ 
+ 
+    // *** provide the certficate info that gets embedded - note this is only
+    // *** for specific formatting of the message to provide the cert info
+    signedXml.KeyInfo = keyInfo;
+ 
+ 
+    // *** Again unusual - meant to make the document match template
+    signedXml.SignedInfo.CanonicalizationMethod = SignedXml.XmlDsigExcC14NTransformUrl;
+ 
+    // *** Now create reference to sign: Point at the Body element
+    Reference reference = new Reference();
+    reference.Uri = "#Body";  // reference id=body section in same doc
+    reference.AddTransform(new XmlDsigExcC14NTransform());  // required to match doc
+    signedXml.AddReference(reference);
+ 
+    // *** Finally create the signature
+    signedXml.ComputeSignature();
+ 
+    // *** Result is an XML node with the signature detail below it
+    // *** Now let's add the sucker into the SOAP-HEADER
+    XmlElement signedElement = signedXml.GetXml();
+ 
+    // *** Create SOAP-SEC:Signature element
+    XmlElement soapSignature = xmlDoc.CreateElement("Signature", STR_SOAPSEC_NS);
+    soapSignature.Prefix = "SOAP-SEC";
+    soapSignature.SetAttribute("MustUnderstand", "", "1");
+ 
+    // *** And add our signature as content
+    soapSignature.AppendChild(signedElement);
+ 
+    // *** Now add the signature header into the master header
+    XmlElement soapHeader = xmlDoc.DocumentElement.SelectSingleNode("//SOAP:Header", ns) as XmlElement;
+    if (soapHeader == null)
+    {
+        soapHeader = xmlDoc.CreateElement("Header", STR_SOAP_NS);
+        soapHeader.Prefix = "SOAP";
+        xmlDoc.DocumentElement.InsertBefore(soapHeader, xmlDoc.DocumentElement.ChildNodes[0]);
+    }
+    soapHeader.AppendChild(soapSignature);
+ 
+    return xmlDoc;
+}
+```
+
+Validating the signature example
+```csharp
+/// <summary>
+/// Validates the Xml Signature in a document.
+/// 
+/// This routine is significantly simpler because the key parameters
+/// are embedded into the signature itself. All that's needed is a
+/// certificate to provide the key - the rest can be read from the
+/// Signature itself.
+/// </summary>
+/// <param name="doc"></param>
+/// <param name="publicCertFileName"></param>
+/// <returns></returns>
+public bool ValidateSoapBodySignature(XmlDocument doc, X509Certificate2 cert)
+{
+    // *** Load the doc this time
+    SignedXml sdoc = new SignedXml(doc);
+ 
+    // *** Find the signature and load it into SignedXml
+    XmlNodeList nodeList = doc.GetElementsByTagName("Signature");
+    sdoc.LoadXml((XmlElement)nodeList[0]);
+ 
+    // *** Now read the actual signature and validate
+    bool result = sdoc.CheckSignature(cert, true);
+ 
+    return result;
+}
+```

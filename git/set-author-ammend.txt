@@ -1,0 +1,1 @@
+git commit --author="John Doe <john@doe.org>"

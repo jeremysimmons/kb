@@ -1,0 +1,46 @@
+https://stackoverflow.com/questions/12902110/bulk-insert-correctly-quoted-csv-file-in-sql-server
+
+9.0
+4
+1       SQLCHAR       0       0     "\""      0     FIRST_QUOTE      SQL_Latin1_General_CP1_CI_AS
+2       SQLCHAR       0       5     "\",\""   1     FNAME               SQL_Latin1_General_CP1_CI_AS
+3       SQLCHAR       0       5     "\",\""   2     LNAME            SQL_Latin1_General_CP1_CI_AS
+4       SQLCHAR       0       50    "\"\r\n"  3     COMPANY          SQL_Latin1_General_CP1_CI_AS
+
+9.0
+3
+1       SQLCHAR       0       5       "\t"     1     FName              SQL_Latin1_General_CP1_CI_AS
+2       SQLCHAR       0       5       "\t"     2     LName              SQL_Latin1_General_CP1_CI_AS
+3       SQLCHAR       0       50      "\r\n"   3     Company            SQL_Latin1_General_CP1_CI_AS
+
+
+additional example
+https://blog.netnerds.net/2007/01/bcp-remove-quotes-from-csv-import-using-bcp-format-file/
+locId,country,region,city,postalCode,latitude,longitude,dmaCode,areaCode
+68954,"US","LA","Kaplan","70548″,29.9845,-92.3224,642,337
+
+
+7.0
+9
+1 SQLCHAR 0 255 ","" 1 locId
+2 SQLCHAR 0 255 "","" 2 country
+3 SQLCHAR 0 255 "","" 3 region
+4 SQLCHAR 0 255 "","" 4 city
+5 SQLCHAR 0 255 ""," 5 postalCode
+6 SQLCHAR 0 255 "," 6 latitude
+7 SQLCHAR 0 255 "," 7 longitude
+8 SQLCHAR 0 255 "," 8 dmaCode
+9 SQLCHAR 0 255 "\n" 9 areaCode
+
+startIpNum,endIpNum,locId
+"33996344","33996351″,"16552″
+
+7.0
+5
+1 SQLCHAR 0 255 """ 0 firstQuote
+2 SQLCHAR 0 255 "","" 1 startIpNum
+3 SQLCHAR 0 255 "","" 2 endIpNum
+4 SQLCHAR 0 255 """ 3 locId
+5 SQLCHAR 0 255 "\n" 0 lastQuote
+
+Then run: bcp dbName.dbo.tableName in mydata.csv -F 2 -S sqlSrvr -T -f bcp.fmt

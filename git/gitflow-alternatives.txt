@@ -1,0 +1,6 @@
+OneFlow – a Git branching model and workflow
+https://www.endoflineblog.com/oneflow-a-git-branching-model-and-workflow
+
+
+Gitworkflow
+https://github.com/rocketraman/gitworkflow

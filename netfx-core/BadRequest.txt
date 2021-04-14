@@ -1,0 +1,1 @@
+https://coderethinked.com/customizing-automatic-http-400-error-response-in-asp-net-core-web-apis/

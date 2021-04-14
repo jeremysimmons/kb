@@ -1,0 +1,25 @@
+#!/bin/bash
+#How to resolve git conflicts on branch without merging or rebasing
+#https://stackoverflow.com/a/39172106/26877
+
+declare -a conflicts
+
+echo "Detecting conflicts..."
+for rev in `git rev-list HEAD..develop`
+do
+  git cherry-pick --no-commit $rev > /dev/null 2>&1
+  if [ $? -eq 1 ]
+  then
+    conflicts+=($rev)
+  fi
+  git reset --hard HEAD > /dev/null
+done
+
+for rev in ${conflicts[*]}
+do
+  git cherry-pick --no-commit $rev > /dev/null 2>&1
+  echo "Commit $rev cherry-picked."
+  read -p "Resolve conflicts, then press any key to continue: "
+done
+
+echo "Done cherry-picking! Commit your changes now!"

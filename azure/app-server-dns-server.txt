@@ -1,0 +1,3 @@
+WEBSITE_DNS_SERVER with value 168.63.129.16 WEBSITE_VNET_ROUTE_ALL with value 1
+
+https://docs.microsoft.com/en-us/azure/app-service/web-sites-integrate-with-vnet#azure-dns-private-zones

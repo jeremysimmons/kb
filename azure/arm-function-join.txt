@@ -1,0 +1,26 @@
+,
+    "functions": [ {
+        "namespace": "ent",
+        "members": {
+            "joinArray": {
+                "parameters": [
+                    {
+                        "name": "list",
+                        "type": "array"
+                    },
+                    {
+                        "name": "prefix",
+                        "type": "string"
+                    },
+                    {
+                        "name": "suffix",
+                        "type": "string"
+                    }
+                ],
+                "output": {
+                    "type": "string",
+                    "value": "[concat(parameters('prefix'), parameters('list')[copyIndex()], parameters('suffix'))]"
+                }
+            }
+        }
+    } ],

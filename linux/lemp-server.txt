@@ -1,0 +1,23 @@
+https://devanswers.co/installing-nginx-mysql-php-lemp-stack-ubuntu-18-04/
+
+https://devanswers.co/installing-phpmyadmin-nginx-ubuntu-18-04/
+
+https://devanswers.co/lets-encrypt-ssl-cert-nginx-ubuntu-18-04/
+
+https://devanswers.co/installing-ftp-server-vsftpd-ubuntu-18-04/	
+
+https://devanswers.co/how-to-automatically-backup-web-server-doc-root-tar-cron/
+
+https://devanswers.co/ubuntu-system-monitoring-with-htop/
+
+https://www.howtoforge.com/tutorial/perfect-server-ubuntu-18-04-nginx-bind-dovecot-and-ispconfig-3/2/
+
+https://serverfault.com/a/609567/22484
+
+tuning nginx
+https://haydenjames.io/php-fpm-tuning-using-pm-static-max-performance/
+https://serverfault.com/questions/479443/php5-fpm-server-reached-pm-max-children/578673
+
+tuning mysql
+https://www.percona.com/blog/2014/01/28/10-mysql-performance-tuning-settings-after-installation/
+https://severalnines.com/database-blog/mysql-performance-cheat-sheet

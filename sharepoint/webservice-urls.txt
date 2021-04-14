@@ -21,3 +21,10 @@ http://localhost/_vti_bin/listdata.svc/Parts(3)
 http://localhost/_vti_bin/listdata.svc/Parts?$orderby=Name
 
 
+https://docs.microsoft.com/en-us/previous-versions/office/developer/sharepoint-2010/ee705814(v=office.14)
+WebSvcLists
+
+Using the SharePoint Foundation 2010 Managed Client Object Model
+https://docs.microsoft.com/en-us/previous-versions/office/developer/sharepoint-2010/ee857094(v=office.14)
+
+https://www.nuget.org/packages/Microsoft.SharePoint.Client/

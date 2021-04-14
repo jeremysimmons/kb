@@ -1,3 +1,8 @@
 https://www.nuget.org/packages/Moq.AutoMock/
-
 https://github.com/AutoFixture/AutoFixture
+
+using AutoFixture;
+using AutoFixture.AutoMoq;
+_fixture = new Fixture().Customize(new AutoMoqCustomization());
+_fixture.Customize<BindingInfo>(c => c.OmitAutoProperties());
+
