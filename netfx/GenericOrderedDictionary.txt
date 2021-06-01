@@ -1,0 +1,136 @@
+public class OrderedDictionary<TKey, TValue> : IEnumerable<TValue>, IDictionary<TKey, TValue>
+   {
+      private readonly Dictionary<TKey, int> IndexLookup;
+      private readonly List<KeyValuePair<TKey, TValue>> Items;
+
+      public OrderedDictionary()
+      {
+         IndexLookup = new Dictionary<TKey, int>();
+         Items = new List<KeyValuePair<TKey, TValue>>();
+      }
+
+      public OrderedDictionary(IEqualityComparer<TKey> comparer)
+      {
+         IndexLookup = new Dictionary<TKey, int>(comparer);
+         Items = new List<KeyValuePair<TKey, TValue>>();
+      }
+
+      public int Add(TKey key, TValue value)
+      {
+         int index = Items.Count;
+         IndexLookup.Add(key, index);
+         Items.Add(new KeyValuePair<TKey, TValue>(key, value));
+         return index;
+      }
+
+      public void AddRange(IEnumerable<KeyValuePair<TKey, TValue>> collection)
+      {
+         foreach (var pair in collection)
+            Add(pair.Key, pair.Value);
+      }
+
+      public void AddRange(OrderedDictionary<TKey, TValue> collection)
+      {
+         AddRange(collection.GetKeyValuePairs());
+      }
+
+      public TValue this[int index]
+      {
+         get => Items[index].Value;
+         set
+         {
+            var item = Items[index];
+            var kvp = new KeyValuePair<TKey, TValue>(item.Key, value);
+            Items[index] = kvp;
+         }
+      }
+
+      public TValue this[TKey key]
+      {
+         get => Items[IndexLookup[key]].Value;
+         set
+         {
+            var kvp = new KeyValuePair<TKey, TValue>(key, value);
+            Items[IndexLookup[key]] = kvp;
+         }
+      }
+
+      public bool Remove(TKey key)
+      {
+         if (IndexLookup.TryGetValue(key, out int index))
+         {
+            Items.RemoveAt(index);
+            IndexLookup.Remove(key);
+            return true;
+         }
+
+         return false;
+      }
+
+      public bool TryGetValue(TKey key, out TValue value)
+      {
+         if (IndexLookup.TryGetValue(key, out int index))
+         {
+            value = Items[index].Value;
+            return true;
+         }
+         value = default;
+         return false;
+      }
+
+      public void Add(KeyValuePair<TKey, TValue> item)
+      {
+         this[item.Key] = item.Value;
+      }
+
+      public void Clear()
+      {
+         Items.Clear();
+         IndexLookup.Clear();
+      }
+
+      public bool Contains(KeyValuePair<TKey, TValue> item)
+      {
+         return IndexLookup.ContainsKey(item.Key) &&
+                Object.Equals(Items[IndexLookup[item.Key]], item);
+      }
+
+      public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
+      {
+         throw new NotImplementedException();
+      }
+
+      public bool Remove(KeyValuePair<TKey, TValue> item)
+      {
+         return Remove(item.Key);
+      }
+
+      public int Count => Items.Count;
+
+      public bool IsReadOnly { get; } = false;
+
+      void IDictionary<TKey, TValue>.Add(TKey key, TValue value)
+      {
+         this[key] = value;
+      }
+
+      public bool ContainsKey(TKey key) => IndexLookup.ContainsKey(key);
+
+      public int IndexOf(TKey key) => IndexLookup.TryGetValue(key, out int index) ? index : -1;
+
+      public List<TKey> Keys => new List<TKey>(IndexLookup.Keys);
+
+      ICollection<TValue> IDictionary<TKey, TValue>.Values => Values;
+
+      ICollection<TKey> IDictionary<TKey, TValue>.Keys => Keys;
+
+      public List<TValue> Values => new List<TValue>(Items.Select(x => x.Value)); // Don't return original list
+
+      public IEnumerable<KeyValuePair<TKey, TValue>> GetKeyValuePairs() => IndexLookup.Keys.Select(k => new KeyValuePair<TKey, TValue>(k, Items[IndexLookup[k]].Value));
+
+      IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator() => IndexLookup.Keys.Select(k => Items[IndexLookup[k]]).GetEnumerator();
+
+      public IEnumerator<TValue> GetEnumerator() => Items.Select(x => x.Value).GetEnumerator();
+
+      IEnumerator IEnumerable.GetEnumerator() => Items.GetEnumerator();
+   }

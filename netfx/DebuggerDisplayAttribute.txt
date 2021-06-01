@@ -1,0 +1,21 @@
+Preferred Pattern
+My personal preferred pattern for DebuggerDisplay attributes is to have the entire item be an expression: DebuggerDisplay.  I then add a private instance property to my type named DebuggerDisplay and do all of my custom formatting in this property.  Having the property be private is fine because nothing is private in the debugger.
+
+code
+
+Copy
+ [DebuggerDisplay("{DebuggerDisplay,nq}")]
+public sealed class Student {
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    private string DebuggerDisplay {
+        get { return string.Format("Student: {0} {1}", FirstName, LastName); }
+    }
+}
+The “,nq” suffix here just asks the expression evaluator to remove the quotes when displaying the final value (nq = no quotes). 
+
+I prefer this pattern because it’s only requires a single function to be evaluated, I can still have language specific expressions (which are nicely type checked by the compiler) and it doesn’t contribute to the public API of my type. 
+
+[1] Note the word “I”.  These are not any kind of official recommendations, just several I advocate to people using this feature.
+
+[2] In one performance critical scenario for Visual Studio 2010 over 95% of it was spent evaluating the function!

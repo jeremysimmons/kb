@@ -1,7 +1,7 @@
 <configuration>  
   <system.diagnostics>  
     <sources>  
-      <source name="System.Net" tracemode="includehex" maxdatasize="1024">  
+      <source name="System.Net" tracemode="includehex" maxdatasize="1024" tracemode="protocolonly|includehex">  
         <listeners>  
           <add name="System.Net"/>  
         </listeners>  

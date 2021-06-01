@@ -1,0 +1,9 @@
+git log --tags --simplify-by-decoration --pretty="format:%ai %d"
+git log --date-order --graph --tags --simplify-by-decoration --pretty=format:"%ai %h %d"
+
+https://stackoverflow.com/a/6900369/26877
+
+git tag -l --sort=-creatordate --format="%(creatordate:short):  %(refname:short)"
+
+https://stackoverflow.com/a/39096588/26877
+

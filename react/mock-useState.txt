@@ -1,0 +1,61 @@
+https://gist.github.com/natterstefan/b9748dfe75f8ca177e25e50b3f466e9f
+
+index.test.js
+
+// source: https://dev.to/ppciesiolkiewicz/comment/i708
+import React, { useState as useStateMock } from 'react'
+import { mount } from 'enzyme'
+
+// Header uses `useState`
+import { Header } from '..'
+
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useState: jest.fn(),
+}))
+
+describe('Header', () => {
+  const setState = jest.fn()
+
+  beforeEach(() => {
+    useStateMock.mockImplementation(init => [init, setState])
+  })
+
+  it('renders', () => {
+    const wrapper = mount(
+      <Header />
+    )
+    expect(setState).toHaveBeenCalledTimes(1)
+    expect(wrapper).toBeTruthy()
+  })
+})
+
+index.test.tsx
+
+// source: https://dev.to/ppciesiolkiewicz/comment/i708
+import React, { useState as useStateMock } from 'react'
+import { mount } from 'enzyme'
+
+// Header uses `useState`
+import { Header } from '..'
+
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useState: jest.fn(),
+}))
+
+describe('Header', () => {
+  const setState = jest.fn()
+
+  beforeEach(() => {
+    ;(useStateMock as jest.Mock).mockImplementation(init => [init, setState])
+  })
+
+  it('renders', () => {
+    const wrapper = mount(
+      <Header />
+    )
+    expect(setState).toHaveBeenCalledTimes(1)
+    expect(wrapper).toBeTruthy()
+  })
+})

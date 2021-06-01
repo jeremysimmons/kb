@@ -1,0 +1,4 @@
+select nm.ag_name
+from sys.dm_hadr_instance_node_map inm
+join sys.dm_hadr_name_id_map nm on nm.ag_resource_id = inm.ag_resource_id
+where instance_name = @@SERVERNAME

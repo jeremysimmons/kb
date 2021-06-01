@@ -14,4 +14,4 @@ SystemParametersInfo( SetDesktopWallpaper, 0, path, UpdateIniFile | SendWinIniCh
 }
 "@
 Add-Type -TypeDefinition $setwallpapersrc
-[wallpaper]::SetWallpaper("C:\work\motivation\hustle_full.jpg") 
+[wallpaper]::SetWallpaper("C:\Users\JSimmons\Pictures\wallpaper\1554280.jpg") 

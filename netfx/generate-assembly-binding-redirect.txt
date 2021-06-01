@@ -1,0 +1,11 @@
+Fortunately, the SDK can generate these for you automatically. This is even the new default for projects which target .NET Framework 4.7.2 or higher.
+
+If you want to opt into this behaviour, you can define the following MSBuild property in your project file, or in Directory.Build.props:
+
+<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+However, this only works for executable projects (Console Application, Windows Forms application, etc.). If you want this to work for other projects - for example, a Class Library that contains unit tests, you need to add one more MSBuild property:
+
+<GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+With those two flags set, then as long as your project directly references the newer version of a transitive dependency, your program will load the newest version, even when your dependencies are built against an older version.
+
+https://blog.yaakov.online/automatically-generating-assembly-binding-redirects/

@@ -1,0 +1,5 @@
+git push origin --delete tagname1 tagname2 tagnameN
+or
+git push origin :refs/tags/tagname
+
+https://devconnected.com/how-to-delete-local-and-remote-tags-on-git/

@@ -1,0 +1,22 @@
+az login
+az account set --subscription Development
+
+ent-dev-vms-rg azdevuservm8
+
+az vm get-instance-view --name azdevuservm8 --resource-group ent-dev-vms-rg --query instanceView.statuses[1] --output table
+
+az vm get-instance-view --name azdevuservm8 --resource-group ent-dev-vms-rg --query "instanceView.statuses[?starts_with(code, 'PowerState')].code" -o tsv
+
+tcping -n 1 172.16.8.254 3389
+
+az group delete --name MyResourceGroup --no-wait
+
+az vm start --name azdevuservm8 --resource-group ent-dev-vms-rg
+
+PowerState/deallocated
+PowerState/running
+
+azdevuservm8.rdp
+full address:s:172.16.8.11:3389
+prompt for credentials:i:1
+administrative session:i:1

@@ -1,0 +1,23 @@
+Testing SSL with your certificate using s_client
+
+Steps to test SSL:  create a cert/key pair then use c_client
+
+Export from Firefox/IE (**If there are key usages use Digital Signature  from RFC)
+or run certmgr.msc in Windows.
+The resulting pcks12 (.pfx, .p12) can be converted to PEM format
+
+openssl pkcs12 -in <.p12 filename> -out <new pem cert filename> -nodes
+
+export the private key from the pkcs12 with the -nocerts flag
+
+openssl pkcs12 -in <.p12 filename> -out <key pem key filename> -nodes -nocerts
+
+test with openssl s_client
+	
+openssl s_client -connect <host:port> -cert <cert.pem> -key <key.pem> [-CApath <dir with CA certs>]
+
+A successful connection will stay open (for a bit) waiting for input – if openssl s_client goes back to the prompt there was an error.
+
+Look for something like CONNECTED(00000003) and make sure that there are no errors immediately following.
+openssl can give an error, "sslv3 alert certificate unknown:s3_pkt.c:1256:SSL alert number 46" can come back for wrong key usage
+error:num=19:self signed certificate in certificate chain can be ok – it is just referring to the root cert

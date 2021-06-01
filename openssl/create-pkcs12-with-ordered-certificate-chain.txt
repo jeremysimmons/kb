@@ -1,0 +1,25 @@
+How to create a pkcs12 file with a ordered certificate chain?
+
+1.) Create a empty file (C:\temp\cert-chain.txt) put the following inside it:
+
+-----BEGIN CERTIFICATE-----
+(Your Primary SSL certificate from C:\temp\your_domain_name.crt)
+-----END CERTIFICATE-----
+-----BEGIN CERTIFICATE-----
+(Your Intermediate certificate from C:\temp\TheIntermediateCA.crt)
+-----END CERTIFICATE-----
+-----BEGIN CERTIFICATE-----
+(Your Root certificate part from C:\temp\TheTrustedRoot.crt)
+-----END CERTIFICATE-----
+
+2.) Now replace the content inside the brackets with your certificates (which you can export via XCA; PEM txt format). The order above is VERY important so do not mix it!
+
+2.) Export the private key (unencrypted in text format) with XCA from your certificate and store it inside  C:\temp\server.pemkey
+
+3.) Now merge everything together as pkcs12 (filename extension for PKCS #12 files is .p12 or .pfx). To do that open a CMD (run as admin) and perform:
+
+openssl pkcs12 -export -inkey C:\temp\server.pemkey -in C:\temp\cert-chain.txt -password pass:ABCD -out C:\temp\certificate(chain_and_key).pfx
+
+4.) Your PFX file is now ready to be used
+
+// https://www.admin-enclave.com/en/articles/windows/422-how-to-create-a-pkcs12-file-with-a-ordered-certificate-chain.html

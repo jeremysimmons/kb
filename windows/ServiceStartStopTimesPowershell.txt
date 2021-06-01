@@ -1,0 +1,5 @@
+Most Recent start time
+(Get-EventLog -LogName "System" -Source "Service Control Manager" -EntryType "Information" -Message "*Computer Browser service*running*" -Newest 1).TimeGenerated;
+
+List of Start Stop Times
+Get-EventLog -LogName "System" -Source "Service Control Manager" -EntryType "Information" -Message "*IDS Scheduler*" |? {$_.EventID -in (7036)} | ft TimeGenerated,EventId,Message -AutoSize –wrap
