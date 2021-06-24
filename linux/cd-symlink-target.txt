@@ -1,0 +1,6 @@
+change directory to the physical directory pointed to by a symlink
+cd -P <symlink_dirname>
+
+set -o physical
+
+https://unix.stackexchange.com/a/63581/40714

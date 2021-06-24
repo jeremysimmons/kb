@@ -1,0 +1,210 @@
+https://stackoverflow.com/a/27447416/26877
+
+Flatten a WSDL file
+
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Web.Services.Discovery;
+using System.Xml;
+
+namespace FlattenXml {
+
+   internal class Program {
+      private static XmlDocument m_MapDoc;
+      private static string m_DocPath;
+      private static XmlDocument m_FlattenDocument = new XmlDocument();
+      private static string m_ServiceUri;
+      private static Dictionary<string, XmlElement> m_Elements = new Dictionary<string, XmlElement>();
+
+      private static void Main(string[] args) {
+         if (args == null || args.Length == 0) {
+            Program.usage();
+         } else {
+            if (args != null && args.Length == 1 && (args[0] == "-h" || args[0] == "-?")) {
+               Program.usage();
+            } else {
+               if (args != null && args.Length == 2) {
+                  Program.m_DocPath = args[1];
+                  Program.m_ServiceUri = args[0];
+                  DiscoveryClientProtocol client = new DiscoveryClientProtocol();
+                  client.DiscoverAny(Program.m_ServiceUri);
+                  client.ResolveAll();
+                  Program.m_DocPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Program.m_DocPath);
+                  Directory.CreateDirectory(Program.m_DocPath);
+                  string mapFile = Path.Combine(Program.m_DocPath, "map.xml");
+                  client.WriteAll(Program.m_DocPath, mapFile);
+                  flattenDocuments(mapFile);
+               }
+            }
+         }
+      }
+
+      private static void usage() {
+         Console.WriteLine("Usage: flattenxml [Service Wsdl URL] [Output Folder]");
+         Console.WriteLine("Example: flattenxml http://localhost/Daenet.TrackingService/TrackingService.svc Out");
+      }
+
+      private static void flattenDocuments(string mapFile) {
+         string rootDocumentName = Program.getRootDocumentFile(mapFile);
+         Program.m_FlattenDocument = Program.flattenDocument(Path.Combine(Program.m_DocPath, rootDocumentName));
+         Program.m_FlattenDocument.Save("FlattenDocument.wsdl");
+      }
+
+      private static string getRootDocumentFile(string mapFile) {
+         XmlDocument mapDoc = new XmlDocument();
+         mapDoc.Load(mapFile);
+         Program.m_MapDoc = mapDoc;
+         foreach (XmlElement el in mapDoc.DocumentElement.FirstChild.OfType<XmlElement>()) {
+            if (el.Attributes["url"].Value == Program.m_ServiceUri || el.Attributes["url"].Value == Program.m_ServiceUri + "?wsdl") {
+               return el.Attributes["filename"].Value;
+            }
+         }
+         throw new ApplicationException("Root document annot be determined.");
+      }
+
+      private static XmlDocument flattenDocument(string rootDocumentName) {
+         XmlDocument unflattenDoc = new XmlDocument();
+         unflattenDoc.Load(rootDocumentName);
+         return Program.importElements(unflattenDoc.DocumentElement);
+      }
+
+      private static XmlDocument importElements(XmlElement schemaEl) {
+         XmlElement root = schemaEl.OwnerDocument.CreateElement("a");
+         Program.importElement(root, schemaEl);
+         XmlDocument flattenDoc = new XmlDocument();
+         flattenDoc.LoadXml(root.FirstChild.OuterXml);
+         return flattenDoc;
+      }
+
+      private static void importExternalElement(XmlElement typeParentEl, XmlElement typeEl) {
+         if (typeEl.LocalName.ToLower() == "import" || typeEl.LocalName.ToLower() == "include") {
+            string importingDocName = Program.getImportingDocName(typeEl);
+            if (importingDocName != null && !Program.m_Elements.ContainsKey(importingDocName)) {
+               Program.addComment(typeParentEl, typeEl);
+               XmlDocument unflattenDoc = new XmlDocument();
+               unflattenDoc.Load(Path.Combine(Program.m_DocPath, importingDocName));
+               Program.m_Elements.Add(importingDocName, null);
+               XmlElement importedEl = typeParentEl.OwnerDocument.CreateElement("a");
+               Program.importElement(importedEl, unflattenDoc.DocumentElement);
+
+               // B: for WSDL, inner "definitions" and "policy" elements should be skipped. For all other cases (i.e. XSD) everything should be included
+               if (typeParentEl.LocalName.ToLower() == "definitions" && typeParentEl.LocalName == importedEl.FirstChild.LocalName) {
+                  Program.mergeNamespaces(typeParentEl, importedEl.FirstChild as XmlElement);
+                  foreach (XmlElement cEl in importedEl.FirstChild.ChildNodes.OfType<XmlElement>()) {
+                     // B: skip policy definitions from internal WSDLs
+                     if (cEl.LocalName.ToLower() == "policy") {
+                        continue;
+                     }
+                     XmlElement cEl2 = cEl.OwnerDocument.CreateElement("a");
+                     cEl2.InnerXml = cEl.OuterXml;
+                     typeParentEl.InsertBefore(cEl2.FirstChild, typeEl);
+                  }
+               } else {
+                  typeParentEl.InsertBefore(importedEl.FirstChild, typeEl);
+               }
+               Program.m_Elements[importingDocName] = importedEl;
+            }
+            typeParentEl.RemoveChild(typeEl);
+            return;
+         }
+         throw new ArgumentException();
+      }
+
+      private static XmlElement importElement(XmlElement typeParentEl, XmlElement typeEl) {
+         XmlElement resultingElement;
+         if (typeEl.ChildNodes.Count > 0) {
+            XmlElement newEl = typeParentEl.OwnerDocument.CreateElement("a");
+            newEl.InnerXml = typeEl.OuterXml;
+            if (typeEl.ChildNodes.OfType<XmlElement>().Count<XmlElement>() > 0) {
+               newEl.FirstChild.InnerXml = "";
+               foreach (XmlElement child in typeEl.ChildNodes.OfType<XmlElement>()) {
+                  if (child.LocalName.ToLower() == "import" || child.LocalName.ToLower() == "include") {
+                     XmlElement impEl = newEl.OwnerDocument.CreateElement("a");
+                     impEl.InnerXml = child.OuterXml;
+                     XmlElement x = newEl.FirstChild.AppendChild(impEl.FirstChild) as XmlElement;
+                     Program.importExternalElement(newEl.FirstChild as XmlElement, x);
+                  } else {
+                     Program.importElement(newEl.FirstChild as XmlElement, child);
+                  }
+               }
+            }
+            resultingElement = Program.appendElement(typeParentEl, newEl.FirstChild);
+         } else {
+            if (typeParentEl.ChildNodes.OfType<XmlElement>().Count((XmlElement e) => e.LocalName == typeEl.LocalName) >= 1) {
+            }
+            resultingElement = Program.appendElement(typeParentEl, typeEl);
+         }
+         return resultingElement;
+      }
+
+      private static XmlElement appendElement(XmlElement parentEl, XmlNode childNode) {
+         XmlElement newEl = parentEl.OwnerDocument.CreateElement("a");
+         newEl.InnerXml = childNode.OuterXml;
+         return parentEl.AppendChild(newEl.FirstChild) as XmlElement;
+      }
+
+      private static XmlDocument loadUnflattenDocument(string importingDoc) {
+         XmlDocument unflattenDoc = new XmlDocument();
+         unflattenDoc.Load(Path.Combine(Program.m_DocPath, importingDoc));
+         XmlDocument flattenDoc = new XmlDocument();
+         return unflattenDoc;
+      }
+
+      private static XmlDocument loadDocumentFromImportNode(XmlElement importEl) {
+         string importingDoc = Program.getImportingDocName(importEl);
+         XmlDocument unflattenDoc = new XmlDocument();
+         unflattenDoc.Load(Path.Combine(Program.m_DocPath, importingDoc));
+         return unflattenDoc;
+      }
+
+      private static string getImportingDocName(XmlElement importEl) {
+         return Program.getImportingDocName(Program.getImportingDocReference(importEl));
+      }
+
+      private static string getImportingDocReference(XmlElement importEl) {
+         if (importEl.LocalName.ToLower() == "import" || importEl.LocalName.ToLower() == "include") {
+            if (importEl.Attributes["location"] != null) {
+               return importEl.Attributes["location"].Value;
+            } else if (importEl.Attributes["schemaLocation"] != null) {
+               return importEl.Attributes["schemaLocation"].Value;
+            }
+         }
+         Console.WriteLine("Invalid node, ignored:");
+         Console.WriteLine(importEl.OuterXml);
+         return null;
+      }
+
+      private static string getImportingDocName(string docReference) {
+         if (docReference == null) return null;
+
+         // NOTE: [B] the following fix required .NET 4.5, because before .NET 4.5. the URLs were not URLEncoded, which was wrong. The extra check below allows it run with .NET 3.5 or later
+         var docReferenceRaw = Uri.UnescapeDataString(docReference);
+         XmlElement refEl = Program.m_MapDoc.DocumentElement.FirstChild.ChildNodes.OfType<XmlElement>().FirstOrDefault((XmlElement el) => el.Attributes["url"].Value == docReference || el.Attributes["url"].Value == docReferenceRaw);
+         if (refEl != null) {
+            return refEl.Attributes["filename"].Value;
+         }
+         throw new ApplicationException("Mapping error");
+      }
+
+      private static void addComment(XmlElement parentEl, XmlElement importEl) {
+         var location = Program.getImportingDocReference(importEl);
+         var path = location == null ? "" : new Uri(Program.getImportingDocReference(importEl)).PathAndQuery;
+         XmlComment commentEl = parentEl.OwnerDocument.CreateComment("Begin \"" + path + "\"");
+         parentEl.InsertBefore(commentEl, importEl);
+         XmlComment commentEl2 = parentEl.OwnerDocument.CreateComment("End \"" + path + "\"");
+         parentEl.InsertAfter(commentEl2, importEl);
+      }
+
+      private static void mergeNamespaces(XmlElement el1, XmlElement el2) {
+         foreach (XmlAttribute attr in new List<XmlAttribute>(el2.Attributes.OfType<XmlAttribute>())) {
+            if (el1.Attributes.OfType<XmlAttribute>().Count((XmlAttribute e) => e.Name == attr.Name) == 0) {
+               el1.Attributes.Append(attr);
+            }
+         }
+      }
+
+   }
+}

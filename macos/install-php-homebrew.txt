@@ -1,0 +1,17 @@
+https://medium.com/@romaninsh/install-php-7-2-xdebug-on-macos-high-sierra-with-homebrew-july-2018-d7968fe7e8b8
+
+# Will show you any php packages you've got. make not of that!
+brew list | grep php
+# Will uninstall any php packages you may have
+brew list | grep php | while read x; do brew uninstall --force $x; done
+# You may need to run this too
+rm -rf /usr/local/Cellar/php
+# Clean up Launch Agents
+rm ~/Library/LaunchAgents/homebrew.mxcl.php*
+sudo rm /Library/LaunchDaemons/homebrew.mxcl.php*
+brew untap homebrew/php
+brew cleanup
+brew update
+brew doctor # just to make sure you're all clean
+ps ax | grep php
+# if some PHP daemons are still runing, reboot.

@@ -1,0 +1,10 @@
+libxml2-utils
+
+This utility comes with libxml2-utils:
+
+echo '<root><foo a="b">lorem</foo><bar value="ipsum" /></root>' |
+    xmllint --format -
+
+xmllint --format - < GetAllRentalRates.xml > GetAllRentalRatesFormat.xml
+
+https://stackoverflow.com/questions/16090869/how-to-pretty-print-xml-from-the-command-line

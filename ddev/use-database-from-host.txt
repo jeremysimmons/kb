@@ -1,0 +1,6 @@
+https://ddev.readthedocs.io/en/stable/users/developer-tools/#database-connections-from-the-host
+
+ddev describe to retrieve the database connection information
+
+To connect to mysql from your host machine, use port 32838 on 127.0.0.1
+For example: mysql --host 127.0.0.1 --port 32838

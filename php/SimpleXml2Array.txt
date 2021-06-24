@@ -1,0 +1,13 @@
+function SimpleXML2Array($xml){
+    $array = (array)$xml;
+
+    //recursive Parser
+    foreach ($array as $key => $value){
+        if(strpos(get_class($value),"SimpleXML")!==false){
+            $array[$key] = SimpleXML2Array($value);
+        }
+    }
+
+    return $array;
+}
+https://stackoverflow.com/a/20659892/26877

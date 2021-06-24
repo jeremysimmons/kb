@@ -1,0 +1,15 @@
+How to compress a whole directory in Linux or Unix
+You need to use the tar command as follows (syntax of tar command):
+
+tar -zcvf archive-name.tar.gz directory-name
+
+Where,
+
+-z : Compress archive using gzip program in Linux or Unix
+-c : Create archive on Linux
+-v : Verbose i.e display progress while creating archive
+-f : Archive File name
+
+https://www.cyberciti.biz/faq/how-do-i-compress-a-whole-linux-or-unix-directory/3
+
+tar -xvf archive.tar.gz

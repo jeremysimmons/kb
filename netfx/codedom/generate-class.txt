@@ -1,0 +1,141 @@
+https://web.archive.org/web/20080721074527/https://www.dotnetspider.com/resources/565-Generating-C-Class-File-Sample-cs-Dynamically-us.aspx
+
+Introduction
+--------------------------
+I worte this artcle beacuse , while doing my project ,I needed to create a Class files(for example Java Bean file) dyanmically with get & set methods.
+
+Microsoft .NET Framework provides a very useful namespace that is named CodeDOM (from code document object model) to automatically generate source code for various languages.
+
+The .NET Framework also provides the Microsoft.CSharp namespace. The Microsoft.CSharp namespace provides C# language-specific code provider.
+--------------------------
+Steps to Create a Class in C# ( Sample.cs file)
+--------------------------
+1)Use Strem & StreamWriter Classes to Create a Sample.cs file in Specific location
+Stream codeFile = File.Open("c:\\sample.cs", FileMode.Create);
+StreamWriter sw = new StreamWriter(codeFile);
+
+2)To Genarate Code in C# , we have to use CSharpCodeProvider Class.
+ICodeGenerator interface is used to generate code in a particular language dynamically.
+CodeGeneratorOptions class is used to set configuration properties for structuring the code
+
+CSharpCodeProvider cscp = new CSharpCodeProvider();
+ICodeGenerator codeGenerator = cscp.CreateGenerator(sw);
+CodeGeneratorOptions cgo = new CodeGeneratorOptions();
+
+3) To Genarate Namespace declaration Use CodeSnippetCompileUnit
+CodeSnippetCompileUnit cscu = new CodeSnippetCompileUnit("using System");
+codeGenerator.GenerateCodeFromCompileUnit(cscu, sw, cop);
+
+4)To generate a namespace for the Class, use the CodeNamespace class
+CodeNamespace cnsCodeDom = new CodeNamespace("SampleNamespace");
+
+5) To Create a Class use CodeTypeDeclaration, Here We can set access specifer and etc properties
+CodeTypeDeclaration clsDecl = new CodeTypeDeclaration();
+clsDecl.Name = "Sample";
+clsDec.IsClass = true;
+clsDecl.TypeAttributes = TypeAttributes.Public;
+cnsCodeNamespace.Types.Add(clsDecl);
+
+6) To Create a constructor use CodeConstructor
+
+CodeConstructor clsConstructor = new CodeConstructor();
+clsConstructor.Attributes = MemberAttributes.Public;
+clsDecl.Members.Add(CodeConstructor);
+
+7) To add member to a class use CodeMemberField
+
+CodeMemberField clsMember = new CodeMemberField();
+clsMember.Name = "myname";
+clsMember.Attributes = MemberAttributes.Private;
+clsMember.Type = new CodeTypeReference("System.String");
+clsDecl.Members.Add(clsMember);
+
+8)To Add Get & Set Property to above Member filed use CodeMemberProperty,
+
+CodeMemberProperty property = new CodeMemberProperty();
+property.Name = "MyName";
+property.Type = new CodeTypeReference("System.String");
+property.Attributes = MemberAttributes.Public;
+property.GetStatements.Add( new CodeMethodReturnStatement( new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), "this.myname") ) );
+property.SetStatements.Add( new CodeAssignStatement( new CodeFieldReferenceExpression(new CodeThisReferenceExpression(),"this.myname"), new CodePropertySetValueReferenceExpression()));
+
+clsDecl.Members.Add(property);
+
+codeGenerator.GenerateCodeFromNamespace(cnsCodeNamespace,sw,cgo);
+
+
+9) finally close the file stream objects
+
+--------------------------
+Complete Code
+--------------------------
+void createClassFile()
+{
+Stream codeFile = File.Open("c:\\sample.cs", FileMode.Create);
+StreamWriter sw = new StreamWriter(codeFile);
+CSharpCodeProvider cscp = new CSharpCodeProvider();
+ICodeGenerator codeGenerator = cscp.CreateGenerator(sw);
+CodeGeneratorOptions cgo = new CodeGeneratorOptions();
+CodeSnippetCompileUnit cscu = new CodeSnippetCompileUnit("using System");
+codeGenerator.GenerateCodeFromCompileUnit(cscu, sw, cop);
+CodeNamespace cnsCodeDom = new CodeNamespace("SampleNamespace");
+CodeTypeDeclaration clsDecl = new CodeTypeDeclaration();
+clsDecl.Name = "Sample";
+clsDec.IsClass = true;
+clsDecl.TypeAttributes = TypeAttributes.Public;
+cnsCodeNamespace.Types.Add(clsDecl);
+CodeConstructor clsConstructor = new CodeConstructor();
+clsConstructor.Attributes = MemberAttributes.Public;
+clsDecl.Members.Add(CodeConstructor);
+CodeMemberField clsMember = new CodeMemberField();
+clsMember.Name = "myname";
+clsMember.Attributes = MemberAttributes.Private;
+clsMember.Type = new CodeTypeReference("System.String");
+clsDecl.Members.Add(clsMember);
+CodeMemberProperty property = new CodeMemberProperty();
+property.Name = "MyName";
+property.Type = new CodeTypeReference("System.String");
+property.Attributes = MemberAttributes.Public;
+property.GetStatements.Add( new CodeMethodReturnStatement( new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), "this.myname") ) );
+property.SetStatements.Add( new CodeAssignStatement( new CodeFieldReferenceExpression(new CodeThisReferenceExpression(),"this.myname"), new CodePropertySetValueReferenceExpression()));
+
+clsDecl.Members.Add(property);
+
+codeGenerator.GenerateCodeFromNamespace(cnsCodeNamespace,sw,cgo);
+
+sw.Close();
+codeFile.Close();
+
+}
+
+Just Copy this code in to a Console Or windows application and call this method,it will be worked without any changes , but just we need to add Above namespace
+
+Output
+
+Sample.cs file is created in C drive, that has following code
+
+using System;
+namespace SampleNamespace
+{
+public class Sample
+{
+System.String myname;
+public Sample()
+{
+}
+public System.String MyName
+{
+get{
+return this.myname;
+}
+
+set
+{
+this.myname = value;
+}
+
+}
+
+
+}
+}

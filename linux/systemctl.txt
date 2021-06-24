@@ -1,0 +1,12 @@
+# systemctl --type=service
+
+# systemctl --type=service --state=active
+
+# systemctl --type=service --state=running
+
+alias running_services='systemctl list-units  --type=service  --state=running'
+
+
+# netstat -ltup
+
+# ss -ltup

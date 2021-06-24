@@ -1,0 +1,42 @@
+SELECT concat('DROP TABLE IF EXISTS `', table_name, '`;')
+FROM information_schema.tables
+WHERE table_schema = 'MyDatabaseName';
+
+SET FOREIGN_KEY_CHECKS = 0;
+drop table if exists customers;
+SET FOREIGN_KEY_CHECKS = 1;
+
+localhost/information_schema/tables/		https://mysqleditor-jasehamstad.temp312.kinsta.cloud/db_sql.php?db=jasehamstad
+ Showing rows 0 - 24 (25 total, Query took 0.0005 seconds.)
+
+SELECT concat('DROP TABLE IF EXISTS `', table_name, '`;')
+FROM information_schema.tables
+WHERE table_schema = 'jasehamstad'
+
+
+concat('DROP TABLE IF EXISTS `', table_name, '`;')	
+DROP TABLE IF EXISTS `wp_terms`;	
+DROP TABLE IF EXISTS `wp_wpforms_entry_fields`;	
+DROP TABLE IF EXISTS `wp_actionscheduler_logs`;	
+DROP TABLE IF EXISTS `wp_users`;	
+DROP TABLE IF EXISTS `wp_yoast_primary_term`;	
+DROP TABLE IF EXISTS `wp_postmeta`;	
+DROP TABLE IF EXISTS `wp_yoast_migrations`;	
+DROP TABLE IF EXISTS `wp_yoast_indexable`;	
+DROP TABLE IF EXISTS `wp_wpforms_tasks_meta`;	
+DROP TABLE IF EXISTS `wp_term_relationships`;	
+DROP TABLE IF EXISTS `wp_usermeta`;	
+DROP TABLE IF EXISTS `wp_yoast_indexable_hierarchy...	
+DROP TABLE IF EXISTS `wp_comments`;	
+DROP TABLE IF EXISTS `wp_posts`;	
+DROP TABLE IF EXISTS `wp_links`;	
+DROP TABLE IF EXISTS `wp_wpforms_entries`;	
+DROP TABLE IF EXISTS `wp_commentmeta`;	
+DROP TABLE IF EXISTS `wp_options`;	
+DROP TABLE IF EXISTS `wp_actionscheduler_claims`;	
+DROP TABLE IF EXISTS `wp_termmeta`;	
+DROP TABLE IF EXISTS `wp_actionscheduler_groups`;	
+DROP TABLE IF EXISTS `wp_actionscheduler_actions`;	
+DROP TABLE IF EXISTS `wp_term_taxonomy`;	
+DROP TABLE IF EXISTS `wp_yoast_seo_links`;	
+DROP TABLE IF EXISTS `wp_wpforms_entry_meta`;	

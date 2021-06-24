@@ -1,0 +1,26 @@
+If you have brew installed with multiple PHP versions i.e. 7.1, 7.2 and 7.3 on Mac OS X mojave, you can to do the following:
+
+Install autoconf with brew brew install autoconf.
+
+Change to the PHP version that you want Xdebug on, run brew unlink php@7.1 && brew link --force --overwrite php. This will switch from PHP 7.1 to PHP 7.3.
+
+Download the latest Xdebug source from xdebug website.
+
+Extract the Xdebug tar and navigate to extracted directory, where you'd see all the files.
+
+Run phpize to configure the build for the new Zend engine.
+
+Run ./configure.
+
+Run make.
+
+Xdebug extension xdebug.so gets compiled in modules directory.
+
+Create a new directory path under /usr/local/lib/php/7.3.1/extensions/ and copy xdebug.so to this location. Here, 7.3.1 is the current version that I switched earlier, change this to match your PHP version.
+
+Open php.ini in an editor and enter
+zend_extension="/usr/local/lib/php/7.3.1/extensions/xdebug.so" then save the change.
+
+Run php -v and it will show Xdebug has been configured correctly
+
+https://dev.to/asrar7787/mac-os-x-install-xdebug-with-multiple-php-versions-4377

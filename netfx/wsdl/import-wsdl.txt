@@ -1,0 +1,84 @@
+https://erionpc.wordpress.com/2011/02/08/web-service-communicator/
+
+reading wsdl into .net framework model
+
+System.Web.Services.Description Namespace
+
+ServiceDescriptionImporter
+https://docs.microsoft.com/en-us/dotnet/api/system.web.services.description.servicedescriptionimporter?view=netframework-4.8
+
+
+ServiceDescription
+CodeGenerationOptions.GenerateProperties
+
+```
+private Assembly BuildAssemblyFromWSDL(Uri webServiceUri)
+{
+    if (String.IsNullOrEmpty(webServiceUri.ToString()))
+        throw new Exception("Web Service Not Found");
+
+    XmlTextReader xmlreader = new XmlTextReader(webServiceUri.ToString() + "?wsdl");
+
+    ServiceDescriptionImporter descriptionImporter = BuildServiceDescriptionImporter(xmlreader);
+
+    return CompileAssembly(descriptionImporter);
+}
+
+private ServiceDescriptionImporter BuildServiceDescriptionImporter( XmlTextReader xmlreader )
+{
+    // make sure xml describes a valid wsdl
+    if (!ServiceDescription.CanRead(xmlreader))
+        throw new Exception("Invalid Web Service Description");
+
+    // parse wsdl
+    ServiceDescription serviceDescription = ServiceDescription.Read(xmlreader);
+
+    // build an importer, that assumes the SOAP protocol, client binding, and generates properties
+    ServiceDescriptionImporter descriptionImporter = new ServiceDescriptionImporter();
+    descriptionImporter.ProtocolName = "Soap";
+    descriptionImporter.AddServiceDescription(serviceDescription, null, null);
+    descriptionImporter.Style = ServiceDescriptionImportStyle.Client;
+    descriptionImporter.CodeGenerationOptions = System.Xml.Serialization.CodeGenerationOptions.GenerateProperties;
+
+    return descriptionImporter;
+}
+
+private Assembly CompileAssembly(ServiceDescriptionImporter descriptionImporter)
+{
+    // a namespace and compile unit are needed by importer
+    CodeNamespace codeNamespace = new CodeNamespace();
+    CodeCompileUnit codeUnit = new CodeCompileUnit();
+
+    codeUnit.Namespaces.Add(codeNamespace);
+
+    ServiceDescriptionImportWarnings importWarnings = descriptionImporter.Import(codeNamespace, codeUnit);
+
+    if (importWarnings == 0) // no warnings
+    {
+        // create a c# compiler
+        CodeDomProvider compiler = CodeDomProvider.CreateProvider("CSharp");
+
+        // include the assembly references needed to compile
+        string[] references = { "System.Web.Services.dll", "System.Xml.dll" };
+
+        CompilerParameters parameters = new CompilerParameters(references);
+
+        // compile into assembly
+        CompilerResults results = compiler.CompileAssemblyFromDom(parameters, codeUnit);
+
+        foreach (CompilerError oops in results.Errors)
+        {
+            // trap these errors and make them available to exception object
+            throw new Exception("Compilation Error Creating Assembly!!\r\n" + oops.ErrorText);
+        }
+
+        // all done....
+        return results.CompiledAssembly;
+    }
+    else
+    {
+        // warnings issued from importers, something wrong with WSDL
+        throw new Exception("Invalid WSDL");
+    }
+}
+```
