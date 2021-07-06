@@ -1,0 +1,4 @@
+https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/betweenoperator
+Between
+Table1 | where Num1 between (1 .. 10)
+Table1 | where Time between (datetime(2017-01-01) .. datetime(2017-01-01))

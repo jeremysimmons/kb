@@ -1,0 +1,21 @@
+CREATE TABLE dbo.SomeOtherTable(TheIdThere INT NOT NULL CONSTRAINT PK_SomeOtherTable PRIMARY KEY)
+GO
+CREATE TABLE dbo.TestTable
+(
+ --define the primary key
+ ID INT IDENTITY NOT NULL CONSTRAINT PK_TestTable PRIMARY KEY
+
+ --let the string be unique (results in a unique index implicitly)
+,SomeUniqueString VARCHAR(100) NOT NULL CONSTRAINT UQ_TestTable_SomeUniqueString UNIQUE
+
+ --define two constraints, one for a default value and one for a value check
+,SomeNumber INT NULL CONSTRAINT DF_TestTable_SomeNumber DEFAULT (0)
+                     CONSTRAINT CK_TestTable_SomeNumber_gt100 CHECK(SomeNumber>100)
+
+ --add a foreign key constraint
+,SomeFK INT NOT NULL CONSTRAINT FK_TestTable_SomeFK FOREIGN KEY REFERENCES dbo.SomeOtherTable(TheIdThere)
+
+ --add a constraint for two columns separately
+,CONSTRAINT UQ_TestTable_StringAndNumber UNIQUE(SomeFK,SomeNumber)
+);
+GO

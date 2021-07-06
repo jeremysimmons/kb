@@ -1,0 +1,3 @@
+union * 
+| extend localTimestamp = timestamp - 7h
+| order by localTimestamp desc 

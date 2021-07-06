@@ -1,0 +1,7 @@
+The general advise is:
+No constraint without a name!
+Use some naming convention e.g.
+DF_TableName_ColumnName for a default constraint
+CK_TableName_ColumnName for a check constraint
+UQ_TableName_ColumnName for a unique constraint
+PK_TableName for a primary key constraint
