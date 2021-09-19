@@ -1,0 +1,34 @@
+https://wordpress.stackexchange.com/questions/96370/pass-php-variable-to-javascript
+function wpse_96370_scripts()
+{
+    if ( is_single() ) {
+
+        wp_register_script(
+           'your_script_handle',
+           get_template_directory_uri() . '/js/your-script.js',
+           array( /* dependencies*/ ),
+           1.0,
+           true
+       );
+
+       wp_enqueue_script( 'your-script-handle' );
+
+       $script_params = array(
+           /* examples */
+           'post' => 99,
+           'users' => array( 1, 20, 2049 )
+       );
+
+       wp_localize_script( 'your-script-handle', 'scriptParams', $script_params );
+
+    }
+}
+add_action( 'wp_enqueue_scripts', 'wpse_96370_scripts' );
+
+var posts = scriptParams.post,
+    secondUser = scriptParams.users[1]; /* index starts at 0 */
+
+// iterate over users
+for ( var i = 0; i < scriptParams.users.length; i++ ) {
+    alert( scriptParams.users[i] );
+}
