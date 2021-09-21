@@ -1,5 +1,6 @@
 az login
 az account set --subscription Development
+az account set --subscription Production
 
 ent-dev-vms-rg azdevuservm8
 

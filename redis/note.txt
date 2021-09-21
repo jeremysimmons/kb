@@ -1,0 +1,2 @@
+https://github.com/StackExchange/StackExchange.Redis/issues/1120#issuecomment-857322625
+RedisConnectionException: No connection is available to service this operation

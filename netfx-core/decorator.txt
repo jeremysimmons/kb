@@ -44,3 +44,24 @@ public class HealthCheckCacher : IHealthCheck
         }
     }
 }
+
+Decoration
+var collection = new ServiceCollection();
+
+// First, add our service to the collection.
+collection.AddSingleton<IDecoratedService, Decorated>();
+
+// Then, decorate Decorated with the Decorator type.
+collection.Decorate<IDecoratedService, Decorator>();
+
+// Finally, decorate Decorator with the OtherDecorator type.
+// As you can see, OtherDecorator requires a separate service, IService. We can get that from the provider argument.
+collection.Decorate<IDecoratedService>((inner, provider) => new OtherDecorator(inner, provider.GetRequiredService<IService>()));
+
+var serviceProvider = collection.BuildServiceProvider();
+
+// When we resolve the IDecoratedService service, we'll get the following structure:
+// OtherDecorator -> Decorator -> Decorated
+var instance = serviceProvider.GetRequiredService<IDecoratedService>();
+
+https://github.com/khellang/Scrutor

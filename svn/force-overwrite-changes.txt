@@ -1,0 +1,2 @@
+svn revert -R <path> // discard all your changes inside path (recursive)
+svn update           // get latest revision of all files (recursive)

@@ -1,0 +1,2 @@
+https://channel9.msdn.com/posts/TPL-Dataflow-Tour 
+https://channel9.msdn.com/Shows/Going+Deep/Stephen-Toub-Inside-TPL-Dataflow 

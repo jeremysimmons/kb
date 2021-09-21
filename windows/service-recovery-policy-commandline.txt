@@ -1,0 +1,5 @@
+:: clear the actions "Take No Action"
+sc failure aspnet_state reset= 86400 actions= //////
+
+:: restart the service after 1 minute
+sc failure aspnet_state reset= 86400 actions= restart/86400/restart/86400

@@ -1,0 +1,21 @@
+https://mihai-albert.com/2020/10/01/get-the-list-of-all-azure-vms-with-all-their-private-and-public-ips/#get-the-list-of-all-azure-vms
+
+Resources
+    | where type =~ 'microsoft.compute/virtualmachines'
+    | project id, vmId = tolower(tostring(id)), vmName = name
+    | join (Resources
+        | where type =~ 'microsoft.network/networkinterfaces'
+        | mv-expand ipconfig=properties.ipConfigurations
+        | project vmId = tolower(tostring(properties.virtualMachine.id)), privateIp = ipconfig.properties.privateIPAddress, publicIpId = tostring(ipconfig.properties.publicIPAddress.id)
+        | join kind=leftouter (Resources
+            | where type =~ 'microsoft.network/publicipaddresses'
+            | project publicIpId = id, publicIp = properties.ipAddress
+        ) on publicIpId
+        | project-away publicIpId, publicIpId1
+        | summarize privateIps = make_list(privateIp), publicIps = make_list(publicIp) by vmId
+    ) on vmId
+    | project-away vmId, vmId1
+    | sort by vmName asc
+
+run query in azure resource graph explorer
+https://portal.azure.com/?feature.customportal=false#blade/HubsExtension/ArgQueryBlade/query/Resources%0A%20%20%20%20%7C%20where%20type%20%3D~%20%27microsoft.compute%2Fvirtualmachines%27%0A%20%20%20%20%7C%20project%20id%2C%20vmId%20%3D%20tolower%28tostring%28id%29%29%2C%20vmName%20%3D%20name%0A%20%20%20%20%7C%20join%20%28Resources%0A%20%20%20%20%20%20%20%20%7C%20where%20type%20%3D~%20%27microsoft.network%2Fnetworkinterfaces%27%0A%20%20%20%20%20%20%20%20%7C%20mv-expand%20ipconfig%3Dproperties.ipConfigurations%0A%20%20%20%20%20%20%20%20%7C%20project%20vmId%20%3D%20tolower%28tostring%28properties.virtualMachine.id%29%29%2C%20privateIp%20%3D%20ipconfig.properties.privateIPAddress%2C%20publicIpId%20%3D%20tostring%28ipconfig.properties.publicIPAddress.id%29%0A%20%20%20%20%20%20%20%20%7C%20join%20kind%3Dleftouter%20%28Resources%0A%20%20%20%20%20%20%20%20%20%20%20%20%7C%20where%20type%20%3D~%20%27microsoft.network%2Fpublicipaddresses%27%0A%20%20%20%20%20%20%20%20%20%20%20%20%7C%20project%20publicIpId%20%3D%20id%2C%20publicIp%20%3D%20properties.ipAddress%0A%20%20%20%20%20%20%20%20%29%20on%20publicIpId%0A%20%20%20%20%20%20%20%20%7C%20project-away%20publicIpId%2C%20publicIpId1%0A%20%20%20%20%20%20%20%20%7C%20summarize%20privateIps%20%3D%20make_list%28privateIp%29%2C%20publicIps%20%3D%20make_list%28publicIp%29%20by%20vmId%0A%20%20%20%20%29%20on%20vmId%0A%20%20%20%20%7C%20project-away%20vmId%2C%20vmId1%0A%20%20%20%20%7C%20sort%20by%20vmName%20asc

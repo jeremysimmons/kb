@@ -1,0 +1,3 @@
+If your App Service Plan is Linux change you need to set TZ variable in Application settings with your time zone in format like America/Sao_Paulo
+
+You are setting wrong variable. You need to set WEBSITE_TIME_ZONE variable in Application settings.

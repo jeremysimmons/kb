@@ -1,0 +1,16 @@
+git cherry -v 
+As indicated at Git: See all unpushed commits or commits that are not in another branch.
+
+https://stackoverflow.com/questions/20433867/git-ahead-behind-info-between-master-and-branch/27940027
+
+For local branches: git rev-list --left-right --count master...test-branch
+
+For remote branches: git rev-list --left-right --count origin/master...origin/test-branch
+
+This gives output like the following:
+
+2       1
+
+git rev-list --left-right --count master...develop
+
+git rev-list --left-right --pretty=oneline master...develop

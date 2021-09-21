@@ -1,0 +1,1 @@
+Get-AzureRmResource -ExpandProperties -ResourceType "microsoft.insights/components"  | select -ExpandProperty Properties  | Select Name, InstrumentationKey

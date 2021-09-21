@@ -1,0 +1,30 @@
+The purpose of this blog is to give a general overview of the available commands to troubleshoot network connectivity issues with web apps, specifically when connecting the web apps to VNETs either in an App Service Environment (ASE) or a standard web app with a Point-to-Site VPN connection. These commands can be used via the web app’s Console available in the Azure Portal or the Kudu console.
+
+I assume the following in this blog:
+1. You are familiar with the terms and use cases of ping, DNS, VNETs, and nslookup.
+2. You are familiar with Kudu or the Console blade in the Azure portal.
+
+Tcpping.exe : This command is similar to ping or psping where you can test if a web app can reach an endpoint via a hostname or IP address or port. If a web app cannot reach an endpoint via hostname it’s always a good idea to test the IP address that corresponds to the hostname in case, there is an issue with the DNS lookup. Tcpping will always default to port 80 unless another port is specified, ie “<hostname or IP address>:port”. For more information about the command and additional switches, type tcpping in the console. Note that the -t and -n switches are best used in Kudu.
+thumbnail image 1 of blog post titled 
+	
+Networking Related Commands for Azure App Services
+
+Examples:
+tcpping google.com
+tcpping google.com:80
+tcpping 10.0.0.5:443
+tcpping google.com:443 -t
+
+Nameresolver.exe : This command is similar to nslookup where it will do a DNS lookup against the DNS server that is configured for the web app. By default, a standard app service will use Azure DNS. If the app services is configured with VNET integration, this includes both ASE types as well, it will use your custom DNS servers configured for the VNET. To specify a different DNS server to complete the lookup on, add the IP address of the server after the hostname separated by a space, ie “hostname <DNS Server IP>”.
+thumbnail image 2 of blog post titled 
+						
+Networking Related Commands for Azure App Services
+
+Examples:
+nameresolver google.com
+nameresolver google.com 8.8.8.8
+
+SET WEBSITE_DNS_ : This command will output the current DNS server that is being used by the web app. If the error Environment variable WEBSITE_DNS_ not defined is received, no custom DNS servers are configured for the web app.
+thumbnail image 3 of blog post titled 
+	
+Networking Related Commands for Azure App Services
