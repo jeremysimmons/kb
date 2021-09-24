@@ -1,0 +1,5 @@
+Check Fingerprint of the Private SSH Key
+ssh-keygen -l -f id_rsa
+
+show the SSH fingerprint in MD5 format
+ssh-keygen -l -E md5 -f keyfile
