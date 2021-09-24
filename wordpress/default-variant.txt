@@ -1,0 +1,3 @@
+https://happykite.co.uk/blog/how-to-change-the-default-variant-in-woocommerce/
+
+https://stackoverflow.com/questions/51181479/remove-choose-an-option-from-variable-product-dropdowns-in-woocommerce-3
