@@ -1,0 +1,7 @@
+map columns in dapper
+https://stackoverflow.com/questions/8902674/manually-map-column-names-with-class-properties
+
+https://gist.github.com/kalebpederson/5460509
+
+https://github.com/henkmollema/Dapper-FluentMap
+
