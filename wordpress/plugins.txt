@@ -21,3 +21,9 @@ Limit Login Attempts Reloaded https://wordpress.org/plugins/limit-login-attempts
 
 [Backups]
 UpdraftPlus https://wordpress.org/plugins/updraftplus/
+
+[performance]
+https://github.com/Rarst/laps
+https://wordpress.org/plugins/p3-profiler/
+https://github.com/tideways/php-xhprof-extension
+https://perfmatters.io/ [commercial]
