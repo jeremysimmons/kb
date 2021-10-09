@@ -1,0 +1,11 @@
+https://stackoverflow.com/questions/41584567/how-to-create-multiple-simple-products-with-same-sku-in-woocommerce
+
+If you want to completely disable the SKU feature then you have to use wc_product_sku_enabled filter.
+It will remove the SKU field from both backend and frontend.
+
+add_filter( 'wc_product_sku_enabled', '__return_false' );
+
+If you want to keep the SKU feature but need to disable unique SKU check then you have to use wc_product_has_unique_sku filter. 
+It will keep the SKU field in both backend and frontend, but will allow you to add multiple duplicate SKU.
+
+add_filter( 'wc_product_has_unique_sku', '__return_false' ); 
