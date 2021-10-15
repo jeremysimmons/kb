@@ -1,0 +1,10 @@
+https://stackoverflow.com/questions/31975093/at-which-point-does-for-or-for-r-enumerate-the-directory-tree
+
+for /F "delims=" %%a in ('dir /B *.log') do (
+   ren "%%a" server1_%%a.txt
+)
+
+powershell
+$items=Get-ChildItem;
+$items | Rename-Item -NewName { "Prefix_" + $_.Name };
+https://superuser.com/questions/1206967/powershell-how-do-i-append-a-prefix-to-all-files-in-a-directory/1207117

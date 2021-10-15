@@ -1,1 +1,10 @@
 https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/sqlcheatsheet
+
+example queries https://marckean.com/2019/03/25/log-analytics-advanced-queries/
+
+Log Analytics Demo site – https://portal.loganalytics.io/demo#/discover/query/main
+Kusto Course – https://www.pluralsight.com/courses/kusto-query-language-kql-from-scratch
+Log Analytics new log search FAQ and known issues – https://docs.microsoft.com/en-us/azure/log-analytics/log-analytics-log-search-faq
+Cheat Sheet – https://docs.microsoft.com/en-us/azure/log-analytics/log-analytics-log-search-transition
+Language Reference – https://docs.loganalytics.io/docs/Language-Reference
+Getting started guide (20 mins) – https://docs.loganalytics.io/docs/Learn/Getting-Started/Getting-started-with-queries

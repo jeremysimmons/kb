@@ -1,0 +1,16 @@
+If you don't mind a machine-wide registry change, you can configure Windows to use the form ProcessName_ProcessID for Perf Counter instance names, rather than appending #1, #2, etc:
+
+Create DWORD HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\PerfProc\Performance\ProcessNameFormat and set its value to 2.
+
+system.web
+<processModel autoConfig="true"
+
+             maxWorkerThreads = "100"
+
+             maxIoThreads = "100"
+
+             minWorkerThreads = "50"
+
+             minIoThreads = "50"
+
+         />
