@@ -1,1 +1,3 @@
 https://salferrarello.com/composer-wordpress-plugins/
+
+https://salferrarello.com/wordpress-composer-private-plugin/

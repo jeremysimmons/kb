@@ -1,0 +1,12 @@
+// timeIntervals('8:00', '17:30', 30, 'm')
+const timeIntervals = (desiredStartTime, desiredEndTime, interval, period) => {
+  const timeLabels = [];
+  const startTimeMoment = moment(desiredStartTime, 'hh:mm');
+  const endTimeMoment = moment(desiredEndTime, 'hh:mm');
+  while(!startTimeMoment.isAfter(endTimeMoment))
+  {
+    timeLabels.push(startTimeMoment.format('hh:mm A'));
+    startTimeMoment.add(interval, period);
+  }
+  return timeLabels;
+};
