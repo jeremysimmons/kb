@@ -1,0 +1,19 @@
+https://stackoverflow.com/questions/24375572/select-multiple-values-from-a-single-column-in-wordpress-database
+
+SELECT ID, post_title, post_content,
+MAX( IF ( wp_postmeta.meta_key = "thumnail", wp_postmeta.meta_value, '' ) ) AS Thumbnail,
+MAX( IF ( wp_postmeta.meta_key = "video", wp_postmeta.meta_value, '' ) ) AS Video
+FROM wp_posts
+INNER JOIN wp_postmeta ON wp_posts.id=wp_postmeta.post_id
+WHERE wp_postmeta.meta_key IN ( "thumnail", "video" )
+GROUP BY ID
+
+SELECT ID, post_title, post_content,
+MAX( CASE WHEN wp_postmeta.meta_key = "thumnail" THEN wp_postmeta.meta_value ELSE '' END ) AS Thumbnail,
+MAX( CASE WHEN wp_postmeta.meta_key = "video" THEN wp_postmeta.meta_value ELSE '' END ) AS Video
+FROM wp_posts
+INNER JOIN wp_postmeta ON wp_posts.id=wp_postmeta.post_id
+WHERE wp_postmeta.meta_key IN( "thumnail", "video" )
+GROUP BY ID
+
+

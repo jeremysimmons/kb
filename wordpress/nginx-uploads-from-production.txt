@@ -1,0 +1,14 @@
+server {
+    server_name mywebsite.dev;
+    set $production mywebsite.wpengine.com;
+
+    # Redirect requests to /wp-content/uploads/* to production server
+    location @prod_uploads {
+        rewrite "^(.*)/wp-content/uploads/(.*)$" "https://$production/wp-content/uploads/$2" break;
+    }
+
+    # Rule for handling requests to https://mywebsite.dev/wp-content/uploads/
+    location ~ "^/wp-content/uploads/(.*)$" {
+        try_files $uri @prod_uploads;
+    }
+}

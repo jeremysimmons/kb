@@ -1,0 +1,14 @@
+websockets
+https://www.codetinkerer.com/2018/06/05/aspnet-core-websockets.html
+   https://github.com/mkropat/WebSocketDemo
+
+https://mcguirev10.com/2019/01/15/simple-multi-client-websocket-server.html
+	https://github.com/MV10/WebSocketExample
+
+
+https://radu-matei.com/blog/aspnet-core-websockets-middleware/
+https://gunnarpeipman.com/aspnet-core-websocket-chart/
+https://dotnetthoughts.net/using-websockets-in-aspnet-core/
+https://www.c-sharpcorner.com/article/how-to-use-websockets-in-asp-net-core-day-nine2/
+
+https://github.com/paulbatum/WebSocket-Samples - old 2012
