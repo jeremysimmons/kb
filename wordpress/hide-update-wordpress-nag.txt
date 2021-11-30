@@ -1,0 +1,8 @@
+remove wordpress version update nag
+
+https://sumtips.com/tips-n-tricks/hide-wordpress-update-nag-admin/
+
+function hide_wp_update_nag() {
+remove_action( 'admin_notices', 'update_nag', 3 );
+}
+add_action('admin_menu','hide_wp_update_nag');

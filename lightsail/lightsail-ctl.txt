@@ -1,0 +1,169 @@
+LIGHTSAIL()                                                        LIGHTSAIL()
+
+NAME
+       lightsail -
+DESCRIPTION
+       Amazon Lightsail is the easiest way to get started with Amazon Web Ser-
+       vices (AWS) for developers who need to build websites or  web  applica-
+       tions. It includes everything you need to launch your project quickly -
+       instances (virtual private servers), container services, managed  data-
+       bases,  SSD-based  block  storage, static IP addresses, load balancers,
+       content delivery network (CDN) distributions, DNS management of  regis-
+       tered  domains,  and  resource  snapshots  (backups)  - for a low, pre-
+       dictable monthly price.
+       You can manage your Lightsail resources using  the  Lightsail  console,
+       Lightsail  API, AWS Command Line Interface (AWS CLI), or SDKs. For more
+       information about Lightsail concepts and tasks, see the  Lightsail  Dev
+       Guide .
+       This  API  Reference  provides  detailed information about the actions,
+       data types, parameters, and errors of the Lightsail service.  For  more
+       information  about  the  supported  AWS Regions, endpoints, and service
+       quotas of the Lightsail service, see  Amaz_n  Lightsail  Endp_ints  and
+       Qu_tas in the AWS General Reference .
+AVAILABLE COMMANDS
+       + allocate-static-ip
+       + attach-certificate-to-distribution
+       + attach-disk
+       + attach-instances-to-load-balancer
+       + attach-load-balancer-tls-certificate
+       + attach-static-ip
+       + close-instance-public-ports
+       + copy-snapshot
+       + create-certificate
+       + create-cloud-formation-stack
+       + create-contact-method
+       + create-container-service
+       + create-container-service-deployment
+       + create-container-service-registry-login
+       + create-disk
+       + create-disk-from-snapshot
+       + create-disk-snapshot
+       + create-distribution
+       + create-domain
+       + create-domain-entry
+       + create-instance-snapshot
+       + create-instances
+       + create-instances-from-snapshot
+       + create-key-pair
+       + create-load-balancer
+       + create-load-balancer-tls-certificate
+       + create-relational-database
+       + create-relational-database-from-snapshot
+       + create-relational-database-snapshot
+       + delete-alarm
+       + delete-auto-snapshot
+       + delete-certificate
+       + delete-contact-method
+       + delete-container-image
+       + delete-container-service
+       + delete-disk
+       + delete-disk-snapshot
+       + delete-distribution
+       + delete-domain
+       + delete-domain-entry
+       + delete-instance
+       + delete-instance-snapshot
+       + delete-key-pair
+       + delete-known-host-keys
+       + delete-load-balancer
+       + delete-load-balancer-tls-certificate
+       + delete-relational-database
+       + delete-relational-database-snapshot
+       + detach-certificate-from-distribution
+       + detach-disk
+       + detach-instances-from-load-balancer
+       + detach-static-ip
+       + disable-add-on
+       + download-default-key-pair
+       + enable-add-on
+       + export-snapshot
+       + get-active-names
+       + get-alarms
+       + get-auto-snapshots
+       + get-blueprints
+       + get-bundles
+       + get-certificates
+       + get-cloud-formation-stack-records
+       + get-contact-methods
+       + get-container-api-metadata
+       + get-container-images
+       + get-container-log
+       + get-container-service-deployments
+       + get-container-service-metric-data
+       + get-container-service-powers
+       + get-container-services
+       + get-disk
+       + get-disk-snapshot
+       + get-disk-snapshots
+       + get-disks
+       + get-distribution-bundles
+       + get-distribution-latest-cache-reset
+       + get-distribution-metric-data
+       + get-distributions
+       + get-domain
+       + get-domains
+       + get-export-snapshot-records
+       + get-instance
+       + get-instance-access-details
+       + get-instance-metric-data
+       + get-instance-port-states
+       + get-instance-snapshot
+       + get-instance-snapshots
+       + get-instance-state
+       + get-instances
+       + get-key-pair
+       + get-key-pairs
+       + get-load-balancer
+       + get-load-balancer-metric-data
+       + get-load-balancer-tls-certificates
+       + get-load-balancers
+       + get-operation
+       + get-operations
+       + get-operations-for-resource
+       + get-regions
+       + get-relational-database
+       + get-relational-database-blueprints
+       + get-relational-database-bundles
+       + get-relational-database-events
+       + get-relational-database-log-events
+       + get-relational-database-log-streams
+       + get-relational-database-master-user-password
+       + get-relational-database-metric-data
+       + get-relational-database-parameters
+       + get-relational-database-snapshot
+       + get-relational-database-snapshots
+       + get-relational-databases
+       + get-static-ip
+       + get-static-ips
+       + help
+       + import-key-pair
+       + is-vpc-peered
+       + open-instance-public-ports
+       + peer-vpc
+       + push-container-image
+       + put-alarm
+       + put-instance-public-ports
+       + reboot-instance
+       + reboot-relational-database
+       + register-container-image
+       + release-static-ip
+       + reset-distribution-cache
+       + send-contact-method-verification
+       + set-ip-address-type
+       + start-instance
+       + start-relational-database
+       + stop-instance
+       + stop-relational-database
+       + tag-resource
+       + test-alarm
+       + unpeer-vpc
+       + untag-resource
+       + update-container-service
+       + update-distribution
+       + update-distribution-bundle
+       + update-domain-entry
+       + update-load-balancer-attribute
+       + update-relational-database
+       + update-relational-database-parameters
+
+                                                                   LIGHTSAIL()

@@ -1,0 +1,20 @@
+serviceName: ''  # [REQUIRED] The name of the container service for which to create the deployment.
+containers: # An object that describes the settings of the containers that will be launched on the container service.
+  KeyName:
+    image: ''  # The name of the image used for the container.
+    command: # The launch command for the container.
+    - ''
+    environment: # The environment variables of the container.
+      KeyName: ''
+    ports: # The open firewall ports of the container.
+      KeyName: UDP
+publicEndpoint: # An object that describes the settings of the public endpoint for the container service.
+  containerName: ''  # [REQUIRED] The name of the container for the endpoint.
+  containerPort: 0 # [REQUIRED] The port of the container to which traffic is forwarded to.
+  healthCheck: # An object that describes the health check configuration of the container.
+    healthyThreshold: 0  # The number of consecutive health checks successes required before moving the container to the Healthy state.
+    unhealthyThreshold: 0 # The number of consecutive health check failures required before moving the container to the Unhealthy state.
+    timeoutSeconds: 0 # The amount of time, in seconds, during which no response means a failed health check.
+    intervalSeconds: 0 # The approximate interval, in seconds, between health checks of an individual container.
+    path: '' # The path on the container on which to perform the health check.
+    successCodes: '' # The HTTP codes to use when checking for a successful response from a container.

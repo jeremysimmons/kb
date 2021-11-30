@@ -1,0 +1,5 @@
+How to delete all your orders 
+
+wp post list --field=ID --post_type=shop_order --posts_per_page=2000 | xargs wp post delete --force
+
+https://wordpress.org/support/topic/tip-how-to-delete-all-your-orders-and-save-you-time/

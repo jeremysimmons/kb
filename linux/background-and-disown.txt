@@ -1,0 +1,10 @@
+1. Run your `mysql` command as though you would like to run it in the foreground; for example: `mysql <options> -h <host> -u <user> -p -e "source /absolute/path/to/commands.sql" <database name> 2>&1 > ./mysql_output.log`
+2. When asked, input the relevant password at the MySQL command prompt for the specified `<user>` (this is triggered by the inclusion of the `-p` flag in the `mysql` command above).
+3. Immediately press <kbd>Ctrl</kbd>+<kbd>Z</kbd> to suspend the current process, in this case `mysql`.
+4. Run the `bg` command to move the currently suspended process into the background, and resume its processing.
+5. Run the `jobs` command to list the jobs currently running in the shell session (you may only have one job listed if you don't have any other background processes running in the current session). From this list note the job number for `mysql`, which will likely be `1` if you only have one job running.
+6. Last, but not least, run the `disown -h %<job number>` command, thus `disown -h %1` (assuming the job number obtained in step #5 above was `1`). This last command is very important, as it disassociates the current shell session from our `mysql` process which we have just moved into the background, so that the `mysql` process does not get killed when the terminal shell session ends. Without the call to `disown`, your `mysql` process that is now running in the background could still get killed if your terminal session ends.
+
+You can't see the output of a job after a disown, disown makes a process a daemon, which means standard input/output are redirected to /dev/null. So, if you plan to disown a job, its better to start it with logging into a file, e.g. my_job_command | tee my_job.log
+
+https://stackoverflow.com/a/41371255/26877

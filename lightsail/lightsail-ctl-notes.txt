@@ -1,0 +1,12 @@
+#create-container-service-deployment
+Creates a deployment for your Amazon Lightsail container service
+aws lightsail create-container-service-deployment --service-name=container-service-1 --generate-cli-skeleton=yaml-input
+
+get-container-images
+get-container-log
+get-container-service-deployments
+get-container-services
+       + push-container-image
+       + register-container-image
+       + update-container-service
+
