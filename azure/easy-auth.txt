@@ -24,3 +24,13 @@ library to use easyauth from .net core
 
 [https://techcommunity.microsoft.com/t5/apps-on-azure/azure-app-service-easyauth-and-azure-active-directory-flows/ba-p/1099890]
 easy-auth flows
+
+https://docs.microsoft.com/en-us/azure/app-service/configure-authentication-user-identities
+For ASP.NET 4.6 apps, App Service populates ClaimsPrincipal.Current
+
+X-MS-CLIENT-PRINCIPAL-NAME
+X-MS-CLIENT-PRINCIPAL-ID
+X-MS-TOKEN-AAD-ID-TOKEN
+X-MS-TOKEN-AAD-ACCESS-TOKEN
+
+https://aadguide.azurewebsites.net/claims/

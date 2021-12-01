@@ -1,0 +1,22 @@
+resources.pipeline.CrmLauncher.pipelineID  571
+resources.pipeline.CrmLauncher.runName  master_20211025.1
+resources.pipeline.CrmLauncher.runID  152849
+resources.pipeline.CrmLauncher.runURI  vstfs:///Build/Build/152849
+resources.pipeline.CrmLauncher.sourceBranch  refs/heads/master
+resources.pipeline.CrmLauncher.sourceCommit  36b27606a6b4b20078c5a742a3a998a0efcea168
+resources.pipeline.CrmLauncher.sourceProvider  TfsGit
+resources.pipeline.CrmLauncher.requestedFor  Jeremy Simmons
+resources.pipeline.CrmLauncher.requestedForID  48f33657-b0b2-6f4f-b807-501dbd5ffe2c
+
+
+- script: |
+    echo pipelineID: $(resources.pipeline.CrmLauncher.pipelineID)
+    echo runName: $(resources.pipeline.CrmLauncher.runName)
+    echo runId: $(resources.pipeline.CrmLauncher.runID)
+    echo runURI: $(resources.pipeline.CrmLauncher.runURI)
+    echo sourceBranch: $(resources.pipeline.CrmLauncher.sourceBranch)
+    echo sourceCommit: $(resources.pipeline.CrmLauncher.sourceCommit)
+    echo sourceProvider: $(resources.pipeline.CrmLauncher.sourceProvider)
+    echo requestedFor: $(resources.pipeline.CrmLauncher.requestedFor)
+    echo requestedForID: $(resources.pipeline.CrmLauncher.requestedForID)
+    

@@ -1,6 +1,8 @@
-(.*(\n|$)){2} every other line
+every other line
+(.*(\n|$)){2} 
 
-(.*\n){10} every 10 lines
+every 10 lines
+(.*\n){10} 
 
 Find: Ctrl+F
 If regular expressions are not already enabled, enable them: Alt+R
