@@ -1,0 +1,1 @@
+wp post delete --force --defer-term-counting $(wp post list --post_type=wishlist --ids)
