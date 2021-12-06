@@ -1,4 +1,4 @@
-DELETE a,b,c
+DELETE a,b
     FROM wp_posts a
     LEFT JOIN wp_postmeta b
         ON (a.ID = b.post_id)

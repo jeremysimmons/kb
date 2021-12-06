@@ -1,0 +1,33 @@
+if(!function_exists('add_query_meta')) {
+  function add_query_meta($wp_query = "") {
+
+      //return In case if wp_query is empty or postmeta already exist
+      if( (empty($wp_query)) || (!empty($wp_query) && !empty($wp_query->posts) && isset($wp_query->posts[0]->postmeta)) ) { return $wp_query; }
+
+      $sql = $postmeta = '';
+      $post_ids = array();
+      $post_ids = wp_list_pluck( $wp_query->posts, 'ID' );
+      if(!empty($post_ids)) {
+        global $wpdb;
+        $post_ids = implode(',', $post_ids);
+        $sql = "SELECT meta_key, meta_value, post_id FROM $wpdb->postmeta WHERE post_id IN ($post_ids)";
+        $postmeta = $wpdb->get_results($sql, OBJECT);
+        if(!empty($postmeta)) {
+          foreach($wp_query->posts as $pKey => $pVal) {
+            $wp_query->posts[$pKey]->postmeta = new StdClass();
+            foreach($postmeta as $mKey => $mVal) {
+              if($postmeta[$mKey]->post_id == $wp_query->posts[$pKey]->ID) {
+                $newmeta[$mKey] = new stdClass();
+                $newmeta[$mKey]->meta_key = $postmeta[$mKey]->meta_key;
+                $newmeta[$mKey]->meta_value = maybe_unserialize($postmeta[$mKey]->meta_value);
+                $wp_query->posts[$pKey]->postmeta = (object) array_merge((array) $wp_query->posts[$pKey]->postmeta, (array) $newmeta);
+                unset($newmeta);
+              }
+            }
+          }
+        }
+        unset($post_ids); unset($sql); unset($postmeta);
+      }
+      return $wp_query;
+  }
+}
