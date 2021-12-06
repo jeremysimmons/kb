@@ -1,0 +1,16 @@
+RD /S /Q "%WinDir%\System32\GroupPolicyUsers"
+RD /S /Q "%WinDir%\System32\GroupPolicy"
+C:\WINDOWS\System32\GroupPolicy\DataStore\0\SysVol\private.entfederal.com\Policies
+DEL /S /F /Q “%PROGRAMDATA%\Microsoft\Group Policy\History\*.*”
+
+
+mklink /D c:\path\to\dir NUL:
+secedit /configure /cfg %windir%\inf\defltbase.inf /db defltbase.sdb /verbose
+
+Delete the "HKLM\Software\Policies\Microsoft" Key (looks like a folder).
+
+Delete the "HKCU\Software\Policies\Microsoft" Key
+
+Delete the "HKCU\Software\Microsoft\Windows\CurrentVersion\Group Policy Objects" Key.
+
+Delete the "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies" Key.
