@@ -1,0 +1,17 @@
+cat >>$HOME/.bash_profile <<EOF
+alias newmac="sudo /sbin/ifconfig en0 ether \\\`openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'\\\`"
+EOF
+
+cat >/etc/sudoers.d/newmac <<EOF
+Cmnd_Alias CMD_NEWMAC = /sbin/ifconfig en0 ether *
+ALL ALL=NOPASSWD: CMD_NEWMAC
+EOF
+
+$ ifconfig en0 | grep -i ether
+ether f6:21:56:35:69:c3
+$ newmac
+$ ifconfig en0 | grep -i ether
+ether 14:2e:a0:eb:de:30
+
+Restore the hardware MAC address
+The soft-changed MAC address is only active until the next reboot.

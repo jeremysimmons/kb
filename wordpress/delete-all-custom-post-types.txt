@@ -2,4 +2,4 @@ DELETE a,b
     FROM wp_posts a
     LEFT JOIN wp_postmeta b
         ON (a.ID = b.post_id)
-    WHERE a.post_type = 'wishlists';
+    WHERE a.post_type = 'wishlist';

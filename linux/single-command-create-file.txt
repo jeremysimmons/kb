@@ -1,0 +1,18 @@
+sometimes you want to create a file with contents from the console/terminal
+
+in DOS, you would use copy con <filename> 
+
+> copy con my-file.txt
+glorious file contents
+with many lines without line continuation characters
+this is bliss
+^-Z
+
+in bash, you use cat with a 
+$ cat << ENDL > my-file.txt
+glorious file contents
+with many lines without line continuation characters
+this is bliss
+ENDL
+
+

@@ -1,0 +1,60 @@
+Annotations
+https://www.baeldung.com/java-default-annotations
+
+@Override - indicate that a method overrides or replaces the behavior of an inherited method. - ignore certain warnings from a part of the code
+@SuppressWarnings
+@Deprecated -  mark an API as not intended for use anymore.
+@SafeVarargs - acts on a type of warning related to using varargs.
+@Native - mark an API as not intended for use anymore
+
+@FunctionalInterface
+Java 8 allows us to write code in a more functional way.
+Even though it's legal to have more than one method on an interface, it isn't when that interface is being used as a lambda target.
+
+@FunctionalInterface
+public interface Adder {
+    int add(int a, int b);
+}
+
+Adder adder = (a,b) -> a + b;
+int result = adder.add(4,5);
+
+some time later, another dev adds a new method to Adder
+
+@FunctionalInterface
+public interface Adder { 
+    // compiler complains that the interface is not a SAM
+    
+    int add(int a, int b);
+    int div(int a, int b);
+}
+
+Without this annotation, the compiler would break in the dozens of places where Adder was used as a lambda. Now, it just breaks in Adder itself.
+
+
+Meta Annotations - applied to other annotations.
+@Target - determine the target elements of a custom annotation
+@Retention - Some annotations are meant to be used as hints for the compiler, while others are used at runtime. - RetentionPolicy [SOURCE, CLASS, RUNTIME]
+@Inherited - make our annotation propagate from an annotated class to its subclasses
+@Documented - By default, Java doesn't document the usage of annotations in Javadocs. including this on another annotation causes it to show up
+@Repeatable - allows multiple instances of an annotation on a single language element.
+
+@Target({ElementType.CONSTRUCTOR, ElementType.METHOD})
+public @interface SafeVarargs {
+}
+ANNOTATION_TYPE	 Annotation type declaration
+CONSTRUCTOR	Constructor declaration
+FIELD	Field declaration (includes enum constants)
+LOCAL_VARIABLE Local variable declaration
+METHOD	Method declaration
+MODULE	Module declaration.
+PACKAGE	Package declaration
+PARAMETER Formal parameter declaration
+RECORD_COMPONENT Record component 
+TYPE Class, interface (including annotation type), enum, or record declaration
+TYPE_PARAMETER Type parameter declaration
+TYPE_USE Use of a type
+
+@Inherited
+
+@Component goes on classes themselves while @Bean goes on class methods
