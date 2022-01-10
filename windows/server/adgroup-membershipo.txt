@@ -1,0 +1,3 @@
+https://sysadmin-central.com/2019/08/19/active-directory-how-to-generate-a-group-membership-report/
+https://community.spiceworks.com/topic/356479-is-there-a-way-to-run-a-report-on-ad-for-group-membership
+https://community.spiceworks.com/scripts/show/1872-get-user-group-memberships
