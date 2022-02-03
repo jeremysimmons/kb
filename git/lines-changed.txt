@@ -1,0 +1,18 @@
+for humans
+git diff --stat <commit-ish> <commit-ish>
+for scripts
+git diff --numstat <commit-ish> <commit-ish>
+
+git log --author="Tri Nguyen" --oneline --shortstat --before="2017-03-20" --after="2017-03-10"
+
+stats on previous 10 commits
+git log --stat -n10
+
+git log --author="Your name" --stat <commit1>..<commit2>
+
+get total changes instead of per-commit changes from git log
+git log --numstat --pretty="%H" --author="Your Name" commit1..commit2 | awk 'NF==3 {plus+=$1; minus+=$2} END {printf("+%d, -%d\n", plus, minus)}'
+
+git diff --shortstat <commit1> <commit2>
+Assuming that you want to compare all of your commits between abcd123 (the first commit) and wxyz789 (the last commit), inclusive:
+git log wxyz789^..abcd123 --oneline --shortstat --author="Mike Surname"
