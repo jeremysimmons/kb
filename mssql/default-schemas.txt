@@ -1,0 +1,10 @@
+select sc.name as schemaname, sp.[name] as owner,
+sp.default_database_name as [database]  from sys.schemas  sc
+inner join sys.server_principals sp on sc.principal_id =  sp.principal_id
+
+select sc.name as schemaname, sp.[name] as owner,
+sp.default_database_name as [database],sp.*  from sys.schemas  sc
+inner join sys.server_principals sp on sc.principal_id =  sp.principal_id
+
+SELECT name, default_schema_name  
+FROM sys.database_principals WHERE type = 'S'

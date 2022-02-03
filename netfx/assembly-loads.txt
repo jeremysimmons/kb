@@ -1,0 +1,6 @@
+https://makolyte.com/csharp-get-a-list-of-types-defined-in-an-assembly-without-loading-it/
+https://docs.microsoft.com/en-us/dotnet/framework/reflection-and-codedom/how-to-load-assemblies-into-the-reflection-only-context
+https://stackoverflow.com/questions/10439668/getting-custom-assembly-attributes-without-loading-into-current-appdomain
+https://github.com/dotnet/samples/blob/main/core/assembly/MetadataLoadContext/Program.cs
+https://docs.microsoft.com/en-us/dotnet/standard/assembly/inspect-contents-using-metadataloadcontext
+https://docs.microsoft.com/en-us/dotnet/standard/assembly/resolve-loads

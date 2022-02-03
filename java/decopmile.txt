@@ -1,0 +1,4 @@
+java -jar JDCommandLine.jar ${TARGET_JAR_NAME}.jar ./classes
+
+Don't leave off the ./classes parameter. It defines the output directory.
+

@@ -1,0 +1,32 @@
+IF (EXISTS (SELECT * 
+                 FROM INFORMATION_SCHEMA.TABLES 
+                 WHERE TABLE_SCHEMA = 'TheSchema' 
+                 AND  TABLE_NAME = 'TheTable'))
+BEGIN
+    --Do Stuff
+END
+
+if not exists (select
+                     column_name
+               from
+                     INFORMATION_SCHEMA.columns
+               where
+                     table_name = 'MyTable'
+                     and column_name = 'MyColumn')
+    alter table MyTable add MyColumn int
+
+--Returns one row for each CHECK, UNIQUE, PRIMARY KEY, and/or FOREIGN KEY
+SELECT * 
+    FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+    WHERE CONSTRAINT_NAME='XYZ'  
+
+--Returns one row for each FOREIGN KEY constrain
+SELECT * 
+    FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS 
+    WHERE CONSTRAINT_NAME='XYZ'
+
+
+--Returns one row for each CHECK constraint 
+SELECT * 
+    FROM INFORMATION_SCHEMA.CHECK_CONSTRAINTS
+    WHERE CONSTRAINT_NAME='XYZ'

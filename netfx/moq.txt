@@ -1,0 +1,5 @@
+Moq: Working With SetupGet, VerifyGet, SetupSet, VerifySet, SetupProperty
+https://hamidmosalla.com/2017/08/03/moq-working-with-setupget-verifyget-setupset-verifyset-setupproperty/
+
+Auto stubbing properties
+https://sodocumentation.net/moq/topic/6774/mocking-properties

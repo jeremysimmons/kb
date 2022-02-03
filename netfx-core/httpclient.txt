@@ -1,4 +1,16 @@
-https://aspnetmonsters.com/2016/08/2016-08-27-httpclientwrong/
+YOU'RE USING HTTPCLIENT WRONG AND IT IS DESTABILIZING YOUR SOFTWARE (https://aspnetmonsters.com/2016/08/2016-08-27-httpclientwrong/)
 
-https://thomaslevesque.com/2018/02/25/better-timeout-handling-with-httpclient/
-https://gist.github.com/thomaslevesque/b4fd8c3aa332c9582a57935d6ed3406f
+Better timeout handling with HttpClient (https://thomaslevesque.com/2018/02/25/better-timeout-handling-with-httpclient/)
+
+TimeoutHandler for smarter timeout handling with HttpClient (https://gist.github.com/thomaslevesque/b4fd8c3aa332c9582a57935d6ed3406f)
+
+A Singleton HttpClient does not respect DNS changes! (https://www.nimaara.com/beware-of-the-net-httpclient/)
+- ServicePoint.ConnectionLeaseTimeout 
+- ServicePointManager.DnsRefreshTimeout
+- Library: https://www.nuget.org/packages/Easy.Common/3.0.0
+
+
+HttpClient - Error handling, a test driven approach
+https://josef.codes/httpclient-error-handling-a-test-driven-approach/
+
+https://www.stevejgordon.co.uk/demystifying-httpclient-internals-httpresponsemessage
