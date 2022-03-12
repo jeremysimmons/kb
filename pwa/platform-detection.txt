@@ -1,0 +1,6 @@
+Detect if iOS is using webapp
+
+isInWebAppiOS = (window.navigator.standalone == true);
+isInWebAppChrome = (window.matchMedia('(display-mode: standalone)').matches);
+
+https://stackoverflow.com/a/40932301/26877

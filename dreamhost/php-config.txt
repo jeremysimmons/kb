@@ -1,9 +1,21 @@
-~/.php/7.4/phprc
 
 log_errors = 1 
 error_log = /home/dh_zm6zac/php.log
 
+# changes take place be killing all the php workers
 killall -9 php74.cgi -u dh_zm6zac
+
+~/.php/7.4/phprc
+
+og_errors = 1
+error_log = /home/dh_zm6zac/php.log
+max_execution_time = 60
+memory_limit = 512M
+date.timezone = America/Los_Angeles
+; {{{ The following lines were automatically added by DreamHost
+zend_extension=opcache.so
+; }}} That's all from DreamHost
+
 
 
 https://help.dreamhost.com/hc/en-us/articles/214199378-How-do-I-enable-PHP-error-logging-

@@ -1,0 +1,17 @@
+error_reporting 
+https://www.php.net/manual/en/function.error-reporting.php
+
+E_ALL is "everything"
+
+E_ALL & ~E_NOTICE is "everything except notices"
+
+E_ALL    = 111111111111111
+E_NOTICE = 000000000001000
+           111111111110111
+
+
+E_ALL would should all the error and warning and notice - everything
+
+E_NOTICE is a special error level, showing things that won't produce error but are not good or gonna be obsolete in future release of PHP. The notice error level is meant to encourage best practices.
+
+Also it should be error_reporting(E_ALL ^ E_NOTICE); to report everything except notice.
