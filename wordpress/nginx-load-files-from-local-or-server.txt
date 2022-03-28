@@ -1,0 +1,12 @@
+WordPress load remote images if they don't exist on the local development server NGINX. vagrant provision after editing site conf file.
+
+
+location ~ ^/wp-content/uploads/(.*) { 
+    if (!-f $request_filename) { 
+        rewrite ^/wp-content/uploads/(.*)$ http://www.remotesite.com/wp-content/uploads/$1 redirect; 
+    } 
+}
+
+gotcha.
+if you don't use if (!-f $request_filename), then will always attempt to load from server.
+if you have a css file from a plugin that is built in this directory, it won't be found.

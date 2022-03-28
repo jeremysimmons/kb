@@ -1,0 +1,50 @@
+https://wordpress.org/plugins/woo-product-remover/
+
+DELETE FROM `wp_posts` WHERE `post_type` = "attachment";
+DELETE FROM `wp_postmeta` WHERE `meta_key` = "_wp_attached_file";
+DELETE FROM `wp_postmeta` WHERE `meta_key` = "_wp_attachment_metadata";
+
+DELETE FROM wp_woocommerce_order_itemmeta;
+DELETE FROM wp_woocommerce_order_items;
+DELETE FROM wp_comments WHERE comment_type = 'order_note';
+DELETE FROM wp_postmeta WHERE post_id IN ( SELECT ID FROM wp_posts WHERE post_type = 'shop_order' );
+DELETE FROM wp_posts WHERE post_type = 'shop_order';
+truncate table wp_wc_customer_lookup
+
+DELETE a,c FROM wp_terms AS a 
+LEFT JOIN wp_term_taxonomy AS c ON a.term_id = c.term_id
+LEFT JOIN wp_term_relationships AS b ON b.term_taxonomy_id = c.term_taxonomy_id
+WHERE c.taxonomy = 'product_tag';
+
+DELETE a,c FROM wp_terms AS a
+LEFT JOIN wp_term_taxonomy AS c ON a.term_id = c.term_id
+LEFT JOIN wp_term_relationships AS b ON b.term_taxonomy_id = c.term_taxonomy_id
+WHERE c.taxonomy = 'product_cat'
+
+DELETE FROM termmeta WHERE term_id NOT IN (SELECT term_id FROM terms)
+
+
+DELETE relations.*, taxes.*, terms.*
+FROM wp_term_relationships AS relations
+INNER JOIN wp_term_taxonomy AS taxes
+ON relations.term_taxonomy_id=taxes.term_taxonomy_id
+INNER JOIN wp_terms AS terms
+ON taxes.term_id=terms.term_id
+WHERE object_id IN (SELECT ID FROM wp_posts WHERE post_type IN ('product','product_variation'));
+
+DELETE FROM wp_postmeta WHERE post_id IN (SELECT ID FROM wp_posts WHERE post_type IN ('product','product_variation'));
+DELETE FROM wp_posts WHERE post_type IN ('product','product_variation');
+
+-- Remove all attributes from WooCommerce
+DELETE FROM wp_terms WHERE term_id IN (SELECT term_id FROM wp_term_taxonomy WHERE taxonomy LIKE 'pa_%');
+DELETE FROM wp_term_taxonomy WHERE taxonomy LIKE 'pa_%';
+DELETE FROM wp_term_relationships WHERE term_taxonomy_id not IN (SELECT term_taxonomy_id FROM wp_term_taxonomy);
+-- Delete all WooCommerce products
+DELETE FROM wp_term_relationships WHERE object_id IN (SELECT ID FROM wp_posts WHERE post_type IN ('product','product_variation'));
+DELETE FROM wp_postmeta WHERE post_id IN (SELECT ID FROM wp_posts WHERE post_type IN ('product','product_variation'));
+DELETE FROM wp_posts WHERE post_type IN ('product','product_variation');
+-- Delete orphaned postmeta
+DELETE pm
+FROM wp_postmeta pm
+LEFT JOIN wp_posts wp ON wp.ID = pm.post_id
+WHERE wp.ID IS NULL

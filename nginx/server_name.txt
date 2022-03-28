@@ -1,0 +1,18 @@
+what's the difference between these two?
+https://serverfault.com/questions/914906/what-is-the-difference-between-server-name-and-server-name-in-nginx
+
+server {
+    listen 80 default_server;
+    server_name ""; # this is by default if no server_name specified
+    return 444;
+}
+or
+
+server {
+    listen 80 default_server;
+    server_name _;
+    return 444;
+}
+
+To conclude, you can use server_name _; for catch-all server block but not server_name "";.
+
