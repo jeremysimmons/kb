@@ -1,0 +1,9 @@
+https://techcommunity.microsoft.com/t5/azure-monitor/how-to-have-a-time-chart-show-zero-for-missing-null-data/m-p/124611
+
+time chart show zero for missing/null data.
+
+exceptions
+| where client_Type != "Browser"
+| where type == 'StackExchange.Redis.RedisConnectionException'
+| make-series count() default=0 on timestamp in range(ago(8h), now(), 10m) by cloud_RoleInstance
+| render timechart

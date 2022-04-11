@@ -1,0 +1,38 @@
+SQL Server "RESTORE FILELISTONLY" Resultset
+https://stackoverflow.com/a/53911994/26877
+CREATE TABLE #FileListHeaders (     
+     LogicalName    nvarchar(128)
+    ,PhysicalName   nvarchar(260)
+    ,[Type] char(1)
+    ,FileGroupName  nvarchar(128) NULL
+    ,Size   numeric(20,0)
+    ,MaxSize    numeric(20,0)
+    ,FileID bigint
+    ,CreateLSN  numeric(25,0)
+    ,DropLSN    numeric(25,0) NULL
+    ,UniqueID   uniqueidentifier
+    ,ReadOnlyLSN    numeric(25,0) NULL
+    ,ReadWriteLSN   numeric(25,0) NULL
+    ,BackupSizeInBytes  bigint
+    ,SourceBlockSize    int
+    ,FileGroupID    int
+    ,LogGroupGUID   uniqueidentifier NULL
+    ,DifferentialBaseLSN    numeric(25,0) NULL
+    ,DifferentialBaseGUID   uniqueidentifier NULL
+    ,IsReadOnly bit
+    ,IsPresent  bit
+)
+IF cast(cast(SERVERPROPERTY('ProductVersion') as char(4)) as float) > 9 -- Greater than SQL 2005 
+BEGIN
+    ALTER TABLE #FileListHeaders ADD TDEThumbprint  varbinary(32) NULL
+END
+IF cast(cast(SERVERPROPERTY('ProductVersion') as char(2)) as float) > 12 -- Greater than 2014
+BEGIN
+    ALTER TABLE #FileListHeaders ADD SnapshotURL    nvarchar(360) NULL
+END
+INSERT INTO #FileListHeaders
+EXEC ('RESTORE FILELISTONLY FROM DISK = N''BackupFileName.bak''')
+
+SELECT * FROM #FileListHeaders
+
+DROP TABLE #FileListHeaders

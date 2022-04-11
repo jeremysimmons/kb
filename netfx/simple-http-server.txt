@@ -1,0 +1,51 @@
+https://stackoverflow.com/questions/1390780/httpwebrequest-how-to-handle-premature-closure-of-underlying-tcp-connection
+ private const string m_defaultResponse = "<html><body><h1>Hello World!</h1></body></html>";
+    private void Listen()
+    {
+        while (true)
+        {
+            using (TcpClient clientConnection = m_listener.AcceptTcpClient())
+            {
+                NetworkStream stream = clientConnection.GetStream();
+                StringBuilder httpData = new StringBuilder("HTTP/1.1 200 OK\r\nServer: ivy\r\nContent-Type: text/html\r\n");
+                httpData.AppendFormat("Content-Length: {0}\r\n\r\n", m_defaultResponse.Length);
+                httpData.AppendFormat(m_defaultResponse);
+
+                Thread.Sleep(3000); // Sleep to simulate latency
+
+                stream.Write(Encoding.ASCII.GetBytes(httpData.ToString()), 0, httpData.Length);
+
+                stream.Close();
+
+                clientConnection.Close();
+            }
+        }
+    }
+
+    static public void SetIdle(object request)
+    {
+        MethodInfo getConnectionGroupLine = request.GetType().GetMethod("GetConnectionGroupLine", BindingFlags.Instance | BindingFlags.NonPublic);
+        string connectionName = (string)getConnectionGroupLine.Invoke(request, null);
+
+        ServicePoint servicePoint = ((HttpWebRequest)request).ServicePoint;
+        MethodInfo findConnectionGroup = servicePoint.GetType().GetMethod("FindConnectionGroup", BindingFlags.Instance | BindingFlags.NonPublic);
+        object connectionGroup;
+        lock (servicePoint)
+        {
+            connectionGroup = findConnectionGroup.Invoke(servicePoint, new object[] { connectionName, false });
+        }
+
+        PropertyInfo currentConnections = connectionGroup.GetType().GetProperty("CurrentConnections", BindingFlags.Instance | BindingFlags.NonPublic);
+        PropertyInfo connectionLimit = connectionGroup.GetType().GetProperty("ConnectionLimit", BindingFlags.Instance | BindingFlags.NonPublic);
+
+        MethodInfo disableKeepAliveOnConnections = connectionGroup.GetType().GetMethod("DisableKeepAliveOnConnections", BindingFlags.Instance | BindingFlags.NonPublic);
+
+        if (((int)currentConnections.GetValue(connectionGroup, null)) ==
+            ((int)connectionLimit.GetValue(connectionGroup, null)))
+        {
+            disableKeepAliveOnConnections.Invoke(connectionGroup, null);
+        }
+
+        MethodInfo connectionGoneIdle = connectionGroup.GetType().GetMethod("ConnectionGoneIdle", BindingFlags.Instance | BindingFlags.NonPublic);
+        connectionGoneIdle.Invoke(connectionGroup, null);
+    }

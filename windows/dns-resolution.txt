@@ -1,0 +1,19 @@
+http://www.patrickkremer.com/per-zone-dns-resolution-for-homelabs/
+
+# Per-zone DNS resolution for homelabs
+
+[Home Lab](http://www.patrickkremer.com/category/home-lab/) by [pkremer](http://www.patrickkremer.com/author/pkremer/)
+
+One of the problems I’ve had with my homelab is the fact that logging into my corporate VPN every day changes my DNS servers, so I cannot resolve homelab DNS. For the past 4+ years I’ve gotten past this using hostfile entries, which is quite annoying when you’re spinning up workloads dynamically.
+
+I posted this question the VMware homelab Slack channel and [Steve Tilkens](https://www.tilkens.com/) came back with /private/etc/resolver for the Mac. He wrote:  
+  
+Just create a file in that directory named whatever your lab domain name is (i.e. – “lab.local”) and the contents should contain the following:  
+nameserver 192.168.0.1  
+nameserver 192.168.0.2
+
+This didn’t help me on Windows, but immediately helped another employee.
+
+But then I started Googling around for things like ‘/private/etc/resolver for Windows’ and somewhere I found somebody suggesting the [Windows NRPT](https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/dn593632(v=ws.11)). The first hit on my search was a [Scott Lowe blog](https://blog.scottlowe.org/2013/08/14/using-your-home-dns-servers-with-corporate-vpns/) talking about using the resolver trick on a Mac so if you want a detailed explanation of the Mac stuff, check it out.
+
+Anyway it took me like 10 seconds to open up the Local Group Policy editor (gpedit.msc) on my laptop and configure my laptop to resolve my AD domain via my homelab domain controllers. Years of searching over!

@@ -1,0 +1,41 @@
+https://tomd.xyz/java-docker-parent-image/
+
+Not a base image, but related capability to build images
+https://github.com/GoogleContainerTools/jib
+Jib builds optimized Docker and OCI images for your Java applications without a Docker daemon
+
+Distroless https://github.com/GoogleContainerTools/distroless/tree/main/java
+- Non-root user
+- contain only java applications and their runtime dependencies
+  (contain package managers, shells, or other programs typically included in a standard Linux distribution, This results in a smaller attack surface.)
+- An attacker cannot change a live container by installing packages or accessing environment variables, check the filesystem, investigate the network, list the running processes, or perform other damaging actions. This is because a Distroless image doesn’t include any shell binaries.
+
+
+[OpenJDK (openjdk/openjdk)](https://hub.docker.com/_/openjdk/)
+
+The official image for OpenJDK, the open source implementation of Java.
+
+- As used in the [official Spring Boot Docker example](https://github.com/spring-guides/gs-spring-boot-docker)
+- Has an Alpine Linux variant
+- Has flavours for both Linux and Windows (tag `windowsservercore`)
+
+[JBoss Base JDK (jboss/base-jdk)](https://hub.docker.com/r/jboss/base-jdk/)
+
+A Java base image from JBoss
+
+- includes OpenJDK
+
+[Fabric8 JBoss OpenJDK (fabric8/java-jboss-openjdk8-jdk)](https://hub.docker.com/r/fabric8/java-jboss-openjdk8-jdk/)
+
+Based on the JBoss Base JDK image, adding the tools below:
+
+- includes Jolokia agent, for easy monitoring of your container using [Hawtio](http://hawt.io/)
+- includes a JMX exporter for exporting statistics to [Prometheus](https://prometheus.io/)
+- a start-up script `run-java.sh` for starting standalone Java applications
+
+[Red Hat Java Application (registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift)](https://access.redhat.com/containers/?tab=overview#/registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift)
+
+An image designed to work with OpenShift
+
+- Good for enterprise environments
+- Designed to work with OpenShift

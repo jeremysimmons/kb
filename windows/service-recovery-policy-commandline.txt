@@ -1,5 +1,8 @@
 :: clear the actions "Take No Action"
-sc failure aspnet_state reset= 86400 actions= //////
+sc failure "IDS Scheduler" reset= 86400 actions= //////
 
 :: restart the service after 1 minute
-sc failure aspnet_state reset= 86400 actions= restart/86400/restart/86400
+sc failure "IDS Scheduler" reset= 86400 actions= restart/86400/restart/86400
+
+:: list failure
+sc qfailure "IDS Scheduler"  2048

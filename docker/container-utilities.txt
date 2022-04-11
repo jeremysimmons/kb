@@ -1,0 +1,3 @@
+https://github.com/aquasecurity/trivy
+https://github.com/goodwithtech/dockle
+https://www.synopsys.com/software-integrity/security-testing/software-composition-analysis.html

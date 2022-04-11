@@ -1,0 +1,15 @@
+public class RoleNameWithRefresh : ITelemetryInitializer
+{
+    string roleName = "";
+    private RefreshRoleName()
+    {
+        //check some timer and refresh if required
+        if (enough time passed)
+          this.roleName = ReadRoleNameFromEnvironmentVariables();
+    }
+    public void Initialize(ITelemetry telemetry)
+    {
+        this.RefreshRoleName();
+        telemetry.Cloud.RoleInstance = this.roleName;
+    }
+}

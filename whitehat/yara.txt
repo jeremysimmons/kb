@@ -1,0 +1,16 @@
+building yara rules
+https://support.knowbe4.com/hc/en-us/articles/360013116053-How-to-Write-YARA-Rules
+https://www.techrepublic.com/article/how-to-write-yara-rules-for-improving-your-security-and-malware-detection/
+https://www.varonis.com/blog/yara-rules
+https://www.nextron-systems.com/2018/12/21/yara-rule-sets-and-rule-feed/
+
+yara scanners
+https://github.com/iomoath/yara-scanner
+https://github.com/Neo23x0/Loki
+https://www.nextron-systems.com/thor-lite/
+
+yara rules
+https://github.com/Neo23x0/signature-base
+
+yara rule generator
+https://andreafortuna.org/2017/04/27/two-open-source-tools-to-easily-generate-yara-rules/

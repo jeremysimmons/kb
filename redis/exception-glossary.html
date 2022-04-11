@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
+</head>
+<body>
+<table>
+  <thead>
+    <tr>
+      <th>Abbreviation</th>
+      <th>Long Name</th>
+      <th>Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>inst</td>
+      <td>OpsSinceLastHeartbeat : {int}</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td>qu</td>
+      <td>Queue-Awaiting-Write : {int}</td>
+      <td>There are x operations currently waiting in queue to write to the redis server.</td>
+    </tr>
+    <tr>
+      <td>qs</td>
+      <td>Queue-Awaiting-Response : {int}</td>
+      <td>There are x operations currently awaiting replies from redis server.</td>
+    </tr>
+    <tr>
+      <td>aw</td>
+      <td>Active-Writer: {bool}</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td>bw</td>
+      <td>Backlog-Writer: {enum}</td>
+      <td>Possible values are     Inactive, Started, CheckingForWork, CheckingForTimeout, RecordingTimeout, WritingMessage, Flushing, MarkingInactive, RecordingWriteFailure, RecordingFault,SettingIdle,Faulted</td>
+    </tr>
+    <tr>
+      <td>rs</td>
+      <td>Read-State: {enum}</td>
+      <td>Possible values are NotStarted, Init, RanToCompletion, Faulted, ReadSync, ReadAsync, UpdateWriteTime, ProcessBuffer, MarkProcessed, TryParseResult, MatchResult, PubSubMessage, PubSubPMessage, Reconfigure, InvokePubSub, DequeueResult, ComputeResult, CompletePendingMessage, NA</td>
+    </tr>
+    <tr>
+      <td>ws</td>
+      <td>Write-State: {enum}</td>
+      <td>Possible values are Initializing, Idle, Writing, Flushing, Flushed, NA</td>
+    </tr>
+    <tr>
+      <td>in</td>
+      <td>Inbound-Bytes : {long}</td>
+      <td>there are x bytes waiting to be read from the input stream from redis</td>
+    </tr>
+    <tr>
+      <td>in-pipe</td>
+      <td>Inbound-Pipe-Bytes: {long}</td>
+      <td>Bytes waiting to be read</td>
+    </tr>
+    <tr>
+      <td>out-pipe</td>
+      <td>Outbound-Pipe-Bytes: {long}</td>
+      <td>Bytes waiting to be sent</td>
+    </tr>
+    <tr>
+      <td>mgr</td>
+      <td>8 of 10 available</td>
+      <td>Redis Internal Dedicated Thread Pool State</td>
+    </tr>
+    <tr>
+      <td>IOCP</td>
+      <td>IOCP: (Busy=0,Free=500,Min=248,Max=500)</td>
+      <td>Runtime Global Thread Pool IO Threads.</td>
+    </tr>
+    <tr>
+      <td>WORKER</td>
+      <td>WORKER: (Busy=170,Free=330,Min=248,Max=500)</td>
+      <td>Runtime Global Thread Pool Worker Threads.</td>
+    </tr>
+    <tr>
+      <td>POOL</td>
+      <td>POOL: (Threads=8,QueuedItems=0,CompletedItems=42)</td>
+      <td>Thread Pool Work Item Stats.</td>
+    </tr>
+    <tr>
+      <td>v</td>
+      <td>Redis Version: version</td>
+      <td>Current redis version you are currently using in your application.</td>
+    </tr>
+    <tr>
+      <td>active</td>
+      <td>Message-Current: {string}</td>
+      <td>Included in exception message when <code class="language-plaintext highlighter-rouge">IncludeDetailInExceptions=True</code> on multiplexer</td>
+    </tr>
+    <tr>
+      <td>next</td>
+      <td>Message-Next: {string}</td>
+      <td>When <code class="language-plaintext highlighter-rouge">IncludeDetailInExceptions=True</code> on multiplexer, it might include command and key, otherwise only command.</td>
+    </tr>
+    <tr>
+      <td>Local-CPU</td>
+      <td>%CPU or Not Available</td>
+      <td>When  <code class="language-plaintext highlighter-rouge">IncludePerformanceCountersInExceptions=True</code> on multiplexer, Local CPU %age will be included in exception message. It might not work in all environments where application is hosted.</td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>

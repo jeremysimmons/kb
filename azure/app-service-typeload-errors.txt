@@ -1,0 +1,3 @@
+azure app service HKLM\Software\Microsoft\Fusion!EnableLog
+Basically all you have to do is add an application setting called WEBSITE_FUSIONLOGGING_ENABLED and set it to 1.
+

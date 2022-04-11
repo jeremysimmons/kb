@@ -1,0 +1,32 @@
+HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main
+DisableScriptDebuggerIE
+Disable Script Debugger yes
+Error Dlg Displayed On Every Error
+
+
+HKLM\SOFTWARE\Microsoft\Internet Explorer\MAIN\FeatureControl\app.exe
+
+[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main]
+"Error Dlg Displayed On Every Error"="no"
+
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main]
+"Error Dlg Displayed On Every Error"="no"
+
+
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main]
+"Error Dlg Displayed On Every Error"="yes"
+
+https://www.pcreview.co.uk/threads/script-error-keeps-dialogue-box-pops-up-on-every-page.687502/
+
+https://admx.help/?Category=Windows_7_2008R2&Policy=Microsoft.Policies.InternetExplorer::ScriptErrorCache
+
+[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main]
+"Disable Script Debugger"="yes"
+"Error Dlg Details Pane Open"="yes"
+"Error Dlg Displayed On Every Error"="no"
+"NoJITSetup"=dword:00000000
+"NoWebJITSetup"=dword:00000001

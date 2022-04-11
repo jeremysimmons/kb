@@ -1,0 +1,28 @@
+https://www.derpturkey.com/system-net-dns-flush-cache-issues/
+
+public class DnsUtils
+{        
+    [DllImport("dnsapi.dll", EntryPoint="DnsFlushResolverCache")]
+    static extern UInt32 DnsFlushResolverCache();
+        
+    [DllImport("dnsapi.dll", EntryPoint = "DnsFlushResolverCacheEntry_A")]
+    public static extern int DnsFlushResolverCacheEntry(string hostName);
+
+    public static void FlushCache()
+    {
+        DnsFlushResolverCache();
+    }
+
+    public static void FlushCache(string hostName)
+    {
+        DnsFlushResolverCacheEntry(hostName);
+    }
+}
+The first method will flush the entire cache. This is ok, but not ideal. The seond method will invalidate cache for a single record. The end result is this code:
+
+public bool IsDnsConfigured(string host, string desiredHost)
+{
+   DnsUtil.FlushCache(host);
+   var aliasRecord = Dns.GetHostEntry(host);
+   return aliasRecord.HostName == desiredHost;  
+}

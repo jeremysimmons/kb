@@ -1,0 +1,13 @@
+https://stackoverflow.com/questions/43262046/azure-app-insights-sampling-itemcount
+
+This really depends on how/where your sampling occurred, as sampling could have occurred at 3 different places depending on how you have your app configured.
+
+There's a fair amount of documentation about the various layers of sampling, but hypothetically:
+
+The sampling algorithm decides which telemetry items to drop, and which ones to keep (whether it's in the SDK or in the Application Insights service). The sampling decision is based on several rules that aim to preserve all interrelated data points intact, maintaining a diagnostic experience in Application Insights that is actionable and reliable even with a reduced data set. For example, if for a failed request your app sends additional telemetry items (such as exception and traces logged from this request), sampling will not split this request and other telemetry. It either keeps or drops them all together. As a result, when you look at the request details in Application Insights, you can always see the request along with its associated telemetry items.
+
+Update: I got some more details from people on the team that do the sampling, and it works like this:
+
+Sampling ratio is determined by the number of events per second occurring in the app
+The AI SDK randomly selects requests to be sampled when the request begins (so, it is not known whether it will fail or succeed)
+AI SDK assigns itemCount=<sampling ratio>

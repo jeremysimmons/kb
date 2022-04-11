@@ -1,0 +1,69 @@
+https://www.red-gate.com/simple-talk/development/dotnet-development/the-dangers-of-the-large-object-heap/
+
+https://vimvq1987.com/debug-net-memory-dump-windbg-crash-course-part-1/
+https://vimvq1987.com/exploring-large-object-heap-windbg/
+.loadby sos clr
+.load D:\windbg\sosex.dll
+
+!dumpheap –stat
+
+So just pick something and try to see what in there. System.String seems to be interesting
+
+!dumpheap -mt 00007fff3cbcda88
+
+dumpheap comes with plenty of parameters, which you can try them yourselves:
+
+-min <size>: only shows the objects which are at least <size> in bytes
+-max <size>: only shows the objects which are at most <size> in bytes
+-type: as above (!dumpheap -stat -type TypeAcivatorCreator)
+-mt: as above
+
+!do or !dumpobj 
+!da or !dumparray
+
+There are two ways to track down an object. The first way is to the command !gcroot.
+
+!eeheap -gc
+
+
+To investigate the first one, we can simply use !dumpheap <Starting address of LOH>
+!dumpheap 0x000000e1224f1000
+
+unmanaged/general commands
+https://sites.google.com/site/taesaza0/etc/windbgcheatsheet
+
+sos.dll
+https://docs.microsoft.com/en-us/dotnet/core/diagnostics/sos-debugging-extension
+https://docs.microsoft.com/en-us/dotnet/framework/tools/sos-dll-sos-debugging-extension
+
+advanced
+https://mattwarren.org/2019/01/21/Stackwalking-in-the-.NET-Runtime/
+https://github.com/dotnet/coreclr/tree/master/Documentation/botr
+
+One of the many things that you end up having to do while debugging a program is displaying data types. While you probably know many of the basic commands like db, da, du, and soforth, one perhaps little-used command is useful for displaying a four or eight byte quantity in a number of different data types: the “.formats” command. This command is useful for viewing various primative/built-in data types, where you cannot display as a structure via the “dt” command.
+
+In particular, you can use .formats to translate a number of different data types into readable values, including floating point or various time formats (time_t if you provide a 32-bit value, or FILETIME if you give a 64-bit value). For instance:
+
+0:001> .formats 41414141
+Evaluate expression:
+  Hex:     41414141
+  Decimal: 1094795585
+  Octal:   10120240501
+  Binary:  01000001 01000001 01000001 01000001
+  Chars:   AAAA
+  Time:    Fri Sep 10 01:53:05 2004
+  Float:   low 12.0784 high 0
+  Double:  5.40901e-315
+The command also supports 64-bit filetime quantities:
+
+0:001> .formats 01010101`01010101
+Evaluate expression:
+  Hex:     01010101`01010101
+  Decimal: 72340172838076673
+  Octal:   0004010020040100200401
+  Binary:  00000001 00000001 00000001 00000001
+           00000001 00000001 00000001 00000001
+  Chars:   ........
+  Time:    Sun Mar 28 21:14:43.807 1830 (GMT-4)
+  Float:   low 2.36943e-038 high 2.36943e-038
+  Double:  7.7486e-304

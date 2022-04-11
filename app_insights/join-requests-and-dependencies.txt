@@ -1,0 +1,22 @@
+https://4pp1n51ght5.com/2016/03/31/cool-app-analytics-query-joining-requests-and-dependencies/
+
+requests
+| where timestamp > ago(1d)
+| project timestamp, operation_Id
+| join (dependencies
+        | where timestamp > ago(1d)
+        | summarize sum(duration) by operation_Id, type 
+        ) on operation_Id
+| summarize avg_duration_by_type=avg(sum_duration) by type, bin(timestamp, 20m)
+| render barchart
+
+
+requests 
+| project timestamp, id, operation_Name, success, resultCode, duration, operation_Id, cloud_RoleName, invocationId=customDimensions['InvocationId'] 
+| where cloud_RoleName =~ 'xxxx' and operation_Name == 'createCase' and resultCode == 400 
+| join (
+    traces
+    | union exceptions
+) on operation_Id
+| project-away operation_Id1
+| order by timestamp asc

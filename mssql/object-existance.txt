@@ -1,9 +1,11 @@
-IF (EXISTS (SELECT * 
-                 FROM INFORMATION_SCHEMA.TABLES 
-                 WHERE TABLE_SCHEMA = 'TheSchema' 
-                 AND  TABLE_NAME = 'TheTable'))
+If IndexProperty(Object_Id('MyTable'), 'MyIndex', 'IndexID') Is Null
+
+IF NOT EXISTS 
+(SELECT * FROM INFORMATION_SCHEMA.TABLES 
+ WHERE TABLE_SCHEMA = 'TheSchema' 
+ AND  TABLE_NAME = 'TheTable')
 BEGIN
-    --Do Stuff
+    --Do Stuff when the table doesn't yet exist
 END
 
 if not exists (select

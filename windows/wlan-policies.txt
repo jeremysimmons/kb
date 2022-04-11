@@ -1,0 +1,4 @@
+Wireless connection profiles delivered by policy are stored in the \Windows\wlansvc\Policies folder.
+
+To reset them, delete this folder, then restart the WLAN service.
+

@@ -1,0 +1,42 @@
+DELETE w
+FROM WorkRecord2 w
+INNER JOIN Employee e
+  ON EmployeeRun=EmployeeNo
+WHERE Company = '1' AND Date = '2013-05-06'
+
+   DELETE WorkRecord2 
+      FROM WorkRecord2 
+INNER JOIN Employee 
+        ON EmployeeRun=EmployeeNo
+     WHERE Company = '1' 
+       AND Date = '2013-05-06';
+
+
+Delete from the second table
+
+http://www.sqlfiddle.com/#!18/7c2ea/2
+
+
+CREATE TABLE WorkRecord2
+    ([EmployeeRun] int, [Date] datetime)
+;
+    
+INSERT INTO WorkRecord2
+    ([EmployeeRun], [Date])
+VALUES
+    (1, '2013-05-06 00:00:00'),
+    (2, '2014-08-22 00:00:00')
+;
+
+
+CREATE TABLE Employee
+    ([EmployeeNo] int, [Company] varchar(1), [Name] varchar(6))
+;
+    
+INSERT INTO Employee
+    ([EmployeeNo], [Company], [Name])
+VALUES
+    (1, '1', 'AA'),
+    (2, '1', 'BB'),
+    (3, '2', 'CC')
+;

@@ -1,0 +1,2 @@
+Capturing dumps on multiple instances automatically using procdumphelper
+https://techcommunity.microsoft.com/t5/apps-on-azure-blog/capturing-dumps-on-multiple-instances-automatically-using/ba-p/392394

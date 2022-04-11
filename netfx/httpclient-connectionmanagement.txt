@@ -1,0 +1,28 @@
+.NET <connectionManagement> can ruin your day
+https://deaddesk.top/connectionManagement-can-ruin-your-day/
+<configuration>  
+  <system.net>  
+    <connectionManagement>  
+      <add address = "http://www.contoso.com" maxconnection = "4" />  
+      <add address = "*" maxconnection = "2" />  
+    </connectionManagement>  
+  </system.net>  
+</configuration>  
+
+static void PrintOpenTcpConnections(object state)
+        {
+            var textHolder = (TextHolder)state;
+
+            IPGlobalProperties ipGlobalProperties = IPGlobalProperties.GetIPGlobalProperties();
+            TcpConnectionInformation[] tcpConnInfoArray = ipGlobalProperties.GetActiveTcpConnections();
+
+            var text = tcpConnInfoArray
+                .Where(tcpi => tcpi.RemoteEndPoint.Address.ToString() == _addressIp)
+                .Aggregate("", (acc, item) => $"{acc} \n Local: ${item.LocalEndPoint} Remote: ${item.RemoteEndPoint}");
+            if (text != string.Empty && textHolder.Text != text)
+            {
+                textHolder.Text = text;
+                Console.Write("\nTCP Connections:");
+                Console.WriteLine(text);
+            }
+        }

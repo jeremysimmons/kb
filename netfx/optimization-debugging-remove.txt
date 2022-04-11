@@ -1,0 +1,19 @@
+https://sitecorevn.blogspot.com/2015/04/debugging-optimized-managed-code-in.html [sitecorevn.blogspot.com]
+
+Debugging optimized managed code in asp.net.
+[.NET Framework Debugging Control]
+GenerateTrackingInfo=1
+AllowOptimize=0
+
+DLLs are actually in C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files
+Run this from that directory to update the ini for all the dlls in that location
+
+Get-ChildItem (Get-Item -Path ".\" -Verbose).FullName -Filter *.dll | 
+Foreach-Object{
+    $newName = $_.DirectoryName +"\"+ [System.IO.Path]::GetFileNameWithoutExtension($_) + ".ini"
+    "[.NET Framework Debugging Control]
+    GenerateTrackingInfo=1
+    AllowOptimize=0" | Out-File $newName
+    Write-host $newName
+}
+

@@ -25,6 +25,7 @@ nameresolver google.com
 nameresolver google.com 8.8.8.8
 
 SET WEBSITE_DNS_ : This command will output the current DNS server that is being used by the web app. If the error Environment variable WEBSITE_DNS_ not defined is received, no custom DNS servers are configured for the web app.
-thumbnail image 3 of blog post titled 
-	
-Networking Related Commands for Azure App Services
+example
+set WEBSITE_DNS_
+WEBSITE_DNS_ALT_SERVER=10.3.10.43
+WEBSITE_DNS_SERVER=10.3.10.42
