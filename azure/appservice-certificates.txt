@@ -1,0 +1,48 @@
+https://docs.microsoft.com/en-us/azure/app-service/configure-ssl-certificate-in-code
+
+WEBSITE_LOAD_CERTIFICATES = comma separated thumbprints
+WEBSITE_LOAD_CERTIFICATES = *
+WEBSITE_LOAD_USER_PROFILE = 1
+
+using System;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+
+string certThumbprint = "E661583E8FABEF4C0BEF694CBC41C28FB81CD870";
+bool validOnly = false;
+
+using (X509Store certStore = new X509Store(StoreName.My, StoreLocation.CurrentUser))
+{
+  certStore.Open(OpenFlags.ReadOnly);
+
+  X509Certificate2Collection certCollection = certStore.Certificates.Find(
+                              X509FindType.FindByThumbprint,
+                              // Replace below with your certificate's thumbprint
+                              certThumbprint,
+                              validOnly);
+  // Get the first cert with the thumbprint
+  X509Certificate2 cert = certCollection.OfType<X509Certificate2>().FirstOrDefault();
+
+  if (cert is null)
+      throw new Exception($"Certificate with thumbprint {certThumbprint} was not found");
+
+  // Use certificate
+  Console.WriteLine(cert.FriendlyName);
+  
+  // Consider to call Dispose() on the certificate after it's being used, avaliable in .NET 4.6 and later
+}
+
+
+https://docs.microsoft.com/en-gb/archive/blogs/karansingh/azure-app-services-how-to-determine-if-the-client-certificate-is-loaded
+
+Check for the application setting and see if WEBSITE_LOAD_CERTIFICATES is present or not. (This is required to load the client certificates for application)
+1
+
+Open Azure Portal, go to Advance tools-> Click on Go
+Select Debug console-> PowerShell
+Run command “cd cert:\currentuser\my”
+Run command “dir”
+It should list down all the certificates loaded for this application. (Note: Please make sure that application setting WEBSITE_LOAD_CERTIFICATES is present)
+
+
+https://paulstovell.com/x509certificate2/
