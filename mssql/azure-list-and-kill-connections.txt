@@ -1,0 +1,31 @@
+com.microsoft.sqlserver.jdbc.SQLServerException: Resource ID : 1. The request limit for the database is 200 and has been reached. See 'http://go.microsoft.com/fwlink/?LinkId=267637' for assistance
+
+To see existing connections on Azure SQL DB I use this query:
+
+SELECT
+    c.session_id, c.net_transport, c.encrypt_option,
+    s.status,
+    c.auth_scheme, s.host_name, s.program_name,
+    s.client_interface_name, s.login_name, s.nt_domain,
+    s.nt_user_name, s.original_login_name, c.connect_time,
+    s.login_time
+FROM sys.dm_exec_connections AS c
+JOIN sys.dm_exec_sessions AS s
+    ON c.session_id = s.session_id
+--WHERE c.session_id = @@SPID;
+--WHERE status = 'sleeping'
+ORDER BY c.connect_time ASC
+To KILL all connections except mine (SPID) I use this query:
+
+DECLARE @kill varchar(8000) = '';
+
+SELECT @kill = @kill + 'KILL ' + CONVERT(varchar(5), c.session_id) + ';'
+
+FROM sys.dm_exec_connections AS c
+JOIN sys.dm_exec_sessions AS s
+    ON c.session_id = s.session_id
+WHERE c.session_id <> @@SPID
+--WHERE status = 'sleeping'
+ORDER BY c.connect_time ASC
+
+EXEC(@kill)

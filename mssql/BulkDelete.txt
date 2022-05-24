@@ -1,0 +1,30 @@
+--Enable minimaly logged (careful for log chain and aoag)
+DBCC TRACEON(610, -1);
+DECLARE @myContinue BIT
+DECLARE @myRowCount INT
+DECLARE @myLoopCount INT
+DECLARE @myBatchCount int
+SET NOCOUNT ON;
+SET @myContinue = 1
+SET @myLoopCount=1
+SET @myBatchCount=10000
+WHILE @myContinue = 1
+BEGIN
+  --Retrive First x Records only (Deleting Records in batch of x numbers)
+  SET ROWCOUNT @myBatchCount  
+    PRINT CAST(@myLoopCount AS NVARCHAR(10)) + N' START:' + CAST(GETDATE() as nvarchar(50))
+    BEGIN TRANSACTION
+    DELETE FROM [dbo].[tesrdel]
+    --Count number of affected records for determining EOF
+  SET @myRowCount = @@rowcount 
+    COMMIT
+  PRINT CAST(@myLoopCount AS NVARCHAR(10)) + N' END:' + CAST(GETDATE() as nvarchar(50))
+  SET @myLoopCount=@myLoopCount+1
+    --IF EOF
+  IF @myRowCount<@myBatchCount 
+    BEGIN
+        SET @myContinue = 0
+    END
+END
+--Disable minimally logged
+DBCC TRACEOFF(610, -1);
