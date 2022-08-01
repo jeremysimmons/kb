@@ -1,0 +1,13 @@
+This answer is useful
+5
+
+So now I end up answering my own question as I just have found a super simple solution that actually works:
+
+this.httpclient = new HttpClient();
+var sp = ServicePointManager.FindServicePoint(new Uri(url));
+sp.SetTcpKeepAlive(true, 30000, 30000);
+result = await this.httpclient.GetAsync(url);
+In fact I used
+
+var sp = ServicePointManager.FindServicePoint(new Uri(baseUrl));
+where baseUrl is the common document root of all my requests I am sending through a for loop.
