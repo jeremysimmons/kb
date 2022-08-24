@@ -1,0 +1,13 @@
+SELECT
+  COUNT(*) AS unfiltered,
+  SUM( CASE WHEN i < 5 THEN 1 ELSE 0 END ) AS filtered
+FROM generate_series(1,10) AS s(i);
+
+It will count every case in unfiltered counter and when i < 5 it will sum 1 to the filtered counter. This is how I’ve coded many times in my reports.
+
+more elegant syntax
+
+SELECT
+  COUNT(*) AS unfiltered,
+  COUNT(*) FILTER (WHERE i < 5) AS filtered
+FROM generate_series(1,10) AS s(i);
