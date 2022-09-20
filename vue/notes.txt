@@ -315,3 +315,13 @@ changes from oninput to onchange
 
 chaining modifiers
 <input v-model.lazy.trim="query" placeholder="2+3=">
+
+
+npm install -g @vue/cli
+
+vue create real-world-vue
+
+cd real-world-vue
+yarn run serve
+
+vue ui
