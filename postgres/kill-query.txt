@@ -1,0 +1,16 @@
+How to stop/kill a query in postgresql
+
+SELECT pid , query, * from pg_stat_activity
+  WHERE state != 'idle' ORDER BY xact_start;
+or
+
+SELECT * FROM pg_stat_activity WHERE state = 'active';
+
+Find the process you want to kill, then type:
+
+SELECT pg_cancel_backend(<pid of the process>)
+This basically "starts" a request to terminate gracefully, which may be satisfied after some time, though the query comes back immediately.
+
+If the process cannot be killed, try:
+
+SELECT pg_terminate_backend(<pid of the process>)

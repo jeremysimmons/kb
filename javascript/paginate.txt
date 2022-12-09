@@ -1,0 +1,35 @@
+https://ilikekillnerds.com/2020/09/how-to-paginate-an-array-in-javascript/
+
+const paginate = (items, page = 1, perPage = 10) => {
+    const offset = perPage * (page - 1);
+    const totalPages = Math.ceil(items.length / perPage);
+    const paginatedItems = items.slice(offset, perPage * page);
+  
+    return {
+        previousPage: page - 1 ? page - 1 : null,
+        nextPage: (totalPages > page) ? page + 1 : null,
+        total: items.length,
+        totalPages: totalPages,
+        items: paginatedItems
+    };
+};
+
+https://shouts.dev/articles/easiest-way-to-paginate-an-array-in-javascript
+function paginator(items, current_page, per_page_items) {
+	let page = current_page || 1,
+	per_page = per_page_items || 10,
+	offset = (page - 1) * per_page,
+
+	paginatedItems = items.slice(offset).slice(0, per_page_items),
+	total_pages = Math.ceil(items.length / per_page);
+
+	return {
+		page: page,
+		per_page: per_page,
+		pre_page: page - 1 ? page - 1 : null,
+		next_page: (total_pages > page) ? page + 1 : null,
+		total: items.length,
+		total_pages: total_pages,
+		data: paginatedItems
+	};
+}

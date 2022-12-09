@@ -1,0 +1,1 @@
+sudo sed -i "s/archive.ubuntu.com/us.archive.ubuntu.com/" /etc/apt/sources.list

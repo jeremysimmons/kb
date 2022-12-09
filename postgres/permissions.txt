@@ -1,0 +1,73 @@
+Listing users using SQL statement
+https://www.postgresqltutorial.com/postgresql-administration/postgresql-list-users/
+SELECT usename AS role_name,
+  CASE 
+     WHEN usesuper AND usecreatedb THEN 
+     CAST('superuser, create database' AS pg_catalog.text)
+     WHEN usesuper THEN 
+      CAST('superuser' AS pg_catalog.text)
+     WHEN usecreatedb THEN 
+      CAST('create database' AS pg_catalog.text)
+     ELSE 
+      CAST('' AS pg_catalog.text)
+  END role_attributes
+FROM pg_catalog.pg_user
+ORDER BY role_name desc;
+
+List Users And Roles
+https://www.folkstalk.com/2022/09/postgres-list-users-and-roles-with-code-examples.html
+SELECT r.rolname, r.rolsuper, r.rolinherit,
+  r.rolcreaterole, r.rolcreatedb, r.rolcanlogin,
+  r.rolconnlimit, r.rolvaliduntil,
+  ARRAY(SELECT b.rolname
+        FROM pg_catalog.pg_auth_members m
+        JOIN pg_catalog.pg_roles b ON (m.roleid = b.oid)
+        WHERE m.member = r.oid) as memberof
+, r.rolreplication
+, r.rolbypassrls
+FROM pg_catalog.pg_roles r
+WHERE r.rolname !~ '^pg_'
+ORDER BY 1;
+
+List Roles
+SELECT rolname FROM pg_roles;
+
+table permissions:
+SELECT grantor, grantee, table_schema, table_name, privilege_type
+FROM information_schema.table_privileges
+
+Ownership:
+select 
+   * 
+from pg_tables 
+where tableowner = 'YOUR_USER'
+;
+
+Schema Permissions:
+select e.usename as grantee, r.usename as grantor, nspname, privilege_type, is_grantable
+from pg_namespace
+join lateral (
+  SELECT
+    *
+  from
+    aclexplode(nspacl) as x
+) a on true
+join pg_user e on a.grantee = e.usesysid
+join pg_user r on a.grantor = r.usesysid;
+
+
+SELECT grantee AS user, CONCAT(table_schema, '.', table_name) AS table,
+    CASE
+        WHEN COUNT(privilege_type) = 7 THEN 'ALL'
+        ELSE ARRAY_TO_STRING(ARRAY_AGG(privilege_type), ', ')
+    END AS grants
+FROM information_schema.role_table_grants
+GROUP BY table_name, table_schema, grantee
+order by "user";
+
++------+--------------+----------------+
+| user |    table     |     grants     |
++------+--------------+----------------+
+| foo  | schema.table | ALL            |
+| bar  | schema.table | SELECT, INSERT |
++------+--------------+----------------+

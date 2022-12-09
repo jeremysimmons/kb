@@ -1,0 +1,8 @@
+https://stackoverflow.com/questions/23545695/group-mysql-results-by-every-30-days
+
+SELECT
+    COUNT(id) as amount,
+    (((datediff(expire, buydate) DIV 30) + 1) * 30) as timegroup
+FROM
+    table
+GROUP BY timegroup;

@@ -1,0 +1,76 @@
+https://aws.amazon.com/blogs/database/scram-authentication-in-rds-for-postgresql-13/
+
+pg_dumpall --roles-only
+
+ALTER SYSTEM SET password_encryption = 'scram-sha-256';
+SELECT pg_reload_conf();
+
+Create a user with the password you need to encode.
+
+CREATE USER tmp_user_to_create_a_password
+WITH PASSWORD 'your_password';
+Read the password with SCRAM encryption.
+
+SELECT rolpassword
+FROM pg_catalog.pg_authid
+WHERE rolname='tmp_user_to_create_a_password';
+Drop the user
+
+DROP USER IF EXISTS tmp_user_to_create_a_password;
+Now you can create your user without using plain text.
+
+CREATE USER user_name
+WITH PASSWORD 'SCRAM-SHA-256$4096:3Lctb6GmH15cSO4bjcDsXg==$BSuI1c10J+NZ/Wmx4hwP4TvpdKEO9rl2hekZ8/DVuyA=:j8G9NJ30Xbz3Za2mjXF/j6O3DJbWyqvX886haFe4aCs=';
+GRANT CONNECT ON DATABASE database_name TO user_name;
+
+https://stackoverflow.com/questions/17429040/creating-user-with-encrypted-password-in-postgresql
+psql postgres
+create role foo with encrypted password foobar;
+\q
+
+echo -n abcdefgehoffman | md5
+95eebfcce27162773a3828689df9d79e
+CREATE ROLE ehoffman LOGIN INHERIT ENCRYPTED PASSWORD 'md595eebfcce27162773a3828689df9d79e';
+
+ALTER ROLE ehoffman ENCRYPTED PASSWORD 'md595eebfcce27162773a3828689df9d79e';
+
+-- View the role from pg_dumpall -g
+pg_dumpall -g | grep foo
+CREATE ROLE foo;
+ALTER ROLE foo WITH NOSUPERUSER INHERIT NOCREATEROLE NOCREATEDB NOLOGIN NOREPLICATION PASSWORD 'md5c98cbfeb6a347a47eb8e96cfb4c4b890';
+
+Or get it from:
+select * from pg_catalog.pg_shadow;
+
+-- create the role again with the already-encrypted password
+psql postgres
+drop role foo;
+CREATE ROLE foo;
+ALTER ROLE foo WITH NOSUPERUSER INHERIT NOCREATEROLE NOCREATEDB NOLOGIN NOREPLICATION PASSWORD 'md5c98cbfeb6a347a47eb8e96cfb4c4b890';
+\q
+
+-- view the ROLE with the same password
+pg_dumpall -g | grep foo
+CREATE ROLE foo;
+ALTER ROLE foo WITH NOSUPERUSER INHERIT NOCREATEROLE NOCREATEDB NOLOGIN NOREPLICATION PASSWORD 'md5c98cbfeb6a347a47eb8e96cfb4c4b890';
+Docs for CREATE ROLE
+
+https://www.dbrnd.com/2015/10/postgresql-script-to-create-a-read-only-database-user/
+
+Create the Read-Only user:
+CREATE ROLE Read_Only_User WITH LOGIN PASSWORD 'Test1234' 
+NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION VALID UNTIL 'infinity';
+
+Assign permissions to the read only user:
+GRANT CONNECT ON DATABASE YourDatabaseName TO Read_Only_User;
+GRANT USAGE ON SCHEMA public TO Read_Only_User;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO Read_Only_User;
+GRANT SELECT ON ALL SEQUENCES IN SCHEMA public TO Read_Only_User;
+
+GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO Read_Only_User;
+
+https://knowledge.informatica.com/s/article/HOW-TO-Configure-Audit-Object-Permissions-in-PostgreSQL-for-Axon?language=en_US
+https://aws.amazon.com/blogs/database/managing-postgresql-users-and-roles/
+
+https://docs.amazonaws.cn/en_us/service-authorization/latest/reference/list_amazonrdsiamauthentication.html
+
