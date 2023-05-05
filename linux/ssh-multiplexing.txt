@@ -1,0 +1,5 @@
+Host *
+ControlPath ~/.ssh/socket-%C
+ControlMaster auto
+ControlPersist 10m
+

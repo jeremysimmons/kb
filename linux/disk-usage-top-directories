@@ -2,4 +2,7 @@ Disk usage for just the top level dirs
 
 du -h -d1 ./
 
+du -cBM --max-depth=1 2> >(grep -v 'Permission denied') | sort -n 
+
 tips: https://til.hashrocket.com/posts/3bddbf0d9f-disk-usage-for-just-the-top-level-dirs
+

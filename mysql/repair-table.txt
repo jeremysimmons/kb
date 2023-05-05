@@ -1,0 +1,4 @@
+check table [yourtablename];
+repair table [yourtablename];
+
+wp_simple_history_contexts

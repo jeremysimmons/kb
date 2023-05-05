@@ -1,5 +1,5 @@
 find largest files
-find . -type f -exec du --human {} + | sort --human --reverse | head
+find . -type f -exec du --human {} + | sort --human --reverse | head -n 50 | awk '{sum+=$1} END {print sum}'
 
 find . -type f -exec du -a {} +
 

@@ -1,0 +1,99 @@
+https://rudrastyh.com/wordpress/custom-bulk-actions.html
+
+<?php
+/**
+ * Create Custom Bulk Actions for WordPress Posts
+ *
+ * @author Misha Rudrastyh
+ * @link https://rudrastyh.com/wordpress/custom-bulk-actions.html
+ */
+// add to dropdown
+add_filter( 'bulk_actions-edit-post', 'rudr_my_bulk_actions' );
+function rudr_my_bulk_actions( $bulk_array ) {
+
+	$bulk_array[ 'misha_make_draft' ] = 'Make draft';
+	$bulk_array[ 'misha_set_price_1000' ] = 'Set price to $1000';
+	return $bulk_array;
+
+}
+
+// process the action
+add_filter( 'handle_bulk_actions-edit-post', 'rudr_bulk_action_handler', 10, 3 );
+function rudr_bulk_action_handler( $redirect, $doaction, $object_ids ) {
+
+	// let's remove query args first
+	$redirect = remove_query_arg(
+		array( 'bulk_make_draft', 'bulk_price_changed' ),
+		$redirect
+	);
+
+	// do something for "Make Draft" bulk action
+	if ( 'misha_make_draft' === $doaction ) {
+
+		foreach ( $object_ids as $post_id ) {
+			wp_update_post(
+				array(
+					'ID' => $post_id,
+					'post_status' => 'draft' // set status
+				)
+			);
+		}
+
+		// do not forget to add query args to URL because we will show notices later
+		$redirect = add_query_arg(
+			'bulk_make_draft', // just a parameter for URL
+			count( $object_ids ), // how many posts have been selected
+			$redirect
+		);
+
+	}
+
+	// do something for "Set price to $1000" bulk action
+	if ( 'misha_set_price_1000' === $doaction ) {
+		foreach ( $object_ids as $post_id ) {
+			update_post_meta( $post_id, 'product_price', 1000 );
+		}
+		$redirect = add_query_arg(
+			'bulk_price_changed',
+			count( $object_ids ),
+			$redirect
+		);
+	}
+
+	return $redirect;
+
+}
+
+// display messages
+add_action( 'admin_notices', 'rudr_bulk_action_notices' );
+function rudr_bulk_action_notices() {
+
+	// first of all we have to make a message,
+	// of course it could be just "Posts updated." like this:
+	if( ! empty( $_REQUEST[ 'bulk_make_draft' ] ) ) {
+		?>
+			<div class="updated notice is-dismissible">
+				<p>Posts updated.</p>
+			</div>
+		<?php
+	}
+
+	// but you can create an awesome message
+	if( ! empty( $_REQUEST[ 'bulk_price_changed' ] ) ) {
+
+		$count = (int) $_REQUEST[ 'bulk_price_changed' ];
+		// depending on ho much posts were changed, make the message different
+		$message = sprintf(
+			_n(
+				'Price of %d product has been changed.',
+				'Price of %d products has been changed.',
+				$count
+			),
+			$count
+		);
+
+		echo "<div class=\"updated notice is-dismissible\"><p>{$message}</p></div>";
+
+	}
+
+}

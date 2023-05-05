@@ -1,0 +1,64 @@
+https://stackoverflow.com/questions/57526737/current-level-navigation-in-wordpress
+
+https://wordpress.stackexchange.com/questions/113592/get-menu-names-and-same-depth-level-menu-names
+
+
+Check if the page has a parent <?php if($post->post_parent) ?>
+Something like <?php echo $post->post_parent; ?>
+Something like <a href="<?php the_permalink() ?>"><?php the_title(); ?></a>
+Something like the code below, then apply your solution for turning it into a dropdown.
+
+
+https://developer.wordpress.org/reference/functions/wp_list_pages/
+https://developer.wordpress.org/reference/functions/wp_page_menu/
+
+<?php
+  $children = wp_list_pages("title_li=&child_of=".$post->ID."&echo=0");
+  if ($children) { ?>
+  <ul>
+  <?php echo $children; ?>
+  </ul>
+  <?php } ?>
+
+List Subpages
+wp_list_pages( array(
+        'title_li'    => '',
+        'child_of'    => $post->ID,
+        'show_date'   => 'modified',
+        'date_format' => $date_format
+    ) );
+
+
+list only if there are child pages (pages that designate the current page as a parent) for the current page:
+
+<?php
+$children = wp_list_pages( 'title_li=&child_of='.$post->ID.'&echo=0' );
+if ( $children) : ?>
+    <ul>
+        <?php echo $children; ?>
+    </ul>
+<?php endif; ?>
+
+
+show the child pages, and only the child pages, when on a parent or on one of the children.
+<?php
+if ( $post->post_parent ) {
+    $children = wp_list_pages( array(
+        'title_li' => '',
+        'child_of' => $post->post_parent,
+        'echo'     => 0
+    ) );
+} else {
+    $children = wp_list_pages( array(
+        'title_li' => '',
+        'child_of' => $post->ID,
+        'echo'     => 0
+    ) );
+}
+ 
+if ( $children ) : ?>
+    <ul>
+        <?php echo $children; ?>
+    </ul>
+<?php endif; ?>
+

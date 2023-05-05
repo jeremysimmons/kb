@@ -34,3 +34,7 @@ https://perfmatters.io/ [commercial]
 
 [recovery]
 https://github.com/stracker-phil/wp-no-white-screen
+
+[debug]
+https://wordpress.org/plugins/query-monitor/
+https://wordpress.org/plugins/what-the-file/

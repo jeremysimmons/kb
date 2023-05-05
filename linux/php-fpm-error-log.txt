@@ -1,0 +1,3 @@
+https://stackoverflow.com/questions/8677493/php-fpm-doesnt-write-to-error-log
+
+truncate -s 0 /var/log/php-fpm/www-error.log

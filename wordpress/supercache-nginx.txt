@@ -1,0 +1,4 @@
+https://wordpress.org/plugins/wp-super-cache/
+https://easyengine.io/wordpress-nginx/tutorials/single-site/wp-super-cache/
+https://github.com/vstoykovbg/nginx.conf-examples/blob/master/wp-super-cache-nginx.conf.md
+https://medium.com/myatus/faster-wp-super-cache-with-nginx-e8f1d9b722cf

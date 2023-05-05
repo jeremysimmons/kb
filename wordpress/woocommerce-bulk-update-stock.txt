@@ -1,0 +1,26 @@
+_manage_stock
+yes
+
+SELECT distinct meta_key, meta_value FROM `wpf2_postmeta` where meta_key like '%stock%'
+
+
+meta_key in ('_stock', '_stock_status', '_manage_stock')
+and (meta_key = '_manage_stock' and meta_value != 'no')
+limit 100
+
+
+_stock_status
+outofstock
+
+
+instock
+
+UPDATE `wpf2_postmeta` set meta_value = 'instock' where meta_value = 'outofstock' and meta_key = '_stock_status'
+
+
+UPDATE `wpf2_postmeta` set meta_value = 'no' where meta_value = 'yes' and meta_key = '_manage_stock'
+
+
+DELETE FROM `wpf2_postmeta` where meta_key = '_order_stock_reduced'
+
+DELETE FROM `wpf2_postmeta` where meta_key = '_stock'

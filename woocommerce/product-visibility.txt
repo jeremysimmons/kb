@@ -1,0 +1,29 @@
+add_filter( 'manage_edit-product_columns', 'show_product_order',15 );
+function show_product_order($columns){
+
+   //remove column
+   unset( $columns['tags'] );
+
+   //add column
+   $columns['offercode'] = __( 'Offer Code'); 
+
+   return $columns;
+}
+
+add_action( 'manage_product_posts_custom_column', 'wpso23858236_product_column_offercode', 10, 2 );
+
+function wpso23858236_product_column_offercode( $column, $postid ) {
+    if ( $column == 'offercode' ) {
+        echo get_post_meta( $postid, 'offercode', true );
+    }
+}
+
+wp_set_object_terms( $prd->ID, 'featured', 'product_visibility' );
+
+get_catalog_visibility
+
+stock (in-stock / out of stock)
+get_stock_status
+outofstock
+onbackorder
+instock

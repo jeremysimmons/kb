@@ -1,0 +1,23 @@
+- ionic serve to see your app in the browser
+- ionic capacitor add ios or ionic capacitor add android to add a native iOS or Android project using Capacitor
+- Generate your app icon and splash screens using cordova-res --skip-config --copy
+https://ion.link/docs
+
+npm install @capacitor/camera @capacitor/preferences @capacitor/filesystem
+
+
+ionic build
+
+one-time
+ionic cap add ios
+ionic cap add android
+
+Every time you perform a build (e.g. ionic build) that updates your web directory (default: build), you'll need to copy those changes into your native projects:
+
+
+ionic cap copy
+
+Note: After making updates to the native portion of the code (such as adding a new plugin), use the sync command:
+
+
+ionic cap sync
