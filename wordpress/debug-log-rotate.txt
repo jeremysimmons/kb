@@ -1,0 +1,1 @@
+ini_set( 'error_log', WP_CONTENT_DIR . '/debug-' . date('Y-m-d') . '.log' );
