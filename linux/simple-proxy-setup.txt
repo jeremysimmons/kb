@@ -1,0 +1,34 @@
+sudo apt-get install -y simpleproxy
+sudo apt-get install tcptraceroute
+
+sudo vi /etc/systemd/system/simpleproxyasdm.service
+
+sudo vi /etc/systemd/system/simpleproxy.service
+
+```
+[Service]
+Type=simple
+ExecStart=/usr/bin/simpleproxy -L 443 -R 65.158.153.186:8123
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
+[Unit]
+Description=Simple Proxy
+After=network.target
+```
+
+simpleproxy -L 433 -R 65.158.153.186:8123
+
+
+lsof -i 
+
+
+sudo nmap -sT -O localhost
+
+
+systemctl start simpleproxy
+systemctl status simpleproxy
+sudo systemctl stop simpleproxy
+systemctl restart simpleproxy

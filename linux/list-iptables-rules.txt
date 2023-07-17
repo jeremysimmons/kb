@@ -1,0 +1,16 @@
+How to list all iptables rules on Linux
+
+
+Open the terminal app or login using ssh command:
+ssh user@server-name
+To list all IPv4 rules:
+sudo iptables -S
+Get list of all IPv6 rules:
+sudo ip6tables -S
+To list all tables rules:
+sudo iptables -L -v -n | more
+Just list all rules for INPUT tables:
+sudo iptables -L INPUT -v -n
+sudo iptables -S INPUT
+
+https://www.cyberciti.biz/faq/how-to-list-all-iptables-rules-in-linux/
