@@ -1,0 +1,10 @@
+MySQL – How to drop all tables starting with a prefix?
+
+SELECT CONCAT('DROP TABLE ', TABLE_SCHEMA, '.', TABLE_NAME, ';')
+FROM INFORMATION_SCHEMA.TABLES
+WHERE TABLE_NAME LIKE 'prefix%' AND TABLE_SCHEMA = 'my_database'
+INTO outfile '/tmp/drop_my_tables.sql';
+
+SOURCE /tmp/drop_my_tables.sql;
+
+https://www.algotech.solutions/shorts/mysql-how-to-drop-all-tables-starting-with-a-prefix/

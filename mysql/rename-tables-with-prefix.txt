@@ -1,0 +1,13 @@
+SET @database  = "databasename";
+SET @oldprefix = "oldprefix_";
+SET @newprefix = "newprefix_";
+ 
+SELECT
+    concat(
+        "RENAME TABLE ",
+        TABLE_NAME,
+        " TO ",
+        replace(TABLE_NAME, @oldprefix, @newprefix),
+        ';'
+    ) AS "SQL"
+FROM information_schema.TABLES WHERE TABLE_SCHEMA = @database;
