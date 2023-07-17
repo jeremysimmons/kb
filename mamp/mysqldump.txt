@@ -1,0 +1,1 @@
+mysqldump -u root -p -S /Applications/MAMP/tmp/mysql/mysql.sock --column-statistics=0 idaho > idaho.sql
