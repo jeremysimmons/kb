@@ -1,0 +1,40 @@
+@Entity
+@Table(name = "orders")
+public class Order {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_id")
+    private long orderId;
+
+    @Column(name = "product_type")
+    private String productType;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "order_date")
+    private Date orderDate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "order_status")
+    private Status orderStatus;
+
+    @Transient
+    private String orderProgress;
+
+}
+
+TemporalType.TIMESTAMP: used to specify that the temporal data is a timestamp value.
+TemporalType.DATE: used to specify that only the date portion is required.
+TemporalType.TIME: used to specify that only the time portion is required.
+
+
+public enum Status{
+    SHIPPED,
+    PENDING,
+    RECEIVED
+}
+
+AUTO: this option allows JPA to pick any strategy for generating the ID that it deems appropriate;
+IDENTITY: this option allows a generation of values to use a database identity, such as AUTO_INCREMENT;
+SEQUENCE: this option allows a generation of values to use a database sequence;
+TABLE: this option allows a generation of values to use an underlying database table to ensure uniqueness.

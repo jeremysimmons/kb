@@ -1,0 +1,32 @@
+public class UserProfile {
+
+    @NotNull(message = "Login must be not null.")
+    @Size(min = 3, message = "Login must contain at least three characters.")
+    private String login;
+
+    @NotNull(message = "Password must be not null.")
+    @Size(min = 5, message = "Password must contain at least five characters.")
+    private String password;
+
+    @NotNull(message = "Email must be not null.")
+    @Email(message = "Email is invalid.")
+    private String email;
+
+    // getters and setters
+}
+
+@RestController
+@Validated
+public class UserProfileController {
+
+    @GetMapping("/users/{login}")
+    ResponseEntity<String> getUserByLogin(
+            @PathVariable("login") @Size(min = 3) String login) {
+        return ResponseEntity.ok("User id is valid.");
+    }
+
+    @PostMapping("/users")
+    public ResponseEntity<String> addNewUserProfile(@RequestBody @Valid UserProfile user) {
+        return ResponseEntity.ok("User info is valid.");
+    }
+}

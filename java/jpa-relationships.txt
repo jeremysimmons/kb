@@ -1,0 +1,71 @@
+One-to-One relationships
+
+@Entity
+public class User {
+    
+    @Id
+    private long id;
+    
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserDetails user_details;
+
+}
+
+@Entity 
+public class UserDetails {
+    
+    private long user_id;
+    
+    @Id
+    private long user_detail_id;
+    
+    private String name;
+    private String location;
+    private String email;
+    
+}
+
+Unidirectional One-to-Many relationships
+@Entity
+public class User {
+
+    @Id
+    private long id;
+
+    @OneToMany
+    @JoinColumn(name = "user_id", nullable = false)
+    private List<Tweet> tweets = new ArrayList<>();
+}
+
+@Entity
+public class Tweet {
+
+    @Id
+    @Column(name = "tweet_id")
+    private long id;
+}
+
+Bidirectional Many-to-One relationships
+
+@Entity
+public class Tweet {
+
+    @Id
+    @Column(name = "tweet_id")
+    private long id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+}
+@Entity
+public class User {
+
+    @Id
+    private long id;
+
+    @OneToMany(mappedBy = "user")
+    private List<Tweet> tweets = new ArrayList<>();
+
+}

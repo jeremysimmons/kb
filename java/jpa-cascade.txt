@@ -1,0 +1,45 @@
+JPA entity states
+transient (new keyword)
+EntityManager
+- detach ( stop an object from being managed by the EntityManager)
+- remove (removed from the persistent database)
+- merge (attach a previously detached entity to an EntityManager)
+
+ALL - propagate all operations from a parent entity to a child entity
+PERSIST
+MERGE
+REMOVE
+REFRESH
+DETACH
+
+@Service
+public class SampleService {
+
+    @Autowired
+    EntityManagerFactory entityManagerFactory;
+
+    public void saveCustomer() {
+        Customer customer = new Customer();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.persist(customer);
+    }
+}
+
+
+public void saveCustomer() {
+    EntityManager entityManager = EntityManagerFactory.createEntityManager();
+    entityManager.getTransaction().begin();
+
+    Customer cust = new Customer();
+    cust.setCustomerName("name");
+        
+    Order order = new Order();
+    order.setOrderCost(4.52);
+    order.setCustomer(cust);
+
+    cust.setOrders(List.of(order));
+
+    entityManager.persist(cust);
+    entityManager.getTransaction().commit();
+
+}
