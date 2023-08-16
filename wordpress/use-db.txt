@@ -1,0 +1,23 @@
+https://stackoverflow.com/a/5418972/26877
+
+./wp-content/db.php
+
+
+
+<?php
+
+class DB extends wpdb
+{
+  protected static $instance = null;
+
+  public static function getInstance()
+  {
+    if (!self::$instance) {
+      self::$instance = new DB(DB_USER, DB_PASSWORD, DB_NAME, DB_HOST);
+    }
+
+    return self::$instance;
+  }
+}
+
+$wpdb = DB::getInstance();

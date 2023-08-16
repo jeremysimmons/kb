@@ -1,0 +1,45 @@
+https://rudrastyh.com/woocommerce/create-product-variations-programmatically.html
+https://rudrastyh.com/woocommerce/create-product-programmatically.html
+
+$product = new WC_Product_Simple();
+$product->set_name( 'Wizard Hat' ); // product title
+$product->set_slug( 'medium-size-wizard-hat-in-new-york' );
+$product->set_regular_price( 500.00 ); // in current shop currency
+$product->set_short_description( '<p>Here it is... A WIZARD HAT!</p><p>Only here and now.</p>' );
+$product->set_description( 'long description here...' );
+$product->set_image_id( 90 );
+
+// let's suppose that our 'Accessories' category has ID = 19 
+$product->set_category_ids( array( 19 ) );
+// you can also use $product->set_tag_ids() for tags, brands etc
+
+$product->save();
+
+$variation = new WC_Product_Variation();
+$variation->set_parent_id( $product_id );
+$variation->set_attributes( array( 'attribute_magical' => 'Yes' ) );
+$variation->set_regular_price( 50 );
+$variation->save();
+
+How to check if a variation with specific attributes already exists? 
+
+
+$variations = $product->get_available_variations();
+foreach( $variations as $variation ) {
+	
+	if( 
+		$variation[ 'sku' ] == $variation_sku 
+		|| ! array_diff_assoc( $variation_attributes, $variation[ 'attributes' ] )
+	) {
+		$variation_id = $variation[ 'variation_id' ];
+		break;
+	}
+	
+}
+if( ! empty( $variation_id ) ) {
+	// Update variation	
+} else {
+	// Create variation
+}
+
+$variation = wc_get_product_object( 'variation', $variation_id );

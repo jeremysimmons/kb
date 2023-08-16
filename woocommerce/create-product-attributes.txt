@@ -1,0 +1,40 @@
+https://kevinruscoe.medium.com/woocommerce-and-mysterious-product-attributes-fffc2014f4b2
+https://wordpress.stackexchange.com/a/303722/178755
+// Add global attributes.
+$global_attributes = ['Size', 'Colour'];
+foreach ($global_attributes as $global_attribute) {
+  wc_create_attribute([
+    'name' => $global_attribute,
+    'type' => 'text',
+  ]);
+}
+// Add product.
+$product_attributes = [
+  'Size' => 'Small',
+  'Colour' => 'Red',
+  'Rating' => '5 Star!'
+];
+$product = new WC_Product;
+// Add names, prices, etc.
+$attributes = [];
+foreach ($product_attributes as $name => $value) {
+  $attribute = new WC_Product_Attribute();
+  $attribute->set_name($name);
+  $attribute->set_options($value);
+  if (in_array($key, $global_attributes)) {
+    // Deal with global attributes.
+    $term_name = "pa_" . sanitize_title( $name );
+    if (! $term = get_term_by( 'name', $value, $term_name )) {
+      wp_insert_term( $value, $term_name );
+      $term = get_term_by( 'name', $value, $term_name );
+    }
+    $attribute->set_id($term->term_taxonomy_id);
+    $attribute->set_name($term_name);
+    $attribute->set_options([$term->term_id]);
+    $attribute->set_visible( 1 );
+    $attribute_object->set_variation( 1 );
+  }
+  $attributes[] = $attribute;
+}
+$product->set_attributes($attributes);
+$product->save();

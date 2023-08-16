@@ -15,3 +15,9 @@ get_category_by_path
 
 https://www.freewebmentor.com/2019/12/wordpress-category-tag-and-taxonomy-functions.html
 WordPress Category Functions
+
+wp_insert_term( 'My New Category', 'product_cat', array(
+    'description' => 'Description for category', // optional
+    'parent' => 0, // optional
+    'slug' => 'my-new-category' // optional
+) );

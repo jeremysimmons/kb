@@ -1,0 +1,21 @@
+define( 'SHORTINIT', true );
+
+https://wp-kama.com/1581/shortinit-constant
+
+require( '/path/to/wp-load.php' );
+or
+require_once( $_SERVER['DOCUMENT_ROOT'] . '/wp-load.php' );
+
+// Here we can communicate with the database.
+// But practically no WP functions will work.
+// Global variables $wp, $wp_query, $wp_the_query are not set.
+global $wpdb;
+$result = $wpdb->get_results(
+	"SELECT post_title FROM $wpdb->posts WHERE post_type='post'"
+);
+
+if( $result ){
+	foreach( $result as $post ){
+		echo "$post->post_title <br>";
+	}
+}

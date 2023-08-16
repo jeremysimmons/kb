@@ -1,0 +1,32 @@
+$( 'body' ).on( 'blur change', '#billing_last_name', function(){
+	const wrapper = $(this).closest( '.form-row' );
+	// you do not have to removeClass() because Woo do it in checkout.js
+	if( /\d/.test( $(this).val() ) ) { // check if contains numbers
+		wrapper.addClass( 'woocommerce-invalid' ); // error
+	} else {
+		wrapper.addClass( 'woocommerce-validated' ); // success
+	}
+});
+add_action( 'wp_footer', function(){
+ 
+	// we need it only on our checkout page
+	if( ! is_checkout() ) {
+		return;
+	}
+ 
+	?>
+	<script>
+	jQuery(function($){
+		$( 'body' ).on( 'blur change', '#billing_last_name', function(){
+			const wrapper = $(this).closest( '.form-row' );
+			// you do not have to removeClass() because Woo do it in checkout.js
+			if( /\d/.test( $(this).val() ) ) { // check if contains numbers
+				wrapper.addClass( 'woocommerce-invalid' ); // error
+			} else {
+				wrapper.addClass( 'woocommerce-validated' ); // success
+			}
+		});
+	});
+	</script>
+	<?php
+} );

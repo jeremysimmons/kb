@@ -1,0 +1,14 @@
+
+https://guides.wp-bullet.com/using-wp-cli-wp-profile-to-diagnose-wordpress-performance-issues/
+
+php -d error_reporting=E_ALL&~E_DEPRECATED&~E_STRICT $(which wp) profile stage --all --orderby=time
+
+wp profile hook wp_head --url=https://idahoeventrent.com/product-category/tents/high-peak-canopies/ --fields=callback,time,location
+
+https://wordpress.org/plugins/f12-profiler/
+
+| plugins_loaded:before    | 0              | 0.5192s |
+| parse_request:before     | 0              | 0.5968s
+
+
+wp profile hook plugins_loaded:before --fields=callback,time,location --url=https://idahoeventrent.com/product-category/tents/high-peak-canopies/

@@ -1,0 +1,7 @@
+
+DELETE pm
+FROM wp_postmeta pm
+LEFT JOIN wp_posts wp ON wp.ID = pm.post_id
+WHERE wp.ID IS NULL
+
+https://www.speakinginbytes.com/2013/02/delete-orphaned-post-meta-data-in-wordpress/
