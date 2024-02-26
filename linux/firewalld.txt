@@ -1,0 +1,11 @@
+--get-default-zone
+--get-active-zones
+
+--get-zones      
+--get-services 
+--list-all-zones 
+--get-policies
+
+--get-active-policies
+
+https://www.linuxcloudvps.com/blog/10-useful-firewall-cmd-commands-in-linux/

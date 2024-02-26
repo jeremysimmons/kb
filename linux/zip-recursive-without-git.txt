@@ -1,0 +1,5 @@
+zip --exclude '*.git*' -r directory.zip directory 
+
+or
+
+zip --exclude \*.git\* -r directory.zip directory

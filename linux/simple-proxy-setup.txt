@@ -1,14 +1,27 @@
 sudo apt-get install -y simpleproxy
 sudo apt-get install tcptraceroute
 
-sudo vi /etc/systemd/system/simpleproxyasdm.service
 
+Running Simple Proxy, checking if it's working
+
+simpleproxy -L 433 -R 65.158.153.186:8123
+lsof -i 
+sudo nmap -sT -O localhost
+
+is it listening?
+netstat -ltup
+
+Creating Simple Proxy as a service
+sudo vi /etc/systemd/system/simpleproxykoopman.service
 sudo vi /etc/systemd/system/simpleproxy.service
+
+https://www.shubhamdipt.com/blog/how-to-create-a-systemd-service-in-linux/
+Create a file named your-service.service and include the following:
 
 ```
 [Service]
 Type=simple
-ExecStart=/usr/bin/simpleproxy -L 443 -R 65.158.153.186:8123
+ExecStart=/usr/bin/simpleproxy -L 9123 -R 54.165.122.164:8123
 Restart=always
 
 [Install]
@@ -19,16 +32,22 @@ Description=Simple Proxy
 After=network.target
 ```
 
-simpleproxy -L 433 -R 65.158.153.186:8123
+Reload the service files to include the new service.
+sudo systemctl daemon-reload
 
+Start your service
+sudo systemctl start your-service.service
 
-lsof -i 
+To check the status of your service
+sudo systemctl status example.service
 
+To enable your service on every reboot
+sudo systemctl enable example.service
 
-sudo nmap -sT -O localhost
+To disable your service on every reboot
+sudo systemctl disable example.service
 
-
-systemctl start simpleproxy
+systemctl start simpleproxykopoman8123
 systemctl status simpleproxy
 sudo systemctl stop simpleproxy
 systemctl restart simpleproxy

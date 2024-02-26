@@ -1,0 +1,3 @@
+https://docs.cpanel.net/whm/scripts/the-pkgacct-script/#use-a-custom-pkgacct-script
+
+/usr/local/cpanel/scripts/pkgacct

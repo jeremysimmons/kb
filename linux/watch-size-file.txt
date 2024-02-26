@@ -1,0 +1,1 @@
+watch -n 5 "du -h club_prod.sql"
