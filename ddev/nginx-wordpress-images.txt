@@ -1,0 +1,10 @@
+    # Matches any URL containing /wp-content/uploads/    
+    location ~ "^(.*)/wp-content/uploads/(.*)$" {
+        # try the local file first or from prod_server
+        try_files $uri @prod_server;
+    }
+
+    # Will redirect requests to your production server
+    location @prod_server {
+        rewrite "^(.*)/wp-content/uploads/(.*)$" "https://tablescapesdev.wpenginepowered.com/wp-content/uploads/$2" redirect;
+    }
