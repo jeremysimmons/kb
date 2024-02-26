@@ -1,0 +1,31 @@
+/**
+ * Sort Attribute values in ascending order for any attribute
+ * @param  array $args 
+ * @return array return sorted $args array
+ */
+function abd_sort_wc_attribute_values( $args ){
+	$get_options 		= $args['options'];
+	asort( $get_options );
+	$args['options'] 	= $get_options;
+	return $args;
+}
+
+add_filter( 'woocommerce_dropdown_variation_attribute_options_args', 'abd_sort_wc_attribute_values', 10, 1 );
+
+Sort attributes in the admin panel alphabetically
+
+
+function art_woocommerce_sorting_attributes_list( $attr ) {
+
+	return wp_list_sort( $attr, 'attribute_label', 'ASC' );
+}
+
+
+add_filter( 'woocommerce_attribute_taxonomies', 'art_woocommerce_sorting_attributes_list' );
+@mesulullogic
+
+
+$raw_attribute_taxonomies = get_transient( 'wc_attribute_taxonomies' );
+	$pre = apply_filters( "pre_transient_{$transient}", false, $transient );
+
+$raw_attribute_taxonomies = (array) array_filter( apply_filters( 'woocommerce_attribute_taxonomies', $raw_attribute_taxonomies ) );

@@ -1,0 +1,32 @@
+https://www.businessbloomer.com/woocommerce-disable-select-unless-previous-selected-variable/
+
+PHP/JS Snippet: Disable Next Attribute Dropdowns If Attribute Is Not Selected @ Variable Product Single Product Page
+
+/**
+ * @snippet       Toggle Attribute Selects @ Single Product
+ * @how-to        Get CustomizeWoo.com FREE
+ * @author        Rodolfo Melogli
+ * @compatible    WooCommerce 5
+ * @donate $9     https://businessbloomer.com/bloomer-armada/
+ */
+  
+add_action( 'woocommerce_before_single_product', 'bbloomer_disable_variable_product_selects_unless_previous_selected' );
+ 
+function bbloomer_disable_variable_product_selects_unless_previous_selected() {
+   global $product;
+   if ( ! $product->is_type( 'variable' ) ) return; // exit if not variable
+   if ( count( $product->get_available_variations() ) < 2 ) return; // exit if only 1 attribute
+   wc_enqueue_js( "
+      function toggle_attributes() {
+         $('table.variations tbody tr').each(function(){
+            if ($(this).prev().find('td.value select').val()=='') {
+               $(this).find('td.value select').attr('disabled',true).val(''); // if previous has no value, disable and reset
+            } else $(this).find('td.value select').attr('disabled',false);
+         });
+      }
+      toggle_attributes();
+      $('table.variations select').change( function(){
+         toggle_attributes();
+      });
+   " );
+}

@@ -1,0 +1,8 @@
+delete from wp_postmeta where meta_key = '_price' and post_id in (select distinct parent_id from wp_wcgr_relationship);
+
+insert into `wp_postmeta` (post_id, meta_key, meta_value)
+SELECT r.parent_id, '_price', min(cast(meta_value as decimal(5,2))) as min_price
+FROM `wp_wcgr_relationship` r
+join `wp_postmeta` pricemeta on r.child_id = pricemeta.post_id and pricemeta.meta_key = '_price'
+group by r.parent_id
+order by 2 desc;

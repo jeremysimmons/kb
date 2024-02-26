@@ -1,0 +1,4 @@
+WP_CLI_PHP_ARGS
+https://daryl.blog/2013/08/14/using-xdebug-with-wp-cli/
+alias wp="export WP_CLI_PHP_ARGS=; $HOME/.wp-cli/bin/wp"
+alias wpd="export WP_CLI_PHP_ARGS=-dxdebug.profiler_enable=1; $HOME/.wp-cli/bin/wp"

@@ -9,3 +9,5 @@ wp core update
 Updates WordPress to a newer version.
 Defaults to updating WordPress to the latest version. Use --version=<version> for specific version.
 https://developer.wordpress.org/cli/commands/core/update/
+
+wp core install --url=https://breakdancewr.ddev.site/ --title=updates --admin_user=admin --admin_password=password  --admin_email=admin@local.site

@@ -23,7 +23,6 @@ $variation->save();
 
 How to check if a variation with specific attributes already exists? 
 
-
 $variations = $product->get_available_variations();
 foreach( $variations as $variation ) {
 	
