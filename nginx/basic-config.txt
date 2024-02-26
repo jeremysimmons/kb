@@ -1,0 +1,65 @@
+sudo apt-get update -y
+Reading package lists... Done
+sudo apt-get upgrade -y
+Calculating upgrade... Done
+
+
+sudo apt-get install nginx -y
+
+
+$remote_user
+
+sudo systemctl restart nginx
+sudo nano /etc/nginx/sites-available/default
+
+sudo sh -c 'echo "Home" > /var/www/html/index.html'
+
+root /var/www/html;
+
+sudo systemctl status nginx
+
+sudo apt-get update -y
+nginx proxy_pass configuration
+sudo nano /etc/nginx/sites-available/default
+root   /usr/share/nginx/html;
+
+https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-22-04
+sudo certbot --nginx -d alertproxy.twelvelegsmarketing.com
+
+# example nginx reverse proxy mapping
+# /etc/nginx/sites-available/default
+location /examples {
+  proxy_pass http://localhost:8080/examples;
+}
+Set Nginx proxy header values
+By default, Nginx relays its own IP address to reverse proxy targets.
+
+To have Nginx relay the IP address, host and port info about the client that made the original request, you can set proxy_set_header values.
+
+Furthermore, Nginx buffers data to help manage heavy workloads, but this may be undesirable for applications that require the lowest latency possible. Instead, it may be better to turn proxy_buffering off for Nginx reverse proxy configurations.
+
+sudo systemctl restart nginx
+
+# example nginx reverse proxy config file
+# /etc/nginx/sites-available/default
+location /examples {
+  proxy_pass http://localhost:8080/examples;
+  proxy_buffering off;
+  proxy_set_header X-Real-IP $remote_addr;
+  proxy_set_header X-Forwarded-Host $host;
+  proxy_set_header X-Forwarded-Port $server_port;
+}
+
+apache2-utils.
+sudo htpasswd -c /var/www/html/.htpasswd idahoeventrent
+sudo htpasswd -c /var/www/html/.htpasswd awpdelivers
+sudo htpasswd -c /var/www/html/.htpasswd koopmanlumber
+
+location /api {
+    auth_basic           "Alert Proxy";
+    auth_basic_user_file /var/www/html/.htpasswd; 
+}
+
+idahoeventrent HeW4wTJAhu!92nW76Q.o
+awpdelivers r2z.kJDPUtN9aeZHAMu4
+koopmanlumber sYzXB.29NReLVbKvv*MC
