@@ -13,3 +13,57 @@ public void MyTest()
    var temp = "my class!";
    output.WriteLine("This is output from {0}", temp);
 }
+
+
+public static class TestOutputHelperLoggerExtensions
+{
+    public static ILogger AsLogger(this ITestOutputHelper helper) => new TestOutputHelperLogger(helper);
+    
+    public static ILogger<T> AsLogger<T>(this ITestOutputHelper helper) => new TestOutputHelperLogger<T>(helper);
+
+    private class TestOutputHelperLogger : ILogger
+    {
+        private readonly ITestOutputHelper _testOutputHelper;
+
+        public TestOutputHelperLogger(ITestOutputHelper testOutputHelper)
+        {
+            _testOutputHelper = testOutputHelper;
+        }
+        public IDisposable BeginScope<TState>(TState state) => null;
+
+        public bool IsEnabled(LogLevel logLevel) => true;
+
+        public void Log<TState>(LogLevel logLevel,
+            EventId eventId,
+            TState state,
+            Exception exception,
+            Func<TState, Exception, string> formatter)
+        {
+            var message = formatter(state, exception);
+            _testOutputHelper.WriteLine(message);
+        }
+    }
+
+    private class TestOutputHelperLogger<T> : ILogger<T>
+    {
+        private readonly ITestOutputHelper _testOutputHelper;
+
+        public TestOutputHelperLogger(ITestOutputHelper testOutputHelper)
+        {
+            _testOutputHelper = testOutputHelper;
+        }
+        public IDisposable BeginScope<TState>(TState state) => null;
+
+        public bool IsEnabled(LogLevel logLevel) => true;
+
+        public void Log<TState>(LogLevel logLevel,
+            EventId eventId,
+            TState state,
+            Exception exception,
+            Func<TState, Exception, string> formatter)
+        {
+            var message = formatter(state, exception);
+            _testOutputHelper.WriteLine(message);
+        }
+    }
+}

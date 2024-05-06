@@ -1,0 +1,8 @@
+docker create --name suspect-container suspect-image:latest
+docker export suspect-container > suspect-container.tar
+
+ get the file list in your terminal
+docker export suspect-container | tar t > suspect-container-files.txt
+
+list layers
+docker image history suspect-image:latest

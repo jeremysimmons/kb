@@ -1,0 +1,28 @@
+https://www.saperis.io/blog/how-to-copy-a-row-to-another-sheet-with-google-apps-script
+
+function copyRowsWithSetValues() {
+  let spreadSheet = SpreadsheetApp.getActiveSpreadsheet();
+  let sourceSheet = spreadSheet.getSheetByName('Source');
+  
+  let sourceRange = sourceSheet.getDataRange();
+  let sourceValues = sourceRange.getValues();
+  
+  let rowCount = sourceValues.length;
+  let columnCount = sourceValues[0].length;
+  
+  let targetSheet = spreadSheet.getSheetByName('Target');
+  let targetRange = targetSheet.getRange(1, 1, rowCount, columnCount);
+  
+  targetRange.setValues(sourceValues);
+} 
+
+function copyRowsWithCopyTo() {
+  let spreadSheet = SpreadsheetApp.getActiveSpreadsheet();
+  let sourceSheet = spreadSheet.getSheetByName('Source');
+  
+  let sourceRange = sourceSheet.getDataRange();
+  
+  let targetSheet = spreadSheet.getSheetByName('Target');
+  
+  sourceRange.copyTo(targetSheet.getRange(1, 1));
+} 

@@ -1,0 +1,16 @@
+https://stackoverflow.com/questions/6882104/faster-way-to-find-the-first-empty-row-in-a-google-sheet-column
+
+
+var firstEmptyRow = SpreadsheetApp.getActiveSpreadsheet().getLastRow() + 1;
+
+https://stackoverflow.com/a/27179623
+function getFirstEmptyRowByColumnArray() {
+  var spr = SpreadsheetApp.getActiveSpreadsheet();
+  var column = spr.getRange('A:A');
+  var values = column.getValues(); // get all data in one call
+  var ct = 0;
+  while ( values[ct] && values[ct][0] != "" ) {
+    ct++;
+  }
+  return (ct+1);
+}

@@ -1,0 +1,2 @@
+https://www.mytechramblings.com/posts/profiling-a-net-app-with-dotnet-cli-diagnostic-tools/
+https://www.mytechramblings.com/posts/profiling-a-net-app-on-aws-ecs-fargate-with-dotnet-monitor/

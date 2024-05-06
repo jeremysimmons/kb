@@ -37,11 +37,7 @@ SELECT grantor, grantee, table_schema, table_name, privilege_type
 FROM information_schema.table_privileges
 
 Ownership:
-select 
-   * 
-from pg_tables 
-where tableowner = 'YOUR_USER'
-;
+select * from pg_tables;
 
 Schema Permissions:
 select e.usename as grantee, r.usename as grantor, nspname, privilege_type, is_grantable
@@ -54,7 +50,6 @@ join lateral (
 ) a on true
 join pg_user e on a.grantee = e.usesysid
 join pg_user r on a.grantor = r.usesysid;
-
 
 SELECT grantee AS user, CONCAT(table_schema, '.', table_name) AS table,
     CASE
