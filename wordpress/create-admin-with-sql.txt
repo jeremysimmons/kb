@@ -1,6 +1,6 @@
-INSERT INTO `wpusers` (`ID`, `user_login`, `user_pass`, `user_nicename`, `user_email`, `user_url`, `user_registered`, `user_activation_key`, `user_status`, `display_name`) VALUES ('400', 'jsimmons@jeremysimmons.net', MD5('topsecret'), 'Jeremy Simmons', 'jsimmons@jeremysimmons.net', 'http://jeremysimmons.net', '2017-11-01 00:00:00', '', '0', 'Jeremy Simmons');
-INSERT INTO `wpusermeta` (`umeta_id`, `user_id`, `meta_key`, `meta_value`) VALUES (NULL, '400', 'wp_capabilities', 'a:1:{s:13:"administrator";s:1:"1";}');
-INSERT INTO `wpusermeta` (`umeta_id`, `user_id`, `meta_key`, `meta_value`) VALUES (NULL, '400', 'wp_user_level', '10');
+INSERT INTO `18d_users` (`ID`, `user_login`, `user_pass`, `user_nicename`, `user_email`, `user_url`, `user_registered`, `user_activation_key`, `user_status`, `display_name`) VALUES ('400', 'jsimmons@jeremysimmons.net', MD5('topsecret'), 'Jeremy Simmons', 'jsimmons@jeremysimmons.net', 'http://jeremysimmons.net', '2017-11-01 00:00:00', '', '0', 'Jeremy Simmons');
+INSERT INTO `18d_usermeta` (`umeta_id`, `user_id`, `meta_key`, `meta_value`) VALUES (NULL, '400', 'wp_capabilities', 'a:1:{s:13:"administrator";s:1:"1";}');
+INSERT INTO `18d_usermeta` (`umeta_id`, `user_id`, `meta_key`, `meta_value`) VALUES (NULL, '400', 'wp_user_level', '10');
 
 https://www.wpwhitesecurity.com/wordpress-tutorial/manually-add-wordpress-user-administrator-role-wordpress-database/
 

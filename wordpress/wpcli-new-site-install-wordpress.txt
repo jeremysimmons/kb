@@ -1,0 +1,12 @@
+wp core download
+
+ddev config
+
+ddev start
+
+ddev ssh
+
+wp core install --url=multisite.ddev.site --title="multisite" --admin_user=admin --admin_password=password --admin_email=wpadmin@gmail.com
+^D
+
+ddev launch /wp-admin/

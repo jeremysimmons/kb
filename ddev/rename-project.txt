@@ -1,0 +1,9 @@
+Export the database of the project: 
+ddev export-db --file=/path/to/db.sql.gz
+ddev delete <project>
+mv old_name new_name
+ddev config --project-name=<new_name>
+ddev start
+ddev import-db --src=/path/to/db.sql.gz
+
+https://stackoverflow.com/a/71579124/26877

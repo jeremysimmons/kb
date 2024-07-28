@@ -1,0 +1,3 @@
+https://github.com/ddev/ddev-memcached
+
+ddev get ddev/ddev-memcached && ddev restart

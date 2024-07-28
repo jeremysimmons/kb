@@ -1,0 +1,20 @@
+select
+      p.ID
+     ,p.post_parent
+     ,p.post_status
+     ,p.post_type
+     ,case when p.post_type = 'product_variation' then 'product_variation' else pt.product_type end as product_type
+     ,case when pt.product_type = 'bundled' then concat('https://tablescapesdev.wpenginepowered.com/product/',p.post_name) else p.guid end as product_url
+     ,m.meta_value as originalUrl
+     ,m2.meta_value as 'original_product_id'
+     ,m3.meta_value as 'sku'
+     ,m4.meta_value as 'children'
+     ,m5.meta_value as 'bundled-options'
+from wp_posts p
+left join product_types pt on pt.object_id = p.ID
+left join wp_postmeta m on p.ID = m.post_id and m.meta_key = 'originalurl'
+left join wp_postmeta m2 on p.ID = m2.post_id and m2.meta_key = 'original_product_id'
+left join wp_postmeta m3 on p.ID = m3.post_id and m3.meta_key = '_sku'
+left join wp_postmeta m4 on p.ID = m4.post_id and m4.meta_key = '_children'
+left join wp_postmeta m5 on p.ID = m5.post_id and m5.meta_key = 'iconic-woo-bundled-products_options'
+where p.post_type in ('product','product_variation');

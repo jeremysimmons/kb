@@ -1,0 +1,33 @@
+https://wordpress.stackexchange.com/questions/355610/how-can-i-properly-enqueue-wp-hooks-without-issues
+
+<?php
+// Manually load the wp-hooks script.
+wp_enqueue_script( 'wp-hooks' );
+
+// or enqueue your script with a dependency on wp-hooks 
+
+wp_enqueue_script(
+    'your-script',
+    'url/to/js/your-script.js',
+    [ 'wp-hooks' ] // ← add this parameter.
+);
+
+
+https://metabox.io/wordpress-javascript-hooks/
+
+addAction( 'hookName', 'namespace', 'functionName', callback, priority )
+removeAction( 'hookName', 'namespace', 'functionName' )
+removeAllActions( 'hookName' )
+doAction( 'hookName', arg1, arg2, ... )
+doingAction( 'hookName' )
+didAction( 'hookName' )
+hasAction( 'hookName' )
+addFilter( 'hookName', 'namespace', 'functionName', callback, priority )
+removeFilter( 'hookName', 'namespace', 'functionName' )
+removeAllFilters( 'hookName' )
+applyFilters( 'hookName', content, arg1, arg2, ... )
+doingFilter( 'hookName' )
+didFilter( 'hookName' )
+hasFilter( 'hookName' )
+
+https://github.com/wp-hooks/wordpress-core-hooks

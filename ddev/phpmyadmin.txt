@@ -1,0 +1,2 @@
+ddev get ddev/ddev-phpmyadmin
+ddev phpmyadmin
